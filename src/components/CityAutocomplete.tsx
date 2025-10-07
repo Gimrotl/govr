@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { getCitySuggestions } from '../data/cities';
+import { getCitySuggestions, CityWithCountry } from '../data/cities';
 
 interface CityAutocompleteProps {
   name: string;
@@ -16,7 +16,7 @@ export const CityAutocomplete: React.FC<CityAutocompleteProps> = ({
   onChange,
   className = ''
 }) => {
-  const [suggestions, setSuggestions] = useState<Array<{city: string, country: string}>>([]);
+  const [suggestions, setSuggestions] = useState<CityWithCountry[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [activeSuggestion, setActiveSuggestion] = useState(-1);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -38,7 +38,7 @@ export const CityAutocomplete: React.FC<CityAutocompleteProps> = ({
     onChange(e);
   };
 
-  const handleSuggestionClick = (suggestion: {city: string, country: string}) => {
+  const handleSuggestionClick = (suggestion: CityWithCountry) => {
     const syntheticEvent = {
       target: { name, value: suggestion.city }
     } as React.ChangeEvent<HTMLInputElement>;
