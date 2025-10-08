@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { ChevronLeft, ChevronRight, MapPin, Star, Navigation, Info, Car, Coffee, Utensils, Fuel, Plus, Edit, Trash2 } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ChevronDown, MapPin, Star, Navigation, Info, Car, Coffee, Utensils, Fuel, Plus, Edit, Trash2 } from 'lucide-react';
 import { RestStopDetailsModal } from './modals/RestStopDetailsModal';
 import { useAuth } from '../hooks/useAuth';
 import { useModals } from '../hooks/useModals';
@@ -169,6 +169,9 @@ export const RestStops: React.FC = () => {
   const [isScrolling3, setIsScrolling3] = useState(false);
   const [selectedRestStop, setSelectedRestStop] = useState<RestStop | null>(null);
   const [restStopsData, setRestStopsData] = useState<RestStop[]>(restStops);
+  const [isSection1Visible, setIsSection1Visible] = useState(false);
+  const [isSection2Visible, setIsSection2Visible] = useState(false);
+  const [isSection3Visible, setIsSection3Visible] = useState(false);
   const { isAdmin } = useAuth();
   const { openModal } = useModals();
   
@@ -363,11 +366,18 @@ export const RestStops: React.FC = () => {
     <>
       <section className="mt-12">
       <div className="flex justify-between items-center mb-6">
-        <div className="flex items-center">
+        <div className="flex items-center cursor-pointer" onClick={() => setIsSection1Visible(!isSection1Visible)}>
           <h2 className="text-2xl font-semibold text-gray-800">Stops richtung Polen, Weißrussland, Russland, Kaukasus</h2>
+          <ChevronDown
+            size={24}
+            className={`ml-2 text-red-600 transition-transform duration-300 ${isSection1Visible ? 'rotate-180' : ''}`}
+          />
           {isAdmin && (
             <button
-              onClick={handleCreateRestStop}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleCreateRestStop();
+              }}
               className="ml-4 bg-green-600 text-white p-2 rounded-full hover:bg-green-700 transition duration-200"
               title="Neuen Rest Stop erstellen"
             >
@@ -375,60 +385,67 @@ export const RestStops: React.FC = () => {
             </button>
           )}
         </div>
-        <div className="flex space-x-2">
+        {isSection1Visible && (
+          <div className="flex space-x-2">
+            <button
+              onClick={goToPrevious}
+              disabled={currentIndex === 0}
+              className={`p-2 rounded-full transition-all duration-200 ${
+                currentIndex === 0
+                  ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                  : 'bg-white shadow-md hover:shadow-lg text-gray-700 hover:text-gray-900'
+              }`}
+            >
+              <ChevronLeft size={20} />
+            </button>
+            <button
+              onClick={goToNext}
+              disabled={currentIndex >= restStopsData.length - 1}
+              className={`p-2 rounded-full transition-all duration-200 ${
+                currentIndex >= restStopsData.length - 1
+                  ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                  : 'bg-white shadow-md hover:shadow-lg text-gray-700 hover:text-gray-900'
+              }`}
+            >
+              <ChevronRight size={20} />
+            </button>
+          </div>
+        )}
+      </div>
+
+      <div
+        className={`overflow-hidden transition-all duration-500 ease-in-out ${
+          isSection1Visible ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'
+        }`}
+      >
+        <div className="relative">
+          {/* Left Arrow */}
           <button
             onClick={goToPrevious}
             disabled={currentIndex === 0}
-            className={`p-2 rounded-full transition-all duration-200 ${
-              currentIndex === 0 
-                ? 'bg-gray-200 text-gray-400 cursor-not-allowed' 
-                : 'bg-white shadow-md hover:shadow-lg text-gray-700 hover:text-gray-900'
+            className={`absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-lg transition-all duration-200 ${
+              currentIndex === 0
+                ? 'opacity-50 cursor-not-allowed'
+                : 'hover:bg-gray-100 hover:shadow-xl'
             }`}
+            style={{ marginLeft: '-12px' }}
           >
-            <ChevronLeft size={20} />
+            <ChevronLeft size={24} className={currentIndex === 0 ? 'text-gray-400' : 'text-gray-700'} />
           </button>
+
+          {/* Right Arrow */}
           <button
             onClick={goToNext}
             disabled={currentIndex >= restStopsData.length - 1}
-            className={`p-2 rounded-full transition-all duration-200 ${
-              currentIndex >= restStopsData.length - 1 
-                ? 'bg-gray-200 text-gray-400 cursor-not-allowed' 
-                : 'bg-white shadow-md hover:shadow-lg text-gray-700 hover:text-gray-900'
+            className={`absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-lg transition-all duration-200 ${
+              currentIndex >= restStopsData.length - 1
+                ? 'opacity-50 cursor-not-allowed'
+                : 'hover:bg-gray-100 hover:shadow-xl'
             }`}
+            style={{ marginRight: '-12px' }}
           >
-            <ChevronRight size={20} />
+            <ChevronRight size={24} className={currentIndex >= restStopsData.length - 1 ? 'text-gray-400' : 'text-gray-700'} />
           </button>
-        </div>
-      </div>
-
-      <div className="relative">
-        {/* Left Arrow */}
-        <button
-          onClick={goToPrevious}
-          disabled={currentIndex === 0}
-          className={`absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-lg transition-all duration-200 ${
-            currentIndex === 0 
-              ? 'opacity-50 cursor-not-allowed' 
-              : 'hover:bg-gray-100 hover:shadow-xl'
-          }`}
-          style={{ marginLeft: '-12px' }}
-        >
-          <ChevronLeft size={24} className={currentIndex === 0 ? 'text-gray-400' : 'text-gray-700'} />
-        </button>
-        
-        {/* Right Arrow */}
-        <button
-          onClick={goToNext}
-          disabled={currentIndex >= restStopsData.length - 1}
-          className={`absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-lg transition-all duration-200 ${
-            currentIndex >= restStopsData.length - 1 
-              ? 'opacity-50 cursor-not-allowed' 
-              : 'hover:bg-gray-100 hover:shadow-xl'
-          }`}
-          style={{ marginRight: '-12px' }}
-        >
-          <ChevronRight size={24} className={currentIndex >= restStopsData.length - 1 ? 'text-gray-400' : 'text-gray-700'} />
-        </button>
         
         <div 
           ref={scrollContainerRef}
@@ -536,16 +553,17 @@ export const RestStops: React.FC = () => {
               key={index}
               onClick={() => scrollToIndex(index)}
               className={`w-2 h-2 rounded-full transition-all duration-200 ${
-                index === currentIndex 
-                  ? 'bg-blue-600 w-8' 
+                index === currentIndex
+                  ? 'bg-blue-600 w-8'
                   : 'bg-gray-300 hover:bg-gray-400'
               }`}
             />
           ))}
         </div>
-        
+
         <div className="text-center mt-4 text-sm text-gray-500 md:hidden">
           ← Wischen Sie nach links/rechts für mehr Stops →
+        </div>
         </div>
       </div>
       </section>
@@ -553,11 +571,18 @@ export const RestStops: React.FC = () => {
       {/* Second Rest Stops Section */}
       <section className="mt-12">
       <div className="flex justify-between items-center mb-6">
-        <div className="flex items-center">
+        <div className="flex items-center cursor-pointer" onClick={() => setIsSection2Visible(!isSection2Visible)}>
           <h2 className="text-2xl font-semibold text-gray-800">Stops richtung Polen,Litauen, Lettland, Weißrussland, Russland, Kaukasus</h2>
+          <ChevronDown
+            size={24}
+            className={`ml-2 text-red-600 transition-transform duration-300 ${isSection2Visible ? 'rotate-180' : ''}`}
+          />
           {isAdmin && (
             <button
-              onClick={handleCreateRestStop}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleCreateRestStop();
+              }}
               className="ml-4 bg-green-600 text-white p-2 rounded-full hover:bg-green-700 transition duration-200"
               title="Neuen Rest Stop erstellen"
             >
@@ -565,66 +590,73 @@ export const RestStops: React.FC = () => {
             </button>
           )}
         </div>
-        <div className="flex space-x-2">
+        {isSection2Visible && (
+          <div className="flex space-x-2">
+            <button
+              onClick={goToPrevious2}
+              disabled={currentIndex2 === 0}
+              className={`p-2 rounded-full transition-all duration-200 ${
+                currentIndex2 === 0
+                  ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                  : 'bg-white shadow-md hover:shadow-lg text-gray-700 hover:text-gray-900'
+              }`}
+            >
+              <ChevronLeft size={20} />
+            </button>
+            <button
+              onClick={goToNext2}
+              disabled={currentIndex2 >= restStopsData.length - 1}
+              className={`p-2 rounded-full transition-all duration-200 ${
+                currentIndex2 >= restStopsData.length - 1
+                  ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                  : 'bg-white shadow-md hover:shadow-lg text-gray-700 hover:text-gray-900'
+              }`}
+            >
+              <ChevronRight size={20} />
+            </button>
+          </div>
+        )}
+      </div>
+
+      <div
+        className={`overflow-hidden transition-all duration-500 ease-in-out ${
+          isSection2Visible ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'
+        }`}
+      >
+        <div className="relative">
+          {/* Left Arrow */}
           <button
             onClick={goToPrevious2}
             disabled={currentIndex2 === 0}
-            className={`p-2 rounded-full transition-all duration-200 ${
-              currentIndex2 === 0 
-                ? 'bg-gray-200 text-gray-400 cursor-not-allowed' 
-                : 'bg-white shadow-md hover:shadow-lg text-gray-700 hover:text-gray-900'
+            className={`absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-lg transition-all duration-200 ${
+              currentIndex2 === 0
+                ? 'opacity-50 cursor-not-allowed'
+                : 'hover:bg-gray-100 hover:shadow-xl'
             }`}
+            style={{ marginLeft: '-12px' }}
           >
-            <ChevronLeft size={20} />
+            <ChevronLeft size={24} className={currentIndex2 === 0 ? 'text-gray-400' : 'text-gray-700'} />
           </button>
+
+          {/* Right Arrow */}
           <button
             onClick={goToNext2}
             disabled={currentIndex2 >= restStopsData.length - 1}
-            className={`p-2 rounded-full transition-all duration-200 ${
-              currentIndex2 >= restStopsData.length - 1 
-                ? 'bg-gray-200 text-gray-400 cursor-not-allowed' 
-                : 'bg-white shadow-md hover:shadow-lg text-gray-700 hover:text-gray-900'
+            className={`absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-lg transition-all duration-200 ${
+              currentIndex2 >= restStopsData.length - 1
+                ? 'opacity-50 cursor-not-allowed'
+                : 'hover:bg-gray-100 hover:shadow-xl'
             }`}
+            style={{ marginRight: '-12px' }}
           >
-            <ChevronRight size={20} />
+            <ChevronRight size={24} className={currentIndex2 >= restStopsData.length - 1 ? 'text-gray-400' : 'text-gray-700'} />
           </button>
-        </div>
-      </div>
 
-      <div className="relative">
-        {/* Left Arrow */}
-        <button
-          onClick={goToPrevious2}
-          disabled={currentIndex2 === 0}
-          className={`absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-lg transition-all duration-200 ${
-            currentIndex2 === 0 
-              ? 'opacity-50 cursor-not-allowed' 
-              : 'hover:bg-gray-100 hover:shadow-xl'
-          }`}
-          style={{ marginLeft: '-12px' }}
-        >
-          <ChevronLeft size={24} className={currentIndex2 === 0 ? 'text-gray-400' : 'text-gray-700'} />
-        </button>
-        
-        {/* Right Arrow */}
-        <button
-          onClick={goToNext2}
-          disabled={currentIndex2 >= restStopsData.length - 1}
-          className={`absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-lg transition-all duration-200 ${
-            currentIndex2 >= restStopsData.length - 1 
-              ? 'opacity-50 cursor-not-allowed' 
-              : 'hover:bg-gray-100 hover:shadow-xl'
-          }`}
-          style={{ marginRight: '-12px' }}
-        >
-          <ChevronRight size={24} className={currentIndex2 >= restStopsData.length - 1 ? 'text-gray-400' : 'text-gray-700'} />
-        </button>
-        
-        <div 
-          ref={scrollContainerRef2}
-          className="flex overflow-x-auto space-x-5 pb-4 scrollbar-hide"
-          style={{ scrollSnapType: 'x mandatory' }}
-        >
+          <div
+            ref={scrollContainerRef2}
+            className="flex overflow-x-auto space-x-5 pb-4 scrollbar-hide"
+            style={{ scrollSnapType: 'x mandatory' }}
+          >
           {restStopsData.map((stop) => (
             <div 
               key={`section2-${stop.id}`} 
@@ -726,16 +758,17 @@ export const RestStops: React.FC = () => {
               key={index}
               onClick={() => scrollToIndex2(index)}
               className={`w-2 h-2 rounded-full transition-all duration-200 ${
-                index === currentIndex2 
-                  ? 'bg-blue-600 w-8' 
+                index === currentIndex2
+                  ? 'bg-blue-600 w-8'
                   : 'bg-gray-300 hover:bg-gray-400'
               }`}
             />
           ))}
         </div>
-        
+
         <div className="text-center mt-4 text-sm text-gray-500 md:hidden">
           ← Wischen Sie nach links/rechts für mehr Stops →
+        </div>
         </div>
       </div>
       </section>
@@ -743,11 +776,18 @@ export const RestStops: React.FC = () => {
       {/* Third Rest Stops Section */}
       <section className="mt-12">
       <div className="flex justify-between items-center mb-6">
-        <div className="flex items-center">
+        <div className="flex items-center cursor-pointer" onClick={() => setIsSection3Visible(!isSection3Visible)}>
           <h2 className="text-2xl font-semibold text-gray-800">Stops richtung Ungarn, Serbein, Bulgarien, Türkei, Georgien, Kausasus </h2>
+          <ChevronDown
+            size={24}
+            className={`ml-2 text-red-600 transition-transform duration-300 ${isSection3Visible ? 'rotate-180' : ''}`}
+          />
           {isAdmin && (
             <button
-              onClick={handleCreateRestStop}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleCreateRestStop();
+              }}
               className="ml-4 bg-green-600 text-white p-2 rounded-full hover:bg-green-700 transition duration-200"
               title="Neuen Rest Stop erstellen"
             >
@@ -755,66 +795,73 @@ export const RestStops: React.FC = () => {
             </button>
           )}
         </div>
-        <div className="flex space-x-2">
+        {isSection3Visible && (
+          <div className="flex space-x-2">
+            <button
+              onClick={goToPrevious3}
+              disabled={currentIndex3 === 0}
+              className={`p-2 rounded-full transition-all duration-200 ${
+                currentIndex3 === 0
+                  ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                  : 'bg-white shadow-md hover:shadow-lg text-gray-700 hover:text-gray-900'
+              }`}
+            >
+              <ChevronLeft size={20} />
+            </button>
+            <button
+              onClick={goToNext3}
+              disabled={currentIndex3 >= restStopsData.length - 1}
+              className={`p-2 rounded-full transition-all duration-200 ${
+                currentIndex3 >= restStopsData.length - 1
+                  ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                  : 'bg-white shadow-md hover:shadow-lg text-gray-700 hover:text-gray-900'
+              }`}
+            >
+              <ChevronRight size={20} />
+            </button>
+          </div>
+        )}
+      </div>
+
+      <div
+        className={`overflow-hidden transition-all duration-500 ease-in-out ${
+          isSection3Visible ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'
+        }`}
+      >
+        <div className="relative">
+          {/* Left Arrow */}
           <button
             onClick={goToPrevious3}
             disabled={currentIndex3 === 0}
-            className={`p-2 rounded-full transition-all duration-200 ${
-              currentIndex3 === 0 
-                ? 'bg-gray-200 text-gray-400 cursor-not-allowed' 
-                : 'bg-white shadow-md hover:shadow-lg text-gray-700 hover:text-gray-900'
+            className={`absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-lg transition-all duration-200 ${
+              currentIndex3 === 0
+                ? 'opacity-50 cursor-not-allowed'
+                : 'hover:bg-gray-100 hover:shadow-xl'
             }`}
+            style={{ marginLeft: '-12px' }}
           >
-            <ChevronLeft size={20} />
+            <ChevronLeft size={24} className={currentIndex3 === 0 ? 'text-gray-400' : 'text-gray-700'} />
           </button>
+
+          {/* Right Arrow */}
           <button
             onClick={goToNext3}
             disabled={currentIndex3 >= restStopsData.length - 1}
-            className={`p-2 rounded-full transition-all duration-200 ${
-              currentIndex3 >= restStopsData.length - 1 
-                ? 'bg-gray-200 text-gray-400 cursor-not-allowed' 
-                : 'bg-white shadow-md hover:shadow-lg text-gray-700 hover:text-gray-900'
+            className={`absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-lg transition-all duration-200 ${
+              currentIndex3 >= restStopsData.length - 1
+                ? 'opacity-50 cursor-not-allowed'
+                : 'hover:bg-gray-100 hover:shadow-xl'
             }`}
+            style={{ marginRight: '-12px' }}
           >
-            <ChevronRight size={20} />
+            <ChevronRight size={24} className={currentIndex3 >= restStopsData.length - 1 ? 'text-gray-400' : 'text-gray-700'} />
           </button>
-        </div>
-      </div>
 
-      <div className="relative">
-        {/* Left Arrow */}
-        <button
-          onClick={goToPrevious3}
-          disabled={currentIndex3 === 0}
-          className={`absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-lg transition-all duration-200 ${
-            currentIndex3 === 0 
-              ? 'opacity-50 cursor-not-allowed' 
-              : 'hover:bg-gray-100 hover:shadow-xl'
-          }`}
-          style={{ marginLeft: '-12px' }}
-        >
-          <ChevronLeft size={24} className={currentIndex3 === 0 ? 'text-gray-400' : 'text-gray-700'} />
-        </button>
-        
-        {/* Right Arrow */}
-        <button
-          onClick={goToNext3}
-          disabled={currentIndex3 >= restStopsData.length - 1}
-          className={`absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-lg transition-all duration-200 ${
-            currentIndex3 >= restStopsData.length - 1 
-              ? 'opacity-50 cursor-not-allowed' 
-              : 'hover:bg-gray-100 hover:shadow-xl'
-          }`}
-          style={{ marginRight: '-12px' }}
-        >
-          <ChevronRight size={24} className={currentIndex3 >= restStopsData.length - 1 ? 'text-gray-400' : 'text-gray-700'} />
-        </button>
-        
-        <div 
-          ref={scrollContainerRef3}
-          className="flex overflow-x-auto space-x-5 pb-4 scrollbar-hide"
-          style={{ scrollSnapType: 'x mandatory' }}
-        >
+          <div
+            ref={scrollContainerRef3}
+            className="flex overflow-x-auto space-x-5 pb-4 scrollbar-hide"
+            style={{ scrollSnapType: 'x mandatory' }}
+          >
           {restStopsData.map((stop) => (
             <div 
               key={`section3-${stop.id}`} 
@@ -916,24 +963,25 @@ export const RestStops: React.FC = () => {
               key={index}
               onClick={() => scrollToIndex3(index)}
               className={`w-2 h-2 rounded-full transition-all duration-200 ${
-                index === currentIndex3 
-                  ? 'bg-blue-600 w-8' 
+                index === currentIndex3
+                  ? 'bg-blue-600 w-8'
                   : 'bg-gray-300 hover:bg-gray-400'
               }`}
             />
           ))}
         </div>
-        
+
         <div className="text-center mt-4 text-sm text-gray-500 md:hidden">
           ← Wischen Sie nach links/rechts für mehr Stops →
+        </div>
         </div>
       </div>
       </section>
 
       {/* Rest Stop Details Modal */}
-      <RestStopDetailsModal 
-        restStop={selectedRestStop} 
-        onClose={() => setSelectedRestStop(null)} 
+      <RestStopDetailsModal
+        restStop={selectedRestStop}
+        onClose={() => setSelectedRestStop(null)}
       />
     </>
   );
