@@ -25,7 +25,8 @@ export const AdminLoginModal: React.FC = () => {
     }
     
     // Simple admin validation (in real app, this would be secure)
-    if (credentials.username === 'admin' && credentials.password === 'admin123') {
+    // Aktuelle Anmeldedaten: Benutzername: admin, Passwort: password123
+    if (credentials.username === 'admin' && credentials.password === 'password123') {
       adminLogin();
       closeModal('adminLogin');
       openModal('adminDashboard');
