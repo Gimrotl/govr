@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Order } from '../types';
 import { useNotifications } from './useNotifications.tsx';
 import { useAuth } from './useAuth';
+import { useMessages } from './useMessages.tsx';
 
 // Initial mock data for orders
 const initialOrders: Order[] = [
@@ -10,14 +11,20 @@ const initialOrders: Order[] = [
     client: 'Ivan',
     clientEmail: 'ivan@example.com',
     details: 'Ride from Berlin to London',
-    status: 'pending'
+    status: 'pending',
+    driverName: 'Max Mustermann',
+    from: 'Berlin',
+    to: 'London'
   },
   {
     id: 2,
     client: 'Maria',
     clientEmail: 'maria@example.com',
     details: 'Ride from Prenzlauer Berg to Neukölln',
-    status: 'pending'
+    status: 'pending',
+    driverName: 'Anna Schmidt',
+    from: 'Prenzlauer Berg',
+    to: 'Neukölln'
   }
 ];
 
@@ -35,61 +42,84 @@ export const useOrders = () => {
   const [orders, setOrders] = useState<Order[]>(initialOrders);
   const { addNotification } = useNotifications();
   const { userEmail } = useAuth();
-  
+  const { addSystemMessage } = useMessages();
+
   const acceptOrder = (orderId: number) => {
     const order = orders.find(o => o.id === orderId);
     if (!order) return;
-    
-    setOrders(orders.map(order => 
+
+    setOrders(orders.map(order =>
       order.id === orderId ? { ...order, status: 'accepted' } : order
     ));
-    
+
+    const driverName = order.driverName || 'dem Fahrer';
+    const rideDetails = order.from && order.to
+      ? `Fahrt von ${order.from} nach ${order.to}`
+      : order.details;
+
     // Send email notification
     sendEmail(
       order.clientEmail,
-      'Ride Booking Accepted',
-      `Great news! Your ride booking "${order.details}" has been accepted by the driver. Please check your account for more details.`
+      'Fahrtbuchung angenommen',
+      `Gute Nachrichten! Ihre Fahrtbuchung "${rideDetails}" von "${driverName}" wurde angenommen. Bitte überprüfen Sie Ihr Konto für weitere Details.`
     );
-    
+
+    // Add message notification
+    addSystemMessage(
+      `Ihre Fahrtbuchung „${rideDetails}" von „${driverName}" wurde angenommen.`,
+      driverName
+    );
+
     // Add in-app notification for the client
     addNotification({
       userId: order.clientEmail,
-      title: 'Booking Accepted! ✅',
-      message: `Your ride booking "${order.details}" has been accepted.`,
+      title: 'Buchung angenommen! ✅',
+      message: `Ihre Fahrtbuchung „${rideDetails}" von „${driverName}" wurde angenommen.`,
       type: 'order_accepted',
       orderId: orderId
     });
-    
-    alert(`Order ${orderId} has been accepted.`);
+
+    alert(`Bestellung ${orderId} wurde angenommen.`);
   };
-  
+
   const rejectOrder = (orderId: number) => {
     const order = orders.find(o => o.id === orderId);
     if (!order) return;
-    
-    setOrders(orders.map(order => 
+
+    setOrders(orders.map(order =>
       order.id === orderId ? { ...order, status: 'rejected' } : order
     ));
-    
+
+    const driverName = order.driverName || 'dem Fahrer';
+    const rideDetails = order.from && order.to
+      ? `Fahrt von ${order.from} nach ${order.to}`
+      : order.details;
+
     // Send email notification
     sendEmail(
       order.clientEmail,
-      'Ride Booking Declined',
-      `We're sorry to inform you that your ride booking "${order.details}" has been declined by the driver. Please look for alternative rides.`
+      'Fahrtbuchung abgelehnt',
+      `Es tut uns leid Ihnen mitteilen zu müssen, dass Ihre Fahrtbuchung "${rideDetails}" von "${driverName}" abgelehnt wurde. Bitte suchen Sie nach alternativen Fahrten.`
     );
-    
+
+    // Add message notification
+    addSystemMessage(
+      `Ihre Fahrtbuchung „${rideDetails}" von „${driverName}" wurde abgelehnt.`,
+      driverName
+    );
+
     // Add in-app notification for the client
     addNotification({
       userId: order.clientEmail,
-      title: 'Booking Declined ❌',
-      message: `Your ride booking "${order.details}" has been declined.`,
+      title: 'Buchung abgelehnt ❌',
+      message: `Ihre Fahrtbuchung „${rideDetails}" von „${driverName}" wurde abgelehnt.`,
       type: 'order_rejected',
       orderId: orderId
     });
-    
-    alert(`Order ${orderId} has been rejected.`);
+
+    alert(`Bestellung ${orderId} wurde abgelehnt.`);
   };
-  
+
   return {
     orders,
     acceptOrder,

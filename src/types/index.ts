@@ -65,6 +65,9 @@ export interface Order {
   clientEmail: string;
   details: string;
   status: 'pending' | 'accepted' | 'rejected';
+  driverName?: string;
+  from?: string;
+  to?: string;
 }
 
 export interface Notification {
