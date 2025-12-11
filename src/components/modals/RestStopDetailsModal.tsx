@@ -286,7 +286,7 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
 
         <div className="flex flex-col lg:flex-row h-full max-h-[95vh]">
           {/* Left side - Image slideshow */}
-          <div className="lg:w-1/2 relative bg-gray-900">
+          <div className="lg:w-1/2 relative bg-gray-50">
             {/* Type badge */}
             <div className="absolute top-4 left-4 z-20 bg-white bg-opacity-90 backdrop-blur-sm rounded-full px-4 py-2 flex items-center space-x-2 shadow-lg">
               <span className="text-xl">{getTypeIcon(restStop.type)}</span>
