@@ -1,5 +1,5 @@
 import React from 'react';
-import { Search, Users } from 'lucide-react';
+import { Search, Users, Calendar } from 'lucide-react';
 import { SearchParams } from '../types';
 import { CityAutocomplete } from './CityAutocomplete';
 
@@ -61,10 +61,16 @@ export const RideSearch: React.FC<RideSearchProps> = ({
             <input
               type="date"
               name="date"
-              className="w-full p-2.5 md:p-3 text-sm md:text-base border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-400 focus:border-transparent transition duration-200"
+              className="w-full p-2.5 md:p-3 pl-8 md:pl-9 text-sm md:text-base border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-400 focus:border-transparent transition duration-200"
               value={searchParams.date}
               onChange={handleChange}
             />
+            <Calendar size={16} className="absolute left-2.5 md:left-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none" />
+            {!searchParams.date && (
+              <span className="absolute left-8 md:left-10 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm md:text-base pointer-events-none">
+                Date
+              </span>
+            )}
           </div>
         </div>
 
