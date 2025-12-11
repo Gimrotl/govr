@@ -21,7 +21,9 @@ export const ProfileModal: React.FC = () => {
     telegram: '@johndoe',
     instagram: '@johndoe',
     bio: '',
-    carImages: []
+    carImages: [],
+    carModel: '',
+    carYear: ''
   });
 
   // Use selectedUser data if viewing another user's profile
@@ -175,6 +177,34 @@ export const ProfileModal: React.FC = () => {
                   onChange={(e) => !isViewingOtherUser && setProfile({ ...profile, whatsapp: e.target.value })}
                   disabled={isViewingOtherUser || !isEditing}
                   className="w-full p-2 md:p-3 border border-gray-300 rounded-md text-sm md:text-base"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs md:text-sm font-medium text-gray-700 mb-1">
+                  Auto Modell
+                </label>
+                <input
+                  type="text"
+                  value={displayProfile.carModel || ''}
+                  onChange={(e) => !isViewingOtherUser && setProfile({ ...profile, carModel: e.target.value })}
+                  disabled={isViewingOtherUser || !isEditing}
+                  className="w-full p-2 md:p-3 border border-gray-300 rounded-md text-sm md:text-base"
+                  placeholder="z.B. Mercedes Vito"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs md:text-sm font-medium text-gray-700 mb-1">
+                  Baujahr
+                </label>
+                <input
+                  type="text"
+                  value={displayProfile.carYear || ''}
+                  onChange={(e) => !isViewingOtherUser && setProfile({ ...profile, carYear: e.target.value })}
+                  disabled={isViewingOtherUser || !isEditing}
+                  className="w-full p-2 md:p-3 border border-gray-300 rounded-md text-sm md:text-base"
+                  placeholder="z.B. 2020"
                 />
               </div>
             </div>

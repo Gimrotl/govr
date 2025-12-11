@@ -94,6 +94,8 @@ export interface UserProfile {
   carImages: string[];
   car?: string;
   carImage?: string;
+  carModel?: string;
+  carYear?: string;
   rating?: number;
   driverInfo?: string;
   userRides?: Ride[];
