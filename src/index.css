@@ -89,3 +89,14 @@ input[type="date"].date-input-custom::-webkit-calendar-picker-indicator {
   cursor: pointer;
   opacity: 1;
 }
+
+input[type="date"].date-input-custom::before {
+  content: attr(placeholder);
+  color: #9ca3af;
+  position: absolute;
+}
+
+input[type="date"].date-input-custom:focus::before,
+input[type="date"].date-input-custom:valid::before {
+  content: none;
+}
