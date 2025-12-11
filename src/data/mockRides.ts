@@ -16,8 +16,6 @@ export const mockRides: Ride[] = [
     telegram: '@AnnaDriver',
     mobile: '+491234567891',
     car: 'Mercedes Vito - Black',
-    carModel: 'Mercedes Vito',
-    carYear: '2020',
     availableSeats: 8,
     bookedSeats: 0,
     carImage: 'https://images.pexels.com/photos/707046/pexels-photo-707046.jpeg',
@@ -26,7 +24,6 @@ export const mockRides: Ride[] = [
       'https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg'
     ],
     stopovers: ['Hamburg', 'Amsterdam', 'Brussels'],
-    information: 'Komfortable Fahrt mit viel Platz. WLAN verfügbar.',
     reviews: [
       {
         id: 1,
@@ -57,8 +54,6 @@ export const mockRides: Ride[] = [
     telegram: '@TomDriver',
     mobile: '+491234567893',
     car: 'Mercedes Vito - Black',
-    carModel: 'VW Transporter',
-    carYear: '2019',
     availableSeats: 8,
     bookedSeats: 0,
     carImage: 'https://images.pexels.com/photos/707046/pexels-photo-707046.jpeg',
@@ -66,8 +61,6 @@ export const mockRides: Ride[] = [
       'https://images.pexels.com/photos/1149137/pexels-photo-1149137.jpeg',
       'https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg'
     ],
-    stopovers: [],
-    information: 'Schnelle Fahrt innerhalb Berlins.',
     reviews: [
       {
         id: 1,
@@ -92,8 +85,6 @@ export const mockRides: Ride[] = [
     telegram: '@LisaDriver',
     mobile: '+491234567895',
     car: 'Mercedes Vito - Black',
-    carModel: 'Ford Transit',
-    carYear: '2018',
     availableSeats: 8,
     bookedSeats: 0,
     carImage: 'https://images.pexels.com/photos/707046/pexels-photo-707046.jpeg',
@@ -101,8 +92,6 @@ export const mockRides: Ride[] = [
       'https://images.pexels.com/photos/1149137/pexels-photo-1149137.jpeg',
       'https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg'
     ],
-    stopovers: [],
-    information: 'Ruhige Fahrt durch Berlin.',
     reviews: [
       {
         id: 1,
