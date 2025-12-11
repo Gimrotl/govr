@@ -273,7 +273,17 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
 
   return (
     <div className="fixed inset-0 bg-white bg-opacity-95 flex items-center justify-center z-50 p-4 animate-fadeIn">
-      <div className="bg-white rounded-2xl shadow-2xl max-w-6xl w-full max-h-[95vh] overflow-hidden animate-scaleIn">
+      <div className="bg-white rounded-2xl shadow-2xl max-w-6xl w-full max-h-[95vh] overflow-hidden animate-scaleIn relative">
+        {/* Close button - fixed top right, aligned with type badge */}
+        <div className="absolute top-4 right-4 z-30">
+          <button
+            onClick={onClose}
+            className="bg-red-500 hover:bg-red-600 rounded-full p-2 text-white transition-colors shadow-lg"
+          >
+            <X size={24} />
+          </button>
+        </div>
+
         <div className="flex flex-col lg:flex-row h-full max-h-[95vh]">
           {/* Left side - Image slideshow */}
           <div className="lg:w-1/2 relative bg-gray-900">
@@ -355,17 +365,7 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
 
           {/* Right side - Details */}
           <div className="lg:w-1/2 flex flex-col overflow-y-auto relative">
-            {/* Close button - fixed top right */}
-            <div className="sticky top-0 right-0 z-30 flex justify-end p-4 lg:p-6 pb-0">
-              <button
-                onClick={onClose}
-                className="bg-red-500 hover:bg-red-600 rounded-full p-2 text-white transition-colors shadow-lg"
-              >
-                <X size={24} />
-              </button>
-            </div>
-
-            <div className="p-4 lg:p-6 pt-2 flex-1">
+            <div className="p-4 lg:p-6 pt-16 flex-1">
               {/* Header */}
               <div className="mb-6 relative">
                 <div className="flex items-center justify-between">
