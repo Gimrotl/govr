@@ -206,6 +206,15 @@ export const RideDetailsModal: React.FC = () => {
               Jetzt buchen - {selectedRide.price}
             </button>
 
+            {/* Car Images button */}
+            <button
+              onClick={handleShowCarImages}
+              className="w-full flex items-center justify-center bg-gray-600 text-white py-3 rounded-lg text-base md:text-lg font-medium hover:bg-gray-700 transition duration-200 mb-4"
+            >
+              <Car size={18} className="mr-2" />
+              Autobilder
+            </button>
+
             {/* Contact button */}
             <button
               onClick={handleContactDriver}
@@ -222,15 +231,6 @@ export const RideDetailsModal: React.FC = () => {
             >
               <Shield size={18} className="mr-2" />
               Report a Problem
-            </button>
-
-            {/* Car Images button */}
-            <button
-              onClick={handleShowCarImages}
-              className="w-full flex items-center justify-center bg-gray-600 text-white py-3 rounded-lg text-base md:text-lg font-medium hover:bg-gray-700 transition duration-200 mt-4"
-            >
-              <Car size={18} className="mr-2" />
-              Autobilder
             </button>
           </div>
         </div>
