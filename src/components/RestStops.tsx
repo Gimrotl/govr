@@ -438,7 +438,7 @@ export const RestStops: React.FC = () => {
     goToNext: () => void,
     scrollRef: React.RefObject<HTMLDivElement>
   ) => (
-    <section className="mt-20 mb-20">
+    <section className="mt-20 mb-20 bg-gray-100 py-12 px-6 rounded-3xl">
       <div className="flex items-start justify-between mb-10">
         <div className="flex-1">
           <h2 className="text-2xl font-bold text-gray-900 mb-2">{title}</h2>
