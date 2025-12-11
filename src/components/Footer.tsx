@@ -8,41 +8,40 @@ export const Footer: React.FC = () => {
   const { isAdmin } = useAuth();
   
   return (
-    <footer className="bg-white border-t border-slate-200 py-8 mt-auto">
-      <div className="container mx-auto px-4">
-        <div className="flex flex-col md:flex-row justify-between items-center md:items-center space-y-4 md:space-y-0">
+    <footer className="bg-gray-800 text-white py-6 mt-auto">
+      <div className="container mx-auto px-4 text-center">
+        <div className="flex justify-between items-center">
           <div className="text-left">
             {isAdmin ? (
-              <button
+              <button 
                 onClick={() => openModal('adminDashboard')}
-                className="flex items-center text-slate-500 hover:text-cyan-600 transition duration-200 text-xs font-medium"
+                className="flex items-center text-gray-400 hover:text-gray-300 transition duration-200 text-xs"
               >
-                <Shield size={14} className="mr-1.5" />
-                <span>Admin Panel</span>
+                <Shield size={12} className="mr-1" />
+                <span>Admin</span>
               </button>
             ) : (
-              <button
+              <button 
                 onClick={() => openModal('adminLogin')}
-                className="flex items-center text-slate-500 hover:text-cyan-600 transition duration-200 text-xs font-medium"
+                className="flex items-center text-gray-400 hover:text-gray-300 transition duration-200 text-xs"
               >
-                <Shield size={14} className="mr-1.5" />
+                <Shield size={12} className="mr-1" />
                 <span>Admin</span>
               </button>
             )}
           </div>
-
-          <p className="text-sm text-slate-600">
-            © {new Date().getFullYear()} Word
-            <span className="mx-2 text-slate-400">·</span>
+          
+          <p className="text-sm">
+            © {new Date().getFullYear()} Word{' '}
             <button
               onClick={() => openModal('terms')}
-              className="text-cyan-600 hover:text-cyan-700 transition duration-200 font-medium"
+              className="text-green-300 hover:underline transition duration-200"
             >
               Terms of Service
             </button>
           </p>
-
-          <div className="text-xs text-slate-500 font-medium">Caucasus RideShare Network</div>
+          
+          <div className="w-16"></div> {/* Spacer for balance */}
         </div>
       </div>
     </footer>

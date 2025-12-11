@@ -20,39 +20,36 @@ export const RideSearch: React.FC<RideSearchProps> = ({
   };
 
   return (
-    <section className="bg-white rounded-2xl shadow-md p-6 md:p-8 transition-all duration-300 hover:shadow-lg border border-slate-100">
-      <div className="flex flex-col space-y-4 md:flex-row md:items-end md:space-y-0 md:space-x-4">
+    <section className="bg-white rounded-xl shadow-sm p-4 md:p-6 transition-all duration-300 hover:shadow-md">
+      <div className="flex flex-col space-y-3 md:flex-row md:items-center md:space-y-0 md:space-x-4">
         <div className="flex-1 w-full">
-          <label className="block text-xs font-semibold text-slate-600 mb-2">From</label>
           <CityAutocomplete
             name="from"
-            placeholder="e.g., Grozny"
-            className="w-full px-4 py-3 text-sm border border-slate-200 rounded-xl focus:ring-2 focus:ring-cyan-400 focus:border-transparent transition duration-200 bg-slate-50 hover:bg-white"
+            placeholder="From (e.g., Grozny)"
+            className="w-full p-2.5 md:p-3 text-sm md:text-base border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-400 focus:border-transparent transition duration-200"
             value={searchParams.from}
             onChange={handleChange}
           />
         </div>
 
         <div className="flex-1 w-full">
-          <label className="block text-xs font-semibold text-slate-600 mb-2">To</label>
           <CityAutocomplete
             name="to"
-            placeholder="e.g., Mecca"
-            className="w-full px-4 py-3 text-sm border border-slate-200 rounded-xl focus:ring-2 focus:ring-cyan-400 focus:border-transparent transition duration-200 bg-slate-50 hover:bg-white"
+            placeholder="To (e.g., Mecca)"
+            className="w-full p-2.5 md:p-3 text-sm md:text-base border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-400 focus:border-transparent transition duration-200"
             value={searchParams.to}
             onChange={handleChange}
           />
         </div>
 
-        <div className="w-full md:w-32 relative">
-          <label className="block text-xs font-semibold text-slate-600 mb-2">Seats</label>
+        <div className="w-full md:w-36 relative">
           <select
             name="seats"
-            className="w-full px-4 py-3 pr-8 text-sm border border-slate-200 rounded-xl focus:ring-2 focus:ring-cyan-400 focus:border-transparent transition duration-200 appearance-none bg-slate-50 hover:bg-white"
+            className="w-full p-2.5 md:p-3 pl-8 md:pl-9 pr-8 text-sm md:text-base border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-400 focus:border-transparent transition duration-200 appearance-none bg-white"
             value={searchParams.seats}
             onChange={handleChange}
           >
-            <option value="">Any</option>
+            <option value="">Seats</option>
             <option value="1">1 Seat</option>
             <option value="2">2 Seats</option>
             <option value="3">3 Seats</option>
@@ -62,25 +59,25 @@ export const RideSearch: React.FC<RideSearchProps> = ({
             <option value="7">7 Seats</option>
             <option value="8">8 Seats</option>
           </select>
-          <Users size={16} className="absolute left-4 top-9 text-slate-400 pointer-events-none" />
-          <ChevronDown size={16} className="absolute right-3 top-9 text-slate-400 pointer-events-none" />
+          <Users size={16} className="absolute left-2.5 md:left-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none" />
+          <ChevronDown size={16} className="absolute right-2.5 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none" />
         </div>
 
-        <div className="w-full md:w-32 relative">
-          <label className="block text-xs font-semibold text-slate-600 mb-2">Date</label>
+        <div className="w-full md:w-36 relative">
           <input
             type="date"
             name="date"
-            className="w-full px-4 py-3 text-sm border border-slate-200 rounded-xl focus:ring-2 focus:ring-cyan-400 focus:border-transparent transition duration-200 date-input-custom bg-slate-50 hover:bg-white"
+            placeholder="Datum"
+            className="w-full p-2.5 md:p-3 text-sm md:text-base border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-400 focus:border-transparent transition duration-200 date-input-custom"
             value={searchParams.date}
             onChange={handleChange}
           />
         </div>
 
-        <div className="w-full md:w-auto md:pt-6">
+        <div className="w-full md:w-auto">
           <button
             onClick={() => onSearch(searchParams)}
-            className="w-full md:w-auto inline-flex items-center justify-center bg-cyan-600 text-white px-8 py-3 text-sm font-semibold rounded-xl hover:bg-cyan-700 transition duration-200 shadow-md hover:shadow-lg"
+            className="w-full md:w-auto inline-flex items-center justify-center bg-green-600 text-white px-5 md:px-6 py-2.5 md:py-3 text-sm md:text-base rounded-xl hover:bg-green-700 transition duration-200 shadow-sm hover:shadow-md"
           >
             <Search size={16} className="mr-2" />
             <span>Search</span>
