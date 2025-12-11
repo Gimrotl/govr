@@ -23,6 +23,7 @@ export const mockRides: Ride[] = [
       'https://images.pexels.com/photos/1149137/pexels-photo-1149137.jpeg',
       'https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg'
     ],
+    stopovers: ['Hamburg', 'Amsterdam', 'Brussels'],
     reviews: [
       {
         id: 1,
@@ -122,6 +123,7 @@ export const mockRides: Ride[] = [
       'https://images.pexels.com/photos/1149137/pexels-photo-1149137.jpeg',
       'https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg'
     ],
+    stopovers: ['Görlitzer Park', 'Warschauer Straße'],
     reviews: [
       {
         id: 1,
@@ -153,6 +155,7 @@ export const mockRides: Ride[] = [
       'https://images.pexels.com/photos/1149137/pexels-photo-1149137.jpeg',
       'https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg'
     ],
+    stopovers: ['Magdeburg', 'Hannover', 'Dortmund'],
     reviews: [
       {
         id: 1,
