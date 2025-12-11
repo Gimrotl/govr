@@ -32,6 +32,10 @@ export const MessagesModal: React.FC = () => {
     ? messages.filter(m => (m.sent && m.to === selectedContact) || (!m.sent && m.from === selectedContact))
     : [];
 
+  const getUnreadCount = (contact: string) => {
+    return messages.filter(m => !m.sent && m.from === contact && !m.read).length;
+  };
+
   const handleSendMessage = (e?: React.FormEvent) => {
     e?.preventDefault();
     
@@ -146,27 +150,51 @@ export const MessagesModal: React.FC = () => {
             </button>
           </div>
           <div className="overflow-y-auto h-[calc(100%-64px)]">
-            {contacts.map((contact) => (
-              <button
-                key={contact}
-                onClick={() => {
-                  setSelectedContact(contact);
-                  setShowContacts(false); // Hide contacts on mobile when selecting
-                }}
-                className={`w-full p-4 text-left hover:bg-gray-50 transition-colors ${
-                  selectedContact === contact ? 'bg-gray-100' : ''
-                }`}
-              >
-                <div className="flex items-center">
-                  <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center mr-3">
-                    <span className="font-semibold text-gray-600">
-                      {contact?.charAt(0).toUpperCase()}
-                    </span>
+            {contacts.map((contact) => {
+              const unreadForContact = getUnreadCount(contact);
+              const hasUnread = unreadForContact > 0;
+
+              return (
+                <button
+                  key={contact}
+                  onClick={() => {
+                    setSelectedContact(contact);
+                    setShowContacts(false); // Hide contacts on mobile when selecting
+                  }}
+                  className={`w-full p-4 text-left transition-colors ${
+                    selectedContact === contact
+                      ? hasUnread
+                        ? 'bg-red-100 border-l-4 border-red-500'
+                        : 'bg-gray-100'
+                      : hasUnread
+                      ? 'bg-red-50 hover:bg-red-100 border-l-4 border-red-400'
+                      : 'hover:bg-gray-50'
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center">
+                      <div className={`w-8 h-8 rounded-full flex items-center justify-center mr-3 ${
+                        hasUnread ? 'bg-red-200' : 'bg-gray-200'
+                      }`}>
+                        <span className={`font-semibold ${
+                          hasUnread ? 'text-red-700' : 'text-gray-600'
+                        }`}>
+                          {contact?.charAt(0).toUpperCase()}
+                        </span>
+                      </div>
+                      <span className={`font-medium ${
+                        hasUnread ? 'text-red-700' : ''
+                      }`}>{contact}</span>
+                    </div>
+                    {hasUnread && (
+                      <span className="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                        {unreadForContact}
+                      </span>
+                    )}
                   </div>
-                  <span className="font-medium">{contact}</span>
-                </div>
-              </button>
-            ))}
+                </button>
+              );
+            })}
           </div>
         </div>
 
