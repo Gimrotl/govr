@@ -30,7 +30,7 @@ export const MyRidesModal: React.FC = () => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 animate-fadeIn">
-      <div className="bg-white rounded-2xl shadow-2xl max-w-5xl w-full max-h-[85vh] animate-scaleIn overflow-hidden">
+      <div className="bg-white rounded-2xl shadow-2xl max-w-5xl w-full animate-scaleIn overflow-hidden">
         <div className="bg-gradient-to-r from-blue-600 to-blue-700 p-6">
           <div className="flex justify-between items-center">
             <h2 className="text-2xl font-bold text-white">Meine Fahrten & Bestellungen</h2>
@@ -78,7 +78,7 @@ export const MyRidesModal: React.FC = () => {
           </div>
         </div>
 
-        <div className="p-6 overflow-y-auto" style={{ maxHeight: 'calc(85vh - 180px)' }}>
+        <div className="p-6 overflow-y-auto h-[500px]">
           {activeTab === 'rides' ? (
             <div>
               {myRides.length === 0 ? (
