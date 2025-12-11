@@ -20,29 +20,29 @@ export const RideSearch: React.FC<RideSearchProps> = ({
   };
 
   return (
-    <section className="bg-white rounded-lg shadow-md p-6 transition-all duration-300 hover:shadow-lg">
-      <div className="flex flex-col space-y-4 md:flex-row md:items-center md:space-y-0 md:space-x-4">
+    <section className="bg-white rounded-xl shadow-sm p-4 md:p-6 transition-all duration-300 hover:shadow-md">
+      <div className="flex flex-col space-y-3 md:flex-row md:items-center md:space-y-0 md:space-x-4">
         <div className="flex-1 w-full">
           <CityAutocomplete
             name="from"
             placeholder="From (e.g., Grozny)"
-            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition duration-200"
+            className="w-full p-2.5 md:p-3 text-sm md:text-base border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-400 focus:border-transparent transition duration-200"
             value={searchParams.from}
             onChange={handleChange}
           />
         </div>
-        
+
         <div className="flex-1 w-full">
           <CityAutocomplete
             name="to"
             placeholder="To (e.g., Mecca)"
-            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition duration-200"
+            className="w-full p-2.5 md:p-3 text-sm md:text-base border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-400 focus:border-transparent transition duration-200"
             value={searchParams.to}
             onChange={handleChange}
           />
         </div>
 
-        <div className="flex space-x-4 md:space-x-4">
+        <div className="flex space-x-3 md:space-x-4">
           <div className="flex-1 md:w-36 relative">
             <input
               type="number"
@@ -50,18 +50,18 @@ export const RideSearch: React.FC<RideSearchProps> = ({
               min="1"
               max="8"
               placeholder="Seats"
-              className="w-full p-3 pl-9 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition duration-200"
+              className="w-full p-2.5 md:p-3 pl-8 md:pl-9 text-sm md:text-base border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-400 focus:border-transparent transition duration-200"
               value={searchParams.seats}
               onChange={handleChange}
             />
-            <Users size={18} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+            <Users size={16} className="absolute left-2.5 md:left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
           </div>
 
           <div className="flex-1 md:w-36 relative">
             <input
               type="date"
               name="date"
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition duration-200"
+              className="w-full p-2.5 md:p-3 text-sm md:text-base border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-400 focus:border-transparent transition duration-200"
               value={searchParams.date}
               onChange={handleChange}
             />
@@ -71,9 +71,9 @@ export const RideSearch: React.FC<RideSearchProps> = ({
         <div className="w-full md:w-auto">
           <button
             onClick={() => onSearch(searchParams)}
-            className="w-full md:w-auto inline-flex items-center justify-center bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition duration-200 shadow-sm"
+            className="w-full md:w-auto inline-flex items-center justify-center bg-green-600 text-white px-5 md:px-6 py-2.5 md:py-3 text-sm md:text-base rounded-xl hover:bg-green-700 transition duration-200 shadow-sm hover:shadow-md"
           >
-            <Search size={18} className="mr-2" />
+            <Search size={16} className="mr-2" />
             <span>Search</span>
           </button>
         </div>
