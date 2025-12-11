@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { X, Send, MessageCircle, Users } from 'lucide-react';
+import { X, Send, MessageCircle } from 'lucide-react';
 import { useModals } from '../../hooks/useModals';
 import { useChat } from '../../hooks/useChat';
 import { useAuth } from '../../hooks/useAuth';
@@ -103,7 +103,7 @@ export const ChatModal: React.FC = () => {
   
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-40 p-4 animate-fadeIn">
-      <div className="bg-white rounded-lg shadow-xl w-full max-w-4xl h-[600px] md:h-[600px] h-[90vh] flex animate-scaleIn">
+      <div className="bg-white rounded-lg shadow-xl w-full max-w-4xl h-[600px] md:h-[600px] h-[90vh] flex flex-col animate-scaleIn">
         {/* Chat Header */}
         <div className="flex-1 flex flex-col">
           <div className="p-3 md:p-4 border-b border-gray-200 flex justify-between items-center bg-green-600 text-white rounded-t-lg">
@@ -204,52 +204,6 @@ export const ChatModal: React.FC = () => {
               </button>
             </div>
           </form>
-        </div>
-        
-        {/* Online Users Sidebar */}
-        <div className="w-48 md:w-64 border-l border-gray-200 bg-gray-50">
-          <div className="p-2 md:p-4 border-b border-gray-200">
-            <div className="flex items-center">
-              <Users size={16} className="mr-1 md:mr-2 text-green-600" />
-              <h3 className="font-semibold text-gray-800 text-sm md:text-base">Online</h3>
-            </div>
-          </div>
-          <div className="p-2 md:p-4">
-            <div className="space-y-2 md:space-y-3">
-              {/* Extract unique users from messages */}
-              {Array.from(new Set(messages.map(m => m.user))).map((user, index) => (
-                <button
-                  key={index}
-                  onClick={() => handleUserClick(user)}
-                  className="w-full flex items-center hover:bg-gray-100 p-1 md:p-2 rounded-lg transition-colors"
-                >
-                  <div className={`w-5 h-5 md:w-6 md:h-6 ${getUserColor(user)} rounded-full flex items-center justify-center mr-1 md:mr-2 transition-colors`}>
-                    <span className="text-white font-bold text-xs md:text-xs">
-                      {user.charAt(0).toUpperCase()}
-                    </span>
-                  </div>
-                  <span className="text-xs md:text-sm text-gray-700 hover:text-green-600 transition-colors truncate">{user}</span>
-                  <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-green-400 rounded-full ml-auto flex-shrink-0"></div>
-                </button>
-              ))}
-              {isLoggedIn && (
-                <button
-                  onClick={() => handleUserClick(userEmail?.split('@')[0] || 'Sie')}
-                  className="w-full flex items-center hover:bg-gray-100 p-1 md:p-2 rounded-lg transition-colors"
-                >
-                  <div className={`w-5 h-5 md:w-6 md:h-6 ${getUserColor(userEmail?.split('@')[0] || 'Sie')} rounded-full flex items-center justify-center mr-1 md:mr-2`}>
-                    <span className="text-white font-bold text-xs md:text-xs">
-                      {(userEmail?.split('@')[0] || 'Sie').charAt(0).toUpperCase()}
-                    </span>
-                  </div>
-                  <span className="text-xs md:text-sm text-gray-700 font-medium hover:text-blue-600 transition-colors truncate">
-                    {userEmail?.split('@')[0] || 'Sie'} (Sie)
-                  </span>
-                  <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-green-400 rounded-full ml-auto flex-shrink-0"></div>
-                </button>
-              )}
-            </div>
-          </div>
         </div>
       </div>
     </div>
