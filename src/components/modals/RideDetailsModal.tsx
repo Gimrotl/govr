@@ -186,13 +186,6 @@ export const RideDetailsModal: React.FC = () => {
             {/* Information Section */}
             <div className="mb-6">
               <h3 className="text-base font-medium text-gray-800 mb-3">Information</h3>
-              {(selectedRide.carModel || selectedRide.carYear) && (
-                <div className="mb-2 text-xs text-gray-500">
-                  {selectedRide.carModel && <span>{selectedRide.carModel}</span>}
-                  {selectedRide.carModel && selectedRide.carYear && <span> • </span>}
-                  {selectedRide.carYear && <span>{selectedRide.carYear}</span>}
-                </div>
-              )}
               <div className="bg-gray-100 p-6 rounded-lg min-h-[120px]">
                 <p className="text-sm md:text-base text-gray-700">{selectedRide.information || 'Keine zusätzlichen Informationen verfügbar.'}</p>
               </div>
