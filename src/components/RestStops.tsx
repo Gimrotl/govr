@@ -347,7 +347,7 @@ export const RestStops: React.FC = () => {
 
   const RestStopCard = ({ stop }: { stop: RestStop }) => (
     <div
-      className="flex-shrink-0 w-96 bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer group"
+      className="flex-shrink-0 w-96 bg-gray-100 rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer group border-2 border-gray-200"
       onClick={() => handleDetailsClick(stop)}
     >
       <div className="relative h-48 overflow-hidden">
@@ -441,8 +441,8 @@ export const RestStops: React.FC = () => {
     <section className="mt-20 mb-20">
       <div className="flex items-start justify-between mb-10">
         <div className="flex-1">
-          <h2 className="text-4xl font-bold text-gray-900 mb-3">{title}</h2>
-          <p className="text-gray-600 text-lg max-w-2xl leading-relaxed">{description}</p>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">{title}</h2>
+          <p className="text-gray-600 text-base max-w-2xl leading-relaxed">{description}</p>
         </div>
         {isAdmin && (
           <button
