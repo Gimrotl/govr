@@ -183,8 +183,8 @@ export const RestStops: React.FC = () => {
   const scrollToIndex = (index: number) => {
     if (scrollContainerRef.current) {
       setIsScrolling(true);
-      const cardWidth = 380;
-      const gap = 20;
+      const cardWidth = 312;
+      const gap = 24;
       const scrollPosition = index * (cardWidth + gap);
 
       scrollContainerRef.current.scrollTo({
@@ -199,8 +199,8 @@ export const RestStops: React.FC = () => {
   const scrollToIndex2 = (index: number) => {
     if (scrollContainerRef2.current) {
       setIsScrolling2(true);
-      const cardWidth = 380;
-      const gap = 20;
+      const cardWidth = 312;
+      const gap = 24;
       const scrollPosition = index * (cardWidth + gap);
 
       scrollContainerRef2.current.scrollTo({
@@ -215,8 +215,8 @@ export const RestStops: React.FC = () => {
   const scrollToIndex3 = (index: number) => {
     if (scrollContainerRef3.current) {
       setIsScrolling3(true);
-      const cardWidth = 380;
-      const gap = 20;
+      const cardWidth = 312;
+      const gap = 24;
       const scrollPosition = index * (cardWidth + gap);
 
       scrollContainerRef3.current.scrollTo({
@@ -231,8 +231,8 @@ export const RestStops: React.FC = () => {
   const handleScroll = () => {
     if (isScrolling || !scrollContainerRef.current) return;
     const container = scrollContainerRef.current;
-    const cardWidth = 380;
-    const gap = 20;
+    const cardWidth = 312;
+    const gap = 24;
     const scrollLeft = container.scrollLeft;
     const newIndex = Math.round(scrollLeft / (cardWidth + gap));
 
@@ -244,8 +244,8 @@ export const RestStops: React.FC = () => {
   const handleScroll2 = () => {
     if (isScrolling2 || !scrollContainerRef2.current) return;
     const container = scrollContainerRef2.current;
-    const cardWidth = 380;
-    const gap = 20;
+    const cardWidth = 312;
+    const gap = 24;
     const scrollLeft = container.scrollLeft;
     const newIndex = Math.round(scrollLeft / (cardWidth + gap));
 
@@ -257,8 +257,8 @@ export const RestStops: React.FC = () => {
   const handleScroll3 = () => {
     if (isScrolling3 || !scrollContainerRef3.current) return;
     const container = scrollContainerRef3.current;
-    const cardWidth = 380;
-    const gap = 20;
+    const cardWidth = 312;
+    const gap = 24;
     const scrollLeft = container.scrollLeft;
     const newIndex = Math.round(scrollLeft / (cardWidth + gap));
 
@@ -347,7 +347,7 @@ export const RestStops: React.FC = () => {
 
   const RestStopCard = ({ stop }: { stop: RestStop }) => (
     <div
-      className="flex-shrink-0 w-96 h-[500px] bg-gray-100 rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer group border-2 border-gray-200 flex flex-col"
+      className="flex-shrink-0 w-72 sm:w-80 md:w-96 h-[500px] bg-gray-100 rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer group border-2 border-gray-200 flex flex-col"
       onClick={() => handleDetailsClick(stop)}
     >
       <div className="relative h-48 overflow-hidden">
@@ -405,13 +405,13 @@ export const RestStops: React.FC = () => {
           ))}
         </div>
 
-        <div className="flex space-x-3 mt-auto">
+        <div className="flex flex-col space-y-2 mt-auto">
           <button
             onClick={(e) => {
               e.stopPropagation();
               handleNavigationClick(stop);
             }}
-            className="flex-1 bg-blue-600 text-white py-3 px-4 rounded-xl font-medium hover:bg-blue-700 transition duration-200 flex items-center justify-center"
+            className="w-full bg-blue-600 text-white py-3 px-4 rounded-xl font-medium hover:bg-blue-700 transition duration-200 flex items-center justify-center"
           >
             <Navigation size={18} className="mr-2" />
             Navigation
@@ -421,7 +421,7 @@ export const RestStops: React.FC = () => {
               e.stopPropagation();
               handleDetailsClick(stop);
             }}
-            className="px-6 py-3 border border-gray-300 text-gray-700 rounded-xl font-medium hover:bg-gray-50 transition duration-200"
+            className="w-full py-3 px-4 border border-gray-300 text-gray-700 rounded-xl font-medium hover:bg-gray-50 transition duration-200"
           >
             Details
           </button>
