@@ -14,6 +14,8 @@ export interface Ride {
   telegram: string;
   mobile: string;
   car: string;
+  carModel?: string;
+  carYear?: string;
   availableSeats: number;
   bookedSeats: number;
   carImage: string;
@@ -94,6 +96,8 @@ export interface UserProfile {
   carImages: string[];
   car?: string;
   carImage?: string;
+  carModel?: string;
+  carYear?: string;
   rating?: number;
   driverInfo?: string;
   userRides?: Ride[];
