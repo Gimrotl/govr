@@ -436,9 +436,10 @@ export const RestStops: React.FC = () => {
     currentIdx: number,
     goToPrev: () => void,
     goToNext: () => void,
-    scrollRef: React.RefObject<HTMLDivElement>
+    scrollRef: React.RefObject<HTMLDivElement>,
+    borderColor: string
   ) => (
-    <section className="mt-20 mb-20 bg-gray-100 py-12 px-6 rounded-3xl">
+    <section className={`mt-20 mb-20 bg-gray-100 py-12 px-6 rounded-3xl border-t-4 ${borderColor}`}>
       <div className="flex items-start justify-between mb-10">
         <div className="flex-1">
           <h2 className="text-2xl font-bold text-gray-900 mb-2">{title}</h2>
@@ -527,7 +528,8 @@ export const RestStops: React.FC = () => {
         currentIndex,
         goToPrevious,
         goToNext,
-        scrollContainerRef
+        scrollContainerRef,
+        'border-blue-500'
       )}
 
       {renderSection(
@@ -536,7 +538,8 @@ export const RestStops: React.FC = () => {
         currentIndex2,
         goToPrevious2,
         goToNext2,
-        scrollContainerRef2
+        scrollContainerRef2,
+        'border-green-500'
       )}
 
       {renderSection(
@@ -545,7 +548,8 @@ export const RestStops: React.FC = () => {
         currentIndex3,
         goToPrevious3,
         goToNext3,
-        scrollContainerRef3
+        scrollContainerRef3,
+        'border-orange-500'
       )}
 
       <RestStopDetailsModal
