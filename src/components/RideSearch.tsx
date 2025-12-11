@@ -1,5 +1,5 @@
 import React from 'react';
-import { Search, Users, Calendar } from 'lucide-react';
+import { Search, Users, Calendar, ChevronDown } from 'lucide-react';
 import { SearchParams } from '../types';
 import { CityAutocomplete } from './CityAutocomplete';
 
@@ -43,17 +43,24 @@ export const RideSearch: React.FC<RideSearchProps> = ({
         </div>
 
         <div className="w-full md:w-36 relative">
-          <input
-            type="number"
+          <select
             name="seats"
-            min="1"
-            max="8"
-            placeholder="Seats"
-            className="w-full p-2.5 md:p-3 pl-8 md:pl-9 text-sm md:text-base border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-400 focus:border-transparent transition duration-200"
+            className="w-full p-2.5 md:p-3 pl-8 md:pl-9 pr-8 text-sm md:text-base border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-400 focus:border-transparent transition duration-200 appearance-none bg-white"
             value={searchParams.seats}
             onChange={handleChange}
-          />
-          <Users size={16} className="absolute left-2.5 md:left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+          >
+            <option value="">Seats</option>
+            <option value="1">1 Seat</option>
+            <option value="2">2 Seats</option>
+            <option value="3">3 Seats</option>
+            <option value="4">4 Seats</option>
+            <option value="5">5 Seats</option>
+            <option value="6">6 Seats</option>
+            <option value="7">7 Seats</option>
+            <option value="8">8 Seats</option>
+          </select>
+          <Users size={16} className="absolute left-2.5 md:left-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none" />
+          <ChevronDown size={16} className="absolute right-2.5 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none" />
         </div>
 
         <div className="flex-1 w-full relative">
