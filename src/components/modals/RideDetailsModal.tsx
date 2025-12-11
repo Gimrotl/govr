@@ -247,7 +247,7 @@ export const RideDetailsModal: React.FC = () => {
             {/* Book ride button */}
             <button
               onClick={handleBookRide}
-              className="w-full bg-blue-600 text-white py-3 md:py-4 rounded-lg text-base md:text-lg font-semibold hover:bg-blue-700 transition duration-200 mb-4"
+              className="w-full bg-blue-600 text-white py-3 md:py-4 rounded-lg text-base md:text-lg font-semibold hover:bg-blue-700 transition duration-200 mb-2"
             >
               Jetzt buchen - {selectedRide.price}
             </button>
@@ -255,7 +255,7 @@ export const RideDetailsModal: React.FC = () => {
             {/* Car Images button */}
             <button
               onClick={handleShowCarImages}
-              className="w-full flex items-center justify-center bg-gray-600 text-white py-3 rounded-lg text-base md:text-lg font-medium hover:bg-gray-700 transition duration-200 mb-4"
+              className="w-full flex items-center justify-center bg-gray-600 text-white py-3 rounded-lg text-base md:text-lg font-medium hover:bg-gray-700 transition duration-200 mb-2"
             >
               <Car size={18} className="mr-2" />
               Autobilder
@@ -264,7 +264,7 @@ export const RideDetailsModal: React.FC = () => {
             {/* Contact button */}
             <button
               onClick={handleContactDriver}
-              className="w-full flex items-center justify-center bg-gray-200 text-gray-700 py-3 rounded-lg text-base md:text-lg font-medium hover:bg-gray-300 transition duration-200 mb-4 border border-gray-400"
+              className="w-full flex items-center justify-center bg-gray-200 text-gray-700 py-3 rounded-lg text-base md:text-lg font-medium hover:bg-gray-300 transition duration-200 mb-2 border border-gray-400"
             >
               <MessageCircle size={18} className="mr-2" />
               Kontaktieren
