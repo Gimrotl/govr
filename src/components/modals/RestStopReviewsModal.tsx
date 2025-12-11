@@ -238,175 +238,171 @@ export const RestStopReviewsModal: React.FC<RestStopReviewsModalProps> = ({ rest
                 </p>
               </div>
             ) : (
-              <div className="space-y-3 md:space-y-4">
+              <div className="space-y-3 md:space-y-6">
                 {reviews.map((review) => (
-                  <div key={review.id} className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-                    {/* Header with stars */}
-                    <div className="bg-gradient-to-r from-teal-50 to-blue-50 px-3 py-2 md:px-4 md:py-3 border-b border-gray-100">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-2">
-                          <div className="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br from-teal-500 to-blue-500 rounded-full flex items-center justify-center flex-shrink-0 shadow-sm">
-                            <span className="text-white font-bold text-sm md:text-base">
-                              {review.userName.charAt(0).toUpperCase()}
+                  <div key={review.id} className="bg-gray-50 rounded-xl p-3 md:p-4 border border-gray-200">
+                    <div className="flex items-start space-x-2 md:space-x-4">
+                      {/* User Avatar */}
+                      <div className="w-8 h-8 md:w-12 md:h-12 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
+                        <span className="text-white font-bold text-sm md:text-lg">
+                          {review.userName.charAt(0).toUpperCase()}
+                        </span>
+                      </div>
+
+                      {/* Review Content */}
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between mb-1 md:mb-2">
+                          <h4 className="font-semibold text-gray-800 text-sm md:text-lg truncate">
+                            {review.userName}
+                          </h4>
+                          <div className="flex items-center flex-shrink-0 ml-2">
+                            {[1, 2, 3, 4, 5].map((star) => (
+                              <Star
+                                key={star}
+                                size={14}
+                                className={`md:w-4 md:h-4 ${
+                                  star <= review.rating
+                                    ? 'text-yellow-500 fill-current'
+                                    : 'text-gray-300'
+                                }`}
+                              />
+                            ))}
+                            <span className="ml-1 md:ml-2 font-bold text-gray-700 text-xs md:text-base">
+                              {review.rating}.0
                             </span>
                           </div>
-                          <div>
-                            <h4 className="font-semibold text-gray-900 text-sm md:text-base">
-                              {review.userName}
-                            </h4>
-                            <span className="text-gray-500 text-xs">{review.timestamp}</span>
-                          </div>
                         </div>
-                        <div className="flex items-center bg-white rounded-full px-2 py-1 shadow-sm">
-                          {[1, 2, 3, 4, 5].map((star) => (
-                            <Star
-                              key={star}
-                              className={`w-3 h-3 md:w-4 md:h-4 ${
-                                star <= review.rating
-                                  ? 'text-amber-400 fill-current'
-                                  : 'text-gray-300'
-                              }`}
-                            />
-                          ))}
+
+                        <p className="text-gray-700 leading-relaxed mb-2 md:mb-3 text-xs md:text-base break-words">
+                          {review.comment}
+                        </p>
+
+                        {/* Action buttons */}
+                        <div className="flex items-center flex-wrap gap-2 md:gap-4 text-xs md:text-sm">
+                          <button
+                            onClick={() => handleLike(review.id)}
+                            className={`flex items-center space-x-1 transition-colors ${
+                              review.userLiked ? 'text-blue-600' : 'text-gray-500 hover:text-blue-600'
+                            }`}
+                          >
+                            <ThumbsUp className="w-3 h-3 md:w-4 md:h-4" />
+                            <span>{review.likes}</span>
+                          </button>
+
+                          <button
+                            onClick={() => handleDislike(review.id)}
+                            className={`flex items-center space-x-1 transition-colors ${
+                              review.userDisliked ? 'text-red-600' : 'text-gray-500 hover:text-red-600'
+                            }`}
+                          >
+                            <ThumbsDown className="w-3 h-3 md:w-4 md:h-4" />
+                            <span>{review.dislikes}</span>
+                          </button>
+
+                          <button
+                            onClick={() => setReplyingTo(review.id)}
+                            className="flex items-center space-x-1 text-gray-500 hover:text-green-600 transition-colors"
+                          >
+                            <MessageCircle className="w-3 h-3 md:w-4 md:h-4" />
+                            <span className="hidden sm:inline">Antworten</span>
+                          </button>
+
+                          <span className="text-gray-400 text-[10px] md:text-xs">{review.timestamp}</span>
                         </div>
-                      </div>
-                    </div>
-
-                    {/* Review Content */}
-                    <div className="px-3 py-2 md:px-4 md:py-3">
-                      <p className="text-gray-700 leading-relaxed text-sm md:text-base break-words mb-3">
-                        {review.comment}
-                      </p>
-
-                      {/* Action buttons */}
-                      <div className="flex items-center gap-4 text-sm">
-                        <button
-                          onClick={() => handleLike(review.id)}
-                          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all ${
-                            review.userLiked
-                              ? 'bg-blue-50 text-blue-600'
-                              : 'bg-gray-50 text-gray-600 hover:bg-blue-50 hover:text-blue-600'
-                          }`}
-                        >
-                          <ThumbsUp className="w-3.5 h-3.5 md:w-4 md:h-4" />
-                          <span className="font-medium">{review.likes}</span>
-                        </button>
-
-                        <button
-                          onClick={() => handleDislike(review.id)}
-                          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all ${
-                            review.userDisliked
-                              ? 'bg-red-50 text-red-600'
-                              : 'bg-gray-50 text-gray-600 hover:bg-red-50 hover:text-red-600'
-                          }`}
-                        >
-                          <ThumbsDown className="w-3.5 h-3.5 md:w-4 md:h-4" />
-                          <span className="font-medium">{review.dislikes}</span>
-                        </button>
-
-                        <button
-                          onClick={() => setReplyingTo(review.id)}
-                          className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gray-50 text-gray-600 hover:bg-teal-50 hover:text-teal-600 transition-all"
-                        >
-                          <MessageCircle className="w-3.5 h-3.5 md:w-4 md:h-4" />
-                          <span className="font-medium hidden sm:inline">Antworten</span>
-                        </button>
-                      </div>
                         
-                      {/* Replies */}
-                      {review.replies.length > 0 && (
-                        <div className="mt-3 md:mt-4 space-y-2 border-l-3 border-teal-200 pl-3 md:pl-4">
-                          {review.replies.map((reply) => (
-                            <div key={reply.id} className="bg-gradient-to-r from-gray-50 to-white rounded-lg p-2.5 md:p-3 border border-gray-100">
-                              <div className="flex items-start justify-between mb-1.5">
-                                <div className="flex items-center gap-2 min-w-0">
-                                  <div className="w-6 h-6 md:w-7 md:h-7 bg-gradient-to-br from-teal-400 to-blue-400 rounded-full flex items-center justify-center flex-shrink-0">
-                                    <span className="text-white font-bold text-xs">
-                                      {reply.userName.charAt(0).toUpperCase()}
-                                    </span>
+                        {/* Replies */}
+                        {review.replies.length > 0 && (
+                          <div className="mt-2 md:mt-4 space-y-2 md:space-y-3 border-l-2 border-gray-200 pl-2 md:pl-4">
+                            {review.replies.map((reply) => (
+                              <div key={reply.id} className="bg-white rounded-lg p-2 md:p-3 border border-gray-100">
+                                <div className="flex items-start justify-between mb-1 md:mb-2">
+                                  <div className="flex items-center min-w-0">
+                                    <div className="w-6 h-6 md:w-8 md:h-8 bg-green-500 rounded-full flex items-center justify-center mr-1.5 md:mr-2 flex-shrink-0">
+                                      <span className="text-white font-bold text-xs md:text-sm">
+                                        {reply.userName.charAt(0).toUpperCase()}
+                                      </span>
+                                    </div>
+                                    <div className="min-w-0">
+                                      <p className="font-medium text-gray-800 text-xs md:text-sm truncate">{reply.userName}</p>
+                                      <span className="text-[10px] md:text-xs text-gray-500">{reply.timestamp}</span>
+                                    </div>
                                   </div>
-                                  <div className="min-w-0">
-                                    <p className="font-medium text-gray-900 text-sm truncate">{reply.userName}</p>
-                                    <span className="text-xs text-gray-500">{reply.timestamp}</span>
-                                  </div>
-                                </div>
-                                {reply.userId === userEmail && (
-                                  <button
-                                    onClick={() => {
-                                      setEditingReply(reply.id);
-                                      setEditReplyText(reply.comment);
-                                    }}
-                                    className="text-gray-400 hover:text-teal-600 transition-colors flex-shrink-0"
-                                  >
-                                    <Edit2 className="w-3.5 h-3.5" />
-                                  </button>
-                                )}
-                              </div>
-
-                              {editingReply === reply.id ? (
-                                <div className="space-y-2">
-                                  <textarea
-                                    value={editReplyText}
-                                    onChange={(e) => setEditReplyText(e.target.value)}
-                                    className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent resize-none h-16 text-base"
-                                    style={{ fontSize: '16px' }}
-                                  />
-                                  <div className="flex gap-2">
-                                    <button
-                                      onClick={() => handleEditReply(reply.id)}
-                                      className="bg-teal-600 text-white px-3 py-1.5 rounded-lg hover:bg-teal-700 transition text-sm font-medium"
-                                    >
-                                      Speichern
-                                    </button>
+                                  {reply.userId === userEmail && (
                                     <button
                                       onClick={() => {
-                                        setEditingReply(null);
-                                        setEditReplyText('');
+                                        setEditingReply(reply.id);
+                                        setEditReplyText(reply.comment);
                                       }}
-                                      className="bg-gray-500 text-white px-3 py-1.5 rounded-lg hover:bg-gray-600 transition text-sm font-medium"
+                                      className="text-gray-400 hover:text-blue-600 transition-colors flex-shrink-0 ml-2"
                                     >
-                                      Abbrechen
+                                      <Edit2 className="w-3 h-3 md:w-3.5 md:h-3.5" />
                                     </button>
-                                  </div>
+                                  )}
                                 </div>
-                              ) : (
-                                <p className="text-gray-700 text-sm leading-relaxed break-words">{reply.comment}</p>
-                              )}
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                        
-                      {/* Reply form */}
-                      {replyingTo === review.id && (
-                        <div className="mt-3 md:mt-4 space-y-2 border-l-3 border-teal-200 pl-3 md:pl-4 bg-teal-50/30 rounded-r-lg py-3">
-                          <textarea
-                            value={replyText}
-                            onChange={(e) => setReplyText(e.target.value)}
-                            placeholder="Ihre Antwort..."
-                            className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent resize-none h-20 text-base"
-                            style={{ fontSize: '16px' }}
-                          />
-                          <div className="flex gap-2">
-                            <button
-                              onClick={() => handleReply(review.id)}
-                              className="bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-700 transition flex items-center gap-2 text-sm font-medium"
-                            >
-                              <Send className="w-4 h-4" />
-                              Antworten
-                            </button>
-                            <button
-                              onClick={() => {
-                                setReplyingTo(null);
-                                setReplyText('');
-                              }}
-                              className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition text-sm font-medium"
-                            >
-                              Abbrechen
-                            </button>
+                                
+                                {editingReply === reply.id ? (
+                                  <div className="space-y-1.5 md:space-y-2">
+                                    <textarea
+                                      value={editReplyText}
+                                      onChange={(e) => setEditReplyText(e.target.value)}
+                                      className="w-full p-1.5 md:p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none h-12 md:h-16 text-xs md:text-sm"
+                                    />
+                                    <div className="flex space-x-1.5 md:space-x-2">
+                                      <button
+                                        onClick={() => handleEditReply(reply.id)}
+                                        className="bg-blue-600 text-white px-2 md:px-3 py-1 rounded-md hover:bg-blue-700 transition duration-200 text-xs md:text-sm"
+                                      >
+                                        Speichern
+                                      </button>
+                                      <button
+                                        onClick={() => {
+                                          setEditingReply(null);
+                                          setEditReplyText('');
+                                        }}
+                                        className="bg-gray-500 text-white px-2 md:px-3 py-1 rounded-md hover:bg-gray-600 transition duration-200 text-xs md:text-sm"
+                                      >
+                                        Abbrechen
+                                      </button>
+                                    </div>
+                                  </div>
+                                ) : (
+                                  <p className="text-gray-700 text-xs md:text-sm break-words">{reply.comment}</p>
+                                )}
+                              </div>
+                            ))}
                           </div>
-                        </div>
-                      )}
+                        )}
+                        
+                        {/* Reply form */}
+                        {replyingTo === review.id && (
+                          <div className="mt-2 md:mt-4 space-y-2 md:space-y-3 border-l-2 border-green-200 pl-2 md:pl-4">
+                            <textarea
+                              value={replyText}
+                              onChange={(e) => setReplyText(e.target.value)}
+                              placeholder="Ihre Antwort..."
+                              className="w-full p-2 md:p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none h-16 md:h-20 text-xs md:text-sm"
+                            />
+                            <div className="flex space-x-1.5 md:space-x-2">
+                              <button
+                                onClick={() => handleReply(review.id)}
+                                className="bg-green-600 text-white px-2 md:px-4 py-1.5 md:py-2 rounded-lg hover:bg-green-700 transition duration-200 flex items-center text-xs md:text-sm"
+                              >
+                                <Send className="w-3 h-3 md:w-3.5 md:h-3.5 mr-1 md:mr-2" />
+                                Antworten
+                              </button>
+                              <button
+                                onClick={() => {
+                                  setReplyingTo(null);
+                                  setReplyText('');
+                                }}
+                                className="bg-gray-500 text-white px-2 md:px-4 py-1.5 md:py-2 rounded-lg hover:bg-gray-600 transition duration-200 text-xs md:text-sm"
+                              >
+                                Abbrechen
+                              </button>
+                            </div>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -415,45 +411,49 @@ export const RestStopReviewsModal: React.FC<RestStopReviewsModalProps> = ({ rest
           </div>
 
           {/* Review Form at Bottom */}
-          <div className="border-t border-gray-200 bg-gradient-to-r from-teal-50 to-blue-50 p-3 md:p-4">
-            <h3 className="text-base font-semibold text-gray-900 mb-2">Bewertung abgeben</h3>
+          <div className="border-t border-gray-200 bg-gray-50 p-2 md:p-3">
+            <h3 className="text-sm md:text-base font-semibold text-gray-800 mb-1.5 md:mb-2">Bewertung abgeben</h3>
 
             {isLoggedIn ? (
-              <div className="space-y-2.5">
-                <div className="flex items-center gap-1.5">
-                  <span className="text-sm text-gray-700 font-medium">Bewerten:</span>
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <button
-                      key={star}
-                      onClick={() => setNewReview({ ...newReview, rating: star })}
-                      className="transition-transform hover:scale-110"
-                    >
-                      <Star
-                        className={`w-6 h-6 ${
-                          star <= newReview.rating
-                            ? 'text-amber-400 fill-current'
-                            : 'text-gray-300'
-                        } hover:text-amber-300`}
-                      />
-                    </button>
-                  ))}
-                </div>
+              <div className="space-y-1.5 md:space-y-2">
+                <div className="flex flex-col md:flex-row md:items-center md:space-x-4 space-y-1.5 md:space-y-0">
+                  <div>
+                    <div className="flex space-x-0.5 md:space-x-1">
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <button
+                          key={star}
+                          onClick={() => setNewReview({ ...newReview, rating: star })}
+                          className="transition-colors"
+                        >
+                          <Star
+                            className={`w-4 h-4 md:w-[18px] md:h-[18px] ${
+                              star <= newReview.rating
+                                ? 'text-yellow-500 fill-current'
+                                : 'text-gray-300'
+                            } hover:text-yellow-400`}
+                          />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
 
-                <div className="flex gap-2">
-                  <textarea
-                    value={newReview.comment}
-                    onChange={(e) => setNewReview({ ...newReview, comment: e.target.value })}
-                    placeholder="Teilen Sie Ihre Erfahrung mit..."
-                    className="flex-1 p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent resize-none h-10 text-base bg-white"
-                    style={{ fontSize: '16px' }}
-                  />
-                  <button
-                    onClick={handleSubmitReview}
-                    className="bg-gradient-to-r from-teal-600 to-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:from-teal-700 hover:to-blue-700 transition-all flex items-center justify-center gap-1.5 text-sm shadow-sm whitespace-nowrap"
-                  >
-                    <Send className="w-4 h-4" />
-                    Senden
-                  </button>
+                  <div className="flex-1">
+                    <div className="flex space-x-1.5 md:space-x-2">
+                      <textarea
+                        value={newReview.comment}
+                        onChange={(e) => setNewReview({ ...newReview, comment: e.target.value })}
+                        placeholder="Teilen Sie Ihre Erfahrung mit..."
+                        className="flex-1 p-1.5 md:p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none h-8 text-[11px] md:text-xs"
+                      />
+                      <button
+                        onClick={handleSubmitReview}
+                        className="bg-blue-600 text-white px-2 md:px-3 py-1 rounded-lg font-medium hover:bg-blue-700 transition duration-200 flex items-center justify-center h-8 text-[11px] md:text-xs whitespace-nowrap"
+                      >
+                        <Send className="w-3 h-3 md:w-3 md:h-3 mr-0.5 md:mr-1" />
+                        Senden
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             ) : (
