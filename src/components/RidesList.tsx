@@ -85,7 +85,7 @@ export const RidesList: React.FC<RidesListProps> = ({ rides }) => {
               }`}
               style={{ marginLeft: '-12px' }}
             >
-              <ChevronLeft size={24} className={currentIndex === 0 ? 'text-gray-400' : 'text-gray-700'} />
+              <ChevronLeft size={24} className={currentIndex === 0 ? 'text-gray-400' : 'text-[#c51d34]'} />
             </button>
             
             {/* Right Arrow */}
@@ -99,7 +99,7 @@ export const RidesList: React.FC<RidesListProps> = ({ rides }) => {
               }`}
               style={{ marginRight: '-12px' }}
             >
-              <ChevronRight size={24} className={currentIndex >= rides.length - 1 ? 'text-gray-400' : 'text-gray-700'} />
+              <ChevronRight size={24} className={currentIndex >= rides.length - 1 ? 'text-gray-400' : 'text-[#c51d34]'} />
             </button>
             
             <div 

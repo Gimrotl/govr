@@ -466,7 +466,7 @@ export const RestStops: React.FC = () => {
           }`}
           style={{ marginLeft: '-20px' }}
         >
-          <ChevronLeft size={28} className={currentIdx === 0 ? 'text-gray-400' : 'text-gray-700'} />
+          <ChevronLeft size={28} className={currentIdx === 0 ? 'text-gray-400' : 'text-[#c51d34]'} />
         </button>
 
         <button
@@ -479,7 +479,7 @@ export const RestStops: React.FC = () => {
           }`}
           style={{ marginRight: '-20px' }}
         >
-          <ChevronRight size={28} className={currentIdx >= restStopsData.length - 1 ? 'text-gray-400' : 'text-gray-700'} />
+          <ChevronRight size={28} className={currentIdx >= restStopsData.length - 1 ? 'text-gray-400' : 'text-[#c51d34]'} />
         </button>
 
         <div
