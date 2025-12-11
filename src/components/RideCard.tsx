@@ -9,7 +9,7 @@ interface RideCardProps {
 }
 
 export const RideCard: React.FC<RideCardProps> = ({ ride }) => {
-  const { openRideDetails, openUserProfile, openModal } = useModals();
+  const { openRideDetails, openUserProfile, openUserReviews } = useModals();
 
   const availableSeats = ride.availableSeats - ride.bookedSeats;
 
@@ -50,8 +50,7 @@ export const RideCard: React.FC<RideCardProps> = ({ ride }) => {
       driverInfo: ride.driverInfo,
       reviews: ride.reviews
     };
-    openUserProfile(userProfile);
-    openModal('reviews');
+    openUserReviews(userProfile);
   };
   
   return (

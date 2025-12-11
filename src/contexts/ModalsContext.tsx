@@ -12,6 +12,7 @@ interface ModalsContextType {
   closeModal: (modal: ModalType) => void;
   openRideDetails: (ride: Ride) => void;
   openUserProfile: (user: UserProfile) => void;
+  openUserReviews: (user: UserProfile) => void;
   openRestStopEdit: (restStop: any) => void;
   isAnyModalOpen: boolean;
 }
@@ -45,6 +46,7 @@ export const ModalsContext = createContext<ModalsContextType>({
   closeModal: () => {},
   openRideDetails: () => {},
   openUserProfile: () => {},
+  openUserReviews: () => {},
   openRestStopEdit: () => {},
   isAnyModalOpen: false
 });
@@ -114,7 +116,12 @@ export const ModalsProvider: React.FC<ModalsProviderProps> = ({ children }) => {
     setSelectedUser(user);
     openModal('profile');
   };
-  
+
+  const openUserReviews = (user: UserProfile) => {
+    setSelectedUser(user);
+    openModal('reviews');
+  };
+
   const openRestStopEdit = (restStop: any) => {
     setSelectedRestStop(restStop);
     openModal('editRestStop');
@@ -133,6 +140,7 @@ export const ModalsProvider: React.FC<ModalsProviderProps> = ({ children }) => {
         closeModal,
         openRideDetails,
         openUserProfile,
+        openUserReviews,
         openRestStopEdit,
         isAnyModalOpen
       }}
