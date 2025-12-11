@@ -5,7 +5,7 @@ import { useMessages } from '../../hooks/useMessages';
 import { useDropzone } from 'react-dropzone';
 
 export const MessagesModal: React.FC = () => {
-  const { closeModal } = useModals();
+  const { closeModal, openUserProfile } = useModals();
   const { messages, sendMessage, markAsRead } = useMessages();
   const [newMessage, setNewMessage] = useState('');
   const [selectedContact, setSelectedContact] = useState<string | null>(null);
@@ -13,7 +13,7 @@ export const MessagesModal: React.FC = () => {
   const [replyingTo, setReplyingTo] = useState<number | null>(null);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [showContacts, setShowContacts] = useState(true);
-  
+
   const emojis = ['😀', '😂', '😍', '🤔', '👍', '👎', '❤️', '🔥', '💯', '🎉', '😢', '😡', '🤝', '🚗', '✈️', '🏠'];
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -26,14 +26,33 @@ export const MessagesModal: React.FC = () => {
     }
   });
 
-  const contacts = Array.from(new Set(messages.map(m => m.sent ? m.to : m.from).filter(Boolean)));
+  const contacts = Array.from(new Set(messages.map(m => m.sent ? m.to : m.from).filter(Boolean)))
+    .sort((a, b) => {
+      const aLastMessage = messages.find(m => (m.sent && m.to === a) || (!m.sent && m.from === a));
+      const bLastMessage = messages.find(m => (m.sent && m.to === b) || (!m.sent && m.from === b));
+      return (bLastMessage?.id || 0) - (aLastMessage?.id || 0);
+    });
 
   const filteredMessages = selectedContact
     ? messages.filter(m => (m.sent && m.to === selectedContact) || (!m.sent && m.from === selectedContact))
+        .sort((a, b) => b.id - a.id)
     : [];
 
   const getUnreadCount = (contact: string) => {
     return messages.filter(m => !m.sent && m.from === contact && !m.read).length;
+  };
+
+  const handleContactClick = (contact: string) => {
+    openUserProfile({
+      firstName: contact,
+      age: '30',
+      mobile: '+1234567890',
+      whatsapp: '+1234567890',
+      telegram: `@${contact}`,
+      instagram: `@${contact}`,
+      bio: '',
+      carImages: []
+    });
   };
 
   const handleSendMessage = (e?: React.FormEvent) => {
@@ -172,22 +191,36 @@ export const MessagesModal: React.FC = () => {
                   }`}
                 >
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center">
-                      <div className={`w-8 h-8 rounded-full flex items-center justify-center mr-3 ${
-                        hasUnread ? 'bg-red-200' : 'bg-gray-200'
-                      }`}>
+                    <div className="flex items-center flex-1 min-w-0">
+                      <div
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleContactClick(contact);
+                        }}
+                        className={`w-8 h-8 rounded-full flex items-center justify-center mr-3 cursor-pointer hover:ring-2 hover:ring-blue-400 transition-all ${
+                          hasUnread ? 'bg-red-200' : 'bg-gray-200'
+                        }`}
+                      >
                         <span className={`font-semibold ${
                           hasUnread ? 'text-red-700' : 'text-gray-600'
                         }`}>
                           {contact?.charAt(0).toUpperCase()}
                         </span>
                       </div>
-                      <span className={`font-medium ${
-                        hasUnread ? 'text-red-700' : ''
-                      }`}>{contact}</span>
+                      <span
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleContactClick(contact);
+                        }}
+                        className={`font-medium cursor-pointer hover:text-blue-600 transition-colors truncate ${
+                          hasUnread ? 'text-red-700' : ''
+                        }`}
+                      >
+                        {contact}
+                      </span>
                     </div>
                     {hasUnread && (
-                      <span className="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                      <span className="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full flex-shrink-0">
                         {unreadForContact}
                       </span>
                     )}
@@ -217,7 +250,7 @@ export const MessagesModal: React.FC = () => {
                 </button>
               </div>
 
-              <div className="flex-1 overflow-y-auto p-4 bg-gray-50">
+              <div className="flex-1 overflow-y-auto p-4 bg-gray-50 flex flex-col-reverse">
                 <div className="space-y-4">
                   {filteredMessages.map((message) => (
                     <div key={message.id} className="group">
