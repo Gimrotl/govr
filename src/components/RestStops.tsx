@@ -345,10 +345,9 @@ export const RestStops: React.FC = () => {
     }
   };
 
-  const RestStopCard = ({ stop, borderColor }: { stop: RestStop; borderColor: string }) => (
+  const RestStopCard = ({ stop }: { stop: RestStop }) => (
     <div
-      className="flex-shrink-0 w-96 h-[500px] bg-gray-100 rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer group border-4 flex flex-col"
-      style={{ borderColor }}
+      className="flex-shrink-0 w-96 h-[500px] bg-gray-100 rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer group border-2 border-gray-200 flex flex-col"
       onClick={() => handleDetailsClick(stop)}
     >
       <div className="relative h-48 overflow-hidden">
@@ -437,8 +436,7 @@ export const RestStops: React.FC = () => {
     currentIdx: number,
     goToPrev: () => void,
     goToNext: () => void,
-    scrollRef: React.RefObject<HTMLDivElement>,
-    borderColor: string
+    scrollRef: React.RefObject<HTMLDivElement>
   ) => (
     <section className="mt-20 mb-20">
       <div className="flex items-start justify-between mb-10">
@@ -491,7 +489,7 @@ export const RestStops: React.FC = () => {
         >
           {restStopsData.map((stop) => (
             <div key={stop.id} style={{ scrollSnapAlign: 'start' }}>
-              <RestStopCard stop={stop} borderColor={borderColor} />
+              <RestStopCard stop={stop} />
             </div>
           ))}
         </div>
@@ -529,8 +527,7 @@ export const RestStops: React.FC = () => {
         currentIndex,
         goToPrevious,
         goToNext,
-        scrollContainerRef,
-        '#10b981'
+        scrollContainerRef
       )}
 
       {renderSection(
@@ -539,8 +536,7 @@ export const RestStops: React.FC = () => {
         currentIndex2,
         goToPrevious2,
         goToNext2,
-        scrollContainerRef2,
-        '#3b82f6'
+        scrollContainerRef2
       )}
 
       {renderSection(
@@ -549,8 +545,7 @@ export const RestStops: React.FC = () => {
         currentIndex3,
         goToPrevious3,
         goToNext3,
-        scrollContainerRef3,
-        '#f97316'
+        scrollContainerRef3
       )}
 
       <RestStopDetailsModal
