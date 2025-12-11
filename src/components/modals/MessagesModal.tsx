@@ -332,7 +332,7 @@ export const MessagesModal: React.FC = () => {
                 </div>
               </div>
 
-              <form onSubmit={handleSendMessage} className="p-4 bg-white border-t border-gray-200 flex-shrink-0">
+              <form onSubmit={handleSendMessage} className="p-4 bg-white border-t border-gray-200 flex-shrink-0 sticky bottom-0 z-10 w-full">
                 {replyingTo && (
                   <div className="mb-2 p-2 bg-blue-50 rounded-lg flex justify-between items-center">
                     <div className="text-sm">
