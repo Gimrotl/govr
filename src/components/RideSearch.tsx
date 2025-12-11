@@ -63,7 +63,7 @@ export const RideSearch: React.FC<RideSearchProps> = ({
           <ChevronDown size={16} className="absolute right-2.5 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none" />
         </div>
 
-        <div className="flex-1 w-full relative">
+        <div className="w-full md:w-36 relative">
           <input
             type="date"
             name="date"
