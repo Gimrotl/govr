@@ -13,33 +13,33 @@ export const Navbar: React.FC = () => {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   return (
-    <nav className="bg-gray-800 text-white shadow-md">
+    <nav className="bg-white border-b border-slate-200 shadow-sm sticky top-0 z-40">
       <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-14">
           <div className="flex items-center">
-            <a href="/" className="text-2xl font-bold">Word</a>
+            <a href="/" className="text-xl font-bold text-cyan-600">Word</a>
           </div>
 
           {/* Mobile menu button */}
           <div className="md:hidden">
             <button
               onClick={toggleMenu}
-              className="text-gray-300 hover:text-white focus:outline-none"
+              className="text-slate-600 hover:text-cyan-600 focus:outline-none transition"
             >
-              <Menu size={24} />
+              <Menu size={20} />
             </button>
           </div>
 
           {/* Desktop navigation */}
-          <div className="hidden md:flex items-center space-x-6">
-            <button 
+          <div className="hidden md:flex items-center space-x-1">
+            <button
               onClick={() => openModal('chat')}
-              className="flex items-center text-white hover:text-green-300 transition duration-200"
+              className="flex items-center text-slate-600 hover:text-cyan-600 transition px-3 py-2 rounded-lg hover:bg-cyan-50"
             >
-              <MessageSquare size={18} className="mr-1" />
-              <span>Chat</span>
+              <MessageSquare size={16} className="mr-1.5" />
+              <span className="text-sm font-medium">Chat</span>
             </button>
-            <button 
+            <button
               onClick={() => {
                 if (!isLoggedIn) {
                   alert('Nur registrierte Benutzer können Fahrten anbieten. Bitte melden Sie sich an.');
@@ -48,77 +48,79 @@ export const Navbar: React.FC = () => {
                 }
                 openModal('offerRide');
               }}
-              className="flex items-center text-white hover:text-green-300 transition duration-200"
+              className="flex items-center text-slate-600 hover:text-cyan-600 transition px-3 py-2 rounded-lg hover:bg-cyan-50"
             >
-              <PlusCircle size={18} className="mr-1" />
-              <span>Offer a Ride</span>
+              <PlusCircle size={16} className="mr-1.5" />
+              <span className="text-sm font-medium">Offer Ride</span>
             </button>
-            
+
             {isLoggedIn && (
               <>
                 <button
                   onClick={() => openModal('myRides')}
-                  className="flex items-center hover:text-green-300 transition duration-200"
+                  className="flex items-center text-slate-600 hover:text-cyan-600 transition px-3 py-2 rounded-lg hover:bg-cyan-50"
                 >
-                  <Car size={18} className="mr-1" />
-                  <span>My Rides</span>
+                  <Car size={16} className="mr-1.5" />
+                  <span className="text-sm font-medium">My Rides</span>
                 </button>
                 <button
                   onClick={() => openModal('messages')}
-                  className="flex items-center hover:text-green-300 transition duration-200 relative"
+                  className="flex items-center text-slate-600 hover:text-cyan-600 transition px-3 py-2 rounded-lg hover:bg-cyan-50 relative"
                 >
-                  <MessageSquare size={18} className="mr-1" />
-                  <span>Messages</span>
+                  <MessageSquare size={16} className="mr-1.5" />
+                  <span className="text-sm font-medium">Messages</span>
                   {unreadCount > 0 && (
-                    <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                    <span className="absolute -top-0.5 -right-0.5 bg-cyan-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-semibold">
                       {unreadCount}
                     </span>
                   )}
                 </button>
-                <button 
+                <button
                   onClick={() => openModal('profile')}
-                  className="flex items-center hover:text-green-300 transition duration-200"
+                  className="flex items-center text-slate-600 hover:text-cyan-600 transition px-3 py-2 rounded-lg hover:bg-cyan-50"
                 >
-                  <User size={18} className="mr-1" />
-                  <span>Profile</span>
+                  <User size={16} className="mr-1.5" />
+                  <span className="text-sm font-medium">Profile</span>
                 </button>
               </>
             )}
-            
-            <button 
-              onClick={isLoggedIn ? logout : () => openModal('login')}
-              className="flex items-center hover:text-green-300 transition duration-200"
-            >
-              {isLoggedIn ? (
-                <>
-                  <LogOut size={18} className="mr-1" />
-                  <span>Logout</span>
-                </>
-              ) : (
-                <>
-                  <LogIn size={18} className="mr-1" />
-                  <span>Login</span>
-                </>
-              )}
-            </button>
+
+            <div className="ml-2 pl-2 border-l border-slate-200">
+              <button
+                onClick={isLoggedIn ? logout : () => openModal('login')}
+                className="flex items-center text-slate-600 hover:text-cyan-600 transition px-3 py-2 rounded-lg hover:bg-cyan-50"
+              >
+                {isLoggedIn ? (
+                  <>
+                    <LogOut size={16} className="mr-1.5" />
+                    <span className="text-sm font-medium">Logout</span>
+                  </>
+                ) : (
+                  <>
+                    <LogIn size={16} className="mr-1.5" />
+                    <span className="text-sm font-medium">Login</span>
+                  </>
+                )}
+              </button>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Mobile menu */}
       {isMenuOpen && (
-        <div className="md:hidden bg-gray-700">
-          <div className="px-2 pt-2 pb-3 space-y-1">
-            <button 
+        <div className="md:hidden border-t border-slate-200 bg-white">
+          <div className="px-2 py-2 space-y-1">
+            <button
               onClick={() => {
                 openModal('chat');
                 setIsMenuOpen(false);
               }}
-              className="block px-3 py-2 text-base w-full text-left rounded-md hover:bg-gray-600"
+              className="block px-4 py-2 text-sm w-full text-left rounded-lg hover:bg-cyan-50 text-slate-700 hover:text-cyan-600 transition"
             >
               Chat
             </button>
-            <button 
+            <button
               onClick={() => {
                 if (!isLoggedIn) {
                   alert('Nur registrierte Benutzer können Fahrten anbieten. Bitte melden Sie sich an.');
@@ -129,7 +131,7 @@ export const Navbar: React.FC = () => {
                 openModal('offerRide');
                 setIsMenuOpen(false);
               }}
-              className="block px-3 py-2 text-base w-full text-left rounded-md hover:bg-gray-600"
+              className="block px-4 py-2 text-sm w-full text-left rounded-lg hover:bg-cyan-50 text-slate-700 hover:text-cyan-600 transition"
             >
               Offer a Ride
             </button>
@@ -140,7 +142,7 @@ export const Navbar: React.FC = () => {
                     openModal('myRides');
                     setIsMenuOpen(false);
                   }}
-                  className="block px-3 py-2 text-base w-full text-left rounded-md hover:bg-gray-600"
+                  className="block px-4 py-2 text-sm w-full text-left rounded-lg hover:bg-cyan-50 text-slate-700 hover:text-cyan-600 transition"
                 >
                   My Rides
                 </button>
@@ -149,35 +151,37 @@ export const Navbar: React.FC = () => {
                     openModal('messages');
                     setIsMenuOpen(false);
                   }}
-                  className="block px-3 py-2 text-base w-full text-left rounded-md hover:bg-gray-600 relative"
+                  className="block px-4 py-2 text-sm w-full text-left rounded-lg hover:bg-cyan-50 text-slate-700 hover:text-cyan-600 transition relative"
                 >
                   Messages
                   {unreadCount > 0 && (
-                    <span className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                    <span className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-cyan-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-semibold">
                       {unreadCount}
                     </span>
                   )}
                 </button>
-                <button 
+                <button
                   onClick={() => {
                     openModal('profile');
                     setIsMenuOpen(false);
                   }}
-                  className="block px-3 py-2 text-base w-full text-left rounded-md hover:bg-gray-600"
+                  className="block px-4 py-2 text-sm w-full text-left rounded-lg hover:bg-cyan-50 text-slate-700 hover:text-cyan-600 transition"
                 >
                   Profile
                 </button>
               </>
             )}
-            <button 
-              onClick={() => {
-                isLoggedIn ? logout() : openModal('login');
-                setIsMenuOpen(false);
-              }}
-              className="block px-3 py-2 text-base w-full text-left rounded-md hover:bg-gray-600"
-            >
-              {isLoggedIn ? 'Logout' : 'Login'}
-            </button>
+            <div className="border-t border-slate-200 pt-2">
+              <button
+                onClick={() => {
+                  isLoggedIn ? logout() : openModal('login');
+                  setIsMenuOpen(false);
+                }}
+                className="block px-4 py-2 text-sm w-full text-left rounded-lg hover:bg-cyan-50 text-slate-700 hover:text-cyan-600 transition"
+              >
+                {isLoggedIn ? 'Logout' : 'Login'}
+              </button>
+            </div>
           </div>
         </div>
       )}
