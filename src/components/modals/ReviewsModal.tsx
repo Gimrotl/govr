@@ -15,7 +15,7 @@ export const ReviewsModal: React.FC = () => {
   if (!selectedRide && !selectedUser) return null;
   
   const driverName = selectedRide?.driver || selectedUser?.firstName || 'Driver';
-  const reviews = selectedRide?.reviews || [];
+  const reviews = selectedRide?.reviews || selectedUser?.reviews || [];
   const averageRating = selectedRide?.rating || selectedUser?.rating || 0;
   const totalReviews = reviews.length;
 

@@ -97,6 +97,7 @@ export interface UserProfile {
   rating?: number;
   driverInfo?: string;
   userRides?: Ride[];
+  reviews?: Review[];
 }
 
 export interface ChatMessage {

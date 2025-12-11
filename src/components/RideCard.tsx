@@ -9,10 +9,10 @@ interface RideCardProps {
 }
 
 export const RideCard: React.FC<RideCardProps> = ({ ride }) => {
-  const { openRideDetails, openUserProfile } = useModals();
-  
+  const { openRideDetails, openUserProfile, openModal } = useModals();
+
   const availableSeats = ride.availableSeats - ride.bookedSeats;
-  
+
   const handleDriverClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     const userProfile = {
@@ -31,6 +31,27 @@ export const RideCard: React.FC<RideCardProps> = ({ ride }) => {
       driverInfo: ride.driverInfo
     };
     openUserProfile(userProfile);
+  };
+
+  const handleRatingClick = () => {
+    const userProfile = {
+      firstName: ride.driver,
+      age: 'Not specified',
+      mobile: ride.mobile || 'Not provided',
+      whatsapp: ride.whatsapp || 'Not provided',
+      telegram: ride.telegram || 'Not provided',
+      carImages: [
+        ...(ride.carImage ? [ride.carImage] : []),
+        ...(ride.additionalImages || [])
+      ].filter(Boolean),
+      car: ride.car,
+      carImage: ride.carImage,
+      rating: ride.rating,
+      driverInfo: ride.driverInfo,
+      reviews: ride.reviews
+    };
+    openUserProfile(userProfile);
+    openModal('reviews');
   };
   
   return (
@@ -66,13 +87,13 @@ export const RideCard: React.FC<RideCardProps> = ({ ride }) => {
             {ride.driver.charAt(0).toUpperCase()}
           </div>
           <div>
-            <button 
+            <button
               onClick={handleDriverClick}
               className="text-sm font-medium text-blue-600 hover:text-blue-800 hover:underline transition-colors"
             >
               {ride.driver}
             </button>
-            <StarRating rating={ride.rating} />
+            <StarRating rating={ride.rating} onClick={handleRatingClick} />
           </div>
         </div>
         
