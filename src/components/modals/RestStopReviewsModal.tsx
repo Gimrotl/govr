@@ -439,9 +439,6 @@ export const RestStopReviewsModal: React.FC<RestStopReviewsModalProps> = ({ rest
                   </div>
                   
                   <div className="flex-1">
-                    <label className="block text-xs font-medium text-gray-700 mb-1">
-                      Kommentar
-                    </label>
                     <div className="flex space-x-2">
                       <textarea
                         value={newReview.comment}
