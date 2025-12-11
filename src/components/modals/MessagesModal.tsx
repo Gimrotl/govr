@@ -231,10 +231,10 @@ export const MessagesModal: React.FC = () => {
           </div>
         </div>
 
-        <div className={`${!showContacts ? 'block' : 'hidden'} md:block flex-1 flex flex-col`}>
+        <div className={`${!showContacts ? 'block' : 'hidden'} md:block flex-1 flex flex-col min-h-0`}>
           {selectedContact ? (
             <>
-              <div className="p-4 border-b border-gray-200 flex items-center">
+              <div className="p-4 border-b border-gray-200 flex items-center flex-shrink-0">
                 <button
                   onClick={() => setShowContacts(true)}
                   className="md:hidden mr-3 text-gray-600 hover:text-gray-800"
@@ -250,7 +250,7 @@ export const MessagesModal: React.FC = () => {
                 </button>
               </div>
 
-              <div className="flex-1 overflow-y-auto p-4 bg-gray-50 flex flex-col-reverse">
+              <div className="flex-1 overflow-y-auto p-4 bg-gray-50 flex flex-col-reverse min-h-0">
                 <div className="space-y-4">
                   {filteredMessages.map((message) => (
                     <div key={message.id} className="group">
@@ -332,7 +332,7 @@ export const MessagesModal: React.FC = () => {
                 </div>
               </div>
 
-              <form onSubmit={handleSendMessage} className="p-4 bg-white border-t border-gray-200">
+              <form onSubmit={handleSendMessage} className="p-4 bg-white border-t border-gray-200 flex-shrink-0">
                 {replyingTo && (
                   <div className="mb-2 p-2 bg-blue-50 rounded-lg flex justify-between items-center">
                     <div className="text-sm">
