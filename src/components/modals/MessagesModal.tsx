@@ -231,7 +231,7 @@ export const MessagesModal: React.FC = () => {
           </div>
         </div>
 
-        <div className={`${!showContacts ? 'block' : 'hidden'} md:block flex-1 flex flex-col min-h-0`}>
+        <div className={`${!showContacts ? 'block' : 'hidden'} md:block flex-1 flex flex-col min-h-0 h-full overflow-hidden`}>
           {selectedContact ? (
             <>
               <div className="p-4 border-b border-gray-200 flex items-center flex-shrink-0">
@@ -332,7 +332,7 @@ export const MessagesModal: React.FC = () => {
                 </div>
               </div>
 
-              <form onSubmit={handleSendMessage} className="p-4 bg-white border-t border-gray-200 flex-shrink-0 sticky bottom-0 z-10 w-full">
+              <form onSubmit={handleSendMessage} className="p-4 bg-white border-t border-gray-200 flex-shrink-0">
                 {replyingTo && (
                   <div className="mb-2 p-2 bg-blue-50 rounded-lg flex justify-between items-center">
                     <div className="text-sm">
