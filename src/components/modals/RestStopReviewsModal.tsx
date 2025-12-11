@@ -226,7 +226,7 @@ export const RestStopReviewsModal: React.FC<RestStopReviewsModalProps> = ({ rest
           </button>
         </div>
 
-        <div className="flex flex-col h-[calc(90vh-120px)]">
+        <div className="flex flex-col h-[calc(90vh-180px)]">
           {/* Reviews List */}
           <div className="flex-1 p-6 overflow-y-auto">
             {reviews.length === 0 ? (
