@@ -156,7 +156,7 @@ export const MessagesModal: React.FC = () => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 animate-fadeIn">
-      <div className="bg-white rounded-lg shadow-xl w-full max-w-4xl h-[600px] md:h-[600px] h-[90vh] flex animate-scaleIn">
+      <div className="bg-white rounded-lg shadow-xl w-full max-w-4xl h-[90vh] max-h-[600px] flex animate-scaleIn">
         {/* Mobile: Show contacts or chat based on selection */}
         <div className={`${showContacts ? 'block' : 'hidden'} md:block w-full md:w-64 border-r border-gray-200`}>
           <div className="p-4 border-b border-gray-200 flex justify-between items-center">
