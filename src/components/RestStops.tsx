@@ -347,7 +347,7 @@ export const RestStops: React.FC = () => {
 
   const RestStopCard = ({ stop }: { stop: RestStop }) => (
     <div
-      className="flex-shrink-0 w-96 bg-gray-100 rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer group border-2 border-gray-200"
+      className="flex-shrink-0 w-96 h-[500px] bg-gray-100 rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer group border-2 border-gray-200 flex flex-col"
       onClick={() => handleDetailsClick(stop)}
     >
       <div className="relative h-48 overflow-hidden">
@@ -385,27 +385,27 @@ export const RestStops: React.FC = () => {
         )}
       </div>
 
-      <div className="p-6">
-        <h3 className="text-xl font-bold text-gray-900 mb-2">{stop.name}</h3>
+      <div className="p-6 flex-1 flex flex-col">
+        <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-1">{stop.name}</h3>
 
         <div className="flex items-center text-gray-600 mb-4">
           <MapPin size={16} className="mr-2 flex-shrink-0" />
-          <span className="text-sm">{stop.location}</span>
+          <span className="text-sm truncate">{stop.location}</span>
         </div>
 
         <p className="text-gray-600 text-sm mb-4 line-clamp-2">
           {stop.description}
         </p>
 
-        <div className="flex flex-wrap gap-2 mb-6">
-          {stop.amenities.map((amenity, index) => (
+        <div className="flex flex-wrap gap-2 mb-6 h-12 overflow-hidden">
+          {stop.amenities.slice(0, 6).map((amenity, index) => (
             <div key={index}>
               {getAmenityIcon(amenity)}
             </div>
           ))}
         </div>
 
-        <div className="flex space-x-3">
+        <div className="flex space-x-3 mt-auto">
           <button
             onClick={(e) => {
               e.stopPropagation();
