@@ -63,15 +63,19 @@ export const RideSearch: React.FC<RideSearchProps> = ({
           <ChevronDown size={16} className="absolute right-2.5 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none" />
         </div>
 
-        <div className="flex-1 w-full">
+        <div className="flex-1 w-full relative">
           <input
-            type="text"
+            type="date"
             name="date"
-            placeholder="Datum"
-            className="w-full p-2.5 md:p-3 text-sm md:text-base border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-400 focus:border-transparent transition duration-200"
+            className="w-full p-2.5 md:p-3 text-sm md:text-base border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-400 focus:border-transparent transition duration-200 date-input-custom"
             value={searchParams.date}
             onChange={handleChange}
           />
+          {!searchParams.date && (
+            <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm md:text-base pointer-events-none">
+              Datum
+            </span>
+          )}
         </div>
 
         <div className="w-full md:w-auto">

@@ -63,7 +63,7 @@ button, a, input, select, textarea {
   display: none;
 }
 
-/* Hide default date input placeholder */
+/* Date input styling */
 input[type="date"].date-input-custom::-webkit-datetime-edit-text,
 input[type="date"].date-input-custom::-webkit-datetime-edit-month-field,
 input[type="date"].date-input-custom::-webkit-datetime-edit-day-field,
@@ -78,13 +78,14 @@ input[type="date"].date-input-custom:focus::-webkit-datetime-edit-year-field {
   color: #374151;
 }
 
-input[type="date"].date-input-custom:not(:placeholder-shown)::-webkit-datetime-edit-text,
-input[type="date"].date-input-custom:not(:placeholder-shown)::-webkit-datetime-edit-month-field,
-input[type="date"].date-input-custom:not(:placeholder-shown)::-webkit-datetime-edit-day-field,
-input[type="date"].date-input-custom:not(:placeholder-shown)::-webkit-datetime-edit-year-field {
+input[type="date"].date-input-custom:valid::-webkit-datetime-edit-text,
+input[type="date"].date-input-custom:valid::-webkit-datetime-edit-month-field,
+input[type="date"].date-input-custom:valid::-webkit-datetime-edit-day-field,
+input[type="date"].date-input-custom:valid::-webkit-datetime-edit-year-field {
   color: #374151;
 }
 
-input[type="date"].date-input-custom:not(:focus):invalid::-webkit-datetime-edit {
-  color: transparent;
+input[type="date"].date-input-custom::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 1;
 }
