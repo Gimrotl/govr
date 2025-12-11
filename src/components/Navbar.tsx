@@ -64,13 +64,6 @@ export const Navbar: React.FC = () => {
                   <span>My Rides</span>
                 </button>
                 <button
-                  onClick={() => openModal('orders')}
-                  className="flex items-center hover:text-green-300 transition duration-200"
-                >
-                  <ShoppingBag size={18} className="mr-1" />
-                  <span>Orders</span>
-                </button>
-                <button
                   onClick={() => openModal('messages')}
                   className="flex items-center hover:text-green-300 transition duration-200 relative"
                 >
@@ -150,15 +143,6 @@ export const Navbar: React.FC = () => {
                   className="block px-3 py-2 text-base w-full text-left rounded-md hover:bg-gray-600"
                 >
                   My Rides
-                </button>
-                <button
-                  onClick={() => {
-                    openModal('orders');
-                    setIsMenuOpen(false);
-                  }}
-                  className="block px-3 py-2 text-base w-full text-left rounded-md hover:bg-gray-600"
-                >
-                  Orders
                 </button>
                 <button
                   onClick={() => {
