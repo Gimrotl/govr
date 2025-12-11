@@ -199,10 +199,11 @@ export const RideDetailsModal: React.FC = () => {
               </div>
               <h3
                 onClick={handleDriverClick}
-                className="text-xl md:text-2xl font-bold text-gray-800 mb-2 cursor-pointer hover:text-blue-600 transition-colors"
+                className="text-xl md:text-2xl font-bold text-gray-800 mb-1 cursor-pointer hover:text-blue-600 transition-colors"
               >
                 {selectedRide.driver}
               </h3>
+              <p className="text-sm text-gray-600 mb-3">Mitglied seit 15.03.2023</p>
               <div className="flex items-center justify-center mb-4">
                 <button
                   onClick={() => openModal('reviews')}
