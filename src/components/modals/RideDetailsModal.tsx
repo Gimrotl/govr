@@ -318,7 +318,7 @@ export const RideDetailsModal: React.FC = () => {
                 <img
                   src={getCarImages()[currentImageIndex]}
                   alt={`${selectedRide.driver}'s car ${currentImageIndex + 1}`}
-                  className="max-h-full max-w-full object-contain rounded-lg"
+                  className="w-full h-full object-cover rounded-lg"
                 />
               ) : (
                 <div className="text-white text-center">
