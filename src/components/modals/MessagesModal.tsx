@@ -134,15 +134,15 @@ export const MessagesModal: React.FC = () => {
   const getNotificationColor = (type: string) => {
     switch (type) {
       case 'order_accepted':
-        return 'bg-green-50 border-l-4 border-green-500';
+        return 'bg-emerald-900/40 border-l-4 border-emerald-400';
       case 'order_rejected':
-        return 'bg-red-50 border-l-4 border-red-500';
+        return 'bg-rose-900/40 border-l-4 border-rose-400';
       case 'booking_confirmed':
-        return 'bg-blue-50 border-l-4 border-blue-500';
+        return 'bg-cyan-900/40 border-l-4 border-cyan-400';
       case 'booking_request':
-        return 'bg-yellow-50 border-l-4 border-yellow-500';
+        return 'bg-amber-900/40 border-l-4 border-amber-400';
       default:
-        return 'bg-gray-50 border-l-4 border-gray-500';
+        return 'bg-zinc-800/40 border-l-4 border-zinc-500';
     }
   };
 
@@ -155,20 +155,19 @@ export const MessagesModal: React.FC = () => {
   }, [selectedContact, filteredMessages]);
 
   return (
-    <div className="fixed inset-0 bg-gradient-to-br from-gray-900/60 to-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-fadeIn">
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-5xl h-[90vh] max-h-[700px] flex overflow-hidden animate-scaleIn">
-        {/* Mobile: Show contacts or chat based on selection */}
-        <div className={`${showContacts ? 'block' : 'hidden'} md:block w-full md:w-80 bg-gradient-to-b from-slate-50 to-white border-r border-slate-200/50`}>
-          <div className="p-5 border-b border-slate-200/50 flex justify-between items-center bg-white/80 backdrop-blur-sm">
-            <h2 className="text-xl font-bold text-slate-800 tracking-tight">Nachrichten</h2>
+    <div className="fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center z-50 p-4 animate-fadeIn">
+      <div className="bg-zinc-900 rounded-2xl shadow-2xl shadow-black/50 w-full max-w-5xl h-[90vh] max-h-[700px] flex overflow-hidden animate-scaleIn border border-zinc-700/50">
+        <div className={`${showContacts ? 'block' : 'hidden'} md:block w-full md:w-80 bg-zinc-900 border-r border-zinc-800`}>
+          <div className="p-5 border-b border-zinc-800 flex justify-between items-center">
+            <h2 className="text-xl font-bold text-zinc-100 tracking-tight">Nachrichten</h2>
             <button
               onClick={() => closeModal('messages')}
-              className="text-slate-400 hover:text-red-500 transition-all duration-200 hover:rotate-90 hover:scale-110"
+              className="text-zinc-500 hover:text-rose-400 transition-all duration-200 hover:rotate-90"
             >
               <X size={22} />
             </button>
           </div>
-          <div className="overflow-y-auto h-[calc(100%-76px)] p-2">
+          <div className="overflow-y-auto h-[calc(100%-76px)] p-3 space-y-1">
             {contacts.map((contact) => {
               const unreadForContact = getUnreadCount(contact);
               const hasUnread = unreadForContact > 0;
@@ -180,53 +179,53 @@ export const MessagesModal: React.FC = () => {
                     setSelectedContact(contact);
                     setShowContacts(false);
                   }}
-                  className={`w-full p-4 mb-2 text-left transition-all duration-200 rounded-xl group ${
+                  className={`w-full p-3 text-left transition-all duration-200 rounded-xl group ${
                     selectedContact === contact
-                      ? hasUnread
-                        ? 'bg-gradient-to-r from-red-50 to-red-100 border-l-4 border-red-500 shadow-md transform scale-[1.02]'
-                        : 'bg-gradient-to-r from-slate-100 to-slate-50 shadow-md transform scale-[1.02]'
+                      ? 'bg-zinc-800 ring-1 ring-teal-500/50'
                       : hasUnread
-                      ? 'bg-red-50/50 hover:bg-gradient-to-r hover:from-red-50 hover:to-red-100 border-l-4 border-red-400 hover:shadow-md hover:scale-[1.01]'
-                      : 'hover:bg-gradient-to-r hover:from-slate-50 hover:to-white hover:shadow-sm hover:scale-[1.01]'
+                      ? 'bg-zinc-800/50 hover:bg-zinc-800'
+                      : 'hover:bg-zinc-800/50'
                   }`}
                 >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center flex-1 min-w-0">
-                      <div
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleContactClick(contact);
-                        }}
-                        className={`w-12 h-12 rounded-full flex items-center justify-center mr-4 cursor-pointer transition-all duration-200 group-hover:scale-110 ${
-                          hasUnread
-                            ? 'bg-gradient-to-br from-red-400 to-red-600 shadow-lg shadow-red-200'
-                            : 'bg-gradient-to-br from-blue-400 to-cyan-500 shadow-lg shadow-blue-200'
-                        }`}
-                      >
-                        <span className="font-bold text-white text-lg">
-                          {contact?.charAt(0).toUpperCase()}
-                        </span>
-                      </div>
-                      <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-3">
+                    <div
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleContactClick(contact);
+                      }}
+                      className={`w-11 h-11 rounded-full flex items-center justify-center cursor-pointer transition-all duration-200 group-hover:scale-105 ${
+                        hasUnread
+                          ? 'bg-gradient-to-br from-rose-500 to-orange-500 ring-2 ring-rose-500/30'
+                          : 'bg-gradient-to-br from-teal-500 to-cyan-600'
+                      }`}
+                    >
+                      <span className="font-bold text-white">
+                        {contact?.charAt(0).toUpperCase()}
+                      </span>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between">
                         <span
                           onClick={(e) => {
                             e.stopPropagation();
                             handleContactClick(contact);
                           }}
-                          className={`font-semibold cursor-pointer hover:text-blue-600 transition-colors truncate block ${
-                            hasUnread ? 'text-slate-900' : 'text-slate-700'
+                          className={`font-medium cursor-pointer hover:text-teal-400 transition-colors truncate ${
+                            hasUnread ? 'text-zinc-100' : 'text-zinc-300'
                           }`}
                         >
                           {contact}
                         </span>
-                        <p className="text-xs text-slate-500 truncate mt-1">Klicken zum Öffnen</p>
+                        {hasUnread && (
+                          <span className="bg-rose-500 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0">
+                            {unreadForContact}
+                          </span>
+                        )}
                       </div>
+                      <p className="text-xs text-zinc-500 truncate mt-0.5">
+                        {hasUnread ? 'Neue Nachricht' : 'Tippen zum Öffnen'}
+                      </p>
                     </div>
-                    {hasUnread && (
-                      <span className="bg-gradient-to-r from-red-500 to-red-600 text-white text-xs font-bold px-3 py-1.5 rounded-full flex-shrink-0 shadow-lg animate-pulse">
-                        {unreadForContact}
-                      </span>
-                    )}
                   </div>
                 </button>
               );
@@ -234,50 +233,54 @@ export const MessagesModal: React.FC = () => {
           </div>
         </div>
 
-        <div className={`${!showContacts ? 'block' : 'hidden'} md:block flex-1 flex flex-col min-h-0 h-full overflow-hidden bg-gradient-to-br from-slate-50 via-white to-blue-50/30`}>
+        <div className={`${!showContacts ? 'block' : 'hidden'} md:block flex-1 flex flex-col min-h-0 h-full overflow-hidden bg-zinc-950`}>
           {selectedContact ? (
             <>
-              <div className="p-5 border-b border-slate-200/50 flex items-center flex-shrink-0 bg-white/80 backdrop-blur-sm">
+              <div className="p-4 border-b border-zinc-800 flex items-center flex-shrink-0 bg-zinc-900/80 backdrop-blur-sm">
                 <button
                   onClick={() => setShowContacts(true)}
-                  className="md:hidden mr-3 text-slate-600 hover:text-slate-900 hover:bg-slate-100 p-2 rounded-lg transition-all duration-200"
+                  className="md:hidden mr-3 text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800 p-2 rounded-lg transition-all duration-200"
                 >
                   <ChevronLeft size={20} />
                 </button>
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-teal-500 to-cyan-600 flex items-center justify-center mr-3">
+                  <span className="font-bold text-white">{selectedContact?.charAt(0).toUpperCase()}</span>
+                </div>
                 <div className="flex-1">
-                  <h3 className="font-bold text-slate-800 text-lg">Chat mit {selectedContact}</h3>
-                  <p className="text-xs text-slate-500">Aktiv</p>
+                  <h3 className="font-semibold text-zinc-100">{selectedContact}</h3>
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+                    <p className="text-xs text-zinc-500">Online</p>
+                  </div>
                 </div>
                 <button
                   onClick={() => closeModal('messages')}
-                  className="hidden md:block text-slate-400 hover:text-red-500 transition-all duration-200 hover:rotate-90 hover:scale-110"
+                  className="hidden md:block text-zinc-500 hover:text-rose-400 transition-all duration-200 p-2 hover:bg-zinc-800 rounded-lg"
                 >
-                  <X size={22} />
+                  <X size={20} />
                 </button>
               </div>
 
-              <div className="flex-1 overflow-y-auto p-6 flex flex-col-reverse min-h-0">
-                <div className="space-y-4">
+              <div className="flex-1 overflow-y-auto p-4 flex flex-col-reverse min-h-0">
+                <div className="space-y-3">
                   {filteredMessages.map((message) => (
                     <div key={message.id} className="group">
                       {message.notificationType ? (
-                        <div className={`p-5 rounded-2xl ${getNotificationColor(message.notificationType)} mb-4 shadow-lg backdrop-blur-sm`}>
-                          <div className="flex items-start">
-                            <span className="text-3xl mr-4">
-                              {getNotificationIcon(message.notificationType)}
-                            </span>
-                            <div className="flex-1">
-                              <div className="flex items-center justify-between mb-2">
-                                <span className="font-bold text-slate-900">{message.from}</span>
+                        <div className={`p-4 rounded-xl ${getNotificationColor(message.notificationType)} mb-3`}>
+                          <div className="flex items-start gap-3">
+                            <span className="text-2xl">{getNotificationIcon(message.notificationType)}</span>
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center justify-between mb-1">
+                                <span className="font-semibold text-zinc-100">{message.from}</span>
                                 {!message.read && (
-                                  <span className="w-2.5 h-2.5 bg-blue-500 rounded-full animate-pulse shadow-lg shadow-blue-300"></span>
+                                  <span className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></span>
                                 )}
                               </div>
-                              <p className="text-slate-700 mb-2 leading-relaxed">{message.content}</p>
-                              <div className="text-xs text-slate-500 font-medium">{message.timestamp}</div>
+                              <p className="text-zinc-300 text-sm leading-relaxed">{message.content}</p>
+                              <div className="text-xs text-zinc-500 mt-2">{message.timestamp}</div>
                               <button
                                 onClick={() => handleReply(message.id)}
-                                className="mt-3 text-sm bg-white/50 hover:bg-white px-4 py-2 rounded-lg text-blue-600 hover:text-blue-800 font-semibold transition-all duration-200 shadow-sm hover:shadow-md"
+                                className="mt-2 text-xs bg-zinc-800 hover:bg-zinc-700 px-3 py-1.5 rounded-lg text-teal-400 hover:text-teal-300 font-medium transition-all duration-200"
                               >
                                 Antworten
                               </button>
@@ -286,48 +289,48 @@ export const MessagesModal: React.FC = () => {
                         </div>
                       ) : (
                         <div className={`flex ${message.sent ? 'justify-end' : 'justify-start'}`}>
-                          <div className="relative max-w-[70%]">
+                          <div className="relative max-w-[75%]">
                             {message.replyTo && (
-                              <div className="mb-2 p-3 bg-white/60 backdrop-blur-sm rounded-xl text-xs border border-slate-200 shadow-sm">
-                                <span className="font-semibold text-slate-600">Antwort auf:</span>
-                                <p className="truncate text-slate-700 mt-1">{getRepliedMessage(message.replyTo)?.content}</p>
+                              <div className="mb-1.5 px-3 py-2 bg-zinc-800/50 rounded-lg text-xs border-l-2 border-teal-500">
+                                <span className="text-teal-400 font-medium">Antwort auf:</span>
+                                <p className="truncate text-zinc-400 mt-0.5">{getRepliedMessage(message.replyTo)?.content}</p>
                               </div>
                             )}
                             <div
-                              className={`p-4 rounded-2xl shadow-lg backdrop-blur-sm transition-all duration-200 hover:shadow-xl ${
+                              className={`px-4 py-3 rounded-2xl transition-all duration-200 ${
                                 message.sent
-                                  ? 'bg-gradient-to-br from-emerald-500 to-green-600 text-white rounded-br-sm'
-                                  : 'bg-white text-slate-800 rounded-bl-sm border border-slate-200/50'
+                                  ? 'bg-gradient-to-r from-teal-600 to-cyan-600 text-white rounded-br-md'
+                                  : 'bg-zinc-800 text-zinc-100 rounded-bl-md'
                               }`}
                             >
-                            {message.image && (
-                              <img
-                                src={message.image}
-                                alt="Shared"
-                                className="max-w-full rounded-xl mb-3 shadow-md"
-                              />
-                            )}
-                            {message.content && (
-                              <p className="break-words leading-relaxed">
-                                {message.content.split(/(@\w+)/g).map((part, index) =>
-                                  part.startsWith('@') ? (
-                                    <span key={index} className={`font-bold ${message.sent ? 'text-emerald-100' : 'text-blue-600'}`}>
-                                      {part}
-                                    </span>
-                                  ) : part
-                                )}
-                              </p>
-                            )}
-                              <div className={`text-xs mt-2 font-medium ${message.sent ? 'text-emerald-100' : 'text-slate-500'}`}>
+                              {message.image && (
+                                <img
+                                  src={message.image}
+                                  alt="Shared"
+                                  className="max-w-full rounded-lg mb-2"
+                                />
+                              )}
+                              {message.content && (
+                                <p className="break-words text-sm leading-relaxed">
+                                  {message.content.split(/(@\w+)/g).map((part, index) =>
+                                    part.startsWith('@') ? (
+                                      <span key={index} className={`font-semibold ${message.sent ? 'text-teal-200' : 'text-teal-400'}`}>
+                                        {part}
+                                      </span>
+                                    ) : part
+                                  )}
+                                </p>
+                              )}
+                              <div className={`text-[10px] mt-1.5 ${message.sent ? 'text-teal-200/70' : 'text-zinc-500'}`}>
                                 {message.timestamp}
                               </div>
                             </div>
                             {!message.sent && (
                               <button
                                 onClick={() => handleReply(message.id)}
-                                className="absolute -right-10 top-1/2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-200 p-2 text-slate-400 hover:text-blue-600 hover:bg-white rounded-lg shadow-md"
+                                className="absolute -right-8 top-1/2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-200 p-1.5 text-zinc-600 hover:text-teal-400 hover:bg-zinc-800 rounded-lg"
                               >
-                                <Reply size={16} />
+                                <Reply size={14} />
                               </button>
                             )}
                           </div>
@@ -338,16 +341,16 @@ export const MessagesModal: React.FC = () => {
                 </div>
               </div>
 
-              <form onSubmit={handleSendMessage} className="relative p-5 bg-white/80 backdrop-blur-sm border-t border-slate-200/50 flex-shrink-0 max-h-[40vh] overflow-y-auto">
+              <form onSubmit={handleSendMessage} className="relative p-4 bg-zinc-900 border-t border-zinc-800 flex-shrink-0">
                 {showEmojiPicker && (
-                  <div className="absolute bottom-full left-0 right-0 mb-2 mx-5 p-3 bg-white rounded-xl border border-slate-200 shadow-xl z-10">
-                    <div className="flex flex-wrap gap-2">
+                  <div className="absolute bottom-full left-0 right-0 mb-2 mx-4 p-3 bg-zinc-800 rounded-xl border border-zinc-700 shadow-xl z-10">
+                    <div className="flex flex-wrap gap-1">
                       {emojis.map((emoji, index) => (
                         <button
                           key={index}
                           type="button"
                           onClick={() => addEmoji(emoji)}
-                          className="text-2xl hover:bg-slate-100 hover:scale-125 p-2 rounded-lg transition-all duration-200"
+                          className="text-xl hover:bg-zinc-700 hover:scale-110 p-2 rounded-lg transition-all duration-200"
                         >
                           {emoji}
                         </button>
@@ -357,48 +360,48 @@ export const MessagesModal: React.FC = () => {
                 )}
 
                 {replyingTo && (
-                  <div className="mb-3 p-3 bg-blue-50 rounded-xl flex justify-between items-center border border-blue-200 shadow-sm">
+                  <div className="mb-3 p-3 bg-zinc-800 rounded-xl flex justify-between items-center border-l-2 border-teal-500">
                     <div className="text-sm flex-1 min-w-0">
-                      <span className="font-semibold text-blue-700">Antwort auf:</span>
-                      <p className="truncate text-slate-700 mt-1">{getRepliedMessage(replyingTo)?.content}</p>
+                      <span className="text-teal-400 font-medium text-xs">Antwort auf:</span>
+                      <p className="truncate text-zinc-300 text-sm mt-0.5">{getRepliedMessage(replyingTo)?.content}</p>
                     </div>
                     <button
                       type="button"
                       onClick={() => setReplyingTo(null)}
-                      className="text-slate-400 hover:text-red-500 transition-all duration-200 hover:rotate-90 ml-2 flex-shrink-0"
+                      className="text-zinc-500 hover:text-rose-400 transition-all duration-200 ml-2 flex-shrink-0"
                     >
                       <X size={16} />
                     </button>
                   </div>
                 )}
 
-                <div className="flex space-x-3">
+                <div className="flex gap-2">
                   <div className="flex-1 relative">
                     <textarea
                       value={newMessage}
                       onChange={(e) => setNewMessage(e.target.value)}
                       onKeyPress={handleKeyPress}
-                      placeholder="Nachricht eingeben... @username für Erwähnung"
-                      className="w-full p-4 pr-14 md:pr-24 border border-slate-300 rounded-2xl resize-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm md:text-base shadow-sm transition-all duration-200 bg-white"
+                      placeholder="Nachricht schreiben..."
+                      className="w-full p-3 pr-24 bg-zinc-800 border border-zinc-700 rounded-xl resize-none focus:ring-2 focus:ring-teal-500/50 focus:border-teal-500 text-sm text-zinc-100 placeholder-zinc-500 transition-all duration-200"
                       rows={1}
                     />
-                    <div className="absolute right-3 top-1/2 -translate-y-1/2 flex space-x-1">
+                    <div className="absolute right-2 top-1/2 -translate-y-1/2 flex gap-0.5">
                       <button
                         type="button"
                         onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-                        className="text-slate-400 hover:text-emerald-500 p-2 rounded-lg hover:bg-slate-100 transition-all duration-200 hidden md:block"
+                        className={`p-2 rounded-lg transition-all duration-200 hidden md:block ${showEmojiPicker ? 'text-teal-400 bg-zinc-700' : 'text-zinc-500 hover:text-teal-400 hover:bg-zinc-700'}`}
                       >
                         <Smile size={18} />
                       </button>
                       <button
                         type="button"
                         onClick={() => handleMention(selectedContact || '')}
-                        className="text-slate-400 hover:text-emerald-500 p-2 rounded-lg hover:bg-slate-100 transition-all duration-200 hidden md:block"
+                        className="text-zinc-500 hover:text-teal-400 p-2 rounded-lg hover:bg-zinc-700 transition-all duration-200 hidden md:block"
                       >
                         <AtSign size={18} />
                       </button>
-                      <div {...getRootProps()} className="cursor-pointer p-2 text-slate-400 hover:text-emerald-500 rounded-lg hover:bg-slate-100 transition-all duration-200">
-                      <input {...getInputProps()} />
+                      <div {...getRootProps()} className="cursor-pointer p-2 text-zinc-500 hover:text-teal-400 rounded-lg hover:bg-zinc-700 transition-all duration-200">
+                        <input {...getInputProps()} />
                         <ImageIcon size={18} />
                       </div>
                     </div>
@@ -406,36 +409,33 @@ export const MessagesModal: React.FC = () => {
                   <button
                     type="submit"
                     disabled={!newMessage.trim() && !selectedImage}
-                    className="bg-gradient-to-r from-emerald-500 to-green-600 text-white p-4 rounded-2xl hover:from-emerald-600 hover:to-green-700 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0 shadow-lg hover:shadow-xl hover:scale-105"
+                    className="bg-gradient-to-r from-teal-500 to-cyan-600 text-white p-3 rounded-xl hover:from-teal-600 hover:to-cyan-700 transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed flex-shrink-0"
                   >
                     <Send size={20} />
                   </button>
                 </div>
                 {selectedImage && (
-                  <div className="mt-3 p-3 bg-slate-100 rounded-xl flex items-center justify-between text-xs md:text-sm shadow-sm border border-slate-200">
-                    <span className="text-slate-700 truncate mr-2 font-medium">{selectedImage.name}</span>
+                  <div className="mt-2 p-2.5 bg-zinc-800 rounded-lg flex items-center justify-between text-xs border border-zinc-700">
+                    <span className="text-zinc-300 truncate mr-2">{selectedImage.name}</span>
                     <button
                       type="button"
                       onClick={() => setSelectedImage(null)}
-                      className="text-slate-400 hover:text-red-500 flex-shrink-0 transition-all duration-200 hover:scale-110"
+                      className="text-zinc-500 hover:text-rose-400 flex-shrink-0 transition-all duration-200"
                     >
-                      <X size={18} />
+                      <X size={16} />
                     </button>
                   </div>
                 )}
               </form>
             </>
           ) : (
-            <div className="flex-1 flex items-center justify-center text-slate-500 p-4 text-center">
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-cyan-500 rounded-full blur-3xl opacity-20 animate-pulse"></div>
-                <div className="relative bg-white/60 backdrop-blur-sm rounded-3xl p-12 shadow-2xl border border-slate-200/50">
-                  <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-2xl flex items-center justify-center shadow-xl shadow-blue-200 animate-bounce">
-                    <MessageSquare size={40} className="text-white" />
-                  </div>
-                  <p className="text-2xl font-bold text-slate-800 mb-3 tracking-tight">Wählen Sie einen Kontakt</p>
-                  <p className="text-base text-slate-500">um eine Unterhaltung zu beginnen</p>
+            <div className="flex-1 flex items-center justify-center p-4">
+              <div className="text-center">
+                <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-teal-500/20 to-cyan-600/20 rounded-2xl flex items-center justify-center border border-teal-500/30">
+                  <MessageSquare size={36} className="text-teal-400" />
                 </div>
+                <p className="text-xl font-semibold text-zinc-300 mb-2">Wählen Sie einen Kontakt</p>
+                <p className="text-sm text-zinc-500">um eine Unterhaltung zu beginnen</p>
               </div>
             </div>
           )}
