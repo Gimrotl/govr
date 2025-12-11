@@ -79,6 +79,25 @@ export const RideDetailsModal: React.FC = () => {
     return images;
   };
 
+  const handleDriverClick = () => {
+    const userProfile = {
+      firstName: selectedRide.driver,
+      age: 'Not specified',
+      mobile: selectedRide.mobile || 'Not provided',
+      whatsapp: selectedRide.whatsapp || 'Not provided',
+      telegram: selectedRide.telegram || 'Not provided',
+      carImages: [
+        ...(selectedRide.carImage ? [selectedRide.carImage] : []),
+        ...(selectedRide.additionalImages || [])
+      ].filter(Boolean),
+      car: selectedRide.car,
+      carImage: selectedRide.carImage,
+      rating: selectedRide.rating,
+      driverInfo: selectedRide.driverInfo
+    };
+    openModal('profile', userProfile);
+  };
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 animate-fadeIn">
       <div className="bg-white rounded-lg shadow-xl max-w-5xl w-full max-h-[90vh] overflow-auto animate-scaleIn">
@@ -170,12 +189,20 @@ export const RideDetailsModal: React.FC = () => {
           <div className="w-full md:w-96 p-4 md:p-6 bg-gray-50 md:border-t-0 border-t border-gray-200">
             {/* Driver Info */}
             <div className="text-center mb-6">
-              <div className="w-16 h-16 md:w-20 md:h-20 bg-blue-200 rounded-full flex items-center justify-center mx-auto mb-3">
+              <div
+                onClick={handleDriverClick}
+                className="w-16 h-16 md:w-20 md:h-20 bg-blue-200 rounded-full flex items-center justify-center mx-auto mb-3 cursor-pointer hover:bg-blue-300 transition-colors"
+              >
                 <span className="text-2xl font-bold text-blue-600">
                   {selectedRide.driver.charAt(0).toUpperCase()}
                 </span>
               </div>
-              <h3 className="text-xl md:text-2xl font-bold text-gray-800 mb-2">{selectedRide.driver}</h3>
+              <h3
+                onClick={handleDriverClick}
+                className="text-xl md:text-2xl font-bold text-gray-800 mb-2 cursor-pointer hover:text-blue-600 transition-colors"
+              >
+                {selectedRide.driver}
+              </h3>
               <div className="flex items-center justify-center mb-4">
                 <button
                   onClick={() => openModal('reviews')}
