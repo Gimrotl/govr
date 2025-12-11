@@ -338,37 +338,37 @@ export const MessagesModal: React.FC = () => {
                 </div>
               </div>
 
-              <form onSubmit={handleSendMessage} className="p-5 bg-white/80 backdrop-blur-sm border-t border-slate-200/50 flex-shrink-0">
-                {replyingTo && (
-                  <div className="mb-3 p-3 bg-blue-50 rounded-xl flex justify-between items-center border border-blue-200 shadow-sm">
-                    <div className="text-sm">
-                      <span className="font-semibold text-blue-700">Antwort auf:</span>
-                      <p className="truncate text-slate-700 mt-1">{getRepliedMessage(replyingTo)?.content}</p>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => setReplyingTo(null)}
-                      className="text-slate-400 hover:text-red-500 transition-all duration-200 hover:rotate-90"
-                    >
-                      <X size={16} />
-                    </button>
-                  </div>
-                )}
-
+              <form onSubmit={handleSendMessage} className="relative p-5 bg-white/80 backdrop-blur-sm border-t border-slate-200/50 flex-shrink-0 max-h-[40vh] overflow-y-auto">
                 {showEmojiPicker && (
-                  <div className="mb-3 p-3 bg-slate-50 rounded-xl border border-slate-200 shadow-sm">
+                  <div className="absolute bottom-full left-0 right-0 mb-2 mx-5 p-3 bg-white rounded-xl border border-slate-200 shadow-xl z-10">
                     <div className="flex flex-wrap gap-2">
                       {emojis.map((emoji, index) => (
                         <button
                           key={index}
                           type="button"
                           onClick={() => addEmoji(emoji)}
-                          className="text-2xl hover:bg-white hover:scale-125 p-2 rounded-lg transition-all duration-200 shadow-sm"
+                          className="text-2xl hover:bg-slate-100 hover:scale-125 p-2 rounded-lg transition-all duration-200"
                         >
                           {emoji}
                         </button>
                       ))}
                     </div>
+                  </div>
+                )}
+
+                {replyingTo && (
+                  <div className="mb-3 p-3 bg-blue-50 rounded-xl flex justify-between items-center border border-blue-200 shadow-sm">
+                    <div className="text-sm flex-1 min-w-0">
+                      <span className="font-semibold text-blue-700">Antwort auf:</span>
+                      <p className="truncate text-slate-700 mt-1">{getRepliedMessage(replyingTo)?.content}</p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setReplyingTo(null)}
+                      className="text-slate-400 hover:text-red-500 transition-all duration-200 hover:rotate-90 ml-2 flex-shrink-0"
+                    >
+                      <X size={16} />
+                    </button>
                   </div>
                 )}
 
