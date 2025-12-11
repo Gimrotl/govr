@@ -397,7 +397,7 @@ export const RestStops: React.FC = () => {
           {stop.description}
         </p>
 
-        <div className="flex flex-wrap gap-2 mb-6 h-12 overflow-hidden">
+        <div className="flex flex-wrap gap-2 mb-6">
           {stop.amenities.slice(0, 6).map((amenity, index) => (
             <div key={index}>
               {getAmenityIcon(amenity)}
