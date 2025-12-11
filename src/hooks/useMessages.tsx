@@ -4,14 +4,24 @@ import { useAuth } from './useAuth';
 
 interface MessagesContextType {
   messages: Message[];
+  unreadCount: number;
   sendMessage: (message: Omit<Message, 'id'>) => Message | undefined;
   addSystemMessage: (content: string, from?: string) => void;
+  addNotificationMessage: (notification: {
+    from: string;
+    content: string;
+    notificationType: 'order_accepted' | 'order_rejected' | 'booking_confirmed' | 'booking_request';
+  }) => void;
+  markAsRead: (messageId: number) => void;
 }
 
 const MessagesContext = createContext<MessagesContextType>({
   messages: [],
+  unreadCount: 0,
   sendMessage: () => undefined,
-  addSystemMessage: () => {}
+  addSystemMessage: () => {},
+  addNotificationMessage: () => {},
+  markAsRead: () => {}
 });
 
 export const useMessages = () => {
@@ -62,14 +72,50 @@ export const MessagesProvider: React.FC<{ children: ReactNode }> = ({ children }
       from: from || 'System',
       content,
       timestamp: new Date().toLocaleString('de-DE'),
-      sent: false
+      sent: false,
+      read: false
     };
 
     setMessages(prev => [newMessage, ...prev]);
   };
 
+  const addNotificationMessage = (notification: {
+    from: string;
+    content: string;
+    notificationType: 'order_accepted' | 'order_rejected' | 'booking_confirmed' | 'booking_request';
+  }) => {
+    const newMessage: Message = {
+      id: Date.now(),
+      from: notification.from,
+      content: notification.content,
+      timestamp: new Date().toLocaleString('de-DE'),
+      sent: false,
+      notificationType: notification.notificationType,
+      read: false
+    };
+
+    setMessages(prev => [newMessage, ...prev]);
+  };
+
+  const markAsRead = (messageId: number) => {
+    setMessages(prev =>
+      prev.map(msg =>
+        msg.id === messageId ? { ...msg, read: true } : msg
+      )
+    );
+  };
+
+  const unreadCount = messages.filter(m => !m.sent && !m.read).length;
+
   return (
-    <MessagesContext.Provider value={{ messages, sendMessage, addSystemMessage }}>
+    <MessagesContext.Provider value={{
+      messages,
+      unreadCount,
+      sendMessage,
+      addSystemMessage,
+      addNotificationMessage,
+      markAsRead
+    }}>
       {children}
     </MessagesContext.Provider>
   );

@@ -57,6 +57,8 @@ export interface Message {
   image?: string;
   replyTo?: number;
   mentions?: string[];
+  notificationType?: 'order_accepted' | 'order_rejected' | 'booking_confirmed' | 'booking_request';
+  read?: boolean;
 }
 
 export interface Order {

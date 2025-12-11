@@ -2,12 +2,12 @@ import React from 'react';
 import { Menu, User, LogOut, LogIn, MessageSquare, ShoppingBag, PlusCircle, Car, Bell, Shield } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { useModals } from '../hooks/useModals';
-import { useNotifications } from '../hooks/useNotifications.tsx';
+import { useMessages } from '../hooks/useMessages';
 
 export const Navbar: React.FC = () => {
   const { isLoggedIn, logout, isAdmin } = useAuth();
   const { openModal } = useModals();
-  const { unreadCount } = useNotifications();
+  const { unreadCount } = useMessages();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
@@ -56,38 +56,31 @@ export const Navbar: React.FC = () => {
             
             {isLoggedIn && (
               <>
-                <button 
-                  onClick={() => openModal('notifications')}
-                  className="flex items-center hover:text-green-300 transition duration-200 relative"
-                >
-                  <Bell size={18} className="mr-1" />
-                  <span>Notifications</span>
-                  {unreadCount > 0 && (
-                    <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                      {unreadCount}
-                    </span>
-                  )}
-                </button>
-                <button 
+                <button
                   onClick={() => openModal('myRides')}
                   className="flex items-center hover:text-green-300 transition duration-200"
                 >
                   <Car size={18} className="mr-1" />
                   <span>My Rides</span>
                 </button>
-                <button 
+                <button
                   onClick={() => openModal('orders')}
                   className="flex items-center hover:text-green-300 transition duration-200"
                 >
                   <ShoppingBag size={18} className="mr-1" />
                   <span>Orders</span>
                 </button>
-                <button 
+                <button
                   onClick={() => openModal('messages')}
-                  className="flex items-center hover:text-green-300 transition duration-200"
+                  className="flex items-center hover:text-green-300 transition duration-200 relative"
                 >
                   <MessageSquare size={18} className="mr-1" />
                   <span>Messages</span>
+                  {unreadCount > 0 && (
+                    <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                      {unreadCount}
+                    </span>
+                  )}
                 </button>
                 <button 
                   onClick={() => openModal('profile')}
@@ -149,21 +142,7 @@ export const Navbar: React.FC = () => {
             </button>
             {isLoggedIn && (
               <>
-                <button 
-                  onClick={() => {
-                    openModal('notifications');
-                    setIsMenuOpen(false);
-                  }}
-                  className="block px-3 py-2 text-base w-full text-left rounded-md hover:bg-gray-600 relative"
-                >
-                  Notifications
-                  {unreadCount > 0 && (
-                    <span className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                      {unreadCount}
-                    </span>
-                  )}
-                </button>
-                <button 
+                <button
                   onClick={() => {
                     openModal('myRides');
                     setIsMenuOpen(false);
@@ -172,7 +151,7 @@ export const Navbar: React.FC = () => {
                 >
                   My Rides
                 </button>
-                <button 
+                <button
                   onClick={() => {
                     openModal('orders');
                     setIsMenuOpen(false);
@@ -181,14 +160,19 @@ export const Navbar: React.FC = () => {
                 >
                   Orders
                 </button>
-                <button 
+                <button
                   onClick={() => {
                     openModal('messages');
                     setIsMenuOpen(false);
                   }}
-                  className="block px-3 py-2 text-base w-full text-left rounded-md hover:bg-gray-600"
+                  className="block px-3 py-2 text-base w-full text-left rounded-md hover:bg-gray-600 relative"
                 >
                   Messages
+                  {unreadCount > 0 && (
+                    <span className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                      {unreadCount}
+                    </span>
+                  )}
                 </button>
                 <button 
                   onClick={() => {

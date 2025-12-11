@@ -6,7 +6,7 @@ import { useDropzone } from 'react-dropzone';
 
 export const MessagesModal: React.FC = () => {
   const { closeModal } = useModals();
-  const { messages, sendMessage } = useMessages();
+  const { messages, sendMessage, markAsRead } = useMessages();
   const [newMessage, setNewMessage] = useState('');
   const [selectedContact, setSelectedContact] = useState<string | null>(null);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
@@ -93,6 +93,44 @@ export const MessagesModal: React.FC = () => {
     }
   };
 
+  const getNotificationIcon = (type: string) => {
+    switch (type) {
+      case 'order_accepted':
+        return '✅';
+      case 'order_rejected':
+        return '❌';
+      case 'booking_confirmed':
+        return '🎉';
+      case 'booking_request':
+        return '📨';
+      default:
+        return '📢';
+    }
+  };
+
+  const getNotificationColor = (type: string) => {
+    switch (type) {
+      case 'order_accepted':
+        return 'bg-green-50 border-l-4 border-green-500';
+      case 'order_rejected':
+        return 'bg-red-50 border-l-4 border-red-500';
+      case 'booking_confirmed':
+        return 'bg-blue-50 border-l-4 border-blue-500';
+      case 'booking_request':
+        return 'bg-yellow-50 border-l-4 border-yellow-500';
+      default:
+        return 'bg-gray-50 border-l-4 border-gray-500';
+    }
+  };
+
+  React.useEffect(() => {
+    filteredMessages.forEach(msg => {
+      if (!msg.sent && !msg.read) {
+        markAsRead(msg.id);
+      }
+    });
+  }, [selectedContact, filteredMessages]);
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 animate-fadeIn">
       <div className="bg-white rounded-lg shadow-xl w-full max-w-4xl h-[600px] md:h-[600px] h-[90vh] flex animate-scaleIn">
@@ -155,21 +193,46 @@ export const MessagesModal: React.FC = () => {
                 <div className="space-y-4">
                   {filteredMessages.map((message) => (
                     <div key={message.id} className="group">
-                      <div className={`flex ${message.sent ? 'justify-end' : 'justify-start'}`}>
-                        <div className="relative max-w-[70%]">
-                          {message.replyTo && (
-                            <div className="mb-1 p-2 bg-gray-200 rounded-lg text-xs">
-                              <span className="font-medium">Replying to:</span>
-                              <p className="truncate">{getRepliedMessage(message.replyTo)?.content}</p>
+                      {message.notificationType ? (
+                        <div className={`p-4 rounded-lg ${getNotificationColor(message.notificationType)} mb-4`}>
+                          <div className="flex items-start">
+                            <span className="text-2xl mr-3">
+                              {getNotificationIcon(message.notificationType)}
+                            </span>
+                            <div className="flex-1">
+                              <div className="flex items-center justify-between mb-2">
+                                <span className="font-semibold text-gray-800">{message.from}</span>
+                                {!message.read && (
+                                  <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
+                                )}
+                              </div>
+                              <p className="text-gray-700 mb-1">{message.content}</p>
+                              <div className="text-xs text-gray-500">{message.timestamp}</div>
+                              <button
+                                onClick={() => handleReply(message.id)}
+                                className="mt-2 text-sm text-blue-600 hover:text-blue-800 font-medium"
+                              >
+                                Antworten
+                              </button>
                             </div>
-                          )}
-                          <div
-                            className={`p-3 rounded-lg ${
-                              message.sent
-                                ? 'bg-green-500 text-white rounded-br-none'
-                                : 'bg-white text-gray-800 rounded-bl-none shadow-sm'
-                            }`}
-                          >
+                          </div>
+                        </div>
+                      ) : (
+                        <div className={`flex ${message.sent ? 'justify-end' : 'justify-start'}`}>
+                          <div className="relative max-w-[70%]">
+                            {message.replyTo && (
+                              <div className="mb-1 p-2 bg-gray-200 rounded-lg text-xs">
+                                <span className="font-medium">Replying to:</span>
+                                <p className="truncate">{getRepliedMessage(message.replyTo)?.content}</p>
+                              </div>
+                            )}
+                            <div
+                              className={`p-3 rounded-lg ${
+                                message.sent
+                                  ? 'bg-green-500 text-white rounded-br-none'
+                                  : 'bg-white text-gray-800 rounded-bl-none shadow-sm'
+                              }`}
+                            >
                             {message.image && (
                               <img 
                                 src={message.image} 
@@ -188,20 +251,21 @@ export const MessagesModal: React.FC = () => {
                                 )}
                               </p>
                             )}
-                            <div className={`text-xs mt-1 ${message.sent ? 'text-green-100' : 'text-gray-500'}`}>
-                              {message.timestamp}
+                              <div className={`text-xs mt-1 ${message.sent ? 'text-green-100' : 'text-gray-500'}`}>
+                                {message.timestamp}
+                              </div>
                             </div>
+                            {!message.sent && (
+                              <button
+                                onClick={() => handleReply(message.id)}
+                                className="absolute -right-8 top-1/2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity p-1 text-gray-400 hover:text-gray-600"
+                              >
+                                <Reply size={16} />
+                              </button>
+                            )}
                           </div>
-                          {!message.sent && (
-                            <button
-                              onClick={() => handleReply(message.id)}
-                              className="absolute -right-8 top-1/2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity p-1 text-gray-400 hover:text-gray-600"
-                            >
-                              <Reply size={16} />
-                            </button>
-                          )}
                         </div>
-                      </div>
+                      )}
                     </div>
                   ))}
                 </div>
