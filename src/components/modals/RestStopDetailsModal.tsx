@@ -354,22 +354,23 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
           </div>
 
           {/* Right side - Details */}
-          <div className="lg:w-1/2 flex flex-col overflow-y-auto">
-            <div className="p-4 lg:p-6 flex-1">
+          <div className="lg:w-1/2 flex flex-col overflow-y-auto relative">
+            {/* Close button - fixed top right */}
+            <div className="sticky top-0 right-0 z-30 flex justify-end p-4 lg:p-6 pb-0">
+              <button
+                onClick={onClose}
+                className="bg-red-500 hover:bg-red-600 rounded-full p-2 text-white transition-colors shadow-lg"
+              >
+                <X size={24} />
+              </button>
+            </div>
+
+            <div className="p-4 lg:p-6 pt-2 flex-1">
               {/* Header */}
               <div className="mb-6 relative">
                 <div className="flex items-center justify-between">
                   <div className="flex-1">
                     <h1 className="text-xl lg:text-3xl font-bold text-gray-900 mb-3">{restStop.name}</h1>
-                  </div>
-                  {/* Close button - positioned on the right */}
-                  <div className="flex-shrink-0">
-                    <button
-                      onClick={onClose}
-                      className="bg-red-500 hover:bg-red-600 rounded-full p-2 text-white transition-colors shadow-lg"
-                    >
-                      <X size={24} />
-                    </button>
                   </div>
                 </div>
                 
