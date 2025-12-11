@@ -418,9 +418,6 @@ export const RestStopReviewsModal: React.FC<RestStopReviewsModalProps> = ({ rest
               <div className="space-y-2">
                 <div className="flex flex-col md:flex-row md:items-center md:space-x-4 space-y-2 md:space-y-0">
                   <div>
-                    <label className="block text-xs font-medium text-gray-700 mb-1">
-                      Bewertung
-                    </label>
                     <div className="flex space-x-1">
                       {[1, 2, 3, 4, 5].map((star) => (
                         <button
