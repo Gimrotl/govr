@@ -238,93 +238,93 @@ export const RestStopReviewsModal: React.FC<RestStopReviewsModalProps> = ({ rest
                 </p>
               </div>
             ) : (
-              <div className="space-y-6">
+              <div className="space-y-3 md:space-y-6">
                 {reviews.map((review) => (
-                  <div key={review.id} className="bg-gray-50 rounded-xl p-4 border border-gray-200">
-                    <div className="flex items-start space-x-4">
+                  <div key={review.id} className="bg-gray-50 rounded-xl p-3 md:p-4 border border-gray-200">
+                    <div className="flex items-start space-x-2 md:space-x-4">
                       {/* User Avatar */}
-                      <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
-                        <span className="text-white font-bold text-lg">
+                      <div className="w-8 h-8 md:w-12 md:h-12 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
+                        <span className="text-white font-bold text-sm md:text-lg">
                           {review.userName.charAt(0).toUpperCase()}
                         </span>
                       </div>
-                      
+
                       {/* Review Content */}
-                      <div className="flex-1">
-                        <div className="flex items-center justify-between mb-2">
-                          <h4 className="font-semibold text-gray-800 text-lg">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between mb-1 md:mb-2">
+                          <h4 className="font-semibold text-gray-800 text-sm md:text-lg truncate">
                             {review.userName}
                           </h4>
-                          <div className="flex items-center">
+                          <div className="flex items-center flex-shrink-0 ml-2">
                             {[1, 2, 3, 4, 5].map((star) => (
                               <Star
                                 key={star}
-                                size={16}
-                                className={`${
+                                size={14}
+                                className={`md:w-4 md:h-4 ${
                                   star <= review.rating
                                     ? 'text-yellow-500 fill-current'
                                     : 'text-gray-300'
                                 }`}
                               />
                             ))}
-                            <span className="ml-2 font-bold text-gray-700">
+                            <span className="ml-1 md:ml-2 font-bold text-gray-700 text-xs md:text-base">
                               {review.rating}.0
                             </span>
                           </div>
                         </div>
-                        
-                        <p className="text-gray-700 leading-relaxed mb-3">
+
+                        <p className="text-gray-700 leading-relaxed mb-2 md:mb-3 text-xs md:text-base break-words">
                           {review.comment}
                         </p>
-                        
+
                         {/* Action buttons */}
-                        <div className="flex items-center space-x-4 text-sm">
+                        <div className="flex items-center flex-wrap gap-2 md:gap-4 text-xs md:text-sm">
                           <button
                             onClick={() => handleLike(review.id)}
                             className={`flex items-center space-x-1 transition-colors ${
                               review.userLiked ? 'text-blue-600' : 'text-gray-500 hover:text-blue-600'
                             }`}
                           >
-                            <ThumbsUp size={16} />
+                            <ThumbsUp className="w-3 h-3 md:w-4 md:h-4" />
                             <span>{review.likes}</span>
                           </button>
-                          
+
                           <button
                             onClick={() => handleDislike(review.id)}
                             className={`flex items-center space-x-1 transition-colors ${
                               review.userDisliked ? 'text-red-600' : 'text-gray-500 hover:text-red-600'
                             }`}
                           >
-                            <ThumbsDown size={16} />
+                            <ThumbsDown className="w-3 h-3 md:w-4 md:h-4" />
                             <span>{review.dislikes}</span>
                           </button>
-                          
+
                           <button
                             onClick={() => setReplyingTo(review.id)}
                             className="flex items-center space-x-1 text-gray-500 hover:text-green-600 transition-colors"
                           >
-                            <MessageCircle size={16} />
-                            <span>Antworten</span>
+                            <MessageCircle className="w-3 h-3 md:w-4 md:h-4" />
+                            <span className="hidden sm:inline">Antworten</span>
                           </button>
-                          
-                          <span className="text-gray-400">{review.timestamp}</span>
+
+                          <span className="text-gray-400 text-[10px] md:text-xs">{review.timestamp}</span>
                         </div>
                         
                         {/* Replies */}
                         {review.replies.length > 0 && (
-                          <div className="mt-4 space-y-3 border-l-2 border-gray-200 pl-4">
+                          <div className="mt-2 md:mt-4 space-y-2 md:space-y-3 border-l-2 border-gray-200 pl-2 md:pl-4">
                             {review.replies.map((reply) => (
-                              <div key={reply.id} className="bg-white rounded-lg p-3 border border-gray-100">
-                                <div className="flex items-start justify-between mb-2">
-                                  <div className="flex items-center">
-                                    <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center mr-2">
-                                      <span className="text-white font-bold text-sm">
+                              <div key={reply.id} className="bg-white rounded-lg p-2 md:p-3 border border-gray-100">
+                                <div className="flex items-start justify-between mb-1 md:mb-2">
+                                  <div className="flex items-center min-w-0">
+                                    <div className="w-6 h-6 md:w-8 md:h-8 bg-green-500 rounded-full flex items-center justify-center mr-1.5 md:mr-2 flex-shrink-0">
+                                      <span className="text-white font-bold text-xs md:text-sm">
                                         {reply.userName.charAt(0).toUpperCase()}
                                       </span>
                                     </div>
-                                    <div>
-                                      <p className="font-medium text-gray-800 text-sm">{reply.userName}</p>
-                                      <span className="text-xs text-gray-500">{reply.timestamp}</span>
+                                    <div className="min-w-0">
+                                      <p className="font-medium text-gray-800 text-xs md:text-sm truncate">{reply.userName}</p>
+                                      <span className="text-[10px] md:text-xs text-gray-500">{reply.timestamp}</span>
                                     </div>
                                   </div>
                                   {reply.userId === userEmail && (
@@ -333,24 +333,24 @@ export const RestStopReviewsModal: React.FC<RestStopReviewsModalProps> = ({ rest
                                         setEditingReply(reply.id);
                                         setEditReplyText(reply.comment);
                                       }}
-                                      className="text-gray-400 hover:text-blue-600 transition-colors"
+                                      className="text-gray-400 hover:text-blue-600 transition-colors flex-shrink-0 ml-2"
                                     >
-                                      <Edit2 size={14} />
+                                      <Edit2 className="w-3 h-3 md:w-3.5 md:h-3.5" />
                                     </button>
                                   )}
                                 </div>
                                 
                                 {editingReply === reply.id ? (
-                                  <div className="space-y-2">
+                                  <div className="space-y-1.5 md:space-y-2">
                                     <textarea
                                       value={editReplyText}
                                       onChange={(e) => setEditReplyText(e.target.value)}
-                                      className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none h-16 text-sm"
+                                      className="w-full p-1.5 md:p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none h-12 md:h-16 text-xs md:text-sm"
                                     />
-                                    <div className="flex space-x-2">
+                                    <div className="flex space-x-1.5 md:space-x-2">
                                       <button
                                         onClick={() => handleEditReply(reply.id)}
-                                        className="bg-blue-600 text-white px-3 py-1 rounded-md hover:bg-blue-700 transition duration-200 text-sm"
+                                        className="bg-blue-600 text-white px-2 md:px-3 py-1 rounded-md hover:bg-blue-700 transition duration-200 text-xs md:text-sm"
                                       >
                                         Speichern
                                       </button>
@@ -359,14 +359,14 @@ export const RestStopReviewsModal: React.FC<RestStopReviewsModalProps> = ({ rest
                                           setEditingReply(null);
                                           setEditReplyText('');
                                         }}
-                                        className="bg-gray-500 text-white px-3 py-1 rounded-md hover:bg-gray-600 transition duration-200 text-sm"
+                                        className="bg-gray-500 text-white px-2 md:px-3 py-1 rounded-md hover:bg-gray-600 transition duration-200 text-xs md:text-sm"
                                       >
                                         Abbrechen
                                       </button>
                                     </div>
                                   </div>
                                 ) : (
-                                  <p className="text-gray-700 text-sm">{reply.comment}</p>
+                                  <p className="text-gray-700 text-xs md:text-sm break-words">{reply.comment}</p>
                                 )}
                               </div>
                             ))}
@@ -375,19 +375,19 @@ export const RestStopReviewsModal: React.FC<RestStopReviewsModalProps> = ({ rest
                         
                         {/* Reply form */}
                         {replyingTo === review.id && (
-                          <div className="mt-4 space-y-3 border-l-2 border-green-200 pl-4">
+                          <div className="mt-2 md:mt-4 space-y-2 md:space-y-3 border-l-2 border-green-200 pl-2 md:pl-4">
                             <textarea
                               value={replyText}
                               onChange={(e) => setReplyText(e.target.value)}
                               placeholder="Ihre Antwort..."
-                              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none h-20 text-sm"
+                              className="w-full p-2 md:p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none h-16 md:h-20 text-xs md:text-sm"
                             />
-                            <div className="flex space-x-2">
+                            <div className="flex space-x-1.5 md:space-x-2">
                               <button
                                 onClick={() => handleReply(review.id)}
-                                className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition duration-200 flex items-center text-sm"
+                                className="bg-green-600 text-white px-2 md:px-4 py-1.5 md:py-2 rounded-lg hover:bg-green-700 transition duration-200 flex items-center text-xs md:text-sm"
                               >
-                                <Send size={14} className="mr-2" />
+                                <Send className="w-3 h-3 md:w-3.5 md:h-3.5 mr-1 md:mr-2" />
                                 Antworten
                               </button>
                               <button
@@ -395,7 +395,7 @@ export const RestStopReviewsModal: React.FC<RestStopReviewsModalProps> = ({ rest
                                   setReplyingTo(null);
                                   setReplyText('');
                                 }}
-                                className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition duration-200 text-sm"
+                                className="bg-gray-500 text-white px-2 md:px-4 py-1.5 md:py-2 rounded-lg hover:bg-gray-600 transition duration-200 text-xs md:text-sm"
                               >
                                 Abbrechen
                               </button>
@@ -411,14 +411,14 @@ export const RestStopReviewsModal: React.FC<RestStopReviewsModalProps> = ({ rest
           </div>
 
           {/* Review Form at Bottom */}
-          <div className="border-t border-gray-200 bg-gray-50 p-3">
-            <h3 className="text-base font-semibold text-gray-800 mb-2">Bewertung abgeben</h3>
-            
+          <div className="border-t border-gray-200 bg-gray-50 p-2 md:p-3">
+            <h3 className="text-sm md:text-base font-semibold text-gray-800 mb-1.5 md:mb-2">Bewertung abgeben</h3>
+
             {isLoggedIn ? (
-              <div className="space-y-2">
-                <div className="flex flex-col md:flex-row md:items-center md:space-x-4 space-y-2 md:space-y-0">
+              <div className="space-y-1.5 md:space-y-2">
+                <div className="flex flex-col md:flex-row md:items-center md:space-x-4 space-y-1.5 md:space-y-0">
                   <div>
-                    <div className="flex space-x-1">
+                    <div className="flex space-x-0.5 md:space-x-1">
                       {[1, 2, 3, 4, 5].map((star) => (
                         <button
                           key={star}
@@ -426,8 +426,7 @@ export const RestStopReviewsModal: React.FC<RestStopReviewsModalProps> = ({ rest
                           className="transition-colors"
                         >
                           <Star
-                            size={18}
-                            className={`${
+                            className={`w-4 h-4 md:w-[18px] md:h-[18px] ${
                               star <= newReview.rating
                                 ? 'text-yellow-500 fill-current'
                                 : 'text-gray-300'
@@ -437,20 +436,20 @@ export const RestStopReviewsModal: React.FC<RestStopReviewsModalProps> = ({ rest
                       ))}
                     </div>
                   </div>
-                  
+
                   <div className="flex-1">
-                    <div className="flex space-x-2">
+                    <div className="flex space-x-1.5 md:space-x-2">
                       <textarea
                         value={newReview.comment}
                         onChange={(e) => setNewReview({ ...newReview, comment: e.target.value })}
                         placeholder="Teilen Sie Ihre Erfahrung mit..."
-                        className="flex-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none h-8 text-xs"
+                        className="flex-1 p-1.5 md:p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none h-8 text-[11px] md:text-xs"
                       />
                       <button
                         onClick={handleSubmitReview}
-                        className="bg-blue-600 text-white px-3 py-1 rounded-lg font-medium hover:bg-blue-700 transition duration-200 flex items-center justify-center h-8 text-xs"
+                        className="bg-blue-600 text-white px-2 md:px-3 py-1 rounded-lg font-medium hover:bg-blue-700 transition duration-200 flex items-center justify-center h-8 text-[11px] md:text-xs whitespace-nowrap"
                       >
-                        <Send size={12} className="mr-1" />
+                        <Send className="w-3 h-3 md:w-3 md:h-3 mr-0.5 md:mr-1" />
                         Senden
                       </button>
                     </div>
