@@ -43,7 +43,7 @@ export const RideSearch: React.FC<RideSearchProps> = ({
         </div>
 
         <div className="flex space-x-4 md:space-x-4">
-          <div className="flex-1 md:w-32 relative">
+          <div className="flex-1 md:w-36 relative">
             <input
               type="number"
               name="seats"
@@ -57,7 +57,7 @@ export const RideSearch: React.FC<RideSearchProps> = ({
             <Users size={18} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
           </div>
 
-          <div className="flex-1 md:w-40">
+          <div className="flex-1 md:w-36 relative">
             <input
               type="date"
               name="date"
