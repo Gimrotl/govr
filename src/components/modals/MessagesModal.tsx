@@ -155,20 +155,20 @@ export const MessagesModal: React.FC = () => {
   }, [selectedContact, filteredMessages]);
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 animate-fadeIn">
-      <div className="bg-white rounded-lg shadow-xl w-full max-w-4xl h-[90vh] max-h-[600px] flex animate-scaleIn">
+    <div className="fixed inset-0 bg-gradient-to-br from-gray-900/60 to-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-fadeIn">
+      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-5xl h-[90vh] max-h-[700px] flex overflow-hidden animate-scaleIn">
         {/* Mobile: Show contacts or chat based on selection */}
-        <div className={`${showContacts ? 'block' : 'hidden'} md:block w-full md:w-64 border-r border-gray-200`}>
-          <div className="p-4 border-b border-gray-200 flex justify-between items-center">
-            <h2 className="text-lg font-semibold">Kontakte</h2>
+        <div className={`${showContacts ? 'block' : 'hidden'} md:block w-full md:w-80 bg-gradient-to-b from-slate-50 to-white border-r border-slate-200/50`}>
+          <div className="p-5 border-b border-slate-200/50 flex justify-between items-center bg-white/80 backdrop-blur-sm">
+            <h2 className="text-xl font-bold text-slate-800 tracking-tight">Nachrichten</h2>
             <button
               onClick={() => closeModal('messages')}
-              className="text-red-500 hover:text-red-700 transition duration-200"
+              className="text-slate-400 hover:text-red-500 transition-all duration-200 hover:rotate-90 hover:scale-110"
             >
-              <X size={20} />
+              <X size={22} />
             </button>
           </div>
-          <div className="overflow-y-auto h-[calc(100%-64px)]">
+          <div className="overflow-y-auto h-[calc(100%-76px)] p-2">
             {contacts.map((contact) => {
               const unreadForContact = getUnreadCount(contact);
               const hasUnread = unreadForContact > 0;
@@ -178,16 +178,16 @@ export const MessagesModal: React.FC = () => {
                   key={contact}
                   onClick={() => {
                     setSelectedContact(contact);
-                    setShowContacts(false); // Hide contacts on mobile when selecting
+                    setShowContacts(false);
                   }}
-                  className={`w-full p-4 text-left transition-colors ${
+                  className={`w-full p-4 mb-2 text-left transition-all duration-200 rounded-xl group ${
                     selectedContact === contact
                       ? hasUnread
-                        ? 'bg-red-100 border-l-4 border-red-500'
-                        : 'bg-gray-100'
+                        ? 'bg-gradient-to-r from-red-50 to-red-100 border-l-4 border-red-500 shadow-md transform scale-[1.02]'
+                        : 'bg-gradient-to-r from-slate-100 to-slate-50 shadow-md transform scale-[1.02]'
                       : hasUnread
-                      ? 'bg-red-50 hover:bg-red-100 border-l-4 border-red-400'
-                      : 'hover:bg-gray-50'
+                      ? 'bg-red-50/50 hover:bg-gradient-to-r hover:from-red-50 hover:to-red-100 border-l-4 border-red-400 hover:shadow-md hover:scale-[1.01]'
+                      : 'hover:bg-gradient-to-r hover:from-slate-50 hover:to-white hover:shadow-sm hover:scale-[1.01]'
                   }`}
                 >
                   <div className="flex items-center justify-between">
@@ -197,30 +197,33 @@ export const MessagesModal: React.FC = () => {
                           e.stopPropagation();
                           handleContactClick(contact);
                         }}
-                        className={`w-8 h-8 rounded-full flex items-center justify-center mr-3 cursor-pointer hover:ring-2 hover:ring-blue-400 transition-all ${
-                          hasUnread ? 'bg-red-200' : 'bg-gray-200'
+                        className={`w-12 h-12 rounded-full flex items-center justify-center mr-4 cursor-pointer transition-all duration-200 group-hover:scale-110 ${
+                          hasUnread
+                            ? 'bg-gradient-to-br from-red-400 to-red-600 shadow-lg shadow-red-200'
+                            : 'bg-gradient-to-br from-blue-400 to-cyan-500 shadow-lg shadow-blue-200'
                         }`}
                       >
-                        <span className={`font-semibold ${
-                          hasUnread ? 'text-red-700' : 'text-gray-600'
-                        }`}>
+                        <span className="font-bold text-white text-lg">
                           {contact?.charAt(0).toUpperCase()}
                         </span>
                       </div>
-                      <span
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleContactClick(contact);
-                        }}
-                        className={`font-medium cursor-pointer hover:text-blue-600 transition-colors truncate ${
-                          hasUnread ? 'text-red-700' : ''
-                        }`}
-                      >
-                        {contact}
-                      </span>
+                      <div className="flex-1 min-w-0">
+                        <span
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleContactClick(contact);
+                          }}
+                          className={`font-semibold cursor-pointer hover:text-blue-600 transition-colors truncate block ${
+                            hasUnread ? 'text-slate-900' : 'text-slate-700'
+                          }`}
+                        >
+                          {contact}
+                        </span>
+                        <p className="text-xs text-slate-500 truncate mt-1">Klicken zum Öffnen</p>
+                      </div>
                     </div>
                     {hasUnread && (
-                      <span className="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full flex-shrink-0">
+                      <span className="bg-gradient-to-r from-red-500 to-red-600 text-white text-xs font-bold px-3 py-1.5 rounded-full flex-shrink-0 shadow-lg animate-pulse">
                         {unreadForContact}
                       </span>
                     )}
@@ -231,47 +234,50 @@ export const MessagesModal: React.FC = () => {
           </div>
         </div>
 
-        <div className={`${!showContacts ? 'block' : 'hidden'} md:block flex-1 flex flex-col min-h-0 h-full overflow-hidden`}>
+        <div className={`${!showContacts ? 'block' : 'hidden'} md:block flex-1 flex flex-col min-h-0 h-full overflow-hidden bg-gradient-to-br from-slate-50 via-white to-blue-50/30`}>
           {selectedContact ? (
             <>
-              <div className="p-4 border-b border-gray-200 flex items-center flex-shrink-0">
+              <div className="p-5 border-b border-slate-200/50 flex items-center flex-shrink-0 bg-white/80 backdrop-blur-sm">
                 <button
                   onClick={() => setShowContacts(true)}
-                  className="md:hidden mr-3 text-gray-600 hover:text-gray-800"
+                  className="md:hidden mr-3 text-slate-600 hover:text-slate-900 hover:bg-slate-100 p-2 rounded-lg transition-all duration-200"
                 >
                   <ChevronLeft size={20} />
                 </button>
-                <h3 className="font-semibold">Chat mit {selectedContact}</h3>
+                <div className="flex-1">
+                  <h3 className="font-bold text-slate-800 text-lg">Chat mit {selectedContact}</h3>
+                  <p className="text-xs text-slate-500">Aktiv</p>
+                </div>
                 <button
                   onClick={() => closeModal('messages')}
-                  className="hidden md:block ml-auto text-red-500 hover:text-red-700 transition duration-200"
+                  className="hidden md:block text-slate-400 hover:text-red-500 transition-all duration-200 hover:rotate-90 hover:scale-110"
                 >
-                  <X size={20} />
+                  <X size={22} />
                 </button>
               </div>
 
-              <div className="flex-1 overflow-y-auto p-4 bg-gray-50 flex flex-col-reverse min-h-0">
+              <div className="flex-1 overflow-y-auto p-6 flex flex-col-reverse min-h-0">
                 <div className="space-y-4">
                   {filteredMessages.map((message) => (
                     <div key={message.id} className="group">
                       {message.notificationType ? (
-                        <div className={`p-4 rounded-lg ${getNotificationColor(message.notificationType)} mb-4`}>
+                        <div className={`p-5 rounded-2xl ${getNotificationColor(message.notificationType)} mb-4 shadow-lg backdrop-blur-sm`}>
                           <div className="flex items-start">
-                            <span className="text-2xl mr-3">
+                            <span className="text-3xl mr-4">
                               {getNotificationIcon(message.notificationType)}
                             </span>
                             <div className="flex-1">
                               <div className="flex items-center justify-between mb-2">
-                                <span className="font-semibold text-gray-800">{message.from}</span>
+                                <span className="font-bold text-slate-900">{message.from}</span>
                                 {!message.read && (
-                                  <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
+                                  <span className="w-2.5 h-2.5 bg-blue-500 rounded-full animate-pulse shadow-lg shadow-blue-300"></span>
                                 )}
                               </div>
-                              <p className="text-gray-700 mb-1">{message.content}</p>
-                              <div className="text-xs text-gray-500">{message.timestamp}</div>
+                              <p className="text-slate-700 mb-2 leading-relaxed">{message.content}</p>
+                              <div className="text-xs text-slate-500 font-medium">{message.timestamp}</div>
                               <button
                                 onClick={() => handleReply(message.id)}
-                                className="mt-2 text-sm text-blue-600 hover:text-blue-800 font-medium"
+                                className="mt-3 text-sm bg-white/50 hover:bg-white px-4 py-2 rounded-lg text-blue-600 hover:text-blue-800 font-semibold transition-all duration-200 shadow-sm hover:shadow-md"
                               >
                                 Antworten
                               </button>
@@ -282,44 +288,44 @@ export const MessagesModal: React.FC = () => {
                         <div className={`flex ${message.sent ? 'justify-end' : 'justify-start'}`}>
                           <div className="relative max-w-[70%]">
                             {message.replyTo && (
-                              <div className="mb-1 p-2 bg-gray-200 rounded-lg text-xs">
-                                <span className="font-medium">Replying to:</span>
-                                <p className="truncate">{getRepliedMessage(message.replyTo)?.content}</p>
+                              <div className="mb-2 p-3 bg-white/60 backdrop-blur-sm rounded-xl text-xs border border-slate-200 shadow-sm">
+                                <span className="font-semibold text-slate-600">Antwort auf:</span>
+                                <p className="truncate text-slate-700 mt-1">{getRepliedMessage(message.replyTo)?.content}</p>
                               </div>
                             )}
                             <div
-                              className={`p-3 rounded-lg ${
+                              className={`p-4 rounded-2xl shadow-lg backdrop-blur-sm transition-all duration-200 hover:shadow-xl ${
                                 message.sent
-                                  ? 'bg-green-500 text-white rounded-br-none'
-                                  : 'bg-white text-gray-800 rounded-bl-none shadow-sm'
+                                  ? 'bg-gradient-to-br from-emerald-500 to-green-600 text-white rounded-br-sm'
+                                  : 'bg-white text-slate-800 rounded-bl-sm border border-slate-200/50'
                               }`}
                             >
                             {message.image && (
-                              <img 
-                                src={message.image} 
-                                alt="Shared" 
-                                className="max-w-full rounded-lg mb-2"
+                              <img
+                                src={message.image}
+                                alt="Shared"
+                                className="max-w-full rounded-xl mb-3 shadow-md"
                               />
                             )}
                             {message.content && (
-                              <p className="break-words">
-                                {message.content.split(/(@\w+)/g).map((part, index) => 
+                              <p className="break-words leading-relaxed">
+                                {message.content.split(/(@\w+)/g).map((part, index) =>
                                   part.startsWith('@') ? (
-                                    <span key={index} className="font-bold text-blue-300">
+                                    <span key={index} className={`font-bold ${message.sent ? 'text-emerald-100' : 'text-blue-600'}`}>
                                       {part}
                                     </span>
                                   ) : part
                                 )}
                               </p>
                             )}
-                              <div className={`text-xs mt-1 ${message.sent ? 'text-green-100' : 'text-gray-500'}`}>
+                              <div className={`text-xs mt-2 font-medium ${message.sent ? 'text-emerald-100' : 'text-slate-500'}`}>
                                 {message.timestamp}
                               </div>
                             </div>
                             {!message.sent && (
                               <button
                                 onClick={() => handleReply(message.id)}
-                                className="absolute -right-8 top-1/2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity p-1 text-gray-400 hover:text-gray-600"
+                                className="absolute -right-10 top-1/2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-200 p-2 text-slate-400 hover:text-blue-600 hover:bg-white rounded-lg shadow-md"
                               >
                                 <Reply size={16} />
                               </button>
@@ -332,32 +338,32 @@ export const MessagesModal: React.FC = () => {
                 </div>
               </div>
 
-              <form onSubmit={handleSendMessage} className="p-4 bg-white border-t border-gray-200 flex-shrink-0">
+              <form onSubmit={handleSendMessage} className="p-5 bg-white/80 backdrop-blur-sm border-t border-slate-200/50 flex-shrink-0">
                 {replyingTo && (
-                  <div className="mb-2 p-2 bg-blue-50 rounded-lg flex justify-between items-center">
+                  <div className="mb-3 p-3 bg-blue-50 rounded-xl flex justify-between items-center border border-blue-200 shadow-sm">
                     <div className="text-sm">
-                      <span className="font-medium">Replying to:</span>
-                      <p className="truncate">{getRepliedMessage(replyingTo)?.content}</p>
+                      <span className="font-semibold text-blue-700">Antwort auf:</span>
+                      <p className="truncate text-slate-700 mt-1">{getRepliedMessage(replyingTo)?.content}</p>
                     </div>
                     <button
                       type="button"
                       onClick={() => setReplyingTo(null)}
-                      className="text-gray-400 hover:text-gray-600"
+                      className="text-slate-400 hover:text-red-500 transition-all duration-200 hover:rotate-90"
                     >
                       <X size={16} />
                     </button>
                   </div>
                 )}
-                
+
                 {showEmojiPicker && (
-                  <div className="mb-2 p-2 bg-gray-50 rounded-lg">
+                  <div className="mb-3 p-3 bg-slate-50 rounded-xl border border-slate-200 shadow-sm">
                     <div className="flex flex-wrap gap-2">
                       {emojis.map((emoji, index) => (
                         <button
                           key={index}
                           type="button"
                           onClick={() => addEmoji(emoji)}
-                          className="text-xl hover:bg-gray-200 p-1 rounded"
+                          className="text-2xl hover:bg-white hover:scale-125 p-2 rounded-lg transition-all duration-200 shadow-sm"
                         >
                           {emoji}
                         </button>
@@ -365,66 +371,71 @@ export const MessagesModal: React.FC = () => {
                     </div>
                   </div>
                 )}
-                
-                <div className="flex space-x-2">
+
+                <div className="flex space-x-3">
                   <div className="flex-1 relative">
                     <textarea
                       value={newMessage}
                       onChange={(e) => setNewMessage(e.target.value)}
                       onKeyPress={handleKeyPress}
                       placeholder="Nachricht eingeben... @username für Erwähnung"
-                      className="w-full p-2 pr-12 md:pr-20 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm md:text-base"
+                      className="w-full p-4 pr-14 md:pr-24 border border-slate-300 rounded-2xl resize-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm md:text-base shadow-sm transition-all duration-200 bg-white"
                       rows={1}
                     />
-                    <div className="absolute right-2 top-1/2 -translate-y-1/2 flex space-x-1 md:space-x-1">
+                    <div className="absolute right-3 top-1/2 -translate-y-1/2 flex space-x-1">
                       <button
                         type="button"
                         onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-                        className="text-gray-400 hover:text-green-500 p-1 hidden md:block"
+                        className="text-slate-400 hover:text-emerald-500 p-2 rounded-lg hover:bg-slate-100 transition-all duration-200 hidden md:block"
                       >
-                        <Smile size={16} />
+                        <Smile size={18} />
                       </button>
                       <button
                         type="button"
                         onClick={() => handleMention(selectedContact || '')}
-                        className="text-gray-400 hover:text-green-500 p-1 hidden md:block"
+                        className="text-slate-400 hover:text-emerald-500 p-2 rounded-lg hover:bg-slate-100 transition-all duration-200 hidden md:block"
                       >
-                        <AtSign size={16} />
+                        <AtSign size={18} />
                       </button>
-                      <div {...getRootProps()} className="cursor-pointer p-1">
+                      <div {...getRootProps()} className="cursor-pointer p-2 text-slate-400 hover:text-emerald-500 rounded-lg hover:bg-slate-100 transition-all duration-200">
                       <input {...getInputProps()} />
-                        <ImageIcon size={14} className="text-gray-400 hover:text-green-500" />
+                        <ImageIcon size={18} />
                       </div>
                     </div>
                   </div>
                   <button
                     type="submit"
                     disabled={!newMessage.trim() && !selectedImage}
-                    className="bg-green-500 text-white p-2 rounded-lg hover:bg-green-600 transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0"
+                    className="bg-gradient-to-r from-emerald-500 to-green-600 text-white p-4 rounded-2xl hover:from-emerald-600 hover:to-green-700 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0 shadow-lg hover:shadow-xl hover:scale-105"
                   >
-                    <Send size={18} />
+                    <Send size={20} />
                   </button>
                 </div>
                 {selectedImage && (
-                  <div className="mt-2 p-2 bg-gray-100 rounded-lg flex items-center justify-between text-xs md:text-sm">
-                    <span className="text-gray-600 truncate mr-2">{selectedImage.name}</span>
+                  <div className="mt-3 p-3 bg-slate-100 rounded-xl flex items-center justify-between text-xs md:text-sm shadow-sm border border-slate-200">
+                    <span className="text-slate-700 truncate mr-2 font-medium">{selectedImage.name}</span>
                     <button
                       type="button"
                       onClick={() => setSelectedImage(null)}
-                      className="text-red-500 hover:text-red-700 flex-shrink-0"
+                      className="text-slate-400 hover:text-red-500 flex-shrink-0 transition-all duration-200 hover:scale-110"
                     >
-                      <X size={16} />
+                      <X size={18} />
                     </button>
                   </div>
                 )}
               </form>
             </>
           ) : (
-            <div className="flex-1 flex items-center justify-center text-gray-500 p-4 text-center">
-              <div>
-                <MessageSquare size={48} className="mx-auto mb-4 text-gray-300" />
-                <p className="text-lg mb-2">Wählen Sie einen Kontakt</p>
-                <p className="text-sm">um eine Unterhaltung zu beginnen</p>
+            <div className="flex-1 flex items-center justify-center text-slate-500 p-4 text-center">
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-cyan-500 rounded-full blur-3xl opacity-20 animate-pulse"></div>
+                <div className="relative bg-white/60 backdrop-blur-sm rounded-3xl p-12 shadow-2xl border border-slate-200/50">
+                  <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-2xl flex items-center justify-center shadow-xl shadow-blue-200 animate-bounce">
+                    <MessageSquare size={40} className="text-white" />
+                  </div>
+                  <p className="text-2xl font-bold text-slate-800 mb-3 tracking-tight">Wählen Sie einen Kontakt</p>
+                  <p className="text-base text-slate-500">um eine Unterhaltung zu beginnen</p>
+                </div>
               </div>
             </div>
           )}
