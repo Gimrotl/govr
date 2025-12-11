@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { ChevronLeft, ChevronRight, ChevronDown, MapPin, Star, Navigation, Info, Car, Coffee, Utensils, Fuel, Plus, Edit, Trash2 } from 'lucide-react';
+import { ChevronLeft, ChevronRight, MapPin, Star, Navigation, Car, Fuel, Utensils, Plus, Edit, Trash2 } from 'lucide-react';
 import { RestStopDetailsModal } from './modals/RestStopDetailsModal';
 import { useAuth } from '../hooks/useAuth';
 import { useModals } from '../hooks/useModals';
@@ -122,7 +122,7 @@ const getAmenityIcon = (amenity: string) => {
       return <div className="bg-red-100 text-red-800 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs flex items-center">
         <span className="mr-1">🍽️</span> Restaurant
       </div>;
-    case 'Grünfläche':
+    case 'Grün':
       return <div className="bg-green-100 text-green-800 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs flex items-center">
         <span className="mr-1">🌳</span> Grünfläche
       </div>;
@@ -138,15 +138,23 @@ const getAmenityIcon = (amenity: string) => {
       return <div className="bg-red-100 text-red-800 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs flex items-center">
         <span className="mr-1">⛽</span> Tankstelle
       </div>;
-    case 'Autowäsche':
-      return <div className="bg-indigo-100 text-indigo-800 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs flex items-center">
+    case 'Autowaschen':
+      return <div className="bg-blue-100 text-blue-800 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs flex items-center">
         <span className="mr-1">🚗</span> Autowäsche
       </div>;
     case 'Hotel':
-      return <div className="bg-purple-100 text-purple-800 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs flex items-center">
+      return <div className="bg-amber-100 text-amber-800 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs flex items-center">
         <span className="mr-1">🏨</span> Hotel
       </div>;
-    case 'Picknickplatz':
+    case 'Kinder':
+      return <div className="bg-pink-100 text-pink-800 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs flex items-center">
+        <span className="mr-1">👶</span> Kinderfreundlich
+      </div>;
+    case 'Essen':
+      return <div className="bg-red-100 text-red-800 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs flex items-center">
+        <span className="mr-1">🍽️</span> Restaurant
+      </div>;
+    case 'Esstisch':
       return <div className="bg-amber-100 text-amber-800 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs flex items-center">
         <span className="mr-1">🪑</span> Picknickplatz
       </div>;
@@ -169,144 +177,120 @@ export const RestStops: React.FC = () => {
   const [isScrolling3, setIsScrolling3] = useState(false);
   const [selectedRestStop, setSelectedRestStop] = useState<RestStop | null>(null);
   const [restStopsData, setRestStopsData] = useState<RestStop[]>(restStops);
-  const [isSection1Visible, setIsSection1Visible] = useState(false);
-  const [isSection2Visible, setIsSection2Visible] = useState(false);
-  const [isSection3Visible, setIsSection3Visible] = useState(false);
   const { isAdmin } = useAuth();
   const { openModal } = useModals();
-  
+
   const scrollToIndex = (index: number) => {
     if (scrollContainerRef.current) {
       setIsScrolling(true);
-      const cardWidth = 380; // Width of each card
-      const gap = 20; // Gap between cards
+      const cardWidth = 380;
+      const gap = 20;
       const scrollPosition = index * (cardWidth + gap);
-      
+
       scrollContainerRef.current.scrollTo({
         left: scrollPosition,
         behavior: 'smooth'
       });
       setCurrentIndex(index);
-      
-      // Reset scrolling flag after animation
       setTimeout(() => setIsScrolling(false), 300);
     }
   };
-  
+
   const scrollToIndex2 = (index: number) => {
     if (scrollContainerRef2.current) {
       setIsScrolling2(true);
-      const cardWidth = 380; // Width of each card
-      const gap = 20; // Gap between cards
+      const cardWidth = 380;
+      const gap = 20;
       const scrollPosition = index * (cardWidth + gap);
-      
+
       scrollContainerRef2.current.scrollTo({
         left: scrollPosition,
         behavior: 'smooth'
       });
       setCurrentIndex2(index);
-      
-      // Reset scrolling flag after animation
       setTimeout(() => setIsScrolling2(false), 300);
     }
   };
-  
+
   const scrollToIndex3 = (index: number) => {
     if (scrollContainerRef3.current) {
       setIsScrolling3(true);
-      const cardWidth = 380; // Width of each card
-      const gap = 20; // Gap between cards
+      const cardWidth = 380;
+      const gap = 20;
       const scrollPosition = index * (cardWidth + gap);
-      
+
       scrollContainerRef3.current.scrollTo({
         left: scrollPosition,
         behavior: 'smooth'
       });
       setCurrentIndex3(index);
-      
-      // Reset scrolling flag after animation
       setTimeout(() => setIsScrolling3(false), 300);
     }
   };
-  
+
   const handleScroll = () => {
     if (isScrolling || !scrollContainerRef.current) return;
-    
     const container = scrollContainerRef.current;
     const cardWidth = 380;
     const gap = 20;
     const scrollLeft = container.scrollLeft;
     const newIndex = Math.round(scrollLeft / (cardWidth + gap));
-    
+
     if (newIndex !== currentIndex && newIndex >= 0 && newIndex < restStopsData.length) {
       setCurrentIndex(newIndex);
     }
   };
-  
+
   const handleScroll2 = () => {
     if (isScrolling2 || !scrollContainerRef2.current) return;
-    
     const container = scrollContainerRef2.current;
     const cardWidth = 380;
     const gap = 20;
     const scrollLeft = container.scrollLeft;
     const newIndex = Math.round(scrollLeft / (cardWidth + gap));
-    
+
     if (newIndex !== currentIndex2 && newIndex >= 0 && newIndex < restStopsData.length) {
       setCurrentIndex2(newIndex);
     }
   };
-  
+
   const handleScroll3 = () => {
     if (isScrolling3 || !scrollContainerRef3.current) return;
-    
     const container = scrollContainerRef3.current;
     const cardWidth = 380;
     const gap = 20;
     const scrollLeft = container.scrollLeft;
     const newIndex = Math.round(scrollLeft / (cardWidth + gap));
-    
+
     if (newIndex !== currentIndex3 && newIndex >= 0 && newIndex < restStopsData.length) {
       setCurrentIndex3(newIndex);
     }
   };
-  
+
   const goToPrevious = () => {
-    if (currentIndex > 0) {
-      scrollToIndex(currentIndex - 1);
-    }
+    if (currentIndex > 0) scrollToIndex(currentIndex - 1);
   };
-  
+
   const goToNext = () => {
-    if (currentIndex < restStopsData.length - 1) {
-      scrollToIndex(currentIndex + 1);
-    }
+    if (currentIndex < restStopsData.length - 1) scrollToIndex(currentIndex + 1);
   };
-  
+
   const goToPrevious2 = () => {
-    if (currentIndex2 > 0) {
-      scrollToIndex2(currentIndex2 - 1);
-    }
+    if (currentIndex2 > 0) scrollToIndex2(currentIndex2 - 1);
   };
-  
+
   const goToNext2 = () => {
-    if (currentIndex2 < restStopsData.length - 1) {
-      scrollToIndex2(currentIndex2 + 1);
-    }
+    if (currentIndex2 < restStopsData.length - 1) scrollToIndex2(currentIndex2 + 1);
   };
-  
+
   const goToPrevious3 = () => {
-    if (currentIndex3 > 0) {
-      scrollToIndex3(currentIndex3 - 1);
-    }
+    if (currentIndex3 > 0) scrollToIndex3(currentIndex3 - 1);
   };
-  
+
   const goToNext3 = () => {
-    if (currentIndex3 < restStopsData.length - 1) {
-      scrollToIndex3(currentIndex3 + 1);
-    }
+    if (currentIndex3 < restStopsData.length - 1) scrollToIndex3(currentIndex3 + 1);
   };
-  
+
   React.useEffect(() => {
     const container = scrollContainerRef.current;
     if (container) {
@@ -355,630 +339,215 @@ export const RestStops: React.FC = () => {
     e.stopPropagation();
     if (window.confirm('Sind Sie sicher, dass Sie diesen Rest Stop löschen möchten?')) {
       setRestStopsData(prev => prev.filter(stop => stop.id !== restStopId));
-      // Adjust current index if necessary
       if (currentIndex >= restStopsData.length - 1 && currentIndex > 0) {
         setCurrentIndex(currentIndex - 1);
       }
     }
   };
 
-  return (
-    <>
-      <section className="mt-12">
-      <div className="flex justify-between items-center mb-6">
-        <div className="flex items-center cursor-pointer" onClick={() => setIsSection1Visible(!isSection1Visible)}>
-          <h2 className="text-2xl font-semibold text-gray-800">Stops richtung Polen, Weißrussland, Russland, Kaukasus</h2>
-          <ChevronDown
-            size={24}
-            className={`ml-2 text-red-600 transition-transform duration-300 ${isSection1Visible ? 'rotate-180' : ''}`}
-          />
-          {isAdmin && (
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                handleCreateRestStop();
-              }}
-              className="ml-4 bg-green-600 text-white p-2 rounded-full hover:bg-green-700 transition duration-200"
-              title="Neuen Rest Stop erstellen"
-            >
-              <Plus size={20} />
-            </button>
-          )}
+  const RestStopCard = ({ stop }: { stop: RestStop }) => (
+    <div
+      className="flex-shrink-0 w-96 bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer group"
+      onClick={() => handleDetailsClick(stop)}
+    >
+      <div className="relative h-48 overflow-hidden">
+        <img
+          src={stop.image}
+          alt={stop.name}
+          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+        />
+        <div className="absolute top-4 left-4 bg-white bg-opacity-90 backdrop-blur-sm rounded-full px-3 py-1 flex items-center space-x-2">
+          {getTypeIcon(stop.type)}
+          <span className="text-sm font-medium text-gray-800">{stop.type}</span>
         </div>
-        {isSection1Visible && (
-          <div className="flex space-x-2">
+        <div className="absolute top-4 right-4 bg-white bg-opacity-90 backdrop-blur-sm rounded-full px-3 py-1 flex items-center space-x-1">
+          <Star size={14} className="text-yellow-500 fill-current" />
+          <span className="text-sm font-bold text-gray-800">{stop.rating}</span>
+        </div>
+
+        {isAdmin && (
+          <div className="absolute bottom-4 right-4 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
             <button
-              onClick={goToPrevious}
-              disabled={currentIndex === 0}
-              className={`p-2 rounded-full transition-all duration-200 ${
-                currentIndex === 0
-                  ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                  : 'bg-white shadow-md hover:shadow-lg text-gray-700 hover:text-gray-900'
-              }`}
+              onClick={(e) => handleEditRestStop(stop, e)}
+              className="bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700 transition duration-200"
+              title="Rest Stop bearbeiten"
             >
-              <ChevronLeft size={20} />
+              <Edit size={16} />
             </button>
             <button
-              onClick={goToNext}
-              disabled={currentIndex >= restStopsData.length - 1}
-              className={`p-2 rounded-full transition-all duration-200 ${
-                currentIndex >= restStopsData.length - 1
-                  ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                  : 'bg-white shadow-md hover:shadow-lg text-gray-700 hover:text-gray-900'
-              }`}
+              onClick={(e) => handleDeleteRestStop(stop.id, e)}
+              className="bg-red-600 text-white p-2 rounded-full hover:bg-red-700 transition duration-200"
+              title="Rest Stop löschen"
             >
-              <ChevronRight size={20} />
+              <Trash2 size={16} />
             </button>
           </div>
         )}
       </div>
 
-      <div
-        className={`overflow-hidden transition-all duration-500 ease-in-out ${
-          isSection1Visible ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'
-        }`}
-      >
-        <div className="relative">
-          {/* Left Arrow */}
-          <button
-            onClick={goToPrevious}
-            disabled={currentIndex === 0}
-            className={`absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-lg transition-all duration-200 ${
-              currentIndex === 0
-                ? 'opacity-50 cursor-not-allowed'
-                : 'hover:bg-gray-100 hover:shadow-xl'
-            }`}
-            style={{ marginLeft: '-12px' }}
-          >
-            <ChevronLeft size={24} className={currentIndex === 0 ? 'text-gray-400' : 'text-gray-700'} />
-          </button>
+      <div className="p-6">
+        <h3 className="text-xl font-bold text-gray-900 mb-2">{stop.name}</h3>
 
-          {/* Right Arrow */}
+        <div className="flex items-center text-gray-600 mb-4">
+          <MapPin size={16} className="mr-2 flex-shrink-0" />
+          <span className="text-sm">{stop.location}</span>
+        </div>
+
+        <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+          {stop.description}
+        </p>
+
+        <div className="flex flex-wrap gap-2 mb-6">
+          {stop.amenities.map((amenity, index) => (
+            <div key={index}>
+              {getAmenityIcon(amenity)}
+            </div>
+          ))}
+        </div>
+
+        <div className="flex space-x-3">
           <button
-            onClick={goToNext}
-            disabled={currentIndex >= restStopsData.length - 1}
-            className={`absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-lg transition-all duration-200 ${
-              currentIndex >= restStopsData.length - 1
-                ? 'opacity-50 cursor-not-allowed'
-                : 'hover:bg-gray-100 hover:shadow-xl'
-            }`}
-            style={{ marginRight: '-12px' }}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleNavigationClick(stop);
+            }}
+            className="flex-1 bg-blue-600 text-white py-3 px-4 rounded-xl font-medium hover:bg-blue-700 transition duration-200 flex items-center justify-center"
           >
-            <ChevronRight size={24} className={currentIndex >= restStopsData.length - 1 ? 'text-gray-400' : 'text-gray-700'} />
+            <Navigation size={18} className="mr-2" />
+            Navigation
           </button>
-        
-        <div 
-          ref={scrollContainerRef}
-          className="flex overflow-x-auto space-x-5 pb-4 scrollbar-hide"
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              handleDetailsClick(stop);
+            }}
+            className="px-6 py-3 border border-gray-300 text-gray-700 rounded-xl font-medium hover:bg-gray-50 transition duration-200"
+          >
+            Details
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
+  const renderSection = (
+    title: string,
+    description: string,
+    currentIdx: number,
+    goToPrev: () => void,
+    goToNext: () => void,
+    scrollRef: React.RefObject<HTMLDivElement>
+  ) => (
+    <section className="mt-20 mb-20">
+      <div className="flex items-start justify-between mb-10">
+        <div className="flex-1">
+          <h2 className="text-4xl font-bold text-gray-900 mb-3">{title}</h2>
+          <p className="text-gray-600 text-lg max-w-2xl leading-relaxed">{description}</p>
+        </div>
+        {isAdmin && (
+          <button
+            onClick={handleCreateRestStop}
+            className="ml-4 bg-green-600 text-white p-3 rounded-full hover:bg-green-700 transition duration-200 flex-shrink-0"
+            title="Neuen Rest Stop erstellen"
+          >
+            <Plus size={24} />
+          </button>
+        )}
+      </div>
+
+      <div className="relative">
+        <button
+          onClick={goToPrev}
+          disabled={currentIdx === 0}
+          className={`absolute left-0 top-1/2 transform -translate-y-1/2 z-20 bg-white rounded-full p-3 shadow-lg transition-all duration-200 ${
+            currentIdx === 0
+              ? 'opacity-30 cursor-not-allowed'
+              : 'hover:bg-gray-100 hover:shadow-xl opacity-90 hover:opacity-100'
+          }`}
+          style={{ marginLeft: '-20px' }}
+        >
+          <ChevronLeft size={28} className={currentIdx === 0 ? 'text-gray-400' : 'text-gray-700'} />
+        </button>
+
+        <button
+          onClick={goToNext}
+          disabled={currentIdx >= restStopsData.length - 1}
+          className={`absolute right-0 top-1/2 transform -translate-y-1/2 z-20 bg-white rounded-full p-3 shadow-lg transition-all duration-200 ${
+            currentIdx >= restStopsData.length - 1
+              ? 'opacity-30 cursor-not-allowed'
+              : 'hover:bg-gray-100 hover:shadow-xl opacity-90 hover:opacity-100'
+          }`}
+          style={{ marginRight: '-20px' }}
+        >
+          <ChevronRight size={28} className={currentIdx >= restStopsData.length - 1 ? 'text-gray-400' : 'text-gray-700'} />
+        </button>
+
+        <div
+          ref={scrollRef}
+          className="flex overflow-x-auto space-x-6 pb-4 scrollbar-hide px-4"
           style={{ scrollSnapType: 'x mandatory' }}
         >
           {restStopsData.map((stop) => (
-            <div 
-              key={stop.id} 
-              className="flex-shrink-0 w-96 bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer"
-              onClick={() => handleDetailsClick(stop)}
-              style={{ scrollSnapAlign: 'start' }}
-            >
-              {/* Image with overlay */}
-              <div className="relative h-48 overflow-hidden group">
-                <img
-                  src={stop.image}
-                  alt={stop.name}
-                  className="w-full h-full object-cover"
-                />
-                {/* Type badge */}
-                <div className="absolute top-4 left-4 bg-white bg-opacity-90 backdrop-blur-sm rounded-full px-3 py-1 flex items-center space-x-2">
-                  {getTypeIcon(stop.type)}
-                  <span className="text-sm font-medium text-gray-800">{stop.type}</span>
-                </div>
-                {/* Rating badge */}
-                <div className="absolute top-4 right-4 bg-white bg-opacity-90 backdrop-blur-sm rounded-full px-3 py-1 flex items-center space-x-1">
-                  <Star size={14} className="text-yellow-500 fill-current" />
-                  <span className="text-sm font-bold text-gray-800">{stop.rating}</span>
-                </div>
-                
-                {/* Admin controls */}
-                {isAdmin && (
-                  <div className="absolute bottom-4 right-4 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <button
-                      onClick={(e) => handleEditRestStop(stop, e)}
-                      className="bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700 transition duration-200"
-                      title="Rest Stop bearbeiten"
-                    >
-                      <Edit size={16} />
-                    </button>
-                    <button
-                      onClick={(e) => handleDeleteRestStop(stop.id, e)}
-                      className="bg-red-600 text-white p-2 rounded-full hover:bg-red-700 transition duration-200"
-                      title="Rest Stop löschen"
-                    >
-                      <Trash2 size={16} />
-                    </button>
-                  </div>
-                )}
-              </div>
-
-              {/* Content */}
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-gray-800 mb-2">{stop.name}</h3>
-                
-                <div className="flex items-center text-gray-600 mb-3">
-                  <MapPin size={16} className="mr-2" />
-                  <span className="text-sm">{stop.location}</span>
-                </div>
-
-                <p className="text-gray-600 text-sm mb-4 line-clamp-2">
-                  {stop.description}
-                </p>
-
-                {/* Amenities */}
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {stop.amenities.map((amenity, index) => (
-                    <div key={index}>
-                      {getAmenityIcon(amenity)}
-                    </div>
-                  ))}
-                </div>
-
-                {/* Action buttons */}
-                <div className="flex space-x-3">
-                  <button 
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleNavigationClick(stop);
-                    }}
-                    className="flex-1 bg-blue-600 text-white py-3 px-4 rounded-xl font-medium hover:bg-blue-700 transition duration-200 flex items-center justify-center"
-                  >
-                    <Navigation size={18} className="mr-2" />
-                    Navigation
-                  </button>
-                  <button 
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleDetailsClick(stop);
-                    }}
-                    className="px-6 py-3 border border-gray-300 text-gray-700 rounded-xl font-medium hover:bg-gray-50 transition duration-200">
-                    Details
-                  </button>
-                </div>
-              </div>
+            <div key={stop.id} style={{ scrollSnapAlign: 'start' }}>
+              <RestStopCard stop={stop} />
             </div>
           ))}
         </div>
-        
-        {/* Dots Indicator */}
-        <div className="flex justify-center mt-6 space-x-2">
+
+        <div className="flex justify-center mt-10 space-x-3">
           {restStopsData.map((_, index) => (
             <button
               key={index}
-              onClick={() => scrollToIndex(index)}
-              className={`w-2 h-2 rounded-full transition-all duration-200 ${
-                index === currentIndex
-                  ? 'bg-blue-600 w-8'
-                  : 'bg-gray-300 hover:bg-gray-400'
-              }`}
-            />
-          ))}
-        </div>
-
-        <div className="text-center mt-4 text-sm text-gray-500 md:hidden">
-          ← Wischen Sie nach links/rechts für mehr Stops →
-        </div>
-        </div>
-      </div>
-      </section>
-
-      {/* Second Rest Stops Section */}
-      <section className="mt-12">
-      <div className="flex justify-between items-center mb-6">
-        <div className="flex items-center cursor-pointer" onClick={() => setIsSection2Visible(!isSection2Visible)}>
-          <h2 className="text-2xl font-semibold text-gray-800">Stops richtung Polen,Litauen, Lettland, Weißrussland, Russland, Kaukasus</h2>
-          <ChevronDown
-            size={24}
-            className={`ml-2 text-red-600 transition-transform duration-300 ${isSection2Visible ? 'rotate-180' : ''}`}
-          />
-          {isAdmin && (
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                handleCreateRestStop();
+              onClick={() => {
+                if (scrollRef === scrollContainerRef) scrollToIndex(index);
+                else if (scrollRef === scrollContainerRef2) scrollToIndex2(index);
+                else scrollToIndex3(index);
               }}
-              className="ml-4 bg-green-600 text-white p-2 rounded-full hover:bg-green-700 transition duration-200"
-              title="Neuen Rest Stop erstellen"
-            >
-              <Plus size={20} />
-            </button>
-          )}
-        </div>
-        {isSection2Visible && (
-          <div className="flex space-x-2">
-            <button
-              onClick={goToPrevious2}
-              disabled={currentIndex2 === 0}
-              className={`p-2 rounded-full transition-all duration-200 ${
-                currentIndex2 === 0
-                  ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                  : 'bg-white shadow-md hover:shadow-lg text-gray-700 hover:text-gray-900'
-              }`}
-            >
-              <ChevronLeft size={20} />
-            </button>
-            <button
-              onClick={goToNext2}
-              disabled={currentIndex2 >= restStopsData.length - 1}
-              className={`p-2 rounded-full transition-all duration-200 ${
-                currentIndex2 >= restStopsData.length - 1
-                  ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                  : 'bg-white shadow-md hover:shadow-lg text-gray-700 hover:text-gray-900'
-              }`}
-            >
-              <ChevronRight size={20} />
-            </button>
-          </div>
-        )}
-      </div>
-
-      <div
-        className={`overflow-hidden transition-all duration-500 ease-in-out ${
-          isSection2Visible ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'
-        }`}
-      >
-        <div className="relative">
-          {/* Left Arrow */}
-          <button
-            onClick={goToPrevious2}
-            disabled={currentIndex2 === 0}
-            className={`absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-lg transition-all duration-200 ${
-              currentIndex2 === 0
-                ? 'opacity-50 cursor-not-allowed'
-                : 'hover:bg-gray-100 hover:shadow-xl'
-            }`}
-            style={{ marginLeft: '-12px' }}
-          >
-            <ChevronLeft size={24} className={currentIndex2 === 0 ? 'text-gray-400' : 'text-gray-700'} />
-          </button>
-
-          {/* Right Arrow */}
-          <button
-            onClick={goToNext2}
-            disabled={currentIndex2 >= restStopsData.length - 1}
-            className={`absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-lg transition-all duration-200 ${
-              currentIndex2 >= restStopsData.length - 1
-                ? 'opacity-50 cursor-not-allowed'
-                : 'hover:bg-gray-100 hover:shadow-xl'
-            }`}
-            style={{ marginRight: '-12px' }}
-          >
-            <ChevronRight size={24} className={currentIndex2 >= restStopsData.length - 1 ? 'text-gray-400' : 'text-gray-700'} />
-          </button>
-
-          <div
-            ref={scrollContainerRef2}
-            className="flex overflow-x-auto space-x-5 pb-4 scrollbar-hide"
-            style={{ scrollSnapType: 'x mandatory' }}
-          >
-          {restStopsData.map((stop) => (
-            <div 
-              key={`section2-${stop.id}`} 
-              className="flex-shrink-0 w-96 bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer"
-              onClick={() => handleDetailsClick(stop)}
-              style={{ scrollSnapAlign: 'start' }}
-            >
-              {/* Image with overlay */}
-              <div className="relative h-48 overflow-hidden group">
-                <img
-                  src={stop.image}
-                  alt={stop.name}
-                  className="w-full h-full object-cover"
-                />
-                {/* Type badge */}
-                <div className="absolute top-4 left-4 bg-white bg-opacity-90 backdrop-blur-sm rounded-full px-3 py-1 flex items-center space-x-2">
-                  {getTypeIcon(stop.type)}
-                  <span className="text-sm font-medium text-gray-800">{stop.type}</span>
-                </div>
-                {/* Rating badge */}
-                <div className="absolute top-4 right-4 bg-white bg-opacity-90 backdrop-blur-sm rounded-full px-3 py-1 flex items-center space-x-1">
-                  <Star size={14} className="text-yellow-500 fill-current" />
-                  <span className="text-sm font-bold text-gray-800">{stop.rating}</span>
-                </div>
-                
-                {/* Admin controls */}
-                {isAdmin && (
-                  <div className="absolute bottom-4 right-4 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <button
-                      onClick={(e) => handleEditRestStop(stop, e)}
-                      className="bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700 transition duration-200"
-                      title="Rest Stop bearbeiten"
-                    >
-                      <Edit size={16} />
-                    </button>
-                    <button
-                      onClick={(e) => handleDeleteRestStop(stop.id, e)}
-                      className="bg-red-600 text-white p-2 rounded-full hover:bg-red-700 transition duration-200"
-                      title="Rest Stop löschen"
-                    >
-                      <Trash2 size={16} />
-                    </button>
-                  </div>
-                )}
-              </div>
-
-              {/* Content */}
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-gray-800 mb-2">{stop.name}</h3>
-                
-                <div className="flex items-center text-gray-600 mb-3">
-                  <MapPin size={16} className="mr-2" />
-                  <span className="text-sm">{stop.location}</span>
-                </div>
-
-                <p className="text-gray-600 text-sm mb-4 line-clamp-2">
-                  {stop.description}
-                </p>
-
-                {/* Amenities */}
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {stop.amenities.map((amenity, index) => (
-                    <div key={index}>
-                      {getAmenityIcon(amenity)}
-                    </div>
-                  ))}
-                </div>
-
-                {/* Action buttons */}
-                <div className="flex space-x-3">
-                  <button 
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleNavigationClick(stop);
-                    }}
-                    className="flex-1 bg-blue-600 text-white py-3 px-4 rounded-xl font-medium hover:bg-blue-700 transition duration-200 flex items-center justify-center"
-                  >
-                    <Navigation size={18} className="mr-2" />
-                    Navigation
-                  </button>
-                  <button 
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleDetailsClick(stop);
-                    }}
-                    className="px-6 py-3 border border-gray-300 text-gray-700 rounded-xl font-medium hover:bg-gray-50 transition duration-200">
-                    Details
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-        
-        {/* Dots Indicator */}
-        <div className="flex justify-center mt-6 space-x-2">
-          {restStopsData.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => scrollToIndex2(index)}
-              className={`w-2 h-2 rounded-full transition-all duration-200 ${
-                index === currentIndex2
-                  ? 'bg-blue-600 w-8'
-                  : 'bg-gray-300 hover:bg-gray-400'
+              className={`h-3 rounded-full transition-all duration-300 ${
+                index === currentIdx
+                  ? 'bg-blue-600 w-10'
+                  : 'bg-gray-300 w-3 hover:bg-gray-400'
               }`}
             />
           ))}
         </div>
 
-        <div className="text-center mt-4 text-sm text-gray-500 md:hidden">
-          ← Wischen Sie nach links/rechts für mehr Stops →
-        </div>
-        </div>
-      </div>
-      </section>
-
-      {/* Third Rest Stops Section */}
-      <section className="mt-12">
-      <div className="flex justify-between items-center mb-6">
-        <div className="flex items-center cursor-pointer" onClick={() => setIsSection3Visible(!isSection3Visible)}>
-          <h2 className="text-2xl font-semibold text-gray-800">Stops richtung Ungarn, Serbein, Bulgarien, Türkei, Georgien, Kausasus </h2>
-          <ChevronDown
-            size={24}
-            className={`ml-2 text-red-600 transition-transform duration-300 ${isSection3Visible ? 'rotate-180' : ''}`}
-          />
-          {isAdmin && (
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                handleCreateRestStop();
-              }}
-              className="ml-4 bg-green-600 text-white p-2 rounded-full hover:bg-green-700 transition duration-200"
-              title="Neuen Rest Stop erstellen"
-            >
-              <Plus size={20} />
-            </button>
-          )}
-        </div>
-        {isSection3Visible && (
-          <div className="flex space-x-2">
-            <button
-              onClick={goToPrevious3}
-              disabled={currentIndex3 === 0}
-              className={`p-2 rounded-full transition-all duration-200 ${
-                currentIndex3 === 0
-                  ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                  : 'bg-white shadow-md hover:shadow-lg text-gray-700 hover:text-gray-900'
-              }`}
-            >
-              <ChevronLeft size={20} />
-            </button>
-            <button
-              onClick={goToNext3}
-              disabled={currentIndex3 >= restStopsData.length - 1}
-              className={`p-2 rounded-full transition-all duration-200 ${
-                currentIndex3 >= restStopsData.length - 1
-                  ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                  : 'bg-white shadow-md hover:shadow-lg text-gray-700 hover:text-gray-900'
-              }`}
-            >
-              <ChevronRight size={20} />
-            </button>
-          </div>
-        )}
-      </div>
-
-      <div
-        className={`overflow-hidden transition-all duration-500 ease-in-out ${
-          isSection3Visible ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'
-        }`}
-      >
-        <div className="relative">
-          {/* Left Arrow */}
-          <button
-            onClick={goToPrevious3}
-            disabled={currentIndex3 === 0}
-            className={`absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-lg transition-all duration-200 ${
-              currentIndex3 === 0
-                ? 'opacity-50 cursor-not-allowed'
-                : 'hover:bg-gray-100 hover:shadow-xl'
-            }`}
-            style={{ marginLeft: '-12px' }}
-          >
-            <ChevronLeft size={24} className={currentIndex3 === 0 ? 'text-gray-400' : 'text-gray-700'} />
-          </button>
-
-          {/* Right Arrow */}
-          <button
-            onClick={goToNext3}
-            disabled={currentIndex3 >= restStopsData.length - 1}
-            className={`absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-lg transition-all duration-200 ${
-              currentIndex3 >= restStopsData.length - 1
-                ? 'opacity-50 cursor-not-allowed'
-                : 'hover:bg-gray-100 hover:shadow-xl'
-            }`}
-            style={{ marginRight: '-12px' }}
-          >
-            <ChevronRight size={24} className={currentIndex3 >= restStopsData.length - 1 ? 'text-gray-400' : 'text-gray-700'} />
-          </button>
-
-          <div
-            ref={scrollContainerRef3}
-            className="flex overflow-x-auto space-x-5 pb-4 scrollbar-hide"
-            style={{ scrollSnapType: 'x mandatory' }}
-          >
-          {restStopsData.map((stop) => (
-            <div 
-              key={`section3-${stop.id}`} 
-              className="flex-shrink-0 w-96 bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer"
-              onClick={() => handleDetailsClick(stop)}
-              style={{ scrollSnapAlign: 'start' }}
-            >
-              {/* Image with overlay */}
-              <div className="relative h-48 overflow-hidden group">
-                <img
-                  src={stop.image}
-                  alt={stop.name}
-                  className="w-full h-full object-cover"
-                />
-                {/* Type badge */}
-                <div className="absolute top-4 left-4 bg-white bg-opacity-90 backdrop-blur-sm rounded-full px-3 py-1 flex items-center space-x-2">
-                  {getTypeIcon(stop.type)}
-                  <span className="text-sm font-medium text-gray-800">{stop.type}</span>
-                </div>
-                {/* Rating badge */}
-                <div className="absolute top-4 right-4 bg-white bg-opacity-90 backdrop-blur-sm rounded-full px-3 py-1 flex items-center space-x-1">
-                  <Star size={14} className="text-yellow-500 fill-current" />
-                  <span className="text-sm font-bold text-gray-800">{stop.rating}</span>
-                </div>
-                
-                {/* Admin controls */}
-                {isAdmin && (
-                  <div className="absolute bottom-4 right-4 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <button
-                      onClick={(e) => handleEditRestStop(stop, e)}
-                      className="bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700 transition duration-200"
-                      title="Rest Stop bearbeiten"
-                    >
-                      <Edit size={16} />
-                    </button>
-                    <button
-                      onClick={(e) => handleDeleteRestStop(stop.id, e)}
-                      className="bg-red-600 text-white p-2 rounded-full hover:bg-red-700 transition duration-200"
-                      title="Rest Stop löschen"
-                    >
-                      <Trash2 size={16} />
-                    </button>
-                  </div>
-                )}
-              </div>
-
-              {/* Content */}
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-gray-800 mb-2">{stop.name}</h3>
-                
-                <div className="flex items-center text-gray-600 mb-3">
-                  <MapPin size={16} className="mr-2" />
-                  <span className="text-sm">{stop.location}</span>
-                </div>
-
-                <p className="text-gray-600 text-sm mb-4 line-clamp-2">
-                  {stop.description}
-                </p>
-
-                {/* Amenities */}
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {stop.amenities.map((amenity, index) => (
-                    <div key={index}>
-                      {getAmenityIcon(amenity)}
-                    </div>
-                  ))}
-                </div>
-
-                {/* Action buttons */}
-                <div className="flex space-x-3">
-                  <button 
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleNavigationClick(stop);
-                    }}
-                    className="flex-1 bg-blue-600 text-white py-3 px-4 rounded-xl font-medium hover:bg-blue-700 transition duration-200 flex items-center justify-center"
-                  >
-                    <Navigation size={18} className="mr-2" />
-                    Navigation
-                  </button>
-                  <button 
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleDetailsClick(stop);
-                    }}
-                    className="px-6 py-3 border border-gray-300 text-gray-700 rounded-xl font-medium hover:bg-gray-50 transition duration-200">
-                    Details
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-        
-        {/* Dots Indicator */}
-        <div className="flex justify-center mt-6 space-x-2">
-          {restStopsData.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => scrollToIndex3(index)}
-              className={`w-2 h-2 rounded-full transition-all duration-200 ${
-                index === currentIndex3
-                  ? 'bg-blue-600 w-8'
-                  : 'bg-gray-300 hover:bg-gray-400'
-              }`}
-            />
-          ))}
-        </div>
-
-        <div className="text-center mt-4 text-sm text-gray-500 md:hidden">
-          ← Wischen Sie nach links/rechts für mehr Stops →
-        </div>
+        <div className="text-center mt-6 text-sm text-gray-500 md:hidden">
+          ← Wischen zum Blättern →
         </div>
       </div>
-      </section>
+    </section>
+  );
 
-      {/* Rest Stop Details Modal */}
+  return (
+    <>
+      {renderSection(
+        'Östliche Routen',
+        'Raststätten und Übernachtungsmöglichkeiten auf dem Weg nach Polen, Weißrussland und in den Kaukasus. Finden Sie alles, was Sie für eine komfortable Fahrt benötigen.',
+        currentIndex,
+        goToPrevious,
+        goToNext,
+        scrollContainerRef
+      )}
+
+      {renderSection(
+        'Baltische und östliche Staaten',
+        'Komfortable Stopps für Ihre Reise nach Litauen, Lettland, Polen und darüber hinaus. Mit allen wichtigen Einrichtungen und guten Bewertungen.',
+        currentIndex2,
+        goToPrevious2,
+        goToNext2,
+        scrollContainerRef2
+      )}
+
+      {renderSection(
+        'Südliche Routen',
+        'Entdecken Sie erstklassige Raststätten und Hotels auf der Route nach Ungarn, Serbien, Bulgarien, der Türkei und Georgien. Perfekt zum Ausruhen und Tanken.',
+        currentIndex3,
+        goToPrevious3,
+        goToNext3,
+        scrollContainerRef3
+      )}
+
       <RestStopDetailsModal
         restStop={selectedRestStop}
         onClose={() => setSelectedRestStop(null)}
