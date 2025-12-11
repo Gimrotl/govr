@@ -123,12 +123,12 @@ export const RideDetailsModal: React.FC = () => {
             </div>
             
             {/* Date and time */}
-            <div className="flex flex-row items-center justify-between gap-3 mb-6">
-              <div className="flex items-center bg-green-100 rounded-md px-3 py-2">
+            <div className="flex flex-row items-center gap-3 mb-6">
+              <div className="flex-1 flex items-center justify-center bg-green-100 rounded-md px-3 py-2">
                 <Calendar size={18} className="mr-2 text-green-600" />
                 <span className="font-medium">{selectedRide.date}</span>
               </div>
-              <div className="flex items-center bg-green-100 rounded-md px-3 py-2">
+              <div className="flex-1 flex items-center justify-center bg-green-100 rounded-md px-3 py-2">
                 <Clock size={18} className="mr-2 text-green-600" />
                 <span className="font-medium">{selectedRide.time}</span>
               </div>
