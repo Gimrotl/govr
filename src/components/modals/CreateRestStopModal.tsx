@@ -347,7 +347,7 @@ export const CreateRestStopModal: React.FC = () => {
             </button>
             <button
               type="submit"
-              className="flex-1 bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition duration-200 flex items-center justify-center"
+              className="flex-1 bg-moonlit-600 text-white py-3 rounded-lg hover:bg-moonlit-700 transition duration-200 flex items-center justify-center"
             >
               <Save size={18} className="mr-2" />
               Erstellen
