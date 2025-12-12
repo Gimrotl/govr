@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { X, Send, MessageCircle, ChevronDown } from 'lucide-react';
+import { X, Send, MessageCircle } from 'lucide-react';
 import { useModals } from '../../hooks/useModals';
 import { useChat } from '../../hooks/useChat';
 import { useAuth } from '../../hooks/useAuth';
@@ -41,25 +41,15 @@ export const ChatModal: React.FC = () => {
   const { isLoggedIn, userEmail } = useAuth();
   const { rides } = useRides();
   const [newMessage, setNewMessage] = useState('');
-  const [showScrollButton, setShowScrollButton] = useState(false);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  
   const scrollToBottom = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollTop = scrollContainerRef.current.scrollHeight;
-    }
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
-
+  
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
-
-  const handleScroll = () => {
-    if (scrollContainerRef.current) {
-      const { scrollTop, scrollHeight, clientHeight } = scrollContainerRef.current;
-      setShowScrollButton(scrollHeight - scrollTop - clientHeight > 100);
-    }
-  };
   
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
@@ -111,107 +101,106 @@ export const ChatModal: React.FC = () => {
     openUserProfile(userProfile);
   };
   
-  if (!isLoggedIn) {
-    return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-start md:items-center justify-center z-50 p-4 pt-1 md:pt-4 animate-fadeIn">
-        <div className="bg-white rounded-lg shadow-lg w-full max-w-md p-4 animate-scaleIn">
-          <div className="flex justify-between items-center mb-3">
-            <h2 className="text-base font-medium text-gray-900">Chat</h2>
-            <button
-              onClick={() => closeModal('chat')}
-              className="text-gray-600 hover:text-gray-900"
-            >
-              <X size={18} />
-            </button>
-          </div>
-          <p className="text-sm text-gray-600">Melden Sie sich an, um den Chat zu nutzen.</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-start md:items-center justify-center z-50 p-4 pt-1 md:pt-4 animate-fadeIn overflow-y-auto">
-      <div className="bg-white rounded-lg shadow-lg w-full max-w-md h-[40vh] md:h-[350px] max-h-[350px] flex flex-col animate-scaleIn mt-0 mb-4 md:my-auto relative">
+      <div className="bg-white rounded-lg shadow-xl w-full max-w-4xl h-[75vh] md:h-[600px] max-h-[600px] flex flex-col animate-scaleIn mt-0 mb-4 md:my-auto">
         {/* Chat Header */}
         <div className="flex-1 flex flex-col">
-          <div className="px-3 py-2 md:px-4 md:py-2 border-b border-gray-200 flex justify-between items-center bg-slate-100 rounded-t-lg">
-            <h2 className="text-base font-medium text-gray-900">Chat</h2>
+          <div className="p-3 md:p-4 border-b border-gray-200 flex justify-between items-center bg-green-600 text-white rounded-t-lg">
+            <div className="flex items-center">
+              <MessageCircle size={20} className="mr-2 md:mr-2" />
+              <h2 className="text-lg md:text-xl font-semibold">Öffentlicher Chat</h2>
+            </div>
             <button
               onClick={() => closeModal('chat')}
-              className="text-gray-600 hover:text-gray-900 transition duration-200"
+              className="text-white hover:text-gray-200 transition duration-200"
             >
-              <X size={18} />
+              <X size={20} className="md:hidden" />
+              <X size={24} className="hidden md:block" />
             </button>
           </div>
-
+          
           {/* Messages Area */}
-          <div
-            ref={scrollContainerRef}
-            onScroll={handleScroll}
-            className="flex-1 overflow-y-auto p-2 md:p-3 bg-white relative"
-          >
-            <div className="space-y-2">
+          <div className="flex-1 overflow-y-auto p-2 md:p-4 bg-gray-50">
+            <div className="space-y-4">
               {messages.map((message) => (
                 <div key={message.id} className={`flex ${
                   message.user === (userEmail?.split('@')[0] || 'Benutzer') ? 'justify-end' : 'justify-start'
                 }`}>
-                  <div className={`max-w-[75%]`}>
-                    <div className={`flex items-end gap-1 ${
-                      message.user === (userEmail?.split('@')[0] || 'Benutzer') ? 'flex-row-reverse' : 'flex-row'
+                  <div className={`max-w-[70%] ${
+                    message.user === (userEmail?.split('@')[0] || 'Benutzer') ? 'order-2' : 'order-1'
+                  }`}>
+                    <div className={`flex items-center mb-1 ${
+                      message.user === (userEmail?.split('@')[0] || 'Benutzer') ? 'justify-end' : 'justify-start'
                     }`}>
-                      <button
-                        onClick={() => handleUserClick(message.user)}
-                        className={`w-5 h-5 ${getUserColor(message.user)} rounded-full flex items-center justify-center transition-colors flex-shrink-0`}
-                      >
-                        <span className="text-white font-bold text-xs">
-                          {message.user.charAt(0).toUpperCase()}
-                        </span>
-                      </button>
-                      <div className={`px-2 py-1 rounded text-xs ${
-                        message.user === (userEmail?.split('@')[0] || 'Benutzer')
-                          ? 'bg-slate-200 text-gray-900'
-                          : 'bg-gray-100 text-gray-800'
+                      <div className={`flex items-center ${
+                        message.user === (userEmail?.split('@')[0] || 'Benutzer') ? 'flex-row-reverse' : 'flex-row'
                       }`}>
-                        <div className="font-medium text-xs mb-0.5">
-                          {message.user === (userEmail?.split('@')[0] || 'Benutzer') ? 'Sie' : message.user}
+                        <button
+                          onClick={() => handleUserClick(message.user)}
+                          className={`w-6 h-6 md:w-8 md:h-8 ${getUserColor(message.user)} rounded-full flex items-center justify-center transition-colors ${
+                            message.user === (userEmail?.split('@')[0] || 'Benutzer') ? 'ml-2' : 'mr-2'
+                          }`}
+                        >
+                          <span className="text-white font-bold text-xs md:text-sm">
+                            {message.user.charAt(0).toUpperCase()}
+                          </span>
+                        </button>
+                        <div className={`flex flex-col ${
+                          message.user === (userEmail?.split('@')[0] || 'Benutzer') ? 'items-end' : 'items-start'
+                        }`}>
+                          <button
+                            onClick={() => handleUserClick(message.user)}
+                            className="font-medium text-gray-800 hover:text-green-600 transition-colors"
+                          >
+                            {message.user === (userEmail?.split('@')[0] || 'Benutzer') ? 'Sie' : message.user}
+                          </button>
+                          <span className="text-xs text-gray-500 hidden md:block">{message.timestamp}</span>
                         </div>
-                        <p className="break-words">{message.content}</p>
-                        <div className="text-xs opacity-70 mt-1">{message.timestamp}</div>
                       </div>
+                    </div>
+                    <div className={`p-3 rounded-lg shadow-sm border ${
+                      message.user === (userEmail?.split('@')[0] || 'Benutzer') 
+                        ? 'bg-green-500 text-white rounded-br-none' 
+                        : 'bg-white text-gray-700 rounded-bl-none'
+                    }`}>
+                      <p className="break-words text-sm md:text-base">{message.content}</p>
                     </div>
                   </div>
                 </div>
               ))}
+              <div ref={messagesEndRef} />
             </div>
-
-            {showScrollButton && (
-              <button
-                onClick={scrollToBottom}
-                className="fixed bottom-32 md:bottom-40 right-8 bg-slate-700 text-white p-1.5 rounded-full shadow-md hover:bg-slate-800 transition-all duration-200 animate-fadeIn"
-                aria-label="Scroll to bottom"
-              >
-                <ChevronDown size={16} />
-              </button>
-            )}
           </div>
-
+          
           {/* Message Input */}
-          <form onSubmit={handleSendMessage} className="absolute bottom-0 left-0 right-0 p-2 md:p-3 bg-white border-t border-gray-200 rounded-b-lg">
-            <div className="flex gap-1 md:gap-2">
-              <input
-                value={newMessage}
-                onChange={(e) => setNewMessage(e.target.value)}
-                onKeyPress={handleKeyPress}
-                placeholder="Nachricht..."
-                className="flex-1 px-2 py-1.5 border border-gray-300 rounded text-xs focus:ring-1 focus:ring-slate-400 focus:border-transparent"
-              />
+          <form onSubmit={handleSendMessage} className="p-2 md:p-4 bg-white border-t border-gray-200 rounded-b-lg">
+            {!isLoggedIn && (
+              <div className="mb-2 md:mb-3 p-2 bg-yellow-100 border border-yellow-300 rounded-lg">
+                <p className="text-yellow-800 text-xs md:text-sm">
+                  Sie können den Chat lesen, aber müssen eingeloggt sein, um Nachrichten zu senden.
+                </p>
+              </div>
+            )}
+            <div className="flex space-x-1 md:space-x-2">
+              <div className="flex-1 relative">
+                <textarea
+                  value={newMessage}
+                  onChange={(e) => setNewMessage(e.target.value)}
+                  onKeyPress={handleKeyPress}
+                  placeholder={isLoggedIn ? "Nachricht eingeben..." : "Melden Sie sich an, um zu schreiben..."}
+                  className="w-full p-2 md:p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm md:text-base"
+                  rows={1}
+                  disabled={!isLoggedIn}
+                />
+              </div>
               <button
                 type="submit"
-                disabled={!newMessage.trim()}
-                className="bg-slate-700 text-white px-2 py-1.5 rounded hover:bg-slate-800 transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+                disabled={!isLoggedIn || !newMessage.trim()}
+                className="bg-green-600 text-white p-2 md:p-3 rounded-lg hover:bg-green-700 transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
               >
-                <Send size={14} />
+                <Send size={16} className="md:hidden" />
+                <Send size={20} className="hidden md:block" />
               </button>
             </div>
           </form>
