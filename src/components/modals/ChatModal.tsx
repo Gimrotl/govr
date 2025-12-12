@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { X, Send, MessageCircle, ChevronDown, Smile, AtSign, Paperclip } from 'lucide-react';
+import { X, Send, MessageCircle, ChevronDown } from 'lucide-react';
 import { useModals } from '../../hooks/useModals';
 import { useChat } from '../../hooks/useChat';
 import { useAuth } from '../../hooks/useAuth';
@@ -173,25 +173,17 @@ export const ChatModal: React.FC = () => {
                         }`}>
                           <button
                             onClick={() => handleUserClick(message.user)}
-                            className={`font-semibold transition-colors ${
-                              message.user === (userEmail?.split('@')[0] || 'Benutzer')
-                                ? 'text-slate-700 hover:text-slate-800'
-                                : 'text-cyan-300 hover:text-cyan-200'
-                            }`}
+                            className="font-semibold text-emerald-300 hover:text-emerald-200 transition-colors"
                           >
                             {message.user === (userEmail?.split('@')[0] || 'Benutzer') ? 'Sie' : message.user}
                           </button>
-                          <span className={`text-xs hidden md:block ${
-                            message.user === (userEmail?.split('@')[0] || 'Benutzer')
-                              ? 'text-slate-600'
-                              : 'text-slate-400'
-                          }`}>{message.timestamp}</span>
+                          <span className="text-xs text-slate-400 hidden md:block">{message.timestamp}</span>
                         </div>
                       </div>
                     </div>
                     <div className={`px-4 py-3 rounded-2xl shadow-lg backdrop-blur-sm border ${
                       message.user === (userEmail?.split('@')[0] || 'Benutzer')
-                        ? 'bg-gradient-to-r from-blue-400 to-cyan-400 text-slate-900 rounded-br-none border-blue-300/50'
+                        ? 'bg-emerald-500/90 text-white rounded-br-none border-emerald-400/30'
                         : 'bg-slate-700/50 text-gray-100 rounded-bl-none border-slate-600/30'
                     }`}>
                       <p className="break-words text-sm md:text-base font-medium">{message.content}</p>
@@ -221,47 +213,22 @@ export const ChatModal: React.FC = () => {
                 </p>
               </div>
             )}
-            <div className="flex items-center space-x-2">
+            <div className="flex space-x-3">
               <div className="flex-1 relative">
                 <textarea
                   value={newMessage}
                   onChange={(e) => setNewMessage(e.target.value)}
                   onKeyPress={handleKeyPress}
                   placeholder={isLoggedIn ? "Nachricht eingeben..." : "Melden Sie sich an, um zu schreiben..."}
-                  className="w-full px-4 py-3 pr-40 bg-slate-700/40 border border-slate-600/50 rounded-2xl resize-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent text-sm md:text-base text-white placeholder-slate-400 transition-all duration-200 backdrop-blur-sm"
+                  className="w-full px-4 py-3 bg-slate-700/40 border border-slate-600/50 rounded-2xl resize-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm md:text-base text-white placeholder-slate-400 transition-all duration-200 backdrop-blur-sm"
                   rows={1}
                   disabled={!isLoggedIn}
                 />
-                {isLoggedIn && (
-                  <div className="absolute right-2 top-1/2 transform -translate-y-1/2 flex gap-2">
-                    <button
-                      type="button"
-                      className="text-slate-400 hover:text-slate-300 hover:bg-slate-600/30 p-2 rounded-lg transition-all duration-200"
-                      title="Emoji"
-                    >
-                      <Smile size={18} />
-                    </button>
-                    <button
-                      type="button"
-                      className="text-slate-400 hover:text-slate-300 hover:bg-slate-600/30 p-2 rounded-lg transition-all duration-200"
-                      title="Mention"
-                    >
-                      <AtSign size={18} />
-                    </button>
-                    <button
-                      type="button"
-                      className="text-slate-400 hover:text-slate-300 hover:bg-slate-600/30 p-2 rounded-lg transition-all duration-200"
-                      title="Datei"
-                    >
-                      <Paperclip size={18} />
-                    </button>
-                  </div>
-                )}
               </div>
               <button
                 type="submit"
                 disabled={!isLoggedIn || !newMessage.trim()}
-                className="bg-gradient-to-r from-blue-500 to-cyan-500 text-slate-900 p-3 rounded-2xl hover:from-blue-400 hover:to-cyan-400 hover:scale-105 transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center shadow-lg border border-blue-300/50 font-semibold"
+                className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white p-3 rounded-2xl hover:from-emerald-500 hover:to-teal-500 hover:scale-105 transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center shadow-lg border border-emerald-400/30"
               >
                 <Send size={20} />
               </button>
