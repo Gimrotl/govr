@@ -102,8 +102,8 @@ export const ChatModal: React.FC = () => {
   };
   
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-start md:items-center justify-center z-50 p-2 md:p-4 animate-fadeIn overflow-y-auto">
-      <div className="bg-white rounded-lg shadow-xl w-full max-w-xl h-[55vh] md:h-[380px] max-h-[380px] flex flex-col animate-scaleIn mt-2 md:my-auto">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center z-50 p-2 md:p-4 animate-fadeIn overflow-y-auto">
+      <div className="bg-white rounded-lg shadow-xl w-full max-w-xl h-[55vh] md:h-[380px] max-h-[380px] flex flex-col animate-scaleIn mt-16">
         {/* Chat Header */}
         <div className="flex-1 flex flex-col">
           <div className="p-2 border-b border-gray-200 flex justify-between items-center bg-green-600 text-white rounded-t-lg">
