@@ -134,7 +134,7 @@ export const MessagesModal: React.FC = () => {
   const getNotificationColor = (type: string) => {
     switch (type) {
       case 'order_accepted':
-        return 'bg-cyan-900/40 border-l-4 border-cyan-400';
+        return 'bg-emerald-900/40 border-l-4 border-emerald-400';
       case 'order_rejected':
         return 'bg-rose-900/40 border-l-4 border-rose-400';
       case 'booking_confirmed':
@@ -181,7 +181,7 @@ export const MessagesModal: React.FC = () => {
                   }}
                   className={`w-full p-3 text-left transition-all duration-200 rounded-xl group ${
                     selectedContact === contact
-                      ? 'bg-zinc-800 ring-1 ring-blue-500/50'
+                      ? 'bg-zinc-800 ring-1 ring-teal-500/50'
                       : hasUnread
                       ? 'bg-zinc-800/50 hover:bg-zinc-800'
                       : 'hover:bg-zinc-800/50'
@@ -196,7 +196,7 @@ export const MessagesModal: React.FC = () => {
                       className={`w-11 h-11 rounded-full flex items-center justify-center cursor-pointer transition-all duration-200 group-hover:scale-105 ${
                         hasUnread
                           ? 'bg-gradient-to-br from-rose-500 to-orange-500 ring-2 ring-rose-500/30'
-                          : 'bg-gradient-to-br from-blue-500 to-cyan-600'
+                          : 'bg-gradient-to-br from-teal-500 to-cyan-600'
                       }`}
                     >
                       <span className="font-bold text-white">
@@ -210,7 +210,7 @@ export const MessagesModal: React.FC = () => {
                             e.stopPropagation();
                             handleContactClick(contact);
                           }}
-                          className={`font-medium cursor-pointer hover:text-blue-400 transition-colors truncate ${
+                          className={`font-medium cursor-pointer hover:text-teal-400 transition-colors truncate ${
                             hasUnread ? 'text-zinc-100' : 'text-zinc-300'
                           }`}
                         >
@@ -243,13 +243,13 @@ export const MessagesModal: React.FC = () => {
                 >
                   <ChevronLeft size={20} />
                 </button>
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-cyan-600 flex items-center justify-center mr-3">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-teal-500 to-cyan-600 flex items-center justify-center mr-3">
                   <span className="font-bold text-white">{selectedContact?.charAt(0).toUpperCase()}</span>
                 </div>
                 <div className="flex-1">
                   <h3 className="font-semibold text-zinc-100">{selectedContact}</h3>
                   <div className="flex items-center gap-1.5">
-                    <span className="w-2 h-2 rounded-full bg-cyan-500"></span>
+                    <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
                     <p className="text-xs text-zinc-500">Online</p>
                   </div>
                 </div>
@@ -280,7 +280,7 @@ export const MessagesModal: React.FC = () => {
                               <div className="text-xs text-zinc-500 mt-2">{message.timestamp}</div>
                               <button
                                 onClick={() => handleReply(message.id)}
-                                className="mt-2 text-xs bg-zinc-800 hover:bg-zinc-700 px-3 py-1.5 rounded-lg text-blue-400 hover:text-blue-300 font-medium transition-all duration-200"
+                                className="mt-2 text-xs bg-zinc-800 hover:bg-zinc-700 px-3 py-1.5 rounded-lg text-teal-400 hover:text-teal-300 font-medium transition-all duration-200"
                               >
                                 Antworten
                               </button>
@@ -291,15 +291,15 @@ export const MessagesModal: React.FC = () => {
                         <div className={`flex ${message.sent ? 'justify-end' : 'justify-start'}`}>
                           <div className="relative max-w-[75%]">
                             {message.replyTo && (
-                              <div className="mb-1.5 px-3 py-2 bg-zinc-800/50 rounded-lg text-xs border-l-2 border-blue-500">
-                                <span className="text-blue-400 font-medium">Antwort auf:</span>
+                              <div className="mb-1.5 px-3 py-2 bg-zinc-800/50 rounded-lg text-xs border-l-2 border-teal-500">
+                                <span className="text-teal-400 font-medium">Antwort auf:</span>
                                 <p className="truncate text-zinc-400 mt-0.5">{getRepliedMessage(message.replyTo)?.content}</p>
                               </div>
                             )}
                             <div
                               className={`px-4 py-3 rounded-2xl transition-all duration-200 ${
                                 message.sent
-                                  ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-br-md'
+                                  ? 'bg-gradient-to-r from-teal-600 to-cyan-600 text-white rounded-br-md'
                                   : 'bg-zinc-800 text-zinc-100 rounded-bl-md'
                               }`}
                             >
@@ -314,21 +314,21 @@ export const MessagesModal: React.FC = () => {
                                 <p className="break-words text-sm leading-relaxed">
                                   {message.content.split(/(@\w+)/g).map((part, index) =>
                                     part.startsWith('@') ? (
-                                      <span key={index} className={`font-semibold ${message.sent ? 'text-blue-200' : 'text-blue-400'}`}>
+                                      <span key={index} className={`font-semibold ${message.sent ? 'text-teal-200' : 'text-teal-400'}`}>
                                         {part}
                                       </span>
                                     ) : part
                                   )}
                                 </p>
                               )}
-                              <div className={`text-[10px] mt-1.5 ${message.sent ? 'text-blue-200/70' : 'text-zinc-500'}`}>
+                              <div className={`text-[10px] mt-1.5 ${message.sent ? 'text-teal-200/70' : 'text-zinc-500'}`}>
                                 {message.timestamp}
                               </div>
                             </div>
                             {!message.sent && (
                               <button
                                 onClick={() => handleReply(message.id)}
-                                className="absolute -right-8 top-1/2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-200 p-1.5 text-zinc-600 hover:text-blue-400 hover:bg-zinc-800 rounded-lg"
+                                className="absolute -right-8 top-1/2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-200 p-1.5 text-zinc-600 hover:text-teal-400 hover:bg-zinc-800 rounded-lg"
                               >
                                 <Reply size={14} />
                               </button>
@@ -360,9 +360,9 @@ export const MessagesModal: React.FC = () => {
                 )}
 
                 {replyingTo && (
-                  <div className="mb-3 p-3 bg-zinc-800 rounded-xl flex justify-between items-center border-l-2 border-blue-500">
+                  <div className="mb-3 p-3 bg-zinc-800 rounded-xl flex justify-between items-center border-l-2 border-teal-500">
                     <div className="text-sm flex-1 min-w-0">
-                      <span className="text-blue-400 font-medium text-xs">Antwort auf:</span>
+                      <span className="text-teal-400 font-medium text-xs">Antwort auf:</span>
                       <p className="truncate text-zinc-300 text-sm mt-0.5">{getRepliedMessage(replyingTo)?.content}</p>
                     </div>
                     <button
@@ -382,25 +382,25 @@ export const MessagesModal: React.FC = () => {
                       onChange={(e) => setNewMessage(e.target.value)}
                       onKeyPress={handleKeyPress}
                       placeholder="Nachricht schreiben..."
-                      className="w-full p-3 pr-24 bg-zinc-800 border border-zinc-700 rounded-xl resize-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 text-sm text-zinc-100 placeholder-zinc-500 transition-all duration-200"
+                      className="w-full p-3 pr-24 bg-zinc-800 border border-zinc-700 rounded-xl resize-none focus:ring-2 focus:ring-teal-500/50 focus:border-teal-500 text-sm text-zinc-100 placeholder-zinc-500 transition-all duration-200"
                       rows={1}
                     />
                     <div className="absolute right-2 top-1/2 -translate-y-1/2 flex gap-0.5">
                       <button
                         type="button"
                         onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-                        className={`p-2 rounded-lg transition-all duration-200 hidden md:block ${showEmojiPicker ? 'text-blue-400 bg-zinc-700' : 'text-zinc-500 hover:text-blue-400 hover:bg-zinc-700'}`}
+                        className={`p-2 rounded-lg transition-all duration-200 hidden md:block ${showEmojiPicker ? 'text-teal-400 bg-zinc-700' : 'text-zinc-500 hover:text-teal-400 hover:bg-zinc-700'}`}
                       >
                         <Smile size={18} />
                       </button>
                       <button
                         type="button"
                         onClick={() => handleMention(selectedContact || '')}
-                        className="text-zinc-500 hover:text-blue-400 p-2 rounded-lg hover:bg-zinc-700 transition-all duration-200 hidden md:block"
+                        className="text-zinc-500 hover:text-teal-400 p-2 rounded-lg hover:bg-zinc-700 transition-all duration-200 hidden md:block"
                       >
                         <AtSign size={18} />
                       </button>
-                      <div {...getRootProps()} className="cursor-pointer p-2 text-zinc-500 hover:text-blue-400 rounded-lg hover:bg-zinc-700 transition-all duration-200">
+                      <div {...getRootProps()} className="cursor-pointer p-2 text-zinc-500 hover:text-teal-400 rounded-lg hover:bg-zinc-700 transition-all duration-200">
                         <input {...getInputProps()} />
                         <ImageIcon size={18} />
                       </div>
@@ -409,7 +409,7 @@ export const MessagesModal: React.FC = () => {
                   <button
                     type="submit"
                     disabled={!newMessage.trim() && !selectedImage}
-                    className="bg-gradient-to-r from-blue-500 to-cyan-600 text-white p-3 rounded-xl hover:from-blue-600 hover:to-cyan-700 transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed flex-shrink-0"
+                    className="bg-gradient-to-r from-teal-500 to-cyan-600 text-white p-3 rounded-xl hover:from-teal-600 hover:to-cyan-700 transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed flex-shrink-0"
                   >
                     <Send size={20} />
                   </button>
@@ -431,8 +431,8 @@ export const MessagesModal: React.FC = () => {
           ) : (
             <div className="flex-1 flex items-center justify-center p-4">
               <div className="text-center">
-                <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-blue-500/20 to-cyan-600/20 rounded-2xl flex items-center justify-center border border-blue-500/30">
-                  <MessageSquare size={36} className="text-blue-400" />
+                <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-teal-500/20 to-cyan-600/20 rounded-2xl flex items-center justify-center border border-teal-500/30">
+                  <MessageSquare size={36} className="text-teal-400" />
                 </div>
                 <p className="text-xl font-semibold text-zinc-300 mb-2">Wählen Sie einen Kontakt</p>
                 <p className="text-sm text-zinc-500">um eine Unterhaltung zu beginnen</p>

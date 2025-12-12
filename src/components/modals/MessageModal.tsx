@@ -47,7 +47,7 @@ export const MessageModal: React.FC = () => {
         
         <div className="space-y-4">
           <textarea
-            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-moonlit-500 focus:border-transparent h-32 resize-none"
+            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent h-32 resize-none"
             placeholder="Type your message here..."
             value={messageContent}
             onChange={(e) => setMessageContent(e.target.value)}
@@ -56,7 +56,7 @@ export const MessageModal: React.FC = () => {
           <div className="flex space-x-3">
             <button
               onClick={handleSendMessage}
-              className="flex-1 flex items-center justify-center bg-moonlit-600 text-white px-4 py-2 rounded-md hover:bg-moonlit-700 transition duration-200"
+              className="flex-1 flex items-center justify-center bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition duration-200"
             >
               <Send size={18} className="mr-2" />
               <span>Send</span>
