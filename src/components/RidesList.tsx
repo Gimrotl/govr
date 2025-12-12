@@ -125,8 +125,8 @@ export const RidesList: React.FC<RidesListProps> = ({ rides }) => {
                   key={index}
                   onClick={() => scrollToIndex(index)}
                   className={`w-2 h-2 rounded-full transition-all duration-200 ${
-                    index === currentIndex
-                      ? 'bg-moonlit-600 w-6'
+                    index === currentIndex 
+                      ? 'bg-green-600 w-6' 
                       : 'bg-gray-300 hover:bg-gray-400'
                   }`}
                 />

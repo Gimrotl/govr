@@ -301,7 +301,7 @@ export const RestStopReviewsModal: React.FC<RestStopReviewsModalProps> = ({ rest
 
                           <button
                             onClick={() => setReplyingTo(review.id)}
-                            className="flex items-center space-x-1 text-gray-500 hover:text-moonlit-600 transition-colors"
+                            className="flex items-center space-x-1 text-gray-500 hover:text-green-600 transition-colors"
                           >
                             <MessageCircle className="w-3 h-3 md:w-4 md:h-4" />
                             <span className="hidden sm:inline">Antworten</span>
@@ -317,7 +317,7 @@ export const RestStopReviewsModal: React.FC<RestStopReviewsModalProps> = ({ rest
                               <div key={reply.id} className="bg-white rounded-lg p-2 md:p-3 border border-gray-100">
                                 <div className="flex items-start justify-between mb-1 md:mb-2">
                                   <div className="flex items-center min-w-0">
-                                    <div className="w-6 h-6 md:w-8 md:h-8 bg-moonlit-500 rounded-full flex items-center justify-center mr-1.5 md:mr-2 flex-shrink-0">
+                                    <div className="w-6 h-6 md:w-8 md:h-8 bg-green-500 rounded-full flex items-center justify-center mr-1.5 md:mr-2 flex-shrink-0">
                                       <span className="text-white font-bold text-xs md:text-sm">
                                         {reply.userName.charAt(0).toUpperCase()}
                                       </span>
@@ -380,12 +380,12 @@ export const RestStopReviewsModal: React.FC<RestStopReviewsModalProps> = ({ rest
                               value={replyText}
                               onChange={(e) => setReplyText(e.target.value)}
                               placeholder="Ihre Antwort..."
-                              className="w-full p-2 md:p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-moonlit-500 focus:border-transparent resize-none h-16 md:h-20 text-xs md:text-sm"
+                              className="w-full p-2 md:p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none h-16 md:h-20 text-xs md:text-sm"
                             />
                             <div className="flex space-x-1.5 md:space-x-2">
                               <button
                                 onClick={() => handleReply(review.id)}
-                                className="bg-moonlit-600 text-white px-2 md:px-4 py-1.5 md:py-2 rounded-lg hover:bg-moonlit-700 transition duration-200 flex items-center text-xs md:text-sm"
+                                className="bg-green-600 text-white px-2 md:px-4 py-1.5 md:py-2 rounded-lg hover:bg-green-700 transition duration-200 flex items-center text-xs md:text-sm"
                               >
                                 <Send className="w-3 h-3 md:w-3.5 md:h-3.5 mr-1 md:mr-2" />
                                 Antworten
