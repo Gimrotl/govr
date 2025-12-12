@@ -33,14 +33,14 @@ function App() {
 
   return (
     <Layout>
-      <header className="bg-green-600 text-white text-center py-10">
-        <h1 className="text-3xl font-bold">Caucasus RideShare Network</h1>
-        <p className="mt-2 text-lg">
+      <header className="bg-white border-b border-slate-200 text-center py-12">
+        <h1 className="text-4xl font-bold text-slate-900">Caucasus RideShare</h1>
+        <p className="mt-3 text-slate-500 text-lg font-light">
           Han vord - han nekh
         </p>
       </header>
 
-      <main className="container mx-auto px-4 py-8 mb-64">
+      <main className="container mx-auto px-4 py-10 mb-64 bg-gradient-to-br from-white to-slate-50">
         {false && (
           <div className="grid grid-cols-2 gap-6 mb-8">
             <button
@@ -69,9 +69,9 @@ function App() {
               onReset={resetSearch} 
             />
             
-            <section className="mt-10">
-              <h2 className="text-2xl font-semibold mb-6 text-center">
-                <span className="text-red-600 font-bold mr-2">{filteredRides.length}</span>
+            <section className="mt-12">
+              <h2 className="text-3xl font-bold mb-8 text-center text-slate-900">
+                <span className="text-cyan-600 font-bold mr-2">{filteredRides.length}</span>
                 Available Rides
               </h2>
               <RidesList rides={filteredRides} />
