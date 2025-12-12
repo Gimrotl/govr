@@ -47,11 +47,11 @@ export const AdminDashboardModal: React.FC = () => {
         
         <div className="bg-white p-4 md:p-6 rounded-lg shadow-md">
           <div className="flex items-center">
-            <Car size={24} className="text-moonlit-600 mr-3 md:mr-4 md:w-8 md:h-8" />
+            <Car size={24} className="text-green-600 mr-3 md:mr-4 md:w-8 md:h-8" />
             <div>
               <h3 className="text-base md:text-lg font-semibold text-gray-800">Fahrten</h3>
               <p className="text-sm md:text-base text-gray-600 hidden md:block">Fahrten überprüfen und genehmigen, aktive Angebote prüfen.</p>
-              <p className="text-xl md:text-2xl font-bold text-moonlit-600 mt-1 md:mt-2">{rides.length}</p>
+              <p className="text-xl md:text-2xl font-bold text-green-600 mt-1 md:mt-2">{rides.length}</p>
             </div>
           </div>
         </div>
@@ -97,7 +97,7 @@ export const AdminDashboardModal: React.FC = () => {
                 </div>
                 <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
                   user.status === 'active' 
-                    ? 'bg-moonlit-100 text-moonlit-800' 
+                    ? 'bg-green-100 text-green-800' 
                     : 'bg-red-100 text-red-800'
                 }`}>
                   {user.status === 'active' ? 'Aktiv' : 'Gesperrt'}
@@ -143,7 +143,7 @@ export const AdminDashboardModal: React.FC = () => {
                 <td className="px-6 py-4 whitespace-nowrap">
                   <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
                     user.status === 'active' 
-                      ? 'bg-moonlit-100 text-moonlit-800' 
+                      ? 'bg-green-100 text-green-800' 
                       : 'bg-red-100 text-red-800'
                   }`}>
                     {user.status === 'active' ? 'Aktiv' : 'Gesperrt'}
@@ -194,7 +194,7 @@ export const AdminDashboardModal: React.FC = () => {
                 <button className="text-blue-600 hover:text-blue-900 p-1">
                   <Eye size={16} />
                 </button>
-                <button className="text-moonlit-600 hover:text-moonlit-900 p-1">
+                <button className="text-green-600 hover:text-green-900 p-1">
                   <CheckCircle size={16} />
                 </button>
                 <button className="text-red-600 hover:text-red-900 p-1">
@@ -235,7 +235,7 @@ export const AdminDashboardModal: React.FC = () => {
                   <button className="text-blue-600 hover:text-blue-900">
                     <Eye size={16} />
                   </button>
-                  <button className="text-moonlit-600 hover:text-moonlit-900">
+                  <button className="text-green-600 hover:text-green-900">
                     <CheckCircle size={16} />
                   </button>
                   <button className="text-red-600 hover:text-red-900">
@@ -268,7 +268,7 @@ export const AdminDashboardModal: React.FC = () => {
                 <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
                   report.status === 'pending' 
                     ? 'bg-yellow-100 text-yellow-800' 
-                    : 'bg-moonlit-100 text-moonlit-800'
+                    : 'bg-green-100 text-green-800'
                 }`}>
                   {report.status === 'pending' ? 'Ausstehend' : 'Gelöst'}
                 </span>
@@ -277,7 +277,7 @@ export const AdminDashboardModal: React.FC = () => {
                 <button className="text-blue-600 hover:text-blue-900 p-1">
                   <Eye size={16} />
                 </button>
-                <button className="text-moonlit-600 hover:text-moonlit-900 p-1">
+                <button className="text-green-600 hover:text-green-900 p-1">
                   <CheckCircle size={16} />
                 </button>
                 <button className="text-red-600 hover:text-red-900 p-1">
@@ -315,7 +315,7 @@ export const AdminDashboardModal: React.FC = () => {
                   <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
                     report.status === 'pending' 
                       ? 'bg-yellow-100 text-yellow-800' 
-                      : 'bg-moonlit-100 text-moonlit-800'
+                      : 'bg-green-100 text-green-800'
                   }`}>
                     {report.status === 'pending' ? 'Ausstehend' : 'Gelöst'}
                   </span>
@@ -324,7 +324,7 @@ export const AdminDashboardModal: React.FC = () => {
                   <button className="text-blue-600 hover:text-blue-900">
                     <Eye size={16} />
                   </button>
-                  <button className="text-moonlit-600 hover:text-moonlit-900">
+                  <button className="text-green-600 hover:text-green-900">
                     <CheckCircle size={16} />
                   </button>
                   <button className="text-red-600 hover:text-red-900">
