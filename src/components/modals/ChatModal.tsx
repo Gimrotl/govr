@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { X, Send, MessageCircle } from 'lucide-react';
+import { X, Send, MessageCircle, ChevronDown } from 'lucide-react';
 import { useModals } from '../../hooks/useModals';
 import { useChat } from '../../hooks/useChat';
 import { useAuth } from '../../hooks/useAuth';
@@ -41,15 +41,25 @@ export const ChatModal: React.FC = () => {
   const { isLoggedIn, userEmail } = useAuth();
   const { rides } = useRides();
   const [newMessage, setNewMessage] = useState('');
-  const messagesEndRef = useRef<HTMLDivElement>(null);
-  
+  const [showScrollButton, setShowScrollButton] = useState(false);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTop = scrollContainerRef.current.scrollHeight;
+    }
   };
-  
+
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  const handleScroll = () => {
+    if (scrollContainerRef.current) {
+      const { scrollTop, scrollHeight, clientHeight } = scrollContainerRef.current;
+      setShowScrollButton(scrollHeight - scrollTop - clientHeight > 100);
+    }
+  };
   
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
@@ -121,7 +131,11 @@ export const ChatModal: React.FC = () => {
           </div>
           
           {/* Messages Area */}
-          <div className="flex-1 overflow-y-auto p-2 md:p-4 bg-gray-50 pb-28 md:pb-32">
+          <div
+            ref={scrollContainerRef}
+            onScroll={handleScroll}
+            className="flex-1 overflow-y-auto p-2 md:p-4 bg-gray-50 pb-4 relative"
+          >
             <div className="space-y-4">
               {messages.map((message) => (
                 <div key={message.id} className={`flex ${
@@ -160,8 +174,8 @@ export const ChatModal: React.FC = () => {
                       </div>
                     </div>
                     <div className={`p-3 rounded-lg shadow-sm border ${
-                      message.user === (userEmail?.split('@')[0] || 'Benutzer') 
-                        ? 'bg-green-500 text-white rounded-br-none' 
+                      message.user === (userEmail?.split('@')[0] || 'Benutzer')
+                        ? 'bg-green-500 text-white rounded-br-none'
                         : 'bg-white text-gray-700 rounded-bl-none'
                     }`}>
                       <p className="break-words text-sm md:text-base">{message.content}</p>
@@ -169,8 +183,17 @@ export const ChatModal: React.FC = () => {
                   </div>
                 </div>
               ))}
-              <div ref={messagesEndRef} />
             </div>
+
+            {showScrollButton && (
+              <button
+                onClick={scrollToBottom}
+                className="fixed bottom-40 md:bottom-48 right-8 bg-green-600 text-white p-2 rounded-full shadow-lg hover:bg-green-700 transition-all duration-200 animate-fadeIn"
+                aria-label="Scroll to bottom"
+              >
+                <ChevronDown size={20} />
+              </button>
+            )}
           </div>
           
           {/* Message Input */}
