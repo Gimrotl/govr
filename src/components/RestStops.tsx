@@ -347,7 +347,7 @@ export const RestStops: React.FC = () => {
 
   const RestStopCard = ({ stop }: { stop: RestStop }) => (
     <div
-      className="flex-shrink-0 w-72 sm:w-80 md:w-96 h-[500px] bg-gray-100 rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer group border-2 border-gray-200 flex flex-col"
+      className="flex-shrink-0 w-72 sm:w-80 md:w-96 h-[500px] bg-slate-800 border border-slate-700 rounded-2xl shadow-lg overflow-hidden hover:shadow-cyan-500/20 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer group hover:border-cyan-500/50 flex flex-col"
       onClick={() => handleDetailsClick(stop)}
     >
       <div className="relative h-48 overflow-hidden">
@@ -356,27 +356,27 @@ export const RestStops: React.FC = () => {
           alt={stop.name}
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
         />
-        <div className="absolute top-4 left-4 bg-white bg-opacity-90 backdrop-blur-sm rounded-full px-3 py-1 flex items-center space-x-2">
+        <div className="absolute top-4 left-4 bg-slate-900/90 backdrop-blur-sm rounded-full px-3 py-1 flex items-center space-x-2 border border-slate-700">
           {getTypeIcon(stop.type)}
-          <span className="text-sm font-medium text-gray-800">{stop.type}</span>
+          <span className="text-sm font-medium text-slate-200">{stop.type}</span>
         </div>
-        <div className="absolute top-4 right-4 bg-white bg-opacity-90 backdrop-blur-sm rounded-full px-3 py-1 flex items-center space-x-1">
-          <Star size={14} className="text-yellow-500 fill-current" />
-          <span className="text-sm font-bold text-gray-800">{stop.rating}</span>
+        <div className="absolute top-4 right-4 bg-slate-900/90 backdrop-blur-sm rounded-full px-3 py-1 flex items-center space-x-1 border border-slate-700">
+          <Star size={14} className="text-yellow-400 fill-current" />
+          <span className="text-sm font-bold text-slate-200">{stop.rating}</span>
         </div>
 
         {isAdmin && (
           <div className="absolute bottom-4 right-4 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
             <button
               onClick={(e) => handleEditRestStop(stop, e)}
-              className="bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700 transition duration-200"
+              className="bg-cyan-600 text-white p-2 rounded-full hover:bg-cyan-700 transition duration-200 shadow-lg"
               title="Rest Stop bearbeiten"
             >
               <Edit size={16} />
             </button>
             <button
               onClick={(e) => handleDeleteRestStop(stop.id, e)}
-              className="bg-red-600 text-white p-2 rounded-full hover:bg-red-700 transition duration-200"
+              className="bg-red-600 text-white p-2 rounded-full hover:bg-red-700 transition duration-200 shadow-lg"
               title="Rest Stop löschen"
             >
               <Trash2 size={16} />
@@ -386,14 +386,14 @@ export const RestStops: React.FC = () => {
       </div>
 
       <div className="p-6 flex-1 flex flex-col">
-        <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-1">{stop.name}</h3>
+        <h3 className="text-xl font-bold text-slate-100 mb-2 line-clamp-1">{stop.name}</h3>
 
-        <div className="flex items-center text-gray-600 mb-4">
+        <div className="flex items-center text-slate-400 mb-4">
           <MapPin size={16} className="mr-2 flex-shrink-0" />
           <span className="text-sm truncate">{stop.location}</span>
         </div>
 
-        <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+        <p className="text-slate-400 text-sm mb-4 line-clamp-2">
           {stop.description}
         </p>
 
@@ -411,7 +411,7 @@ export const RestStops: React.FC = () => {
               e.stopPropagation();
               handleNavigationClick(stop);
             }}
-            className="w-full bg-blue-600 text-white py-3 px-4 rounded-xl font-medium hover:bg-blue-700 transition duration-200 flex items-center justify-center"
+            className="w-full bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-600 hover:to-teal-600 text-white py-3 px-4 rounded-xl font-medium transition-all duration-200 flex items-center justify-center shadow-lg hover:shadow-cyan-500/50"
           >
             <Navigation size={18} className="mr-2" />
             Navigation
@@ -421,7 +421,7 @@ export const RestStops: React.FC = () => {
               e.stopPropagation();
               handleDetailsClick(stop);
             }}
-            className="w-full py-3 px-4 border border-gray-300 text-gray-700 rounded-xl font-medium hover:bg-gray-50 transition duration-200"
+            className="w-full py-3 px-4 border border-slate-600 text-slate-300 rounded-xl font-medium hover:bg-slate-700 transition-all duration-200"
           >
             Details
           </button>
@@ -439,16 +439,16 @@ export const RestStops: React.FC = () => {
     scrollRef: React.RefObject<HTMLDivElement>,
     borderColor: string
   ) => (
-    <section className={`mt-20 mb-20 bg-gray-100 py-12 px-6 rounded-3xl border-t-4 ${borderColor}`}>
+    <section className={`mt-20 mb-20 bg-slate-800/50 backdrop-blur-sm py-12 px-6 rounded-3xl border-t-4 ${borderColor} border border-slate-700`}>
       <div className="flex items-start justify-between mb-10">
         <div className="flex-1">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">{title}</h2>
-          <p className="text-gray-600 text-base max-w-2xl leading-relaxed">{description}</p>
+          <h2 className="text-2xl font-bold text-slate-100 mb-2">{title}</h2>
+          <p className="text-slate-400 text-base max-w-2xl leading-relaxed">{description}</p>
         </div>
         {isAdmin && (
           <button
             onClick={handleCreateRestStop}
-            className="ml-4 bg-green-600 text-white p-3 rounded-full hover:bg-green-700 transition duration-200 flex-shrink-0"
+            className="ml-4 bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-600 hover:to-teal-600 text-white p-3 rounded-full transition-all duration-200 flex-shrink-0 shadow-lg"
             title="Neuen Rest Stop erstellen"
           >
             <Plus size={24} />
@@ -460,27 +460,27 @@ export const RestStops: React.FC = () => {
         <button
           onClick={goToPrev}
           disabled={currentIdx === 0}
-          className={`absolute left-0 top-1/2 transform -translate-y-1/2 z-20 bg-white rounded-full p-3 shadow-lg transition-all duration-200 ${
+          className={`absolute left-0 top-1/2 transform -translate-y-1/2 z-20 bg-slate-800 border border-slate-600 rounded-full p-3 shadow-lg transition-all duration-200 ${
             currentIdx === 0
               ? 'opacity-30 cursor-not-allowed'
-              : 'hover:bg-gray-100 hover:shadow-xl opacity-90 hover:opacity-100'
+              : 'hover:bg-slate-700 hover:shadow-xl opacity-90 hover:opacity-100'
           }`}
           style={{ marginLeft: '-20px' }}
         >
-          <ChevronLeft size={28} className={currentIdx === 0 ? 'text-gray-400' : 'text-[#c51d34]'} />
+          <ChevronLeft size={28} className={currentIdx === 0 ? 'text-slate-600' : 'text-cyan-400'} />
         </button>
 
         <button
           onClick={goToNext}
           disabled={currentIdx >= restStopsData.length - 1}
-          className={`absolute right-0 top-1/2 transform -translate-y-1/2 z-20 bg-white rounded-full p-3 shadow-lg transition-all duration-200 ${
+          className={`absolute right-0 top-1/2 transform -translate-y-1/2 z-20 bg-slate-800 border border-slate-600 rounded-full p-3 shadow-lg transition-all duration-200 ${
             currentIdx >= restStopsData.length - 1
               ? 'opacity-30 cursor-not-allowed'
-              : 'hover:bg-gray-100 hover:shadow-xl opacity-90 hover:opacity-100'
+              : 'hover:bg-slate-700 hover:shadow-xl opacity-90 hover:opacity-100'
           }`}
           style={{ marginRight: '-20px' }}
         >
-          <ChevronRight size={28} className={currentIdx >= restStopsData.length - 1 ? 'text-gray-400' : 'text-[#c51d34]'} />
+          <ChevronRight size={28} className={currentIdx >= restStopsData.length - 1 ? 'text-slate-600' : 'text-cyan-400'} />
         </button>
 
         <div
@@ -506,14 +506,14 @@ export const RestStops: React.FC = () => {
               }}
               className={`h-3 rounded-full transition-all duration-300 ${
                 index === currentIdx
-                  ? 'bg-blue-600 w-10'
-                  : 'bg-gray-300 w-3 hover:bg-gray-400'
+                  ? 'bg-gradient-to-r from-cyan-500 to-teal-500 w-10'
+                  : 'bg-slate-600 w-3 hover:bg-slate-500'
               }`}
             />
           ))}
         </div>
 
-        <div className="text-center mt-6 text-sm text-gray-500 md:hidden">
+        <div className="text-center mt-6 text-sm text-slate-400 md:hidden">
           ← Wischen zum Blättern →
         </div>
       </div>
