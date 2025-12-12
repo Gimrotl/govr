@@ -101,69 +101,69 @@ export const OfferRideForm: React.FC<OfferRideFormProps> = ({ onBack }) => {
   };
 
   return (
-    <section className="mt-4 bg-gray-200 rounded-lg shadow-md p-6">
+    <section className="mt-4 bg-slate-800 border border-slate-700 rounded-xl shadow-lg p-6">
       <div className="flex items-center mb-6">
         <button
           onClick={onBack}
-          className="text-gray-600 hover:text-gray-800 transition-colors mr-4"
+          className="text-slate-400 hover:text-cyan-400 transition-colors mr-4"
         >
           <ChevronLeft size={24} />
         </button>
-        <h2 className="text-2xl font-semibold">Offer a Ride</h2>
+        <h2 className="text-2xl font-semibold text-slate-100">Offer a Ride</h2>
       </div>
       
       <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
           <div>
-            <label htmlFor="from" className="block text-sm font-medium text-gray-700 mb-1">From</label>
+            <label htmlFor="from" className="block text-sm font-medium text-slate-300 mb-1">From</label>
             <CityAutocomplete
               name="from"
               placeholder="City of departure"
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent bg-gray-100"
+              className="w-full p-3 border border-slate-600 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent bg-slate-900 text-slate-200 placeholder-slate-500"
               value={newRide.from}
               onChange={handleChange}
             />
           </div>
-          
+
           <div>
-            <label htmlFor="to" className="block text-sm font-medium text-gray-700 mb-1">To</label>
+            <label htmlFor="to" className="block text-sm font-medium text-slate-300 mb-1">To</label>
             <CityAutocomplete
               name="to"
               placeholder="Destination city"
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent bg-gray-100"
+              className="w-full p-3 border border-slate-600 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent bg-slate-900 text-slate-200 placeholder-slate-500"
               value={newRide.to}
               onChange={handleChange}
             />
           </div>
-          
+
           <div>
-            <label htmlFor="date" className="block text-sm font-medium text-gray-700 mb-1">Date</label>
+            <label htmlFor="date" className="block text-sm font-medium text-slate-300 mb-1">Date</label>
             <input
               type="date"
               id="date"
               name="date"
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent bg-gray-100"
+              className="w-full p-3 border border-slate-600 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent bg-slate-900 text-slate-200"
               value={newRide.date}
               onChange={handleChange}
               required
             />
           </div>
-          
+
           <div>
-            <label htmlFor="time" className="block text-sm font-medium text-gray-700 mb-1">Time</label>
+            <label htmlFor="time" className="block text-sm font-medium text-slate-300 mb-1">Time</label>
             <input
               type="time"
               id="time"
               name="time"
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent bg-gray-100"
+              className="w-full p-3 border border-slate-600 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent bg-slate-900 text-slate-200"
               value={newRide.time}
               onChange={handleChange}
               required
             />
           </div>
-          
+
           <div>
-            <label htmlFor="priceAmount" className="block text-sm font-medium text-gray-700 mb-1">Preis pro Platz</label>
+            <label htmlFor="priceAmount" className="block text-sm font-medium text-slate-300 mb-1">Preis pro Platz</label>
             <div className="flex space-x-2">
               <input
                 type="number"
@@ -172,7 +172,7 @@ export const OfferRideForm: React.FC<OfferRideFormProps> = ({ onBack }) => {
                 placeholder="Betrag"
                 min="0"
                 step="0.01"
-                className="w-[48%] p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent bg-gray-100"
+                className="w-[48%] p-3 border border-slate-600 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent bg-slate-900 text-slate-200 placeholder-slate-500"
                 value={newRide.priceAmount}
                 onChange={handleChange}
                 required
@@ -181,7 +181,7 @@ export const OfferRideForm: React.FC<OfferRideFormProps> = ({ onBack }) => {
                 name="currency"
                 value={newRide.currency}
                 onChange={handleChange}
-                className="w-[45%] p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent bg-gray-100"
+                className="w-[45%] p-3 border border-slate-600 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent bg-slate-900 text-slate-200"
               >
                 {currencies.map((currency) => (
                   <option key={currency.code} value={currency.code}>
@@ -191,16 +191,16 @@ export const OfferRideForm: React.FC<OfferRideFormProps> = ({ onBack }) => {
               </select>
             </div>
           </div>
-          
+
           <div>
-            <label htmlFor="availableSeats" className="block text-sm font-medium text-gray-700 mb-1">Available Seats</label>
+            <label htmlFor="availableSeats" className="block text-sm font-medium text-slate-300 mb-1">Available Seats</label>
             <input
               type="number"
               id="availableSeats"
               name="availableSeats"
               min="1"
               max="8"
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent bg-gray-100"
+              className="w-full p-3 border border-slate-600 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent bg-slate-900 text-slate-200"
               value={newRide.availableSeats}
               onChange={handleChange}
               required
@@ -209,13 +209,13 @@ export const OfferRideForm: React.FC<OfferRideFormProps> = ({ onBack }) => {
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-1">Stopovers</label>
+          <label className="block text-sm font-medium text-slate-300 mb-1">Stopovers</label>
           {stopovers.map((stopover, index) => (
             <div key={index} className="flex items-center space-x-2 mb-2">
               <CityAutocomplete
                 name={`stopover-${index}`}
                 placeholder="Enter stopover city"
-                className="flex-1 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent bg-gray-100"
+                className="flex-1 p-3 border border-slate-600 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent bg-slate-900 text-slate-200 placeholder-slate-500"
                 value={stopover}
                 onChange={(e) => handleStopoverChange(index, e.target.value)}
               />
@@ -223,7 +223,7 @@ export const OfferRideForm: React.FC<OfferRideFormProps> = ({ onBack }) => {
                 <button
                   type="button"
                   onClick={addStopover}
-                  className="p-2 text-green-600 hover:text-green-700"
+                  className="p-2 text-cyan-400 hover:text-cyan-300 transition-colors"
                 >
                   <Plus size={24} />
                 </button>
@@ -231,7 +231,7 @@ export const OfferRideForm: React.FC<OfferRideFormProps> = ({ onBack }) => {
                 <button
                   type="button"
                   onClick={() => removeStopover(index)}
-                  className="p-2 text-red-600 hover:text-red-700"
+                  className="p-2 text-red-400 hover:text-red-300 transition-colors"
                 >
                   <Minus size={24} />
                 </button>
@@ -241,20 +241,20 @@ export const OfferRideForm: React.FC<OfferRideFormProps> = ({ onBack }) => {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="information" className="block text-sm font-medium text-gray-700 mb-1">Additional Information</label>
+          <label htmlFor="information" className="block text-sm font-medium text-slate-300 mb-1">Additional Information</label>
           <textarea
             id="information"
             name="information"
             placeholder="Add any additional information about the ride..."
-            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent bg-gray-100 h-32"
+            className="w-full p-3 border border-slate-600 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent bg-slate-900 text-slate-200 placeholder-slate-500 h-32"
             value={newRide.information}
             onChange={handleChange}
           />
         </div>
-        
+
         <button
           type="submit"
-          className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition duration-200 shadow-sm"
+          className="bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-600 hover:to-teal-600 text-white px-6 py-3 rounded-lg transition-all duration-200 shadow-lg hover:shadow-cyan-500/50 font-medium"
         >
           Offer Ride
         </button>
