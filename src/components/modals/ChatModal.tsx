@@ -111,6 +111,25 @@ export const ChatModal: React.FC = () => {
     openUserProfile(userProfile);
   };
   
+  if (!isLoggedIn) {
+    return (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-start md:items-center justify-center z-50 p-4 pt-1 md:pt-4 animate-fadeIn">
+        <div className="bg-white rounded-lg shadow-lg w-full max-w-md p-4 animate-scaleIn">
+          <div className="flex justify-between items-center mb-3">
+            <h2 className="text-base font-medium text-gray-900">Chat</h2>
+            <button
+              onClick={() => closeModal('chat')}
+              className="text-gray-600 hover:text-gray-900"
+            >
+              <X size={18} />
+            </button>
+          </div>
+          <p className="text-sm text-gray-600">Melden Sie sich an, um den Chat zu nutzen.</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-start md:items-center justify-center z-50 p-4 pt-1 md:pt-4 animate-fadeIn overflow-y-auto">
       <div className="bg-white rounded-lg shadow-lg w-full max-w-md h-[40vh] md:h-[350px] max-h-[350px] flex flex-col animate-scaleIn mt-0 mb-4 md:my-auto relative">
@@ -154,7 +173,11 @@ export const ChatModal: React.FC = () => {
                           ? 'bg-slate-200 text-gray-900'
                           : 'bg-gray-100 text-gray-800'
                       }`}>
+                        <div className="font-medium text-xs mb-0.5">
+                          {message.user === (userEmail?.split('@')[0] || 'Benutzer') ? 'Sie' : message.user}
+                        </div>
                         <p className="break-words">{message.content}</p>
+                        <div className="text-xs opacity-70 mt-1">{message.timestamp}</div>
                       </div>
                     </div>
                   </div>
@@ -180,13 +203,12 @@ export const ChatModal: React.FC = () => {
                 value={newMessage}
                 onChange={(e) => setNewMessage(e.target.value)}
                 onKeyPress={handleKeyPress}
-                placeholder={isLoggedIn ? "Nachricht..." : "Anmelden..."}
-                className="flex-1 px-2 py-1.5 border border-gray-300 rounded text-xs focus:ring-1 focus:ring-slate-400 focus:border-transparent disabled:opacity-50 disabled:bg-gray-50"
-                disabled={!isLoggedIn}
+                placeholder="Nachricht..."
+                className="flex-1 px-2 py-1.5 border border-gray-300 rounded text-xs focus:ring-1 focus:ring-slate-400 focus:border-transparent"
               />
               <button
                 type="submit"
-                disabled={!isLoggedIn || !newMessage.trim()}
+                disabled={!newMessage.trim()}
                 className="bg-slate-700 text-white px-2 py-1.5 rounded hover:bg-slate-800 transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
               >
                 <Send size={14} />
