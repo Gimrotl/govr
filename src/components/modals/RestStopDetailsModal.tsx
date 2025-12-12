@@ -75,7 +75,7 @@ const getAmenityIcon = (amenity: string) => {
     case 'Essen':
       return { icon: '🍽️', label: 'Restaurant', color: 'bg-red-100 text-red-800' };
     case 'Grün':
-      return { icon: '🌳', label: 'Grünfläche', color: 'bg-moonlit-100 text-moonlit-800' };
+      return { icon: '🌳', label: 'Grünfläche', color: 'bg-green-100 text-green-800' };
     case 'Parkplatz':
       return { icon: '🅿️', label: 'Parkplatz', color: 'bg-gray-100 text-gray-800' };
     case 'Duschen':

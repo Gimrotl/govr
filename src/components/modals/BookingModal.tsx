@@ -61,7 +61,7 @@ export const BookingModal: React.FC = () => {
             <p className="text-sm text-gray-600">
               {selectedRide.date} um {selectedRide.time}
             </p>
-            <p className="text-lg font-bold text-moonlit-600 mt-1">
+            <p className="text-lg font-bold text-green-600 mt-1">
               {selectedRide.price}
             </p>
           </div>
