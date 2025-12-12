@@ -103,13 +103,13 @@ export const ChatModal: React.FC = () => {
   
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-start md:items-center justify-center z-50 p-4 pt-1 md:pt-4 animate-fadeIn overflow-y-auto">
-      <div className="bg-white rounded-lg shadow-xl w-full max-w-4xl h-[75vh] md:h-[600px] max-h-[600px] flex flex-col animate-scaleIn mt-0 mb-4 md:my-auto">
+      <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl h-[65vh] md:h-[480px] max-h-[480px] flex flex-col animate-scaleIn mt-0 mb-4 md:my-auto">
         {/* Chat Header */}
         <div className="flex-1 flex flex-col">
-          <div className="p-3 md:p-4 border-b border-gray-200 flex justify-between items-center bg-green-600 text-white rounded-t-lg">
+          <div className="p-3 border-b border-gray-200 flex justify-between items-center bg-green-600 text-white rounded-t-lg">
             <div className="flex items-center">
-              <MessageCircle size={20} className="mr-2 md:mr-2" />
-              <h2 className="text-lg md:text-xl font-semibold">Öffentlicher Chat</h2>
+              <MessageCircle size={18} className="mr-2" />
+              <h2 className="text-base md:text-lg font-semibold">Öffentlicher Chat</h2>
             </div>
             <button
               onClick={() => closeModal('chat')}
@@ -121,8 +121,8 @@ export const ChatModal: React.FC = () => {
           </div>
           
           {/* Messages Area */}
-          <div className="flex-1 overflow-y-auto p-2 md:p-4 bg-gray-50">
-            <div className="space-y-4">
+          <div className="flex-1 overflow-y-auto p-3 bg-gray-50">
+            <div className="space-y-3">
               {messages.map((message) => (
                 <div key={message.id} className={`flex ${
                   message.user === (userEmail?.split('@')[0] || 'Benutzer') ? 'justify-end' : 'justify-start'
@@ -159,12 +159,12 @@ export const ChatModal: React.FC = () => {
                         </div>
                       </div>
                     </div>
-                    <div className={`p-3 rounded-lg shadow-sm border ${
-                      message.user === (userEmail?.split('@')[0] || 'Benutzer') 
-                        ? 'bg-green-500 text-white rounded-br-none' 
+                    <div className={`px-3 py-2 rounded-lg shadow-sm border ${
+                      message.user === (userEmail?.split('@')[0] || 'Benutzer')
+                        ? 'bg-green-500 text-white rounded-br-none'
                         : 'bg-white text-gray-700 rounded-bl-none'
                     }`}>
-                      <p className="break-words text-sm md:text-base">{message.content}</p>
+                      <p className="break-words text-sm">{message.content}</p>
                     </div>
                   </div>
                 </div>
@@ -174,22 +174,22 @@ export const ChatModal: React.FC = () => {
           </div>
           
           {/* Message Input */}
-          <form onSubmit={handleSendMessage} className="p-2 md:p-4 bg-white border-t border-gray-200 rounded-b-lg">
+          <form onSubmit={handleSendMessage} className="p-3 bg-white border-t border-gray-200 rounded-b-lg">
             {!isLoggedIn && (
-              <div className="mb-2 md:mb-3 p-2 bg-yellow-100 border border-yellow-300 rounded-lg">
-                <p className="text-yellow-800 text-xs md:text-sm">
+              <div className="mb-2 p-2 bg-yellow-100 border border-yellow-300 rounded-lg">
+                <p className="text-yellow-800 text-xs">
                   Sie können den Chat lesen, aber müssen eingeloggt sein, um Nachrichten zu senden.
                 </p>
               </div>
             )}
-            <div className="flex space-x-1 md:space-x-2">
+            <div className="flex space-x-2">
               <div className="flex-1 relative">
                 <textarea
                   value={newMessage}
                   onChange={(e) => setNewMessage(e.target.value)}
                   onKeyPress={handleKeyPress}
-                  placeholder={isLoggedIn ? "Nachricht eingeben..." : "Melden Sie sich an, um zu schreiben..."}
-                  className="w-full p-2 md:p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm md:text-base"
+                  placeholder={isLoggedIn ? "Nachricht..." : "Anmelden zum Schreiben..."}
+                  className="w-full p-2 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm"
                   rows={1}
                   disabled={!isLoggedIn}
                 />
@@ -197,10 +197,9 @@ export const ChatModal: React.FC = () => {
               <button
                 type="submit"
                 disabled={!isLoggedIn || !newMessage.trim()}
-                className="bg-green-600 text-white p-2 md:p-3 rounded-lg hover:bg-green-700 transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+                className="bg-green-600 text-white p-2 rounded-lg hover:bg-green-700 transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
               >
-                <Send size={16} className="md:hidden" />
-                <Send size={20} className="hidden md:block" />
+                <Send size={18} />
               </button>
             </div>
           </form>
