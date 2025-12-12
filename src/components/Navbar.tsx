@@ -34,7 +34,7 @@ export const Navbar: React.FC = () => {
           <div className="hidden md:flex items-center space-x-6">
             <button 
               onClick={() => openModal('chat')}
-              className="flex items-center text-white hover:text-green-300 transition duration-200"
+              className="flex items-center text-white hover:text-moonlit-300 transition duration-200"
             >
               <MessageSquare size={18} className="mr-1" />
               <span>Chat</span>
@@ -48,7 +48,7 @@ export const Navbar: React.FC = () => {
                 }
                 openModal('offerRide');
               }}
-              className="flex items-center text-white hover:text-green-300 transition duration-200"
+              className="flex items-center text-white hover:text-moonlit-300 transition duration-200"
             >
               <PlusCircle size={18} className="mr-1" />
               <span>Offer a Ride</span>
@@ -58,14 +58,14 @@ export const Navbar: React.FC = () => {
               <>
                 <button
                   onClick={() => openModal('myRides')}
-                  className="flex items-center hover:text-green-300 transition duration-200"
+                  className="flex items-center hover:text-moonlit-300 transition duration-200"
                 >
                   <Car size={18} className="mr-1" />
                   <span>My Rides</span>
                 </button>
                 <button
                   onClick={() => openModal('messages')}
-                  className="flex items-center hover:text-green-300 transition duration-200 relative"
+                  className="flex items-center hover:text-moonlit-300 transition duration-200 relative"
                 >
                   <MessageSquare size={18} className="mr-1" />
                   <span>Messages</span>
@@ -77,7 +77,7 @@ export const Navbar: React.FC = () => {
                 </button>
                 <button 
                   onClick={() => openModal('profile')}
-                  className="flex items-center hover:text-green-300 transition duration-200"
+                  className="flex items-center hover:text-moonlit-300 transition duration-200"
                 >
                   <User size={18} className="mr-1" />
                   <span>Profile</span>
@@ -87,7 +87,7 @@ export const Navbar: React.FC = () => {
             
             <button 
               onClick={isLoggedIn ? logout : () => openModal('login')}
-              className="flex items-center hover:text-green-300 transition duration-200"
+              className="flex items-center hover:text-moonlit-300 transition duration-200"
             >
               {isLoggedIn ? (
                 <>

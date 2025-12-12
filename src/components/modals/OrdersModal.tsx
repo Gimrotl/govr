@@ -34,7 +34,7 @@ export const OrdersModal: React.FC = () => {
                     <h3 className="font-medium">{order.client}</h3>
                     <span className={`text-sm font-medium px-2 py-1 rounded-full ${
                       order.status === 'pending' ? 'bg-yellow-100 text-yellow-800' : 
-                      order.status === 'accepted' ? 'bg-green-100 text-green-800' : 
+                      order.status === 'accepted' ? 'bg-moonlit-100 text-moonlit-800' : 
                       'bg-red-100 text-red-800'
                     }`}>
                       {order.status === 'pending' ? 'Pending' : 
@@ -48,7 +48,7 @@ export const OrdersModal: React.FC = () => {
                     <div className="flex mt-3 space-x-2">
                       <button
                         onClick={() => acceptOrder(order.id)}
-                        className="flex items-center justify-center bg-green-600 text-white px-3 py-1 rounded-md hover:bg-green-700 transition duration-200"
+                        className="flex items-center justify-center bg-moonlit-600 text-white px-3 py-1 rounded-md hover:bg-moonlit-700 transition duration-200"
                       >
                         <CheckCheck size={16} className="mr-1" />
                         <span>Accept</span>

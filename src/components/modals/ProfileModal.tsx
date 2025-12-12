@@ -93,7 +93,7 @@ export const ProfileModal: React.FC = () => {
                 {!isViewingOtherUser && (
                   <button
                     onClick={() => setIsEditing(!isEditing)}
-                    className="text-green-600 hover:text-green-700 transition duration-200"
+                    className="text-moonlit-600 hover:text-moonlit-700 transition duration-200"
                   >
                     {isEditing ? (
                       <Check size={24} onClick={handleSave} />
@@ -236,7 +236,7 @@ export const ProfileModal: React.FC = () => {
                 </button>
                 <button
                   onClick={() => {/* Show current rides */}}
-                  className="flex-1 flex items-center justify-center bg-green-600 text-white py-2 md:py-3 px-3 md:px-4 rounded-lg hover:bg-green-700 transition duration-200 text-sm md:text-base"
+                  className="flex-1 flex items-center justify-center bg-moonlit-600 text-white py-2 md:py-3 px-3 md:px-4 rounded-lg hover:bg-moonlit-700 transition duration-200 text-sm md:text-base"
                 >
                   <Car size={16} className="mr-2 md:hidden" />
                   <Car size={18} className="mr-2 hidden md:block" />
@@ -249,8 +249,8 @@ export const ProfileModal: React.FC = () => {
             {currentRides.length > 0 && (
               <div className="mt-4 md:mt-6">
                 <h3 className="text-base md:text-lg font-medium text-gray-800 mb-3 md:mb-4 flex items-center">
-                  <Car size={18} className="mr-2 text-green-600 md:hidden" />
-                  <Car size={20} className="mr-2 text-green-600 hidden md:block" />
+                  <Car size={18} className="mr-2 text-moonlit-600 md:hidden" />
+                  <Car size={20} className="mr-2 text-moonlit-600 hidden md:block" />
                   {isViewingOtherUser ? 'Aktuelle Fahrten' : 'Meine aktuellen Fahrten'}
                 </h3>
                 <div className="max-h-32 md:max-h-40 overflow-y-auto space-y-2">
@@ -264,7 +264,7 @@ export const ProfileModal: React.FC = () => {
                           <p className="text-xs md:text-sm text-gray-600">
                             {ride.date} um {ride.time}
                           </p>
-                          <p className="text-xs md:text-sm text-green-600 font-medium">
+                          <p className="text-xs md:text-sm text-moonlit-600 font-medium">
                             {ride.price}
                           </p>
                         </div>
@@ -304,7 +304,7 @@ export const ProfileModal: React.FC = () => {
             <h3 className="text-base md:text-lg font-medium text-gray-800 mb-3 md:mb-4">Car Images</h3>
             {!isViewingOtherUser && isEditing && displayProfile.carImages.length < 5 && (
               <div className="mb-3 md:mb-4">
-                <label className="cursor-pointer flex items-center justify-center w-full h-24 md:h-32 border-2 border-dashed border-gray-300 rounded-lg hover:border-green-500 transition-colors">
+                <label className="cursor-pointer flex items-center justify-center w-full h-24 md:h-32 border-2 border-dashed border-gray-300 rounded-lg hover:border-moonlit-500 transition-colors">
                   <input
                     type="file"
                     multiple

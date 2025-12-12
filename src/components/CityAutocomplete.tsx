@@ -114,7 +114,7 @@ export const CityAutocomplete: React.FC<CityAutocompleteProps> = ({
               key={`${suggestion.city}-${suggestion.country}`}
               className={`px-4 py-2 cursor-pointer transition-colors ${
                 index === activeSuggestion
-                  ? 'bg-green-100 text-green-800'
+                  ? 'bg-moonlit-100 text-moonlit-800'
                   : 'hover:bg-gray-100'
               }`}
               onClick={() => handleSuggestionClick(suggestion)}
