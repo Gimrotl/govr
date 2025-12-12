@@ -23,7 +23,7 @@ export const NotificationsModal: React.FC = () => {
   const getNotificationColor = (type: string) => {
     switch (type) {
       case 'order_accepted':
-        return 'border-l-green-500 bg-green-50';
+        return 'border-l-moonlit-500 bg-moonlit-50';
       case 'order_rejected':
         return 'border-l-red-500 bg-red-50';
       case 'booking_confirmed':

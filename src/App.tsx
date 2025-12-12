@@ -33,7 +33,7 @@ function App() {
 
   return (
     <Layout>
-      <header className="bg-green-600 text-white text-center py-10">
+      <header className="bg-moonlit-600 text-white text-center py-10">
         <h1 className="text-3xl font-bold">Caucasus RideShare Network</h1>
         <p className="mt-2 text-lg">
           Han vord - han nekh

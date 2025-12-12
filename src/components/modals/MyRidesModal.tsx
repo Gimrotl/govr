@@ -116,9 +116,9 @@ export const MyRidesModal: React.FC = () => {
                                 {ride.availableSeats - ride.bookedSeats} / {ride.availableSeats}
                               </p>
                             </div>
-                            <div className="bg-green-50 rounded-lg p-3">
+                            <div className="bg-moonlit-50 rounded-lg p-3">
                               <p className="text-xs text-gray-600 mb-1">Preis</p>
-                              <p className="text-lg font-bold text-green-700">{ride.price}</p>
+                              <p className="text-lg font-bold text-moonlit-700">{ride.price}</p>
                             </div>
                           </div>
                         </div>
@@ -174,7 +174,7 @@ export const MyRidesModal: React.FC = () => {
                             order.status === 'pending'
                               ? 'bg-yellow-100 text-yellow-800'
                               : order.status === 'accepted'
-                              ? 'bg-green-100 text-green-800'
+                              ? 'bg-moonlit-100 text-moonlit-800'
                               : 'bg-red-100 text-red-800'
                           }`}
                         >
@@ -194,7 +194,7 @@ export const MyRidesModal: React.FC = () => {
                         <div className="flex space-x-3">
                           <button
                             onClick={() => acceptOrder(order.id)}
-                            className="flex-1 flex items-center justify-center bg-green-600 text-white py-3 px-4 rounded-xl font-semibold hover:bg-green-700 transition-all duration-200 shadow-md hover:shadow-lg"
+                            className="flex-1 flex items-center justify-center bg-moonlit-600 text-white py-3 px-4 rounded-xl font-semibold hover:bg-moonlit-700 transition-all duration-200 shadow-md hover:shadow-lg"
                           >
                             <CheckCheck size={20} className="mr-2" />
                             Annehmen

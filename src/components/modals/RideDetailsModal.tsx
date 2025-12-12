@@ -124,12 +124,12 @@ export const RideDetailsModal: React.FC = () => {
             
             {/* Date and time */}
             <div className="flex flex-row items-center gap-3 mb-6">
-              <div className="flex-1 flex items-center justify-center bg-green-100 rounded-md px-3 py-2">
-                <Calendar size={18} className="mr-2 text-green-600" />
+              <div className="flex-1 flex items-center justify-center bg-moonlit-100 rounded-md px-3 py-2">
+                <Calendar size={18} className="mr-2 text-moonlit-600" />
                 <span className="font-medium">{selectedRide.date}</span>
               </div>
-              <div className="flex-1 flex items-center justify-center bg-green-100 rounded-md px-3 py-2">
-                <Clock size={18} className="mr-2 text-green-600" />
+              <div className="flex-1 flex items-center justify-center bg-moonlit-100 rounded-md px-3 py-2">
+                <Clock size={18} className="mr-2 text-moonlit-600" />
                 <span className="font-medium">{selectedRide.time}</span>
               </div>
             </div>
@@ -140,25 +140,25 @@ export const RideDetailsModal: React.FC = () => {
                 <h3 className="text-base font-semibold text-gray-800 mb-4">Route</h3>
                 <div className="relative">
                   {/* Background line */}
-                  <div className="absolute top-3 left-3 right-3 h-0.5 bg-gradient-to-r from-green-500 to-green-400 rounded-full"></div>
+                  <div className="absolute top-3 left-3 right-3 h-0.5 bg-gradient-to-r from-moonlit-500 to-moonlit-400 rounded-full"></div>
                   
                   {/* Route points container */}
                   <div className="flex justify-between items-start relative z-10">
                     {/* Start point */}
                     <div className="flex flex-col items-center max-w-[120px]">
-                      <div className="w-8 h-8 bg-green-500 rounded-full border-2 border-white shadow-sm flex items-center justify-center">
+                      <div className="w-8 h-8 bg-moonlit-500 rounded-full border-2 border-white shadow-sm flex items-center justify-center">
                         <div className="w-2 h-2 bg-white rounded-full"></div>
                       </div>
                       <div className="mt-2 text-center">
                         <div className="font-medium text-gray-800 text-sm leading-tight">{selectedRide.from}</div>
-                        <div className="text-sm text-green-600 mt-1">Start</div>
+                        <div className="text-sm text-moonlit-600 mt-1">Start</div>
                       </div>
                     </div>
                     
                     {/* Intermediate stops */}
                     {selectedRide.stopovers && selectedRide.stopovers.filter(stop => stop.trim()).map((stop, index) => (
                       <div key={index} className="flex flex-col items-center max-w-[120px]">
-                        <div className="w-6 h-6 bg-green-400 rounded-full border-2 border-white shadow-sm flex items-center justify-center">
+                        <div className="w-6 h-6 bg-moonlit-400 rounded-full border-2 border-white shadow-sm flex items-center justify-center">
                           <div className="w-1.5 h-1.5 bg-white rounded-full"></div>
                         </div>
                         <div className="mt-2 text-center">
@@ -170,12 +170,12 @@ export const RideDetailsModal: React.FC = () => {
                     
                     {/* End point */}
                     <div className="flex flex-col items-center max-w-[120px]">
-                      <div className="w-8 h-8 bg-green-500 rounded-full border-2 border-white shadow-sm flex items-center justify-center">
+                      <div className="w-8 h-8 bg-moonlit-500 rounded-full border-2 border-white shadow-sm flex items-center justify-center">
                         <div className="w-2 h-2 bg-white rounded-full"></div>
                       </div>
                       <div className="mt-2 text-center">
                         <div className="font-medium text-gray-800 text-sm leading-tight">{selectedRide.to}</div>
-                        <div className="text-sm text-green-600 mt-1">Ziel</div>
+                        <div className="text-sm text-moonlit-600 mt-1">Ziel</div>
                       </div>
                     </div>
                   </div>
@@ -238,7 +238,7 @@ export const RideDetailsModal: React.FC = () => {
                   <span className="font-medium text-sm md:text-base">{selectedRide.mobile || '+49 555 123 4567'}</span>
                 </div>
                 <div className="flex items-center">
-                  <WhatsAppIcon size={16} className="text-green-600 mr-2" />
+                  <WhatsAppIcon size={16} className="text-moonlit-600 mr-2" />
                   <span className="font-medium text-sm md:text-base">{selectedRide.whatsapp || selectedRide.mobile || '+49 555 123 4567'}</span>
                 </div>
               </div>

@@ -11,7 +11,7 @@ const getUserColor = (username: string) => {
     'bg-blue-500 hover:bg-blue-400',
     'bg-cyan-500 hover:bg-cyan-400',
     'bg-teal-500 hover:bg-teal-400',
-    'bg-emerald-500 hover:bg-emerald-400',
+    'bg-moonlit-500 hover:bg-moonlit-400',
     'bg-rose-500 hover:bg-rose-400',
     'bg-orange-500 hover:bg-orange-400',
     'bg-amber-500 hover:bg-amber-400',
