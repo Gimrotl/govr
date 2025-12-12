@@ -33,9 +33,9 @@ function App() {
 
   return (
     <Layout>
-      <header className="bg-gradient-to-r from-cyan-600 to-teal-600 text-white text-center py-16 shadow-2xl">
-        <h1 className="text-4xl md:text-5xl font-bold mb-2 drop-shadow-lg">Caucasus RideShare Network</h1>
-        <p className="mt-2 text-xl md:text-2xl text-cyan-100 font-light">
+      <header className="bg-green-600 text-white text-center py-10">
+        <h1 className="text-3xl font-bold">Caucasus RideShare Network</h1>
+        <p className="mt-2 text-lg">
           Han vord - han nekh
         </p>
       </header>
@@ -45,18 +45,18 @@ function App() {
           <div className="grid grid-cols-2 gap-6 mb-8">
             <button
               onClick={() => setActiveSection('search')}
-              className="bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-cyan-500 rounded-xl p-8 text-center transition-all duration-300 flex flex-col items-center justify-center space-y-4 shadow-lg hover:shadow-cyan-500/50"
+              className="bg-gray-200 hover:bg-gray-300 rounded-lg p-8 text-center transition-all duration-300 flex flex-col items-center justify-center space-y-4"
             >
-              <Search size={48} className="text-cyan-400" />
-              <span className="text-xl font-semibold text-slate-200">Search Ride</span>
+              <Search size={48} className="text-gray-700" />
+              <span className="text-xl font-semibold text-gray-700">Search Ride</span>
             </button>
-
+            
             <button
               onClick={() => setActiveSection('offer')}
-              className="bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-teal-500 rounded-xl p-8 text-center transition-all duration-300 flex flex-col items-center justify-center space-y-4 shadow-lg hover:shadow-teal-500/50"
+              className="bg-gray-200 hover:bg-gray-300 rounded-lg p-8 text-center transition-all duration-300 flex flex-col items-center justify-center space-y-4"
             >
-              <Plus size={48} className="text-teal-400" />
-              <span className="text-xl font-semibold text-slate-200">Offer Ride</span>
+              <Plus size={48} className="text-gray-700" />
+              <span className="text-xl font-semibold text-gray-700">Offer Ride</span>
             </button>
           </div>
         )}
@@ -70,8 +70,8 @@ function App() {
             />
             
             <section className="mt-10">
-              <h2 className="text-2xl font-semibold mb-6 text-center text-slate-200">
-                <span className="text-cyan-400 font-bold mr-2">{filteredRides.length}</span>
+              <h2 className="text-2xl font-semibold mb-6 text-center">
+                <span className="text-red-600 font-bold mr-2">{filteredRides.length}</span>
                 Available Rides
               </h2>
               <RidesList rides={filteredRides} />
@@ -86,12 +86,12 @@ function App() {
             <div className="grid grid-cols-2 gap-6 mb-8">
               <button
                 onClick={() => setActiveSection('search')}
-                className="bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-cyan-500 rounded-xl p-8 text-center transition-all duration-300 flex flex-col items-center justify-center space-y-4 shadow-lg hover:shadow-cyan-500/50"
+                className="bg-gray-200 hover:bg-gray-300 rounded-lg p-8 text-center transition-all duration-300 flex flex-col items-center justify-center space-y-4"
               >
-                <Search size={48} className="text-cyan-400" />
-                <span className="text-xl font-semibold text-slate-200">Search Ride</span>
+                <Search size={48} className="text-gray-700" />
+                <span className="text-xl font-semibold text-gray-700">Search Ride</span>
               </button>
-
+              
               <button
                 onClick={() => {
                   if (!isLoggedIn) {
@@ -99,14 +99,15 @@ function App() {
                     openModal('login');
                     return;
                   }
+                  // Stay on offer section - user can use the form below
                 }}
-                className="bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-teal-500 rounded-xl p-8 text-center transition-all duration-300 flex flex-col items-center justify-center space-y-4 shadow-lg hover:shadow-teal-500/50"
+                className="bg-gray-200 hover:bg-gray-300 rounded-lg p-8 text-center transition-all duration-300 flex flex-col items-center justify-center space-y-4"
               >
-                <Plus size={48} className="text-teal-400" />
-                <span className="text-xl font-semibold text-slate-200">Offer Ride</span>
+                <Plus size={48} className="text-gray-700" />
+                <span className="text-xl font-semibold text-gray-700">Offer Ride</span>
               </button>
             </div>
-
+            
             {isLoggedIn && <OfferRideForm onBack={() => setActiveSection(null)} />}
           </>
         )}
