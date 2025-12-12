@@ -35,7 +35,7 @@ export const Footer: React.FC = () => {
             © {new Date().getFullYear()} Word{' '}
             <button
               onClick={() => openModal('terms')}
-              className="text-green-300 hover:underline transition duration-200"
+              className="text-moonlit-300 hover:underline transition duration-200"
             >
               Terms of Service
             </button>
