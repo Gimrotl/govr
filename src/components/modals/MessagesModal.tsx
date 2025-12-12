@@ -155,20 +155,23 @@ export const MessagesModal: React.FC = () => {
   }, [selectedContact, filteredMessages]);
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 animate-fadeIn">
-      <div className="bg-white rounded-lg shadow-xl w-full max-w-4xl h-[90vh] max-h-[600px] flex animate-scaleIn">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-2 md:p-4 animate-fadeIn">
+      <div className="bg-white rounded-xl shadow-2xl w-full max-w-5xl h-[88vh] md:h-[85vh] max-h-[700px] flex animate-scaleIn overflow-hidden">
         {/* Mobile: Show contacts or chat based on selection */}
-        <div className={`${showContacts ? 'block' : 'hidden'} md:block w-full md:w-64 border-r border-gray-200`}>
-          <div className="p-4 border-b border-gray-200 flex justify-between items-center">
-            <h2 className="text-lg font-semibold">Kontakte</h2>
+        <div className={`${showContacts ? 'block' : 'hidden'} md:block w-full md:w-72 border-r border-gray-100 bg-gray-50 flex flex-col`}>
+          <div className="p-4 border-b border-gray-100 flex justify-between items-center bg-white sticky top-0 z-10">
+            <div className="flex items-center space-x-2">
+              <MessageSquare size={20} className="text-green-600" />
+              <h2 className="text-base font-semibold text-gray-900">Nachrichten</h2>
+            </div>
             <button
               onClick={() => closeModal('messages')}
-              className="text-red-500 hover:text-red-700 transition duration-200"
+              className="text-gray-400 hover:text-gray-600 hover:bg-gray-100 p-2 rounded-lg transition-all duration-200"
             >
-              <X size={20} />
+              <X size={18} />
             </button>
           </div>
-          <div className="overflow-y-auto h-[calc(100%-64px)]">
+          <div className="overflow-y-auto flex-1 divide-y divide-gray-100">
             {contacts.map((contact) => {
               const unreadForContact = getUnreadCount(contact);
               const hasUnread = unreadForContact > 0;
@@ -178,50 +181,47 @@ export const MessagesModal: React.FC = () => {
                   key={contact}
                   onClick={() => {
                     setSelectedContact(contact);
-                    setShowContacts(false); // Hide contacts on mobile when selecting
+                    setShowContacts(false);
                   }}
-                  className={`w-full p-4 text-left transition-colors ${
+                  className={`w-full p-3 text-left transition-all duration-200 hover:bg-white ${
                     selectedContact === contact
-                      ? hasUnread
-                        ? 'bg-red-100 border-l-4 border-red-500'
-                        : 'bg-gray-100'
-                      : hasUnread
-                      ? 'bg-red-50 hover:bg-red-100 border-l-4 border-red-400'
-                      : 'hover:bg-gray-50'
+                      ? 'bg-white border-l-4 border-green-500 shadow-sm'
+                      : 'hover:bg-white'
                   }`}
                 >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center flex-1 min-w-0">
-                      <div
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleContactClick(contact);
-                        }}
-                        className={`w-8 h-8 rounded-full flex items-center justify-center mr-3 cursor-pointer hover:ring-2 hover:ring-blue-400 transition-all ${
-                          hasUnread ? 'bg-red-200' : 'bg-gray-200'
-                        }`}
-                      >
-                        <span className={`font-semibold ${
-                          hasUnread ? 'text-red-700' : 'text-gray-600'
-                        }`}>
-                          {contact?.charAt(0).toUpperCase()}
-                        </span>
-                      </div>
+                  <div className="flex items-center justify-between gap-3">
+                    <div
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleContactClick(contact);
+                      }}
+                      className={`w-10 h-10 rounded-full flex items-center justify-center cursor-pointer transition-all flex-shrink-0 ${
+                        hasUnread
+                          ? 'bg-gradient-to-br from-green-400 to-green-600 text-white ring-2 ring-green-200'
+                          : 'bg-gradient-to-br from-blue-400 to-blue-600 text-white hover:ring-2 hover:ring-blue-200'
+                      }`}
+                    >
+                      <span className="font-semibold text-sm">
+                        {contact?.charAt(0).toUpperCase()}
+                      </span>
+                    </div>
+                    <div className="flex-1 min-w-0">
                       <span
                         onClick={(e) => {
                           e.stopPropagation();
                           handleContactClick(contact);
                         }}
-                        className={`font-medium cursor-pointer hover:text-blue-600 transition-colors truncate ${
-                          hasUnread ? 'text-red-700' : ''
+                        className={`block font-medium text-sm truncate transition-colors cursor-pointer hover:text-green-600 ${
+                          hasUnread ? 'text-gray-900 font-semibold' : 'text-gray-800'
                         }`}
                       >
                         {contact}
                       </span>
+                      <p className="text-xs text-gray-500 truncate">Letzte Nachricht...</p>
                     </div>
                     {hasUnread && (
-                      <span className="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full flex-shrink-0">
-                        {unreadForContact}
+                      <span className="bg-green-500 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0">
+                        {unreadForContact > 9 ? '9+' : unreadForContact}
                       </span>
                     )}
                   </div>
@@ -231,47 +231,53 @@ export const MessagesModal: React.FC = () => {
           </div>
         </div>
 
-        <div className={`${!showContacts ? 'block' : 'hidden'} md:block flex-1 flex flex-col min-h-0 h-full overflow-hidden`}>
+        <div className={`${!showContacts ? 'block' : 'hidden'} md:block flex-1 flex flex-col min-h-0 h-full overflow-hidden bg-white`}>
           {selectedContact ? (
             <>
-              <div className="p-4 border-b border-gray-200 flex items-center flex-shrink-0">
+              <div className="p-4 border-b border-gray-100 flex items-center gap-3 flex-shrink-0 bg-white">
                 <button
                   onClick={() => setShowContacts(true)}
-                  className="md:hidden mr-3 text-gray-600 hover:text-gray-800"
+                  className="md:hidden text-gray-400 hover:text-gray-600 p-1 rounded-lg hover:bg-gray-100 transition-all"
                 >
                   <ChevronLeft size={20} />
                 </button>
-                <h3 className="font-semibold">Chat mit {selectedContact}</h3>
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white font-semibold text-sm flex-shrink-0">
+                  {selectedContact.charAt(0).toUpperCase()}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-semibold text-gray-900 text-sm">{selectedContact}</h3>
+                  <p className="text-xs text-gray-500">Online</p>
+                </div>
                 <button
                   onClick={() => closeModal('messages')}
-                  className="hidden md:block ml-auto text-red-500 hover:text-red-700 transition duration-200"
+                  className="hidden md:block text-gray-400 hover:text-gray-600 p-2 rounded-lg hover:bg-gray-100 transition-all"
                 >
-                  <X size={20} />
+                  <X size={18} />
                 </button>
               </div>
 
-              <div className="flex-1 overflow-y-auto p-4 bg-gray-50 flex flex-col-reverse min-h-0">
-                <div className="space-y-4">
+              <div className="flex-1 overflow-y-auto p-4 flex flex-col-reverse min-h-0">
+                <div className="space-y-3">
                   {filteredMessages.map((message) => (
                     <div key={message.id} className="group">
                       {message.notificationType ? (
-                        <div className={`p-4 rounded-lg ${getNotificationColor(message.notificationType)} mb-4`}>
-                          <div className="flex items-start">
-                            <span className="text-2xl mr-3">
+                        <div className={`p-3 rounded-lg ${getNotificationColor(message.notificationType)}`}>
+                          <div className="flex items-start gap-3">
+                            <span className="text-xl flex-shrink-0">
                               {getNotificationIcon(message.notificationType)}
                             </span>
-                            <div className="flex-1">
-                              <div className="flex items-center justify-between mb-2">
-                                <span className="font-semibold text-gray-800">{message.from}</span>
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center justify-between gap-2 mb-1">
+                                <span className="font-semibold text-gray-900 text-sm">{message.from}</span>
                                 {!message.read && (
-                                  <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
+                                  <span className="w-2 h-2 bg-green-500 rounded-full flex-shrink-0"></span>
                                 )}
                               </div>
-                              <p className="text-gray-700 mb-1">{message.content}</p>
-                              <div className="text-xs text-gray-500">{message.timestamp}</div>
+                              <p className="text-gray-700 text-sm mb-1">{message.content}</p>
+                              <div className="text-xs text-gray-500 mb-2">{message.timestamp}</div>
                               <button
                                 onClick={() => handleReply(message.id)}
-                                className="mt-2 text-sm text-blue-600 hover:text-blue-800 font-medium"
+                                className="text-xs text-green-600 hover:text-green-700 font-medium transition-colors"
                               >
                                 Antworten
                               </button>
@@ -280,38 +286,42 @@ export const MessagesModal: React.FC = () => {
                         </div>
                       ) : (
                         <div className={`flex ${message.sent ? 'justify-end' : 'justify-start'}`}>
-                          <div className="relative max-w-[70%]">
+                          <div className="relative max-w-[75%] lg:max-w-[60%]">
                             {message.replyTo && (
-                              <div className="mb-1 p-2 bg-gray-200 rounded-lg text-xs">
-                                <span className="font-medium">Replying to:</span>
-                                <p className="truncate">{getRepliedMessage(message.replyTo)?.content}</p>
+                              <div className={`mb-2 p-2 rounded-lg text-xs border-l-3 ${
+                                message.sent
+                                  ? 'bg-green-400 bg-opacity-30 border-green-400'
+                                  : 'bg-gray-100 border-gray-300'
+                              }`}>
+                                <span className="font-medium text-gray-700">Antwortet auf:</span>
+                                <p className="truncate text-gray-600">{getRepliedMessage(message.replyTo)?.content}</p>
                               </div>
                             )}
                             <div
-                              className={`p-3 rounded-lg ${
+                              className={`px-3 py-2 rounded-2xl transition-all ${
                                 message.sent
-                                  ? 'bg-green-500 text-white rounded-br-none'
-                                  : 'bg-white text-gray-800 rounded-bl-none shadow-sm'
+                                  ? 'bg-green-500 text-white rounded-br-none shadow-md'
+                                  : 'bg-gray-100 text-gray-900 rounded-bl-none'
                               }`}
                             >
-                            {message.image && (
-                              <img 
-                                src={message.image} 
-                                alt="Shared" 
-                                className="max-w-full rounded-lg mb-2"
-                              />
-                            )}
-                            {message.content && (
-                              <p className="break-words">
-                                {message.content.split(/(@\w+)/g).map((part, index) => 
-                                  part.startsWith('@') ? (
-                                    <span key={index} className="font-bold text-blue-300">
-                                      {part}
-                                    </span>
-                                  ) : part
-                                )}
-                              </p>
-                            )}
+                              {message.image && (
+                                <img
+                                  src={message.image}
+                                  alt="Shared"
+                                  className="max-w-full rounded-xl mb-2"
+                                />
+                              )}
+                              {message.content && (
+                                <p className="break-words text-sm leading-relaxed">
+                                  {message.content.split(/(@\w+)/g).map((part, index) =>
+                                    part.startsWith('@') ? (
+                                      <span key={index} className={`font-bold ${message.sent ? 'text-green-100' : 'text-green-600'}`}>
+                                        {part}
+                                      </span>
+                                    ) : part
+                                  )}
+                                </p>
+                              )}
                               <div className={`text-xs mt-1 ${message.sent ? 'text-green-100' : 'text-gray-500'}`}>
                                 {message.timestamp}
                               </div>
@@ -319,7 +329,7 @@ export const MessagesModal: React.FC = () => {
                             {!message.sent && (
                               <button
                                 onClick={() => handleReply(message.id)}
-                                className="absolute -right-8 top-1/2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity p-1 text-gray-400 hover:text-gray-600"
+                                className="absolute -right-10 top-1/2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity p-1.5 text-gray-400 hover:text-green-600 hover:bg-gray-100 rounded-lg"
                               >
                                 <Reply size={16} />
                               </button>
@@ -332,32 +342,32 @@ export const MessagesModal: React.FC = () => {
                 </div>
               </div>
 
-              <form onSubmit={handleSendMessage} className="p-4 bg-white border-t border-gray-200 flex-shrink-0">
+              <form onSubmit={handleSendMessage} className="p-4 bg-white border-t border-gray-100 flex-shrink-0">
                 {replyingTo && (
-                  <div className="mb-2 p-2 bg-blue-50 rounded-lg flex justify-between items-center">
-                    <div className="text-sm">
-                      <span className="font-medium">Replying to:</span>
-                      <p className="truncate">{getRepliedMessage(replyingTo)?.content}</p>
+                  <div className="mb-3 p-2.5 bg-green-50 rounded-lg border border-green-200 flex justify-between items-center">
+                    <div className="text-xs">
+                      <span className="font-medium text-gray-700">Antwortet auf:</span>
+                      <p className="truncate text-gray-600 mt-0.5">{getRepliedMessage(replyingTo)?.content}</p>
                     </div>
                     <button
                       type="button"
                       onClick={() => setReplyingTo(null)}
-                      className="text-gray-400 hover:text-gray-600"
+                      className="text-gray-400 hover:text-gray-600 p-1 rounded hover:bg-white transition-all flex-shrink-0"
                     >
                       <X size={16} />
                     </button>
                   </div>
                 )}
-                
+
                 {showEmojiPicker && (
-                  <div className="mb-2 p-2 bg-gray-50 rounded-lg">
-                    <div className="flex flex-wrap gap-2">
+                  <div className="mb-3 p-3 bg-gray-50 rounded-lg border border-gray-200">
+                    <div className="flex flex-wrap gap-1">
                       {emojis.map((emoji, index) => (
                         <button
                           key={index}
                           type="button"
                           onClick={() => addEmoji(emoji)}
-                          className="text-xl hover:bg-gray-200 p-1 rounded"
+                          className="text-xl hover:bg-white p-1.5 rounded-lg transition-colors"
                         >
                           {emoji}
                         </button>
@@ -365,66 +375,68 @@ export const MessagesModal: React.FC = () => {
                     </div>
                   </div>
                 )}
-                
-                <div className="flex space-x-2">
+
+                <div className="flex gap-2">
                   <div className="flex-1 relative">
                     <textarea
                       value={newMessage}
                       onChange={(e) => setNewMessage(e.target.value)}
                       onKeyPress={handleKeyPress}
-                      placeholder="Nachricht eingeben... @username für Erwähnung"
-                      className="w-full p-2 pr-12 md:pr-20 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm md:text-base"
+                      placeholder="Nachricht eingeben... @username erwähnen"
+                      className="w-full p-3 pr-16 md:pr-24 border border-gray-200 rounded-full resize-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm placeholder-gray-400 transition-all"
                       rows={1}
                     />
-                    <div className="absolute right-2 top-1/2 -translate-y-1/2 flex space-x-1 md:space-x-1">
+                    <div className="absolute right-3 top-1/2 -translate-y-1/2 flex gap-1">
                       <button
                         type="button"
                         onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-                        className="text-gray-400 hover:text-green-500 p-1 hidden md:block"
+                        className="text-gray-400 hover:text-green-600 p-1.5 rounded-lg hover:bg-gray-100 transition-all hidden md:block"
                       >
                         <Smile size={16} />
                       </button>
                       <button
                         type="button"
                         onClick={() => handleMention(selectedContact || '')}
-                        className="text-gray-400 hover:text-green-500 p-1 hidden md:block"
+                        className="text-gray-400 hover:text-green-600 p-1.5 rounded-lg hover:bg-gray-100 transition-all hidden md:block"
                       >
                         <AtSign size={16} />
                       </button>
-                      <div {...getRootProps()} className="cursor-pointer p-1">
-                      <input {...getInputProps()} />
-                        <ImageIcon size={14} className="text-gray-400 hover:text-green-500" />
+                      <div {...getRootProps()} className="cursor-pointer p-1.5 rounded-lg hover:bg-gray-100 transition-all">
+                        <input {...getInputProps()} />
+                        <ImageIcon size={16} className="text-gray-400 hover:text-green-600" />
                       </div>
                     </div>
                   </div>
                   <button
                     type="submit"
                     disabled={!newMessage.trim() && !selectedImage}
-                    className="bg-green-500 text-white p-2 rounded-lg hover:bg-green-600 transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0"
+                    className="bg-green-500 hover:bg-green-600 text-white p-3 rounded-full transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0 flex items-center justify-center shadow-md hover:shadow-lg"
                   >
                     <Send size={18} />
                   </button>
                 </div>
                 {selectedImage && (
-                  <div className="mt-2 p-2 bg-gray-100 rounded-lg flex items-center justify-between text-xs md:text-sm">
-                    <span className="text-gray-600 truncate mr-2">{selectedImage.name}</span>
+                  <div className="mt-3 p-2.5 bg-gray-100 rounded-lg flex items-center justify-between text-xs border border-gray-200">
+                    <span className="text-gray-700 truncate mr-2 font-medium">{selectedImage.name}</span>
                     <button
                       type="button"
                       onClick={() => setSelectedImage(null)}
-                      className="text-red-500 hover:text-red-700 flex-shrink-0"
+                      className="text-gray-400 hover:text-gray-600 hover:bg-white p-1 rounded transition-all flex-shrink-0"
                     >
-                      <X size={16} />
+                      <X size={14} />
                     </button>
                   </div>
                 )}
               </form>
             </>
           ) : (
-            <div className="flex-1 flex items-center justify-center text-gray-500 p-4 text-center">
-              <div>
-                <MessageSquare size={48} className="mx-auto mb-4 text-gray-300" />
-                <p className="text-lg mb-2">Wählen Sie einen Kontakt</p>
-                <p className="text-sm">um eine Unterhaltung zu beginnen</p>
+            <div className="flex-1 flex items-center justify-center p-4">
+              <div className="text-center">
+                <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <MessageSquare size={40} className="text-gray-400" />
+                </div>
+                <p className="text-gray-900 font-semibold text-base mb-1">Wählen Sie einen Kontakt</p>
+                <p className="text-gray-500 text-sm">um die Unterhaltung zu beginnen</p>
               </div>
             </div>
           )}
