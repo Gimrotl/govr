@@ -102,27 +102,26 @@ export const ChatModal: React.FC = () => {
   };
   
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-start md:items-center justify-center z-50 p-4 pt-1 md:pt-4 animate-fadeIn overflow-y-auto">
-      <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl h-[65vh] md:h-[480px] max-h-[480px] flex flex-col animate-scaleIn mt-0 mb-4 md:my-auto">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-start md:items-center justify-center z-50 p-2 md:p-4 animate-fadeIn overflow-y-auto">
+      <div className="bg-white rounded-lg shadow-xl w-full max-w-xl h-[55vh] md:h-[380px] max-h-[380px] flex flex-col animate-scaleIn mt-2 md:my-auto">
         {/* Chat Header */}
         <div className="flex-1 flex flex-col">
-          <div className="p-3 border-b border-gray-200 flex justify-between items-center bg-green-600 text-white rounded-t-lg">
+          <div className="p-2 border-b border-gray-200 flex justify-between items-center bg-green-600 text-white rounded-t-lg">
             <div className="flex items-center">
-              <MessageCircle size={18} className="mr-2" />
-              <h2 className="text-base md:text-lg font-semibold">Öffentlicher Chat</h2>
+              <MessageCircle size={16} className="mr-1.5" />
+              <h2 className="text-sm font-semibold">Chat</h2>
             </div>
             <button
               onClick={() => closeModal('chat')}
-              className="text-white hover:text-gray-200 transition duration-200"
+              className="text-white hover:text-gray-200 transition duration-200 p-0.5"
             >
-              <X size={20} className="md:hidden" />
-              <X size={24} className="hidden md:block" />
+              <X size={16} />
             </button>
           </div>
           
           {/* Messages Area */}
-          <div className="flex-1 overflow-y-auto p-3 bg-gray-50">
-            <div className="space-y-3">
+          <div className="flex-1 overflow-y-auto p-2 bg-gray-50">
+            <div className="space-y-2">
               {messages.map((message) => (
                 <div key={message.id} className={`flex ${
                   message.user === (userEmail?.split('@')[0] || 'Benutzer') ? 'justify-end' : 'justify-start'
@@ -138,11 +137,11 @@ export const ChatModal: React.FC = () => {
                       }`}>
                         <button
                           onClick={() => handleUserClick(message.user)}
-                          className={`w-6 h-6 md:w-8 md:h-8 ${getUserColor(message.user)} rounded-full flex items-center justify-center transition-colors ${
+                          className={`w-5 h-5 ${getUserColor(message.user)} rounded-full flex items-center justify-center transition-colors ${
                             message.user === (userEmail?.split('@')[0] || 'Benutzer') ? 'ml-2' : 'mr-2'
                           }`}
                         >
-                          <span className="text-white font-bold text-xs md:text-sm">
+                          <span className="text-white font-bold text-xs">
                             {message.user.charAt(0).toUpperCase()}
                           </span>
                         </button>
@@ -151,7 +150,7 @@ export const ChatModal: React.FC = () => {
                         }`}>
                           <button
                             onClick={() => handleUserClick(message.user)}
-                            className="font-medium text-gray-800 hover:text-green-600 transition-colors"
+                            className="font-medium text-gray-800 hover:text-green-600 transition-colors text-xs"
                           >
                             {message.user === (userEmail?.split('@')[0] || 'Benutzer') ? 'Sie' : message.user}
                           </button>
@@ -159,12 +158,12 @@ export const ChatModal: React.FC = () => {
                         </div>
                       </div>
                     </div>
-                    <div className={`px-3 py-2 rounded-lg shadow-sm border ${
+                    <div className={`px-2 py-1 rounded-lg shadow-sm border ${
                       message.user === (userEmail?.split('@')[0] || 'Benutzer')
                         ? 'bg-green-500 text-white rounded-br-none'
                         : 'bg-white text-gray-700 rounded-bl-none'
                     }`}>
-                      <p className="break-words text-sm">{message.content}</p>
+                      <p className="break-words text-xs">{message.content}</p>
                     </div>
                   </div>
                 </div>
@@ -174,22 +173,22 @@ export const ChatModal: React.FC = () => {
           </div>
           
           {/* Message Input */}
-          <form onSubmit={handleSendMessage} className="p-3 bg-white border-t border-gray-200 rounded-b-lg">
+          <form onSubmit={handleSendMessage} className="p-2 bg-white border-t border-gray-200 rounded-b-lg">
             {!isLoggedIn && (
-              <div className="mb-2 p-2 bg-yellow-100 border border-yellow-300 rounded-lg">
+              <div className="mb-1 p-1 bg-yellow-100 border border-yellow-300 rounded text-center">
                 <p className="text-yellow-800 text-xs">
-                  Sie können den Chat lesen, aber müssen eingeloggt sein, um Nachrichten zu senden.
+                  Anmelden zum Schreiben
                 </p>
               </div>
             )}
-            <div className="flex space-x-2">
+            <div className="flex space-x-1">
               <div className="flex-1 relative">
                 <textarea
                   value={newMessage}
                   onChange={(e) => setNewMessage(e.target.value)}
                   onKeyPress={handleKeyPress}
-                  placeholder={isLoggedIn ? "Nachricht..." : "Anmelden zum Schreiben..."}
-                  className="w-full p-2 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm"
+                  placeholder={isLoggedIn ? "Text..." : ""}
+                  className="w-full p-1.5 border border-gray-300 rounded resize-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-xs"
                   rows={1}
                   disabled={!isLoggedIn}
                 />
@@ -197,9 +196,9 @@ export const ChatModal: React.FC = () => {
               <button
                 type="submit"
                 disabled={!isLoggedIn || !newMessage.trim()}
-                className="bg-green-600 text-white p-2 rounded-lg hover:bg-green-700 transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+                className="bg-green-600 text-white px-2 py-1.5 rounded hover:bg-green-700 transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
               >
-                <Send size={18} />
+                <Send size={14} />
               </button>
             </div>
           </form>
