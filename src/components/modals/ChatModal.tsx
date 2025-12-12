@@ -116,7 +116,7 @@ export const ChatModal: React.FC = () => {
       <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-3xl shadow-2xl w-full max-w-4xl h-[75vh] md:h-[600px] max-h-[600px] flex flex-col animate-scaleIn mt-0 mb-4 md:my-auto relative border border-slate-700/50 overflow-hidden">
         {/* Chat Header */}
         <div className="flex-1 flex flex-col">
-          <div className="px-6 py-4 flex justify-between items-center bg-gradient-to-r from-teal-600 to-emerald-600 text-white">
+          <div className="px-6 py-4 flex justify-between items-center bg-gradient-to-r from-blue-700 to-cyan-600 text-white">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-white/20 rounded-xl backdrop-blur-sm">
                 <MessageCircle size={20} />
@@ -137,7 +137,7 @@ export const ChatModal: React.FC = () => {
             onScroll={handleScroll}
             className="flex-1 overflow-y-auto pb-4 relative"
             style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cfilter id='blur'%3E%3CfeGaussianBlur in='SourceGraphic' stdDeviation='2' /%3E%3C/filter%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='%231e293b'/%3E%3Cg filter='url(%23blur)' opacity='0.3'%3E%3Cpath d='M -50 300 Q 100 100, 300 200 T 700 150 T 1200 250 L 1200 500 L -50 500 Z' fill='%2310b981' /%3E%3Cpath d='M 0 350 Q 200 200, 400 280 T 900 250 T 1300 350 L 1300 500 L 0 500 Z' fill='%2306b6d4' opacity='0.6' /%3E%3C/g%3E%3Cg filter='url(%23blur)' opacity='0.4'%3E%3Crect x='200' y='280' width='40' height='20' fill='%23fee2e2' /%3E%3Crect x='220' y='290' width='8' height='10' fill='%23000'/%3E%3Crect x='232' y='290' width='8' height='10' fill='%23000'/%3E%3Ccircle cx='210' cy='305' r='8' fill='%23fca5a5'/%3E%3Ccircle cx='238' cy='305' r='8' fill='%23fca5a5'/%3E%3C/g%3E%3C/svg%3E")`,
+              backgroundImage: `url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cfilter id='blur'%3E%3CfeGaussianBlur in='SourceGraphic' stdDeviation='2' /%3E%3C/filter%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='%231e293b'/%3E%3Cg filter='url(%23blur)' opacity='0.3'%3E%3Cpath d='M -50 300 Q 100 100, 300 200 T 700 150 T 1200 250 L 1200 500 L -50 500 Z' fill='%230ea5e9' /%3E%3Cpath d='M 0 350 Q 200 200, 400 280 T 900 250 T 1300 350 L 1300 500 L 0 500 Z' fill='%2306b6d4' opacity='0.6' /%3E%3C/g%3E%3Cg filter='url(%23blur)' opacity='0.4'%3E%3Crect x='200' y='280' width='40' height='20' fill='%23fee2e2' /%3E%3Crect x='220' y='290' width='8' height='10' fill='%23000'/%3E%3Crect x='232' y='290' width='8' height='10' fill='%23000'/%3E%3Ccircle cx='210' cy='305' r='8' fill='%23fca5a5'/%3E%3Ccircle cx='238' cy='305' r='8' fill='%23fca5a5'/%3E%3C/g%3E%3C/svg%3E")`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               backgroundAttachment: 'fixed',
@@ -204,7 +204,7 @@ export const ChatModal: React.FC = () => {
             {showScrollButton && (
               <button
                 onClick={scrollToBottom}
-                className="fixed bottom-40 md:bottom-48 right-8 bg-emerald-600 text-white p-3 rounded-full shadow-xl hover:bg-emerald-500 hover:scale-110 transition-all duration-300 animate-fadeIn backdrop-blur-sm border border-emerald-400/30"
+                className="fixed bottom-40 md:bottom-48 right-8 bg-cyan-600 text-white p-3 rounded-full shadow-xl hover:bg-cyan-500 hover:scale-110 transition-all duration-300 animate-fadeIn backdrop-blur-sm border border-cyan-400/30"
                 aria-label="Scroll to bottom"
               >
                 <ChevronDown size={20} />
