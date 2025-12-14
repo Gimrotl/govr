@@ -2,6 +2,18 @@ import React from 'react';
 import { ChevronRight } from 'lucide-react';
 import { useInfoCards } from '../hooks/useInfoCards';
 
+const borderColors = [
+  'border-l-blue-500',
+  'border-l-green-500',
+  'border-l-orange-500'
+];
+
+const hoverTitleColors = [
+  'group-hover:text-blue-600',
+  'group-hover:text-green-600',
+  'group-hover:text-orange-600'
+];
+
 export const InfoCards: React.FC = () => {
   const { cards, loading } = useInfoCards();
 
@@ -24,12 +36,12 @@ export const InfoCards: React.FC = () => {
   return (
     <section className="my-12">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {cards.map((card) => (
+        {cards.map((card, index) => (
           <div
             key={card.id}
-            className="bg-gray-50 rounded-lg p-6 transition-all duration-300 hover:bg-white hover:shadow-lg hover:-translate-y-1 cursor-pointer group border border-transparent hover:border-gray-200"
+            className={`bg-gray-50 rounded-lg p-6 transition-all duration-300 hover:bg-white hover:shadow-lg hover:-translate-y-1 cursor-pointer group border-l-4 ${borderColors[index % borderColors.length]} border border-gray-100 hover:border-gray-200`}
           >
-            <h3 className="text-xl font-bold text-gray-900 mb-4 group-hover:text-green-600 transition-colors">
+            <h3 className={`text-xl font-bold text-gray-900 mb-4 transition-colors ${hoverTitleColors[index % hoverTitleColors.length]}`}>
               {card.title}
             </h3>
             <p className="text-gray-600 text-sm leading-relaxed mb-6 min-h-[80px]">
