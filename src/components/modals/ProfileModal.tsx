@@ -228,7 +228,7 @@ export const ProfileModal: React.FC = () => {
               <div className="mt-4 md:mt-6 flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4">
                 <button
                   onClick={handleContact}
-                  className="flex-1 flex items-center justify-center bg-blue-600 text-white py-2 md:py-3 px-3 md:px-4 rounded-lg hover:bg-blue-700 transition duration-200 text-sm md:text-base"
+                  className="flex-1 flex items-center justify-center bg-sky-500 text-white py-2 md:py-3 px-3 md:px-4 rounded-lg hover:bg-sky-600 transition duration-200 text-sm md:text-base"
                 >
                   <MessageCircle size={16} className="mr-2 md:hidden" />
                   <MessageCircle size={18} className="mr-2 hidden md:block" />

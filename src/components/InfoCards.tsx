@@ -3,13 +3,13 @@ import { ChevronRight } from 'lucide-react';
 import { useInfoCards } from '../hooks/useInfoCards';
 
 const borderColors = [
-  'border-t-blue-500',
+  'border-t-sky-400',
   'border-t-green-500',
   'border-t-orange-500'
 ];
 
 const hoverTitleColors = [
-  'group-hover:text-blue-600',
+  'group-hover:text-sky-500',
   'group-hover:text-green-600',
   'group-hover:text-orange-600'
 ];

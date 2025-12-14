@@ -146,7 +146,7 @@ export const CreateRestStopModal: React.FC = () => {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-400 focus:border-transparent"
                 placeholder="z.B. Raststätte Geiselwind"
                 required
               />
@@ -160,7 +160,7 @@ export const CreateRestStopModal: React.FC = () => {
                 name="type"
                 value={formData.type}
                 onChange={handleChange}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-400 focus:border-transparent"
               >
                 <option value="Raststätte">Raststätte</option>
                 <option value="Hotel">Hotel</option>
@@ -178,7 +178,7 @@ export const CreateRestStopModal: React.FC = () => {
                 name="location"
                 value={formData.location}
                 onChange={handleChange}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-400 focus:border-transparent"
                 placeholder="z.B. Geiselwind"
                 required
               />
@@ -196,7 +196,7 @@ export const CreateRestStopModal: React.FC = () => {
                 min="1"
                 max="5"
                 step="0.1"
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-400 focus:border-transparent"
               />
             </div>
           </div>
@@ -210,7 +210,7 @@ export const CreateRestStopModal: React.FC = () => {
               name="address"
               value={formData.address}
               onChange={handleChange}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-400 focus:border-transparent"
               placeholder="z.B. A3 Raststätte Geiselwind, 96160 Geiselwind"
               required
             />
@@ -240,9 +240,9 @@ export const CreateRestStopModal: React.FC = () => {
               <div
                 {...getRootProps()}
                 className={`w-full h-48 border-2 border-dashed rounded-lg flex flex-col items-center justify-center cursor-pointer transition-colors ${
-                  isDragActive 
-                    ? 'border-blue-500 bg-blue-50' 
-                    : 'border-gray-300 hover:border-blue-400 hover:bg-gray-50'
+                  isDragActive
+                    ? 'border-sky-400 bg-sky-50'
+                    : 'border-gray-300 hover:border-sky-300 hover:bg-gray-50'
                 }`}
               >
                 <input {...getInputProps()} />
@@ -268,7 +268,7 @@ export const CreateRestStopModal: React.FC = () => {
               name="description"
               value={formData.description}
               onChange={handleChange}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent h-20 resize-none"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-400 focus:border-transparent h-20 resize-none"
               placeholder="Kurze Beschreibung für die Karte..."
             />
           </div>
@@ -281,7 +281,7 @@ export const CreateRestStopModal: React.FC = () => {
               name="fullDescription"
               value={formData.fullDescription}
               onChange={handleChange}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent h-32 resize-none"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-400 focus:border-transparent h-32 resize-none"
               placeholder="Detaillierte Beschreibung für die Detailansicht..."
             />
           </div>
@@ -297,7 +297,7 @@ export const CreateRestStopModal: React.FC = () => {
                     type="checkbox"
                     checked={formData.amenities.includes(amenity)}
                     onChange={() => handleAmenityToggle(amenity)}
-                    className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                    className="rounded border-gray-300 text-sky-500 focus:ring-sky-400"
                   />
                   <span className="text-sm text-gray-700">{amenity}</span>
                 </label>
@@ -316,7 +316,7 @@ export const CreateRestStopModal: React.FC = () => {
                 value={formData.coordinates.lat}
                 onChange={handleChange}
                 step="any"
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-400 focus:border-transparent"
                 placeholder="z.B. 49.7667"
               />
             </div>
@@ -331,7 +331,7 @@ export const CreateRestStopModal: React.FC = () => {
                 value={formData.coordinates.lng}
                 onChange={handleChange}
                 step="any"
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-400 focus:border-transparent"
                 placeholder="z.B. 10.4667"
               />
             </div>

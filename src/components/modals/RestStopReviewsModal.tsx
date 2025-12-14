@@ -243,7 +243,7 @@ export const RestStopReviewsModal: React.FC<RestStopReviewsModalProps> = ({ rest
                   <div key={review.id} className="bg-gray-50 rounded-xl p-3 md:p-4 border border-gray-200">
                     <div className="flex items-start space-x-2 md:space-x-4">
                       {/* User Avatar */}
-                      <div className="w-8 h-8 md:w-12 md:h-12 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
+                      <div className="w-8 h-8 md:w-12 md:h-12 bg-sky-500 rounded-full flex items-center justify-center flex-shrink-0">
                         <span className="text-white font-bold text-sm md:text-lg">
                           {review.userName.charAt(0).toUpperCase()}
                         </span>
@@ -282,7 +282,7 @@ export const RestStopReviewsModal: React.FC<RestStopReviewsModalProps> = ({ rest
                           <button
                             onClick={() => handleLike(review.id)}
                             className={`flex items-center space-x-1 transition-colors ${
-                              review.userLiked ? 'text-blue-600' : 'text-gray-500 hover:text-blue-600'
+                              review.userLiked ? 'text-sky-500' : 'text-gray-500 hover:text-sky-500'
                             }`}
                           >
                             <ThumbsUp className="w-3 h-3 md:w-4 md:h-4" />
@@ -333,7 +333,7 @@ export const RestStopReviewsModal: React.FC<RestStopReviewsModalProps> = ({ rest
                                         setEditingReply(reply.id);
                                         setEditReplyText(reply.comment);
                                       }}
-                                      className="text-gray-400 hover:text-blue-600 transition-colors flex-shrink-0 ml-2"
+                                      className="text-gray-400 hover:text-sky-500 transition-colors flex-shrink-0 ml-2"
                                     >
                                       <Edit2 className="w-3 h-3 md:w-3.5 md:h-3.5" />
                                     </button>
@@ -345,12 +345,12 @@ export const RestStopReviewsModal: React.FC<RestStopReviewsModalProps> = ({ rest
                                     <textarea
                                       value={editReplyText}
                                       onChange={(e) => setEditReplyText(e.target.value)}
-                                      className="w-full p-1.5 md:p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none h-12 md:h-16 text-xs md:text-sm"
+                                      className="w-full p-1.5 md:p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-400 focus:border-transparent resize-none h-12 md:h-16 text-xs md:text-sm"
                                     />
                                     <div className="flex space-x-1.5 md:space-x-2">
                                       <button
                                         onClick={() => handleEditReply(reply.id)}
-                                        className="bg-blue-600 text-white px-2 md:px-3 py-1 rounded-md hover:bg-blue-700 transition duration-200 text-xs md:text-sm"
+                                        className="bg-sky-500 text-white px-2 md:px-3 py-1 rounded-md hover:bg-sky-600 transition duration-200 text-xs md:text-sm"
                                       >
                                         Speichern
                                       </button>
@@ -443,11 +443,11 @@ export const RestStopReviewsModal: React.FC<RestStopReviewsModalProps> = ({ rest
                         value={newReview.comment}
                         onChange={(e) => setNewReview({ ...newReview, comment: e.target.value })}
                         placeholder="Teilen Sie Ihre Erfahrung mit..."
-                        className="flex-1 p-1.5 md:p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none h-8 text-[11px] md:text-xs"
+                        className="flex-1 p-1.5 md:p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-400 focus:border-transparent resize-none h-8 text-[11px] md:text-xs"
                       />
                       <button
                         onClick={handleSubmitReview}
-                        className="bg-blue-600 text-white px-2 md:px-3 py-1 rounded-lg font-medium hover:bg-blue-700 transition duration-200 flex items-center justify-center h-8 text-[11px] md:text-xs whitespace-nowrap"
+                        className="bg-sky-500 text-white px-2 md:px-3 py-1 rounded-lg font-medium hover:bg-sky-600 transition duration-200 flex items-center justify-center h-8 text-[11px] md:text-xs whitespace-nowrap"
                       >
                         <Send className="w-3 h-3 md:w-3 md:h-3 mr-0.5 md:mr-1" />
                         Senden
@@ -466,7 +466,7 @@ export const RestStopReviewsModal: React.FC<RestStopReviewsModalProps> = ({ rest
                   onClick={() => {
                     openModal('login');
                   }}
-                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200 font-medium text-sm"
+                  className="bg-sky-500 text-white px-4 py-2 rounded-lg hover:bg-sky-600 transition duration-200 font-medium text-sm"
                 >
                   Anmelden
                 </button>

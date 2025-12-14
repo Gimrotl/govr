@@ -67,7 +67,7 @@ const getTypeIcon = (type: string) => {
 const getAmenityIcon = (amenity: string) => {
   switch (amenity) {
     case 'WC':
-      return { icon: '🚻', label: 'WC', color: 'bg-blue-100 text-blue-800' };
+      return { icon: '🚻', label: 'WC', color: 'bg-sky-100 text-sky-700' };
     case 'Kinder':
       return { icon: '👶', label: 'Kinderfreundlich', color: 'bg-pink-100 text-pink-800' };
     case 'Sport':
@@ -83,11 +83,11 @@ const getAmenityIcon = (amenity: string) => {
     case 'Tankstelle':
       return { icon: '⛽', label: 'Tankstelle', color: 'bg-red-100 text-red-800' };
     case 'Autowaschen':
-      return { icon: '🚗', label: 'Autowäsche', color: 'bg-indigo-100 text-indigo-800' };
+      return { icon: '🚗', label: 'Autowäsche', color: 'bg-sky-100 text-sky-700' };
     case 'Hotel':
       return { icon: '🏨', label: 'Hotel', color: 'bg-purple-100 text-purple-800' };
     case 'Strand':
-      return { icon: '🏖️', label: 'Strand', color: 'bg-blue-100 text-blue-800' };
+      return { icon: '🏖️', label: 'Strand', color: 'bg-sky-100 text-sky-700' };
     case 'Esstisch':
       return { icon: '🪑', label: 'Picknickplatz', color: 'bg-amber-100 text-amber-800' };
     default:
@@ -329,8 +329,8 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
                     key={index}
                     onClick={() => setCurrentImageIndex(index)}
                     className={`flex-shrink-0 w-12 h-12 rounded-lg overflow-hidden border-2 transition-all ${
-                      index === currentImageIndex 
-                        ? 'border-blue-500 shadow-lg' 
+                      index === currentImageIndex
+                        ? 'border-sky-400 shadow-lg'
                         : 'border-gray-300 hover:border-gray-400'
                     }`}
                   >
@@ -417,7 +417,7 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
                 <h3 className="text-lg font-semibold text-gray-800 mb-3">Adresse</h3>
                 <div className="bg-gray-50 p-4 lg:p-6 rounded-xl">
                   <div className="flex items-start text-gray-700">
-                    <MapPin size={20} className="mr-3 mt-1 text-blue-500 flex-shrink-0" />
+                    <MapPin size={20} className="mr-3 mt-1 text-sky-400 flex-shrink-0" />
                     <div className="flex-1">
                       <p className="font-medium text-gray-800 text-sm lg:text-base">{restStop.address}</p>
                       <p className="text-sm text-gray-600 mt-1">{restStop.location}</p>
@@ -430,7 +430,7 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
               <div className="mb-6">
                 <button
                   onClick={handleNavigateToGoogleMaps}
-                  className="w-full bg-blue-600 text-white py-3 lg:py-4 px-6 rounded-xl font-semibold hover:bg-blue-700 transition duration-200 flex items-center justify-center shadow-lg"
+                  className="w-full bg-sky-500 text-white py-3 lg:py-4 px-6 rounded-xl font-semibold hover:bg-sky-600 transition duration-200 flex items-center justify-center shadow-lg"
                 >
                   <Navigation size={20} className="mr-3" />
                   In Google Maps öffnen

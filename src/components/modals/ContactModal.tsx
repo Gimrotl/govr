@@ -40,7 +40,7 @@ export const ContactModal: React.FC = () => {
       <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6 animate-scaleIn">
         <div className="flex justify-between items-start mb-4">
           <h2 className="text-lg font-semibold text-gray-800 flex items-center">
-            <MessageCircle size={20} className="text-blue-500 mr-2" />
+            <MessageCircle size={20} className="text-sky-400 mr-2" />
             Nachricht an {selectedUser.firstName}
           </h2>
           <button
@@ -54,8 +54,8 @@ export const ContactModal: React.FC = () => {
         <div className="space-y-4">
           <div className="bg-gray-50 p-3 rounded-lg">
             <div className="flex items-center">
-              <div className="w-10 h-10 bg-blue-200 rounded-full flex items-center justify-center mr-3">
-                <span className="text-blue-600 font-bold">
+              <div className="w-10 h-10 bg-sky-200 rounded-full flex items-center justify-center mr-3">
+                <span className="text-sky-500 font-bold">
                   {selectedUser.firstName.charAt(0).toUpperCase()}
                 </span>
               </div>
@@ -72,7 +72,7 @@ export const ContactModal: React.FC = () => {
           </div>
           
           <textarea
-            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent h-32 resize-none"
+            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-400 focus:border-transparent h-32 resize-none"
             placeholder="Schreiben Sie Ihre Nachricht hier..."
             value={messageContent}
             onChange={(e) => setMessageContent(e.target.value)}
@@ -92,7 +92,7 @@ export const ContactModal: React.FC = () => {
             </button>
             <button
               onClick={handleSendMessage}
-              className="flex-1 flex items-center justify-center bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-200"
+              className="flex-1 flex items-center justify-center bg-sky-500 text-white px-4 py-2 rounded-md hover:bg-sky-600 transition duration-200"
             >
               <Send size={18} className="mr-2" />
               Senden

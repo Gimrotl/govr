@@ -8,7 +8,7 @@ import { useRides } from '../../hooks/useRides';
 // Function to generate consistent color for each username
 const getUserColor = (username: string) => {
   const colors = [
-    'bg-blue-500 hover:bg-blue-600',
+    'bg-sky-500 hover:bg-sky-600',
     'bg-purple-500 hover:bg-purple-600', 
     'bg-pink-500 hover:bg-pink-600',
     'bg-indigo-500 hover:bg-indigo-600',

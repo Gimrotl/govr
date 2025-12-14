@@ -40,11 +40,11 @@ export const AdminDashboardModal: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
         <div className="bg-white p-4 md:p-6 rounded-lg shadow-md">
           <div className="flex items-center">
-            <Users size={24} className="text-blue-600 mr-3 md:mr-4 md:w-8 md:h-8" />
+            <Users size={24} className="text-sky-500 mr-3 md:mr-4 md:w-8 md:h-8" />
             <div>
               <h3 className="text-base md:text-lg font-semibold text-gray-800">Benutzer</h3>
               <p className="text-sm md:text-base text-gray-600 hidden md:block">Registrierte Benutzer, Rollen und Zugriffsrechte verwalten.</p>
-              <p className="text-xl md:text-2xl font-bold text-blue-600 mt-1 md:mt-2">{mockUsers.length}</p>
+              <p className="text-xl md:text-2xl font-bold text-sky-500 mt-1 md:mt-2">{mockUsers.length}</p>
             </div>
           </div>
         </div>
@@ -110,7 +110,7 @@ export const AdminDashboardModal: React.FC = () => {
               <div className="flex justify-between items-center">
                 <span className="text-sm text-gray-600">{user.rides} Fahrten</span>
                 <div className="flex space-x-2">
-                  <button className="text-blue-600 hover:text-blue-900 p-1">
+                  <button className="text-sky-500 hover:text-sky-700 p-1">
                     <Eye size={16} />
                   </button>
                   <button className="text-red-600 hover:text-red-900 p-1">
@@ -157,7 +157,7 @@ export const AdminDashboardModal: React.FC = () => {
                   {user.rides}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                  <button className="text-blue-600 hover:text-blue-900">
+                  <button className="text-sky-500 hover:text-sky-700">
                     <Eye size={16} />
                   </button>
                   <button className="text-red-600 hover:text-red-900">
@@ -195,7 +195,7 @@ export const AdminDashboardModal: React.FC = () => {
                 </div>
               </div>
               <div className="flex justify-end space-x-2">
-                <button className="text-blue-600 hover:text-blue-900 p-1">
+                <button className="text-sky-500 hover:text-sky-700 p-1">
                   <Eye size={16} />
                 </button>
                 <button className="text-green-600 hover:text-green-900 p-1">
@@ -236,7 +236,7 @@ export const AdminDashboardModal: React.FC = () => {
                   <div className="text-sm text-gray-900">{ride.price}</div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                  <button className="text-blue-600 hover:text-blue-900">
+                  <button className="text-sky-500 hover:text-sky-700">
                     <Eye size={16} />
                   </button>
                   <button className="text-green-600 hover:text-green-900">
@@ -278,7 +278,7 @@ export const AdminDashboardModal: React.FC = () => {
                 </span>
               </div>
               <div className="flex justify-end space-x-2">
-                <button className="text-blue-600 hover:text-blue-900 p-1">
+                <button className="text-sky-500 hover:text-sky-700 p-1">
                   <Eye size={16} />
                 </button>
                 <button className="text-green-600 hover:text-green-900 p-1">
@@ -325,7 +325,7 @@ export const AdminDashboardModal: React.FC = () => {
                   </span>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                  <button className="text-blue-600 hover:text-blue-900">
+                  <button className="text-sky-500 hover:text-sky-700">
                     <Eye size={16} />
                   </button>
                   <button className="text-green-600 hover:text-green-900">
@@ -369,7 +369,7 @@ export const AdminDashboardModal: React.FC = () => {
         <div className="bg-white p-4 md:p-6 rounded-lg shadow-md">
           <h3 className="text-base md:text-lg font-semibold text-gray-800 mb-3 md:mb-4">Sicherheit</h3>
           <div className="space-y-4">
-            <button className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-200">
+            <button className="w-full bg-sky-500 text-white py-2 px-4 rounded-lg hover:bg-sky-600 transition duration-200">
               Passwort ändern
             </button>
             <button className="w-full bg-gray-600 text-white py-2 px-4 rounded-lg hover:bg-gray-700 transition duration-200">
@@ -463,7 +463,7 @@ export const AdminDashboardModal: React.FC = () => {
                   </div>
                   <button
                     onClick={() => setEditingCard(card)}
-                    className="ml-4 text-blue-600 hover:text-blue-800 p-2 hover:bg-blue-50 rounded-lg transition"
+                    className="ml-4 text-sky-500 hover:text-sky-700 p-2 hover:bg-sky-50 rounded-lg transition"
                   >
                     <Eye size={18} />
                   </button>
@@ -499,7 +499,7 @@ export const AdminDashboardModal: React.FC = () => {
         {/* Mobile Header */}
         <div className="md:hidden bg-gray-800 text-white p-4 flex justify-between items-center rounded-t-lg">
           <div className="flex items-center">
-            <Shield size={20} className="text-blue-400 mr-2" />
+            <Shield size={20} className="text-sky-300 mr-2" />
             <h2 className="text-lg font-bold">Admin Panel</h2>
           </div>
           <button
@@ -603,7 +603,7 @@ export const AdminDashboardModal: React.FC = () => {
         {/* Desktop Sidebar */}
         <div className="hidden md:flex w-64 bg-gray-800 text-white flex-col p-6 rounded-l-lg">
           <div className="flex items-center mb-8">
-            <Shield size={24} className="text-blue-400 mr-2" />
+            <Shield size={24} className="text-sky-300 mr-2" />
             <h2 className="text-xl font-bold">Admin Panel</h2>
           </div>
           

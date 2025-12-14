@@ -101,9 +101,9 @@ export const LoginModal: React.FC = () => {
         </div>
 
         {emailSent && (
-          <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-            <h3 className="font-semibold text-blue-800 mb-2">E-Mail-Bestätigung erforderlich</h3>
-            <p className="text-blue-700 text-sm">
+          <div className="mb-6 p-4 bg-sky-50 border border-sky-200 rounded-lg">
+            <h3 className="font-semibold text-sky-700 mb-2">E-Mail-Bestätigung erforderlich</h3>
+            <p className="text-sky-600 text-sm">
               Wir haben eine Bestätigungs-E-Mail an <strong>{registerCredentials.email}</strong> gesendet. 
               Bitte überprüfen Sie Ihr Postfach und klicken Sie auf den Bestätigungslink, um Ihr Konto zu aktivieren.
             </p>
@@ -232,7 +232,7 @@ export const LoginModal: React.FC = () => {
             <button
               type="button"
               onClick={googleLogin}
-              className="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 transition duration-200 flex items-center justify-center"
+              className="w-full bg-sky-400 text-white py-3 rounded-lg hover:bg-sky-500 transition duration-200 flex items-center justify-center"
             >
               <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12.545,10.917v3.249h5.72c-0.23,1.282-1.741,3.824-5.72,3.824c-3.453,0-6.27-2.866-6.27-6.395c0-3.529,2.817-6.395,6.27-6.395c1.953,0,3.29,0.83,4.048,1.556l2.729-2.636c-1.762-1.634-4.054-2.62-6.777-2.62c-5.565,0-10.062,4.501-10.062,10.062c0,5.561,4.497,10.062,10.062,10.062c5.814,0,9.689-3.956,9.689-9.551c0-0.647-0.071-1.139-0.155-1.638H12.545z"/>

@@ -40,7 +40,7 @@ export const AdminLoginModal: React.FC = () => {
       <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-8 animate-scaleIn">
         <div className="flex justify-between items-center mb-6">
           <div className="flex items-center">
-            <Shield size={24} className="text-blue-600 mr-2" />
+            <Shield size={24} className="text-sky-500 mr-2" />
             <h2 className="text-2xl font-semibold text-gray-800">Admin Login</h2>
           </div>
           <button
@@ -62,7 +62,7 @@ export const AdminLoginModal: React.FC = () => {
                 type="text"
                 id="admin-username"
                 name="username"
-                className="w-full pl-10 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full pl-10 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-400 focus:border-transparent"
                 placeholder="Admin Username"
                 value={credentials.username}
                 onChange={handleChange}
@@ -81,7 +81,7 @@ export const AdminLoginModal: React.FC = () => {
                 type="password"
                 id="admin-password"
                 name="password"
-                className="w-full pl-10 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full pl-10 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-400 focus:border-transparent"
                 placeholder="Passwort"
                 value={credentials.password}
                 onChange={handleChange}
@@ -92,7 +92,7 @@ export const AdminLoginModal: React.FC = () => {
           
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition duration-200 font-medium"
+            className="w-full bg-sky-500 text-white py-3 rounded-lg hover:bg-sky-600 transition duration-200 font-medium"
           >
             Anmelden
           </button>

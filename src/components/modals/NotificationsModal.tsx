@@ -27,7 +27,7 @@ export const NotificationsModal: React.FC = () => {
       case 'order_rejected':
         return 'border-l-red-500 bg-red-50';
       case 'booking_confirmed':
-        return 'border-l-blue-500 bg-blue-50';
+        return 'border-l-sky-400 bg-sky-50';
       default:
         return 'border-l-gray-500 bg-gray-50';
     }
@@ -38,7 +38,7 @@ export const NotificationsModal: React.FC = () => {
       <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full p-6 max-h-[80vh] animate-scaleIn">
         <div className="flex justify-between items-center mb-6">
           <div className="flex items-center">
-            <Bell size={24} className="text-blue-600 mr-2" />
+            <Bell size={24} className="text-sky-500 mr-2" />
             <h2 className="text-2xl font-semibold text-gray-800">
               Notifications
               {unreadCount > 0 && (
@@ -62,7 +62,7 @@ export const NotificationsModal: React.FC = () => {
               {unreadCount > 0 && (
                 <button
                   onClick={markAllAsRead}
-                  className="flex items-center text-blue-600 hover:text-blue-800 text-sm"
+                  className="flex items-center text-sky-500 hover:text-sky-700 text-sm"
                 >
                   <CheckCheck size={16} className="mr-1" />
                   Mark all as read
@@ -109,7 +109,7 @@ export const NotificationsModal: React.FC = () => {
                           {notification.title}
                         </h3>
                         {!notification.read && (
-                          <span className="ml-2 w-2 h-2 bg-blue-500 rounded-full"></span>
+                          <span className="ml-2 w-2 h-2 bg-sky-500 rounded-full"></span>
                         )}
                       </div>
                       <p className="text-gray-700 mb-2">{notification.message}</p>
@@ -119,7 +119,7 @@ export const NotificationsModal: React.FC = () => {
                       {!notification.read && (
                         <button
                           onClick={() => markAsRead(notification.id)}
-                          className="text-blue-600 hover:text-blue-800 p-1"
+                          className="text-sky-500 hover:text-sky-700 p-1"
                           title="Mark as read"
                         >
                           <Check size={16} />

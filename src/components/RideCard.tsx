@@ -88,7 +88,7 @@ export const RideCard: React.FC<RideCardProps> = ({ ride }) => {
           <div>
             <button
               onClick={handleDriverClick}
-              className="text-sm font-medium text-blue-600 hover:text-blue-800 hover:underline transition-colors"
+              className="text-sm font-medium text-sky-500 hover:text-sky-700 hover:underline transition-colors"
             >
               {ride.driver}
             </button>

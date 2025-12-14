@@ -94,7 +94,7 @@ const getTypeIcon = (type: string) => {
     case 'Raststätte':
       return <Car size={16} className="text-emerald-500" />;
     case 'Hotel':
-      return <div className="w-4 h-4 bg-blue-600 rounded flex items-center justify-center text-white text-xs font-bold">H</div>;
+      return <div className="w-4 h-4 bg-sky-500 rounded flex items-center justify-center text-white text-xs font-bold">H</div>;
     case 'Tankstelle':
       return <Fuel size={16} className="text-red-600" />;
     case 'Restaurant':
@@ -107,7 +107,7 @@ const getTypeIcon = (type: string) => {
 const getAmenityIcon = (amenity: string) => {
   switch (amenity) {
     case 'WC':
-      return <div className="bg-blue-100 text-blue-800 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs flex items-center">
+      return <div className="bg-sky-100 text-sky-700 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs flex items-center">
         <span className="mr-1">🚻</span> WC
       </div>;
     case 'Kinderfreundlich':
@@ -139,7 +139,7 @@ const getAmenityIcon = (amenity: string) => {
         <span className="mr-1">⛽</span> Tankstelle
       </div>;
     case 'Autowaschen':
-      return <div className="bg-blue-100 text-blue-800 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs flex items-center">
+      return <div className="bg-sky-100 text-sky-700 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs flex items-center">
         <span className="mr-1">🚗</span> Autowäsche
       </div>;
     case 'Hotel':
@@ -369,7 +369,7 @@ export const RestStops: React.FC = () => {
           <div className="absolute bottom-4 right-4 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
             <button
               onClick={(e) => handleEditRestStop(stop, e)}
-              className="bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700 transition duration-200"
+              className="bg-sky-500 text-white p-2 rounded-full hover:bg-sky-600 transition duration-200"
               title="Rest Stop bearbeiten"
             >
               <Edit size={16} />
@@ -411,7 +411,7 @@ export const RestStops: React.FC = () => {
               e.stopPropagation();
               handleNavigationClick(stop);
             }}
-            className="w-full bg-blue-600 text-white py-3 px-4 rounded-xl font-medium hover:bg-blue-700 transition duration-200 flex items-center justify-center"
+            className="w-full bg-sky-500 text-white py-3 px-4 rounded-xl font-medium hover:bg-sky-600 transition duration-200 flex items-center justify-center"
           >
             <Navigation size={18} className="mr-2" />
             Navigation
@@ -506,7 +506,7 @@ export const RestStops: React.FC = () => {
               }}
               className={`h-3 rounded-full transition-all duration-300 ${
                 index === currentIdx
-                  ? 'bg-blue-600 w-10'
+                  ? 'bg-sky-500 w-10'
                   : 'bg-gray-300 w-3 hover:bg-gray-400'
               }`}
             />
@@ -529,7 +529,7 @@ export const RestStops: React.FC = () => {
         goToPrevious,
         goToNext,
         scrollContainerRef,
-        'border-blue-500'
+        'border-sky-400'
       )}
 
       {renderSection(

@@ -205,15 +205,15 @@ export const RideDetailsModal: React.FC = () => {
             <div className="text-center mb-6">
               <div
                 onClick={handleDriverClick}
-                className="w-16 h-16 md:w-20 md:h-20 bg-blue-200 rounded-full flex items-center justify-center mx-auto mb-3 cursor-pointer hover:bg-blue-300 transition-colors"
+                className="w-16 h-16 md:w-20 md:h-20 bg-sky-200 rounded-full flex items-center justify-center mx-auto mb-3 cursor-pointer hover:bg-sky-300 transition-colors"
               >
-                <span className="text-2xl font-bold text-blue-600">
+                <span className="text-2xl font-bold text-sky-500">
                   {selectedRide.driver.charAt(0).toUpperCase()}
                 </span>
               </div>
               <h3
                 onClick={handleDriverClick}
-                className="text-xl md:text-2xl font-bold text-gray-800 mb-1 cursor-pointer hover:text-blue-600 transition-colors"
+                className="text-xl md:text-2xl font-bold text-gray-800 mb-1 cursor-pointer hover:text-sky-500 transition-colors"
               >
                 {selectedRide.driver}
               </h3>
@@ -247,7 +247,7 @@ export const RideDetailsModal: React.FC = () => {
             {/* Book ride button */}
             <button
               onClick={handleBookRide}
-              className="w-full bg-blue-600 text-white py-3 md:py-4 rounded-lg text-base md:text-lg font-semibold hover:bg-blue-700 transition duration-200 mb-2"
+              className="w-full bg-sky-500 text-white py-3 md:py-4 rounded-lg text-base md:text-lg font-semibold hover:bg-sky-600 transition duration-200 mb-2"
             >
               Jetzt buchen - {selectedRide.price}
             </button>

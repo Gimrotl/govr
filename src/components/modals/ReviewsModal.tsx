@@ -78,7 +78,7 @@ export const ReviewsModal: React.FC = () => {
                 <div key={review.id} className="bg-gray-50 rounded-lg p-4 border border-gray-200">
                   <div className="flex items-start space-x-4">
                     {/* User Avatar */}
-                    <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
+                    <div className="w-12 h-12 bg-sky-500 rounded-full flex items-center justify-center flex-shrink-0">
                       <span className="text-white font-bold text-lg">
                         {review.user.charAt(0).toUpperCase()}
                       </span>

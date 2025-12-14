@@ -31,7 +31,7 @@ export const MyRidesModal: React.FC = () => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 animate-fadeIn">
       <div className="bg-white rounded-2xl shadow-2xl max-w-5xl w-full animate-scaleIn overflow-hidden">
-        <div className="bg-gradient-to-r from-blue-600 to-blue-700 p-6">
+        <div className="bg-gradient-to-r from-sky-500 to-sky-600 p-6">
           <div className="flex justify-between items-center">
             <h2 className="text-2xl font-bold text-white">Meine Fahrten & Bestellungen</h2>
             <button
@@ -47,14 +47,14 @@ export const MyRidesModal: React.FC = () => {
               onClick={() => setActiveTab('rides')}
               className={`flex-1 flex items-center justify-center py-3 px-4 rounded-xl font-semibold transition-all duration-200 ${
                 activeTab === 'rides'
-                  ? 'bg-white text-blue-700 shadow-lg'
-                  : 'bg-blue-500 bg-opacity-30 text-white hover:bg-opacity-50'
+                  ? 'bg-white text-sky-600 shadow-lg'
+                  : 'bg-sky-400 bg-opacity-30 text-white hover:bg-opacity-50'
               }`}
             >
               <Car size={20} className="mr-2" />
               Meine Fahrten
               {myRides.length > 0 && (
-                <span className="ml-2 bg-blue-700 text-white text-xs font-bold px-2 py-1 rounded-full">
+                <span className="ml-2 bg-sky-600 text-white text-xs font-bold px-2 py-1 rounded-full">
                   {myRides.length}
                 </span>
               )}
@@ -63,8 +63,8 @@ export const MyRidesModal: React.FC = () => {
               onClick={() => setActiveTab('orders')}
               className={`flex-1 flex items-center justify-center py-3 px-4 rounded-xl font-semibold transition-all duration-200 ${
                 activeTab === 'orders'
-                  ? 'bg-white text-blue-700 shadow-lg'
-                  : 'bg-blue-500 bg-opacity-30 text-white hover:bg-opacity-50'
+                  ? 'bg-white text-sky-600 shadow-lg'
+                  : 'bg-sky-400 bg-opacity-30 text-white hover:bg-opacity-50'
               }`}
             >
               <Package size={20} className="mr-2" />
@@ -96,8 +96,8 @@ export const MyRidesModal: React.FC = () => {
                       <div className="flex justify-between items-start">
                         <div className="flex-1">
                           <div className="flex items-center mb-3">
-                            <div className="bg-blue-100 p-2 rounded-lg mr-3">
-                              <Car size={24} className="text-blue-600" />
+                            <div className="bg-sky-100 p-2 rounded-lg mr-3">
+                              <Car size={24} className="text-sky-500" />
                             </div>
                             <div>
                               <h3 className="text-xl font-bold text-gray-800">
@@ -110,9 +110,9 @@ export const MyRidesModal: React.FC = () => {
                           </div>
 
                           <div className="grid grid-cols-2 gap-3 mt-4">
-                            <div className="bg-blue-50 rounded-lg p-3">
+                            <div className="bg-sky-50 rounded-lg p-3">
                               <p className="text-xs text-gray-600 mb-1">Verfügbare Plätze</p>
-                              <p className="text-lg font-bold text-blue-700">
+                              <p className="text-lg font-bold text-sky-600">
                                 {ride.availableSeats - ride.bookedSeats} / {ride.availableSeats}
                               </p>
                             </div>
@@ -126,7 +126,7 @@ export const MyRidesModal: React.FC = () => {
                         <div className="flex space-x-2 ml-4">
                           <button
                             onClick={() => handleEdit(ride.id)}
-                            className="p-3 bg-blue-100 text-blue-600 hover:bg-blue-200 rounded-lg transition-colors"
+                            className="p-3 bg-sky-100 text-sky-500 hover:bg-sky-200 rounded-lg transition-colors"
                             title="Fahrt bearbeiten"
                           >
                             <Edit size={20} />
@@ -161,8 +161,8 @@ export const MyRidesModal: React.FC = () => {
                     >
                       <div className="flex justify-between items-start mb-4">
                         <div className="flex items-center">
-                          <div className="bg-blue-100 p-3 rounded-full mr-3">
-                            <Package size={20} className="text-blue-600" />
+                          <div className="bg-sky-100 p-3 rounded-full mr-3">
+                            <Package size={20} className="text-sky-500" />
                           </div>
                           <div>
                             <h3 className="text-lg font-bold text-gray-800">{order.client}</h3>

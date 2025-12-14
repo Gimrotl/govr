@@ -138,7 +138,7 @@ export const MessagesModal: React.FC = () => {
       case 'order_rejected':
         return 'bg-red-50 border-l-4 border-red-500';
       case 'booking_confirmed':
-        return 'bg-blue-50 border-l-4 border-blue-500';
+        return 'bg-sky-50 border-l-4 border-sky-400';
       case 'booking_request':
         return 'bg-yellow-50 border-l-4 border-yellow-500';
       default:
@@ -198,7 +198,7 @@ export const MessagesModal: React.FC = () => {
                       className={`w-10 h-10 rounded-full flex items-center justify-center cursor-pointer transition-all flex-shrink-0 ${
                         hasUnread
                           ? 'bg-gradient-to-br from-emerald-300 to-emerald-500 text-white ring-2 ring-emerald-200'
-                          : 'bg-gradient-to-br from-blue-400 to-blue-600 text-white hover:ring-2 hover:ring-blue-200'
+                          : 'bg-gradient-to-br from-sky-300 to-sky-500 text-white hover:ring-2 hover:ring-sky-200'
                       }`}
                     >
                       <span className="font-semibold text-sm">
@@ -241,7 +241,7 @@ export const MessagesModal: React.FC = () => {
                 >
                   <ChevronLeft size={20} />
                 </button>
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white font-semibold text-sm flex-shrink-0">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-sky-300 to-sky-500 flex items-center justify-center text-white font-semibold text-sm flex-shrink-0">
                   {selectedContact.charAt(0).toUpperCase()}
                 </div>
                 <div className="flex-1 min-w-0">

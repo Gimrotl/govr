@@ -76,7 +76,7 @@ export const BookingModal: React.FC = () => {
               <select
                 value={bookingSeats}
                 onChange={(e) => setBookingSeats(Number(e.target.value))}
-                className="flex-1 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="flex-1 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-400 focus:border-transparent"
               >
                 {[...Array(Math.min(availableSeats, 8))].map((_, i) => (
                   <option key={i + 1} value={i + 1}>
@@ -101,7 +101,7 @@ export const BookingModal: React.FC = () => {
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder="Hallo, ich möchte gerne mitfahren..."
-                className="w-full pl-10 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent h-20 resize-none"
+                className="w-full pl-10 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-400 focus:border-transparent h-20 resize-none"
                 maxLength={200}
               />
             </div>
@@ -111,10 +111,10 @@ export const BookingModal: React.FC = () => {
           </div>
 
           {/* Total price */}
-          <div className="bg-blue-50 p-4 rounded-lg">
+          <div className="bg-sky-50 p-4 rounded-lg">
             <div className="flex justify-between items-center">
               <span className="font-medium text-gray-800">Gesamtpreis:</span>
-              <span className="text-xl font-bold text-blue-600">
+              <span className="text-xl font-bold text-sky-500">
                 {selectedRide.price.includes('€') 
                   ? `€${(parseInt(selectedRide.price.replace('€', '')) * bookingSeats)}`
                   : `${bookingSeats} × ${selectedRide.price}`
@@ -133,7 +133,7 @@ export const BookingModal: React.FC = () => {
             </button>
             <button
               onClick={handleBooking}
-              className="flex-1 bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition duration-200 font-medium"
+              className="flex-1 bg-sky-500 text-white py-3 rounded-lg hover:bg-sky-600 transition duration-200 font-medium"
             >
               Jetzt buchen
             </button>
