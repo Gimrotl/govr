@@ -36,17 +36,17 @@ function App() {
     <Layout>
       <div className="relative">
         <div
-          className="relative min-h-[500px] md:min-h-[600px] bg-cover bg-center bg-no-repeat"
+          className="relative min-h-[380px] md:min-h-[420px] bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: 'url(/bildschirmfoto_2025-12-14_um_03.47.46.png)' }}
         >
           <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-gray-50"></div>
 
-          <div className="relative z-10 pt-24 md:pt-32 pb-16 md:pb-24">
+          <div className="relative z-10 pt-20 md:pt-24 pb-10 md:pb-14">
             <div className="container mx-auto px-4 text-center">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white drop-shadow-lg mb-4">
                 Caucasus RideShare Network
               </h1>
-              <p className="text-xl md:text-2xl text-white/90 drop-shadow-md mb-12">
+              <p className="text-xl md:text-2xl text-white/90 drop-shadow-md mb-8">
                 Han vord - han nekh
               </p>
 
@@ -64,7 +64,7 @@ function App() {
         </div>
       </div>
 
-      <main className="container mx-auto px-4 py-8 mb-64 -mt-8">
+      <main className="container mx-auto px-4 py-6 mb-64">
         {false && (
           <div className="grid grid-cols-2 gap-6 mb-8">
             <button
