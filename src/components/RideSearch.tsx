@@ -20,7 +20,7 @@ export const RideSearch: React.FC<RideSearchProps> = ({
   };
 
   return (
-    <section className="bg-white rounded-xl shadow-sm p-4 md:p-6 transition-all duration-300 hover:shadow-md">
+    <section className="bg-white/95 backdrop-blur-sm rounded-xl shadow-lg p-4 md:p-6 transition-all duration-300 hover:shadow-xl">
       <div className="flex flex-col space-y-3 md:flex-row md:items-center md:space-y-0 md:space-x-4">
         <div className="flex-1 w-full">
           <CityAutocomplete

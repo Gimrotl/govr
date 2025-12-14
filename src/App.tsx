@@ -34,14 +34,37 @@ function App() {
 
   return (
     <Layout>
-      <header className="bg-green-600 text-white text-center py-10">
-        <h1 className="text-3xl font-bold">Caucasus RideShare Network</h1>
-        <p className="mt-2 text-lg">
-          Han vord - han nekh
-        </p>
-      </header>
+      <div className="relative">
+        <div
+          className="relative min-h-[500px] md:min-h-[600px] bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: 'url(/bildschirmfoto_2025-12-14_um_03.47.46.png)' }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-gray-50"></div>
 
-      <main className="container mx-auto px-4 py-8 mb-64">
+          <div className="relative z-10 pt-24 md:pt-32 pb-16 md:pb-24">
+            <div className="container mx-auto px-4 text-center">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white drop-shadow-lg mb-4">
+                Caucasus RideShare Network
+              </h1>
+              <p className="text-xl md:text-2xl text-white/90 drop-shadow-md mb-12">
+                Han vord - han nekh
+              </p>
+
+              {(activeSection === 'search') && (
+                <div className="max-w-5xl mx-auto">
+                  <RideSearch
+                    searchParams={searchParams}
+                    onSearch={setSearchParams}
+                    onReset={resetSearch}
+                  />
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <main className="container mx-auto px-4 py-8 mb-64 -mt-8">
         {false && (
           <div className="grid grid-cols-2 gap-6 mb-8">
             <button
@@ -64,13 +87,7 @@ function App() {
 
         {(activeSection === 'search') && (
           <>
-            <RideSearch 
-              searchParams={searchParams} 
-              onSearch={setSearchParams} 
-              onReset={resetSearch} 
-            />
-            
-            <section className="mt-10">
+            <section className="mt-4">
               <h2 className="text-2xl font-semibold mb-6 text-center">
                 <span className="text-red-600 font-bold mr-2">{filteredRides.length}</span>
                 Available Rides
