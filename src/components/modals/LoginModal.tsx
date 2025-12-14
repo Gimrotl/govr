@@ -176,7 +176,7 @@ export const LoginModal: React.FC = () => {
                 <button
                   type="button"
                   onClick={openTermsModal}
-                  className="text-emerald-500 hover:text-emerald-700 underline"
+                  className="text-rose-400 hover:text-rose-500 underline"
                 >
                   Nutzungsbedingungen
                 </button>
@@ -245,7 +245,7 @@ export const LoginModal: React.FC = () => {
         <div className="mt-6 text-center">
           <button
             onClick={toggleMode}
-            className="text-emerald-500 hover:text-emerald-700 transition duration-200"
+            className="text-black hover:text-gray-700 transition duration-200"
           >
             {isRegisterMode ? 'Bereits ein Konto? Hier anmelden' : 'Noch kein Konto? Jetzt registrieren'}
           </button>
