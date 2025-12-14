@@ -39,7 +39,7 @@ export const InfoCards: React.FC = () => {
         {cards.map((card, index) => (
           <div
             key={card.id}
-            className={`bg-gray-200 rounded-lg p-6 transition-all duration-300 hover:bg-white hover:shadow-lg hover:-translate-y-1 cursor-pointer group border-t-2 ${borderColors[index % borderColors.length]} border border-gray-300 hover:border-gray-400`}
+            className={`bg-gray-50 rounded-lg p-6 transition-all duration-300 hover:bg-white hover:shadow-lg hover:-translate-y-1 cursor-pointer group border-t-2 ${borderColors[index % borderColors.length]} border border-gray-100 hover:border-gray-200`}
           >
             <h3 className={`text-xl font-bold text-gray-900 mb-4 transition-colors ${hoverTitleColors[index % hoverTitleColors.length]}`}>
               {card.title}
