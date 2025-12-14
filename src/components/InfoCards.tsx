@@ -34,9 +34,9 @@ export const InfoCards: React.FC = () => {
   }
 
   return (
-    <section className="my-12 relative">
-      <div className="absolute inset-0 bg-gradient-to-b from-gray-900/15 via-gray-600/5 to-transparent rounded-lg pointer-events-none"></div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
+    <section className="my-12 relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-b from-gray-800/25 via-gray-400/10 to-transparent pointer-events-none -z-10"></div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {cards.map((card, index) => (
           <div
             key={card.id}
@@ -55,7 +55,6 @@ export const InfoCards: React.FC = () => {
           </div>
         ))}
       </div>
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white/40 rounded-lg pointer-events-none"></div>
     </section>
   );
 };
