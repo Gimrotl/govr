@@ -4,6 +4,7 @@ import { RideSearch } from './components/RideSearch';
 import { RidesList } from './components/RidesList';
 import { OfferRideForm } from './components/OfferRideForm';
 import { RestStops } from './components/RestStops';
+import { InfoCards } from './components/InfoCards';
 import { useRides } from './hooks/useRides';
 import { useAuth } from './hooks/useAuth';
 import { useModals } from './hooks/useModals';
@@ -76,7 +77,9 @@ function App() {
               </h2>
               <RidesList rides={filteredRides} />
             </section>
-            
+
+            <InfoCards />
+
             <RestStops />
           </>
         )}

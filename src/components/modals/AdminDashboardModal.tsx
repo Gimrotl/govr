@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
-import { X, Users, Car, AlertTriangle, Settings, LogOut, Shield, Eye, Trash2, Ban, CheckCircle } from 'lucide-react';
+import { X, Users, Car, AlertTriangle, Settings, LogOut, Shield, Eye, Trash2, Ban, CheckCircle, FileText, Save } from 'lucide-react';
 import { useModals } from '../../hooks/useModals';
 import { useAuth } from '../../hooks/useAuth';
 import { useRides } from '../../hooks/useRides';
+import { useInfoCards, InfoCard } from '../../hooks/useInfoCards';
 
 export const AdminDashboardModal: React.FC = () => {
   const { closeModal } = useModals();
   const { logout } = useAuth();
   const { rides } = useRides();
-  const [activeTab, setActiveTab] = useState<'dashboard' | 'users' | 'rides' | 'reports' | 'settings'>('dashboard');
+  const { cards, updateCard, loading: cardsLoading } = useInfoCards();
+  const [activeTab, setActiveTab] = useState<'dashboard' | 'users' | 'rides' | 'reports' | 'settings' | 'content'>('dashboard');
   const [showSidebar, setShowSidebar] = useState(false);
+  const [editingCard, setEditingCard] = useState<InfoCard | null>(null);
+  const [saving, setSaving] = useState(false);
 
   const handleLogout = () => {
     logout();
@@ -342,7 +346,7 @@ export const AdminDashboardModal: React.FC = () => {
   const renderSettings = () => (
     <div>
       <h1 className="text-xl md:text-2xl font-bold text-gray-800 mb-4 md:mb-6 hidden md:block">Einstellungen</h1>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
         <div className="bg-white p-4 md:p-6 rounded-lg shadow-md">
           <h3 className="text-base md:text-lg font-semibold text-gray-800 mb-3 md:mb-4">Plattform-Einstellungen</h3>
@@ -361,7 +365,7 @@ export const AdminDashboardModal: React.FC = () => {
             </div>
           </div>
         </div>
-        
+
         <div className="bg-white p-4 md:p-6 rounded-lg shadow-md">
           <h3 className="text-base md:text-lg font-semibold text-gray-800 mb-3 md:mb-4">Sicherheit</h3>
           <div className="space-y-4">
@@ -380,7 +384,99 @@ export const AdminDashboardModal: React.FC = () => {
     </div>
   );
 
-  const renderContent = () => {
+  const handleSaveCard = async () => {
+    if (!editingCard) return;
+    setSaving(true);
+    await updateCard(editingCard.id, {
+      title: editingCard.title,
+      description: editingCard.description,
+      link_text: editingCard.link_text
+    });
+    setSaving(false);
+    setEditingCard(null);
+  };
+
+  const renderContentCards = () => (
+    <div>
+      <h1 className="text-xl md:text-2xl font-bold text-gray-800 mb-4 md:mb-6 hidden md:block">Info-Karten verwalten</h1>
+
+      {cardsLoading ? (
+        <div className="flex justify-center py-8">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600"></div>
+        </div>
+      ) : (
+        <div className="space-y-4">
+          {cards.map((card) => (
+            <div key={card.id} className="bg-white p-4 md:p-6 rounded-lg shadow-md">
+              {editingCard?.id === card.id ? (
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Titel</label>
+                    <input
+                      type="text"
+                      value={editingCard.title}
+                      onChange={(e) => setEditingCard({ ...editingCard, title: e.target.value })}
+                      className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Beschreibung</label>
+                    <textarea
+                      value={editingCard.description}
+                      onChange={(e) => setEditingCard({ ...editingCard, description: e.target.value })}
+                      rows={3}
+                      className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Link-Text</label>
+                    <input
+                      type="text"
+                      value={editingCard.link_text}
+                      onChange={(e) => setEditingCard({ ...editingCard, link_text: e.target.value })}
+                      className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    />
+                  </div>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={handleSaveCard}
+                      disabled={saving}
+                      className="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition disabled:opacity-50"
+                    >
+                      <Save size={16} />
+                      {saving ? 'Speichern...' : 'Speichern'}
+                    </button>
+                    <button
+                      onClick={() => setEditingCard(null)}
+                      className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition"
+                    >
+                      Abbrechen
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="flex justify-between items-start">
+                  <div className="flex-1">
+                    <h3 className="text-lg font-semibold text-gray-800 mb-2">{card.title}</h3>
+                    <p className="text-gray-600 text-sm mb-2">{card.description}</p>
+                    <p className="text-red-500 text-sm font-medium">{card.link_text}</p>
+                  </div>
+                  <button
+                    onClick={() => setEditingCard(card)}
+                    className="ml-4 text-blue-600 hover:text-blue-800 p-2 hover:bg-blue-50 rounded-lg transition"
+                  >
+                    <Eye size={18} />
+                  </button>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+
+  const renderMainContent = () => {
     switch (activeTab) {
       case 'users':
         return renderUsers();
@@ -390,6 +486,8 @@ export const AdminDashboardModal: React.FC = () => {
         return renderReports();
       case 'settings':
         return renderSettings();
+      case 'content':
+        return renderContentCards();
       default:
         return renderDashboard();
     }
@@ -467,6 +565,18 @@ export const AdminDashboardModal: React.FC = () => {
             </button>
             <button
               onClick={() => {
+                setActiveTab('content');
+                setShowSidebar(false);
+              }}
+              className={`w-full text-left p-3 rounded-lg transition duration-200 flex items-center ${
+                activeTab === 'content' ? 'bg-gray-600' : 'hover:bg-gray-600'
+              }`}
+            >
+              <FileText size={18} className="mr-3" />
+              Inhalte
+            </button>
+            <button
+              onClick={() => {
                 setActiveTab('settings');
                 setShowSidebar(false);
               }}
@@ -535,6 +645,15 @@ export const AdminDashboardModal: React.FC = () => {
               Meldungen
             </button>
             <button
+              onClick={() => setActiveTab('content')}
+              className={`w-full text-left p-3 rounded-lg mb-2 transition duration-200 flex items-center ${
+                activeTab === 'content' ? 'bg-gray-700' : 'hover:bg-gray-700'
+              }`}
+            >
+              <FileText size={18} className="mr-3" />
+              Inhalte
+            </button>
+            <button
               onClick={() => setActiveTab('settings')}
               className={`w-full text-left p-3 rounded-lg mb-2 transition duration-200 flex items-center ${
                 activeTab === 'settings' ? 'bg-gray-700' : 'hover:bg-gray-700'
@@ -544,7 +663,7 @@ export const AdminDashboardModal: React.FC = () => {
               Einstellungen
             </button>
           </nav>
-          
+
           <button
             onClick={handleLogout}
             className="w-full text-left p-3 rounded-lg hover:bg-red-600 transition duration-200 flex items-center mt-auto"
@@ -563,6 +682,7 @@ export const AdminDashboardModal: React.FC = () => {
               {activeTab === 'users' && 'Benutzer'}
               {activeTab === 'rides' && 'Fahrten'}
               {activeTab === 'reports' && 'Meldungen'}
+              {activeTab === 'content' && 'Inhalte'}
               {activeTab === 'settings' && 'Einstellungen'}
             </h1>
             <button
@@ -572,10 +692,10 @@ export const AdminDashboardModal: React.FC = () => {
               <X size={24} />
             </button>
           </div>
-          
+
           {/* Content Area */}
           <div className="flex-1 p-4 md:p-6 overflow-y-auto">
-            {renderContent()}
+            {renderMainContent()}
           </div>
         </div>
       </div>
