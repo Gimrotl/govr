@@ -301,7 +301,7 @@ export const RestStopReviewsModal: React.FC<RestStopReviewsModalProps> = ({ rest
 
                           <button
                             onClick={() => setReplyingTo(review.id)}
-                            className="flex items-center space-x-1 text-gray-500 hover:text-green-600 transition-colors"
+                            className="flex items-center space-x-1 text-gray-500 hover:text-emerald-500 transition-colors"
                           >
                             <MessageCircle className="w-3 h-3 md:w-4 md:h-4" />
                             <span className="hidden sm:inline">Antworten</span>
@@ -375,17 +375,17 @@ export const RestStopReviewsModal: React.FC<RestStopReviewsModalProps> = ({ rest
                         
                         {/* Reply form */}
                         {replyingTo === review.id && (
-                          <div className="mt-2 md:mt-4 space-y-2 md:space-y-3 border-l-2 border-green-200 pl-2 md:pl-4">
+                          <div className="mt-2 md:mt-4 space-y-2 md:space-y-3 border-l-2 border-emerald-200 pl-2 md:pl-4">
                             <textarea
                               value={replyText}
                               onChange={(e) => setReplyText(e.target.value)}
                               placeholder="Ihre Antwort..."
-                              className="w-full p-2 md:p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none h-16 md:h-20 text-xs md:text-sm"
+                              className="w-full p-2 md:p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-400 focus:border-transparent resize-none h-16 md:h-20 text-xs md:text-sm"
                             />
                             <div className="flex space-x-1.5 md:space-x-2">
                               <button
                                 onClick={() => handleReply(review.id)}
-                                className="bg-green-600 text-white px-2 md:px-4 py-1.5 md:py-2 rounded-lg hover:bg-green-700 transition duration-200 flex items-center text-xs md:text-sm"
+                                className="bg-emerald-500 text-white px-2 md:px-4 py-1.5 md:py-2 rounded-lg hover:bg-emerald-600 transition duration-200 flex items-center text-xs md:text-sm"
                               >
                                 <Send className="w-3 h-3 md:w-3.5 md:h-3.5 mr-1 md:mr-2" />
                                 Antworten

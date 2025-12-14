@@ -51,11 +51,11 @@ export const AdminDashboardModal: React.FC = () => {
         
         <div className="bg-white p-4 md:p-6 rounded-lg shadow-md">
           <div className="flex items-center">
-            <Car size={24} className="text-green-600 mr-3 md:mr-4 md:w-8 md:h-8" />
+            <Car size={24} className="text-emerald-500 mr-3 md:mr-4 md:w-8 md:h-8" />
             <div>
               <h3 className="text-base md:text-lg font-semibold text-gray-800">Fahrten</h3>
               <p className="text-sm md:text-base text-gray-600 hidden md:block">Fahrten überprüfen und genehmigen, aktive Angebote prüfen.</p>
-              <p className="text-xl md:text-2xl font-bold text-green-600 mt-1 md:mt-2">{rides.length}</p>
+              <p className="text-xl md:text-2xl font-bold text-emerald-500 mt-1 md:mt-2">{rides.length}</p>
             </div>
           </div>
         </div>
@@ -147,7 +147,7 @@ export const AdminDashboardModal: React.FC = () => {
                 <td className="px-6 py-4 whitespace-nowrap">
                   <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
                     user.status === 'active' 
-                      ? 'bg-green-100 text-green-800' 
+                      ? 'bg-emerald-50 text-emerald-700' 
                       : 'bg-red-100 text-red-800'
                   }`}>
                     {user.status === 'active' ? 'Aktiv' : 'Gesperrt'}
@@ -319,7 +319,7 @@ export const AdminDashboardModal: React.FC = () => {
                   <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
                     report.status === 'pending' 
                       ? 'bg-yellow-100 text-yellow-800' 
-                      : 'bg-green-100 text-green-800'
+                      : 'bg-emerald-50 text-emerald-700'
                   }`}>
                     {report.status === 'pending' ? 'Ausstehend' : 'Gelöst'}
                   </span>
@@ -402,7 +402,7 @@ export const AdminDashboardModal: React.FC = () => {
 
       {cardsLoading ? (
         <div className="flex justify-center py-8">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-500"></div>
         </div>
       ) : (
         <div className="space-y-4">
@@ -416,7 +416,7 @@ export const AdminDashboardModal: React.FC = () => {
                       type="text"
                       value={editingCard.title}
                       onChange={(e) => setEditingCard({ ...editingCard, title: e.target.value })}
-                      className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                      className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-400 focus:border-transparent"
                     />
                   </div>
                   <div>
@@ -425,7 +425,7 @@ export const AdminDashboardModal: React.FC = () => {
                       value={editingCard.description}
                       onChange={(e) => setEditingCard({ ...editingCard, description: e.target.value })}
                       rows={3}
-                      className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                      className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-400 focus:border-transparent"
                     />
                   </div>
                   <div>
@@ -434,14 +434,14 @@ export const AdminDashboardModal: React.FC = () => {
                       type="text"
                       value={editingCard.link_text}
                       onChange={(e) => setEditingCard({ ...editingCard, link_text: e.target.value })}
-                      className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                      className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-400 focus:border-transparent"
                     />
                   </div>
                   <div className="flex gap-2">
                     <button
                       onClick={handleSaveCard}
                       disabled={saving}
-                      className="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition disabled:opacity-50"
+                      className="flex items-center gap-2 bg-emerald-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-600 transition disabled:opacity-50"
                     >
                       <Save size={16} />
                       {saving ? 'Speichern...' : 'Speichern'}

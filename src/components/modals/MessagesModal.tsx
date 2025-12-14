@@ -185,7 +185,7 @@ export const MessagesModal: React.FC = () => {
                   }}
                   className={`w-full p-3 text-left transition-all duration-200 hover:bg-white ${
                     selectedContact === contact
-                      ? 'bg-white border-l-4 border-green-500 shadow-sm'
+                      ? 'bg-white border-l-4 border-emerald-400 shadow-sm'
                       : 'hover:bg-white'
                   }`}
                 >
@@ -197,7 +197,7 @@ export const MessagesModal: React.FC = () => {
                       }}
                       className={`w-10 h-10 rounded-full flex items-center justify-center cursor-pointer transition-all flex-shrink-0 ${
                         hasUnread
-                          ? 'bg-gradient-to-br from-green-400 to-green-600 text-white ring-2 ring-green-200'
+                          ? 'bg-gradient-to-br from-emerald-300 to-emerald-500 text-white ring-2 ring-emerald-200'
                           : 'bg-gradient-to-br from-blue-400 to-blue-600 text-white hover:ring-2 hover:ring-blue-200'
                       }`}
                     >
@@ -220,7 +220,7 @@ export const MessagesModal: React.FC = () => {
                       <p className="text-xs text-gray-500 truncate">Letzte Nachricht...</p>
                     </div>
                     {hasUnread && (
-                      <span className="bg-green-500 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0">
+                      <span className="bg-emerald-500 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0">
                         {unreadForContact > 9 ? '9+' : unreadForContact}
                       </span>
                     )}
@@ -277,7 +277,7 @@ export const MessagesModal: React.FC = () => {
                               <div className="text-xs text-gray-500 mb-2">{message.timestamp}</div>
                               <button
                                 onClick={() => handleReply(message.id)}
-                                className="text-xs text-green-600 hover:text-green-700 font-medium transition-colors"
+                                className="text-xs text-emerald-500 hover:text-emerald-600 font-medium transition-colors"
                               >
                                 Antworten
                               </button>
@@ -290,7 +290,7 @@ export const MessagesModal: React.FC = () => {
                             {message.replyTo && (
                               <div className={`mb-2 p-2 rounded-lg text-xs border-l-3 ${
                                 message.sent
-                                  ? 'bg-green-400 bg-opacity-30 border-green-400'
+                                  ? 'bg-emerald-300 bg-opacity-30 border-emerald-300'
                                   : 'bg-gray-100 border-gray-300'
                               }`}>
                                 <span className="font-medium text-gray-700">Antwortet auf:</span>
@@ -300,7 +300,7 @@ export const MessagesModal: React.FC = () => {
                             <div
                               className={`px-3 py-2 rounded-2xl transition-all ${
                                 message.sent
-                                  ? 'bg-green-500 text-white rounded-br-none shadow-md'
+                                  ? 'bg-emerald-500 text-white rounded-br-none shadow-md'
                                   : 'bg-gray-100 text-gray-900 rounded-bl-none'
                               }`}
                             >
@@ -315,7 +315,7 @@ export const MessagesModal: React.FC = () => {
                                 <p className="break-words text-sm leading-relaxed">
                                   {message.content.split(/(@\w+)/g).map((part, index) =>
                                     part.startsWith('@') ? (
-                                      <span key={index} className={`font-bold ${message.sent ? 'text-green-100' : 'text-green-600'}`}>
+                                      <span key={index} className={`font-bold ${message.sent ? 'text-emerald-50' : 'text-emerald-500'}`}>
                                         {part}
                                       </span>
                                     ) : part
@@ -344,7 +344,7 @@ export const MessagesModal: React.FC = () => {
 
               <form onSubmit={handleSendMessage} className="p-4 bg-white border-t border-gray-100 flex-shrink-0">
                 {replyingTo && (
-                  <div className="mb-3 p-2.5 bg-green-50 rounded-lg border border-green-200 flex justify-between items-center">
+                  <div className="mb-3 p-2.5 bg-emerald-50 rounded-lg border border-emerald-200 flex justify-between items-center">
                     <div className="text-xs">
                       <span className="font-medium text-gray-700">Antwortet auf:</span>
                       <p className="truncate text-gray-600 mt-0.5">{getRepliedMessage(replyingTo)?.content}</p>
@@ -383,34 +383,34 @@ export const MessagesModal: React.FC = () => {
                       onChange={(e) => setNewMessage(e.target.value)}
                       onKeyPress={handleKeyPress}
                       placeholder="Nachricht eingeben... @username erwähnen"
-                      className="w-full p-3 pr-16 md:pr-24 border border-gray-200 rounded-full resize-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm placeholder-gray-400 transition-all"
+                      className="w-full p-3 pr-16 md:pr-24 border border-gray-200 rounded-full resize-none focus:ring-2 focus:ring-emerald-400 focus:border-transparent text-sm placeholder-gray-400 transition-all"
                       rows={1}
                     />
                     <div className="absolute right-3 top-1/2 -translate-y-1/2 flex gap-1">
                       <button
                         type="button"
                         onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-                        className="text-gray-400 hover:text-green-600 p-1.5 rounded-lg hover:bg-gray-100 transition-all hidden md:block"
+                        className="text-gray-400 hover:text-emerald-500 p-1.5 rounded-lg hover:bg-gray-100 transition-all hidden md:block"
                       >
                         <Smile size={16} />
                       </button>
                       <button
                         type="button"
                         onClick={() => handleMention(selectedContact || '')}
-                        className="text-gray-400 hover:text-green-600 p-1.5 rounded-lg hover:bg-gray-100 transition-all hidden md:block"
+                        className="text-gray-400 hover:text-emerald-500 p-1.5 rounded-lg hover:bg-gray-100 transition-all hidden md:block"
                       >
                         <AtSign size={16} />
                       </button>
                       <div {...getRootProps()} className="cursor-pointer p-1.5 rounded-lg hover:bg-gray-100 transition-all">
                         <input {...getInputProps()} />
-                        <ImageIcon size={16} className="text-gray-400 hover:text-green-600" />
+                        <ImageIcon size={16} className="text-gray-400 hover:text-emerald-500" />
                       </div>
                     </div>
                   </div>
                   <button
                     type="submit"
                     disabled={!newMessage.trim() && !selectedImage}
-                    className="bg-green-500 hover:bg-green-600 text-white p-3 rounded-full transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0 flex items-center justify-center shadow-md hover:shadow-lg"
+                    className="bg-emerald-500 hover:bg-emerald-600 text-white p-3 rounded-full transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0 flex items-center justify-center shadow-md hover:shadow-lg"
                   >
                     <Send size={18} />
                   </button>

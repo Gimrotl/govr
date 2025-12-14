@@ -106,7 +106,7 @@ export const ChatModal: React.FC = () => {
       <div className="bg-white rounded-lg shadow-xl w-full max-w-xl h-[55vh] md:h-[380px] max-h-[380px] flex flex-col animate-scaleIn mt-16">
         {/* Chat Header */}
         <div className="flex-1 flex flex-col">
-          <div className="p-2 border-b border-gray-200 flex justify-between items-center bg-green-600 text-white rounded-t-lg">
+          <div className="p-2 border-b border-gray-200 flex justify-between items-center bg-emerald-500 text-white rounded-t-lg">
             <div className="flex items-center">
               <MessageCircle size={16} className="mr-1.5" />
               <h2 className="text-sm font-semibold">Chat</h2>
@@ -150,7 +150,7 @@ export const ChatModal: React.FC = () => {
                         }`}>
                           <button
                             onClick={() => handleUserClick(message.user)}
-                            className="font-medium text-gray-800 hover:text-green-600 transition-colors text-xs"
+                            className="font-medium text-gray-800 hover:text-emerald-500 transition-colors text-xs"
                           >
                             {message.user === (userEmail?.split('@')[0] || 'Benutzer') ? 'Sie' : message.user}
                           </button>
@@ -160,7 +160,7 @@ export const ChatModal: React.FC = () => {
                     </div>
                     <div className={`px-2 py-1 rounded-lg shadow-sm border ${
                       message.user === (userEmail?.split('@')[0] || 'Benutzer')
-                        ? 'bg-green-500 text-white rounded-br-none'
+                        ? 'bg-emerald-500 text-white rounded-br-none'
                         : 'bg-white text-gray-700 rounded-bl-none'
                     }`}>
                       <p className="break-words text-xs">{message.content}</p>
@@ -188,7 +188,7 @@ export const ChatModal: React.FC = () => {
                   onChange={(e) => setNewMessage(e.target.value)}
                   onKeyPress={handleKeyPress}
                   placeholder={isLoggedIn ? "Text..." : ""}
-                  className="w-full p-1.5 border border-gray-300 rounded resize-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-xs"
+                  className="w-full p-1.5 border border-gray-300 rounded resize-none focus:ring-2 focus:ring-emerald-400 focus:border-transparent text-xs"
                   rows={1}
                   disabled={!isLoggedIn}
                 />
@@ -196,7 +196,7 @@ export const ChatModal: React.FC = () => {
               <button
                 type="submit"
                 disabled={!isLoggedIn || !newMessage.trim()}
-                className="bg-green-600 text-white px-2 py-1.5 rounded hover:bg-green-700 transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+                className="bg-emerald-500 text-white px-2 py-1.5 rounded hover:bg-emerald-600 transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
               >
                 <Send size={14} />
               </button>

@@ -119,7 +119,7 @@ export const LoginModal: React.FC = () => {
                 type="email"
                 id="register-email"
                 name="email"
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-400 focus:border-transparent"
                 placeholder="Your email"
                 value={registerCredentials.email}
                 onChange={handleRegisterChange}
@@ -135,7 +135,7 @@ export const LoginModal: React.FC = () => {
                 type="password"
                 id="register-password"
                 name="password"
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-400 focus:border-transparent"
                 placeholder="Create a password"
                 value={registerCredentials.password}
                 onChange={handleRegisterChange}
@@ -152,7 +152,7 @@ export const LoginModal: React.FC = () => {
                 type="password"
                 id="confirm-password"
                 name="confirmPassword"
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-400 focus:border-transparent"
                 placeholder="Passwort wiederholen"
                 value={registerCredentials.confirmPassword}
                 onChange={handleRegisterChange}
@@ -167,7 +167,7 @@ export const LoginModal: React.FC = () => {
                 id="accept-terms"
                 checked={acceptTerms}
                 onChange={(e) => setAcceptTerms(e.target.checked)}
-                className="mt-1 h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
+                className="mt-1 h-4 w-4 text-emerald-500 focus:ring-emerald-400 border-gray-300 rounded"
                 required
                 disabled={emailSent}
               />
@@ -176,7 +176,7 @@ export const LoginModal: React.FC = () => {
                 <button
                   type="button"
                   onClick={openTermsModal}
-                  className="text-green-600 hover:text-green-800 underline"
+                  className="text-emerald-500 hover:text-emerald-700 underline"
                 >
                   Nutzungsbedingungen
                 </button>
@@ -185,7 +185,7 @@ export const LoginModal: React.FC = () => {
             
             <button
               type="submit"
-              className="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition duration-200"
+              className="w-full bg-emerald-500 text-white py-3 rounded-lg hover:bg-emerald-600 transition duration-200"
               disabled={emailSent}
             >
               {emailSent ? 'E-Mail-Bestätigung ausstehend...' : 'Konto erstellen'}
@@ -201,7 +201,7 @@ export const LoginModal: React.FC = () => {
                 type="email"
                 id="login-email"
                 name="email"
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-400 focus:border-transparent"
                 placeholder="Ihre E-Mail-Adresse"
                 value={loginCredentials.email}
                 onChange={handleLoginChange}
@@ -216,7 +216,7 @@ export const LoginModal: React.FC = () => {
                 type="password"
                 id="login-password"
                 name="password"
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-400 focus:border-transparent"
                 placeholder="Ihr Passwort"
                 value={loginCredentials.password}
                 onChange={handleLoginChange}
@@ -225,7 +225,7 @@ export const LoginModal: React.FC = () => {
             </div>
             <button
               type="submit"
-              className="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition duration-200"
+              className="w-full bg-emerald-500 text-white py-3 rounded-lg hover:bg-emerald-600 transition duration-200"
             >
               Anmelden
             </button>
@@ -245,7 +245,7 @@ export const LoginModal: React.FC = () => {
         <div className="mt-6 text-center">
           <button
             onClick={toggleMode}
-            className="text-green-600 hover:text-green-800 transition duration-200"
+            className="text-emerald-500 hover:text-emerald-700 transition duration-200"
           >
             {isRegisterMode ? 'Bereits ein Konto? Hier anmelden' : 'Noch kein Konto? Jetzt registrieren'}
           </button>

@@ -93,7 +93,7 @@ export const ProfileModal: React.FC = () => {
                 {!isViewingOtherUser && (
                   <button
                     onClick={() => setIsEditing(!isEditing)}
-                    className="text-green-600 hover:text-green-700 transition duration-200"
+                    className="text-emerald-500 hover:text-emerald-600 transition duration-200"
                   >
                     {isEditing ? (
                       <Check size={24} onClick={handleSave} />
@@ -236,7 +236,7 @@ export const ProfileModal: React.FC = () => {
                 </button>
                 <button
                   onClick={() => {/* Show current rides */}}
-                  className="flex-1 flex items-center justify-center bg-green-600 text-white py-2 md:py-3 px-3 md:px-4 rounded-lg hover:bg-green-700 transition duration-200 text-sm md:text-base"
+                  className="flex-1 flex items-center justify-center bg-emerald-500 text-white py-2 md:py-3 px-3 md:px-4 rounded-lg hover:bg-emerald-600 transition duration-200 text-sm md:text-base"
                 >
                   <Car size={16} className="mr-2 md:hidden" />
                   <Car size={18} className="mr-2 hidden md:block" />
@@ -264,7 +264,7 @@ export const ProfileModal: React.FC = () => {
                           <p className="text-xs md:text-sm text-gray-600">
                             {ride.date} um {ride.time}
                           </p>
-                          <p className="text-xs md:text-sm text-green-600 font-medium">
+                          <p className="text-xs md:text-sm text-emerald-500 font-medium">
                             {ride.price}
                           </p>
                         </div>

@@ -92,7 +92,7 @@ const restStops: RestStop[] = [
 const getTypeIcon = (type: string) => {
   switch (type) {
     case 'Raststätte':
-      return <Car size={16} className="text-green-600" />;
+      return <Car size={16} className="text-emerald-500" />;
     case 'Hotel':
       return <div className="w-4 h-4 bg-blue-600 rounded flex items-center justify-center text-white text-xs font-bold">H</div>;
     case 'Tankstelle':
@@ -123,7 +123,7 @@ const getAmenityIcon = (amenity: string) => {
         <span className="mr-1">🍽️</span> Restaurant
       </div>;
     case 'Grün':
-      return <div className="bg-green-100 text-green-800 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs flex items-center">
+      return <div className="bg-emerald-50 text-emerald-700 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs flex items-center">
         <span className="mr-1">🌳</span> Grünfläche
       </div>;
     case 'Parkplatz':
@@ -448,7 +448,7 @@ export const RestStops: React.FC = () => {
         {isAdmin && (
           <button
             onClick={handleCreateRestStop}
-            className="ml-4 bg-green-600 text-white p-3 rounded-full hover:bg-green-700 transition duration-200 flex-shrink-0"
+            className="ml-4 bg-emerald-500 text-white p-3 rounded-full hover:bg-emerald-600 transition duration-200 flex-shrink-0"
             title="Neuen Rest Stop erstellen"
           >
             <Plus size={24} />
@@ -539,7 +539,7 @@ export const RestStops: React.FC = () => {
         goToPrevious2,
         goToNext2,
         scrollContainerRef2,
-        'border-green-500'
+        'border-emerald-400'
       )}
 
       {renderSection(

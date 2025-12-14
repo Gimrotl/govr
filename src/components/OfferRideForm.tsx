@@ -119,7 +119,7 @@ export const OfferRideForm: React.FC<OfferRideFormProps> = ({ onBack }) => {
             <CityAutocomplete
               name="from"
               placeholder="City of departure"
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent bg-gray-100"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-400 focus:border-transparent bg-gray-100"
               value={newRide.from}
               onChange={handleChange}
             />
@@ -130,7 +130,7 @@ export const OfferRideForm: React.FC<OfferRideFormProps> = ({ onBack }) => {
             <CityAutocomplete
               name="to"
               placeholder="Destination city"
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent bg-gray-100"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-400 focus:border-transparent bg-gray-100"
               value={newRide.to}
               onChange={handleChange}
             />
@@ -142,7 +142,7 @@ export const OfferRideForm: React.FC<OfferRideFormProps> = ({ onBack }) => {
               type="date"
               id="date"
               name="date"
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent bg-gray-100"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-400 focus:border-transparent bg-gray-100"
               value={newRide.date}
               onChange={handleChange}
               required
@@ -155,7 +155,7 @@ export const OfferRideForm: React.FC<OfferRideFormProps> = ({ onBack }) => {
               type="time"
               id="time"
               name="time"
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent bg-gray-100"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-400 focus:border-transparent bg-gray-100"
               value={newRide.time}
               onChange={handleChange}
               required
@@ -200,7 +200,7 @@ export const OfferRideForm: React.FC<OfferRideFormProps> = ({ onBack }) => {
               name="availableSeats"
               min="1"
               max="8"
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent bg-gray-100"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-400 focus:border-transparent bg-gray-100"
               value={newRide.availableSeats}
               onChange={handleChange}
               required
@@ -223,7 +223,7 @@ export const OfferRideForm: React.FC<OfferRideFormProps> = ({ onBack }) => {
                 <button
                   type="button"
                   onClick={addStopover}
-                  className="p-2 text-green-600 hover:text-green-700"
+                  className="p-2 text-emerald-500 hover:text-emerald-600"
                 >
                   <Plus size={24} />
                 </button>
@@ -254,7 +254,7 @@ export const OfferRideForm: React.FC<OfferRideFormProps> = ({ onBack }) => {
         
         <button
           type="submit"
-          className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition duration-200 shadow-sm"
+          className="bg-emerald-500 text-white px-6 py-3 rounded-lg hover:bg-emerald-600 transition duration-200 shadow-sm"
         >
           Offer Ride
         </button>

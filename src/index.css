@@ -5,10 +5,10 @@
 @tailwind utilities;
 
 :root {
-  --primary-color: #10B981;
+  --primary-color: #7CB89F;
   --secondary-color: #6B7280;
   --accent-color: #3B82F6;
-  --success-color: #10B981;
+  --success-color: #7CB89F;
   --warning-color: #F59E0B;
   --error-color: #EF4444;
   --background-color: #F3F4F6;

@@ -78,7 +78,7 @@ export const RideCard: React.FC<RideCardProps> = ({ ride }) => {
               <span className="text-sm">{ride.time}</span>
             </div>
           </div>
-          <span className="font-bold text-green-600">{ride.price}</span>
+          <span className="font-bold text-emerald-500">{ride.price}</span>
         </div>
         
         <div className="flex items-center mb-3">
@@ -105,7 +105,7 @@ export const RideCard: React.FC<RideCardProps> = ({ ride }) => {
       <div className="px-5 pb-4">
         <button
           onClick={() => openRideDetails(ride)}
-          className="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition duration-200"
+          className="w-full bg-emerald-500 text-white py-2 px-4 rounded-md hover:bg-emerald-600 transition duration-200"
         >
           View Details
         </button>
