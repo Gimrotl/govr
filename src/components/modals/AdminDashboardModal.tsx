@@ -4,9 +4,10 @@ import { useModals } from '../../hooks/useModals';
 import { useAuth } from '../../hooks/useAuth';
 import { useRides } from '../../hooks/useRides';
 import { useInfoCards, InfoCard } from '../../hooks/useInfoCards';
+import { UserProfile } from '../../types';
 
 export const AdminDashboardModal: React.FC = () => {
-  const { closeModal } = useModals();
+  const { closeModal, openUserProfile } = useModals();
   const { logout } = useAuth();
   const { rides } = useRides();
   const { cards, updateCard, loading: cardsLoading } = useInfoCards();
@@ -18,6 +19,18 @@ export const AdminDashboardModal: React.FC = () => {
   const handleLogout = () => {
     logout();
     closeModal('adminDashboard');
+  };
+
+  const handleViewUser = (user: any) => {
+    const userProfile: UserProfile = {
+      firstName: user.name,
+      age: '30',
+      mobile: '',
+      whatsapp: '',
+      telegram: '',
+      carImages: []
+    };
+    openUserProfile(userProfile);
   };
 
   const mockUsers = [
@@ -111,7 +124,7 @@ export const AdminDashboardModal: React.FC = () => {
               <div className="flex justify-between items-center">
                 <span className="text-sm text-gray-600">{user.rides} Fahrten</span>
                 <div className="flex space-x-2">
-                  <button className="text-sky-500 hover:text-sky-700 p-1">
+                  <button onClick={() => handleViewUser(user)} className="text-sky-500 hover:text-sky-700 p-1">
                     <Eye size={16} />
                   </button>
                   <button className="text-red-600 hover:text-red-900 p-1">
@@ -162,7 +175,7 @@ export const AdminDashboardModal: React.FC = () => {
                   {user.rides}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                  <button className="text-sky-500 hover:text-sky-700">
+                  <button onClick={() => handleViewUser(user)} className="text-sky-500 hover:text-sky-700">
                     <Eye size={16} />
                   </button>
                   <button className="text-red-600 hover:text-red-900">
