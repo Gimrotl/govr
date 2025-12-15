@@ -65,16 +65,8 @@ export const RideCard: React.FC<RideCardProps> = ({ ride }) => {
           />
         </div>
       )}
-
-      {/* Car Model and Year */}
-      {(ride.carModel || ride.carYear) && (
-        <div className="px-3 pb-2 text-center">
-          <p className="text-sm font-semibold text-gray-700">
-            {ride.carModel && ride.carYear ? `${ride.carModel} • ${ride.carYear}` : (ride.carModel || ride.carYear)}
-          </p>
-        </div>
-      )}
-
+      
+      
       <div className="p-5 flex-grow">
         <div className="flex items-start justify-between mb-3">
           <div className="flex flex-col">
@@ -86,12 +78,7 @@ export const RideCard: React.FC<RideCardProps> = ({ ride }) => {
               <span className="text-sm">{ride.time}</span>
             </div>
           </div>
-          <div className="flex flex-col items-end">
-            <span className="font-bold text-emerald-500">{ride.price}</span>
-            {ride.carYear && (
-              <span className="text-xs text-gray-500 mt-1">{ride.carYear}</span>
-            )}
-          </div>
+          <span className="font-bold text-emerald-500">{ride.price}</span>
         </div>
         
         <div className="flex items-center mb-3">
