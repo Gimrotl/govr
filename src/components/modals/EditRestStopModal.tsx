@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { X, MapPin, Star, Save, Upload, Trash2 } from 'lucide-react';
+import { X, MapPin, Star, Save, Upload, Trash2, Pencil } from 'lucide-react';
 import { useModals } from '../../hooks/useModals';
+import { useAuth } from '../../hooks/useAuth';
 import { useDropzone } from 'react-dropzone';
 
 interface RestStop {
@@ -27,6 +28,9 @@ interface EditRestStopModalProps {
 
 export const EditRestStopModal: React.FC = () => {
   const { closeModal, selectedRestStop } = useModals();
+  const { isAdmin } = useAuth();
+  const [isEditingDescription, setIsEditingDescription] = useState(false);
+  const [isEditingFullDescription, setIsEditingFullDescription] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     type: 'Raststätte' as 'Raststätte' | 'Hotel' | 'Tankstelle' | 'Restaurant',
@@ -321,27 +325,69 @@ export const EditRestStopModal: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Kurze Beschreibung
-            </label>
+            <div className="flex items-center justify-between mb-1">
+              <label className="block text-sm font-medium text-gray-700">
+                Kurze Beschreibung
+              </label>
+              {isAdmin && (
+                <button
+                  type="button"
+                  onClick={() => setIsEditingDescription(!isEditingDescription)}
+                  className={`p-2 rounded-lg transition duration-200 ${
+                    isEditingDescription
+                      ? 'bg-sky-500 text-white hover:bg-sky-600'
+                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                  }`}
+                  title={isEditingDescription ? 'Bearbeitung beenden' : 'Bearbeiten'}
+                >
+                  <Pencil size={16} />
+                </button>
+              )}
+            </div>
             <textarea
               name="description"
               value={formData.description}
               onChange={handleChange}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-400 focus:border-transparent h-20 resize-none"
+              disabled={isAdmin && !isEditingDescription}
+              className={`w-full p-3 border border-gray-300 rounded-lg h-20 resize-none ${
+                isAdmin && !isEditingDescription
+                  ? 'bg-gray-100 cursor-not-allowed'
+                  : 'focus:ring-2 focus:ring-sky-400 focus:border-transparent'
+              }`}
               placeholder="Kurze Beschreibung für die Karte..."
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Vollständige Beschreibung
-            </label>
+            <div className="flex items-center justify-between mb-1">
+              <label className="block text-sm font-medium text-gray-700">
+                Vollständige Beschreibung
+              </label>
+              {isAdmin && (
+                <button
+                  type="button"
+                  onClick={() => setIsEditingFullDescription(!isEditingFullDescription)}
+                  className={`p-2 rounded-lg transition duration-200 ${
+                    isEditingFullDescription
+                      ? 'bg-sky-500 text-white hover:bg-sky-600'
+                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                  }`}
+                  title={isEditingFullDescription ? 'Bearbeitung beenden' : 'Bearbeiten'}
+                >
+                  <Pencil size={16} />
+                </button>
+              )}
+            </div>
             <textarea
               name="fullDescription"
               value={formData.fullDescription}
               onChange={handleChange}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-400 focus:border-transparent h-32 resize-none"
+              disabled={isAdmin && !isEditingFullDescription}
+              className={`w-full p-3 border border-gray-300 rounded-lg h-32 resize-none ${
+                isAdmin && !isEditingFullDescription
+                  ? 'bg-gray-100 cursor-not-allowed'
+                  : 'focus:ring-2 focus:ring-sky-400 focus:border-transparent'
+              }`}
               placeholder="Detaillierte Beschreibung für die Detailansicht..."
             />
           </div>
