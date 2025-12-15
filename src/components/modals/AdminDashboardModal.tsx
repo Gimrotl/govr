@@ -518,16 +518,7 @@ export const AdminDashboardModal: React.FC = () => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 animate-fadeIn">
-      <div className="bg-gray-100 rounded-lg shadow-xl w-full max-w-7xl h-[90vh] flex flex-col md:flex-row animate-scaleIn relative">
-        {/* Close Button - Fixed on right side */}
-        <button
-          onClick={() => closeModal('adminDashboard')}
-          className="absolute top-4 right-4 bg-red-500 hover:bg-red-600 text-white p-2 rounded-lg transition duration-200 z-10"
-          title="Panel schließen"
-        >
-          <X size={24} />
-        </button>
-
+      <div className="bg-gray-100 rounded-lg shadow-xl w-full max-w-7xl h-[90vh] flex flex-col md:flex-row animate-scaleIn">
         {/* Mobile Header */}
         <div className="md:hidden bg-gray-800 text-white p-4 flex justify-between items-center rounded-t-lg">
           <div className="flex items-center">
@@ -708,7 +699,7 @@ export const AdminDashboardModal: React.FC = () => {
         {/* Main Content */}
         <div className="flex-1 flex flex-col min-h-0">
           {/* Header */}
-          <div className="bg-white p-4 md:p-6 border-b border-gray-200">
+          <div className="bg-white p-4 md:p-6 border-b border-gray-200 flex justify-between items-center">
             <h1 className="text-xl md:text-2xl font-bold text-gray-800">
               {activeTab === 'dashboard' && 'Dashboard'}
               {activeTab === 'users' && 'Benutzer'}
@@ -717,6 +708,12 @@ export const AdminDashboardModal: React.FC = () => {
               {activeTab === 'content' && 'Inhalte'}
               {activeTab === 'settings' && 'Einstellungen'}
             </h1>
+            <button
+              onClick={() => closeModal('adminDashboard')}
+              className="text-red-500 hover:text-red-700 transition duration-200 md:hidden"
+            >
+              <X size={24} />
+            </button>
           </div>
 
           {/* Content Area */}
