@@ -1,7 +1,7 @@
 import React, { createContext, useState, ReactNode } from 'react';
 import { Ride, UserProfile } from '../types';
 
-type ModalType = 'login' | 'rideDetails' | 'message' | 'messages' | 'terms' | 'complaint' | 'orders' | 'profile' | 'offerRide' | 'myRides' | 'notifications' | 'chat' | 'booking' | 'contact' | 'reviews' | 'adminLogin' | 'adminDashboard' | 'createRestStop' | 'editRestStop';
+type ModalType = 'login' | 'rideDetails' | 'message' | 'messages' | 'terms' | 'complaint' | 'orders' | 'profile' | 'offerRide' | 'myRides' | 'notifications' | 'chat' | 'booking' | 'contact' | 'reviews' | 'adminLogin' | 'adminDashboard' | 'createRestStop' | 'editRestStop' | 'currentRides';
 
 interface ModalsContextType {
   activeModals: Record<ModalType, boolean>;
@@ -37,7 +37,8 @@ export const ModalsContext = createContext<ModalsContextType>({
     adminLogin: false,
     adminDashboard: false,
     createRestStop: false,
-    editRestStop: false
+    editRestStop: false,
+    currentRides: false
   },
   selectedRide: null,
   selectedUser: null,
@@ -75,7 +76,8 @@ export const ModalsProvider: React.FC<ModalsProviderProps> = ({ children }) => {
     adminLogin: false,
     adminDashboard: false,
     createRestStop: false,
-    editRestStop: false
+    editRestStop: false,
+    currentRides: false
   });
   
   const [selectedRide, setSelectedRide] = useState<Ride | null>(null);
