@@ -233,14 +233,22 @@ export const RideDetailsModal: React.FC = () => {
             {/* Contact Information */}
             <div className="mb-6">
               <div className="grid grid-cols-2 gap-3">
-                <div className="flex items-center">
+                <a
+                  href={`tel:${selectedRide.mobile || '+49 555 123 4567'}`}
+                  className="flex items-center hover:bg-gray-100 p-2 rounded-lg transition-colors cursor-pointer"
+                >
                   <Phone size={16} className="text-gray-600 mr-2" />
                   <span className="font-medium text-sm md:text-base">{selectedRide.mobile || '+49 555 123 4567'}</span>
-                </div>
-                <div className="flex items-center">
+                </a>
+                <a
+                  href={`https://wa.me/${(selectedRide.whatsapp || selectedRide.mobile || '+49 555 123 4567').replace(/\D/g, '')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center hover:bg-green-50 p-2 rounded-lg transition-colors cursor-pointer"
+                >
                   <WhatsAppIcon size={16} className="text-green-600 mr-2" />
                   <span className="font-medium text-sm md:text-base">{selectedRide.whatsapp || selectedRide.mobile || '+49 555 123 4567'}</span>
-                </div>
+                </a>
               </div>
             </div>
 
