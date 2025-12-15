@@ -1,19 +1,21 @@
 import React, { createContext, useState, ReactNode } from 'react';
 import { Ride, UserProfile } from '../types';
 
-type ModalType = 'login' | 'rideDetails' | 'message' | 'messages' | 'terms' | 'complaint' | 'orders' | 'profile' | 'offerRide' | 'myRides' | 'notifications' | 'chat' | 'booking' | 'contact' | 'reviews' | 'adminLogin' | 'adminDashboard' | 'createRestStop' | 'editRestStop' | 'currentRides';
+type ModalType = 'login' | 'rideDetails' | 'message' | 'messages' | 'terms' | 'complaint' | 'orders' | 'profile' | 'offerRide' | 'myRides' | 'notifications' | 'chat' | 'booking' | 'contact' | 'reviews' | 'adminLogin' | 'adminDashboard' | 'createRestStop' | 'editRestStop' | 'currentRides' | 'reportDetails';
 
 interface ModalsContextType {
   activeModals: Record<ModalType, boolean>;
   selectedRide: Ride | null;
   selectedUser: UserProfile | null;
   selectedRestStop: any | null;
+  selectedReport: any | null;
   openModal: (modal: ModalType) => void;
   closeModal: (modal: ModalType) => void;
   openRideDetails: (ride: Ride) => void;
   openUserProfile: (user: UserProfile) => void;
   openUserReviews: (user: UserProfile) => void;
   openRestStopEdit: (restStop: any) => void;
+  openReportDetails: (report: any) => void;
   isAnyModalOpen: boolean;
 }
 
@@ -38,17 +40,20 @@ export const ModalsContext = createContext<ModalsContextType>({
     adminDashboard: false,
     createRestStop: false,
     editRestStop: false,
-    currentRides: false
+    currentRides: false,
+    reportDetails: false
   },
   selectedRide: null,
   selectedUser: null,
   selectedRestStop: null,
+  selectedReport: null,
   openModal: () => {},
   closeModal: () => {},
   openRideDetails: () => {},
   openUserProfile: () => {},
   openUserReviews: () => {},
   openRestStopEdit: () => {},
+  openReportDetails: () => {},
   isAnyModalOpen: false
 });
 
@@ -77,12 +82,14 @@ export const ModalsProvider: React.FC<ModalsProviderProps> = ({ children }) => {
     adminDashboard: false,
     createRestStop: false,
     editRestStop: false,
-    currentRides: false
+    currentRides: false,
+    reportDetails: false
   });
-  
+
   const [selectedRide, setSelectedRide] = useState<Ride | null>(null);
   const [selectedUser, setSelectedUser] = useState<UserProfile | null>(null);
   const [selectedRestStop, setSelectedRestStop] = useState<any | null>(null);
+  const [selectedReport, setSelectedReport] = useState<any | null>(null);
   
   const openModal = (modal: ModalType) => {
     setActiveModals((prev) => ({ ...prev, [modal]: true }));
@@ -90,21 +97,24 @@ export const ModalsProvider: React.FC<ModalsProviderProps> = ({ children }) => {
   
   const closeModal = (modal: ModalType) => {
     setActiveModals((prev) => ({ ...prev, [modal]: false }));
-    
+
     if (modal === 'rideDetails') {
       setSelectedRide(null);
     }
-    
+
     if (modal === 'profile') {
       setSelectedUser(null);
     }
-    
+
     if (modal === 'editRestStop') {
       setSelectedRestStop(null);
     }
-    
+
+    if (modal === 'reportDetails') {
+      setSelectedReport(null);
+    }
+
     if (modal === 'adminDashboard') {
-      // Also close admin login if dashboard is closed
       setActiveModals((prev) => ({ ...prev, adminLogin: false }));
     }
   };
@@ -128,7 +138,12 @@ export const ModalsProvider: React.FC<ModalsProviderProps> = ({ children }) => {
     setSelectedRestStop(restStop);
     openModal('editRestStop');
   };
-  
+
+  const openReportDetails = (report: any) => {
+    setSelectedReport(report);
+    openModal('reportDetails');
+  };
+
   const isAnyModalOpen = Object.values(activeModals).some(Boolean);
   
   return (
@@ -138,12 +153,14 @@ export const ModalsProvider: React.FC<ModalsProviderProps> = ({ children }) => {
         selectedRide,
         selectedUser,
         selectedRestStop,
+        selectedReport,
         openModal,
         closeModal,
         openRideDetails,
         openUserProfile,
         openUserReviews,
         openRestStopEdit,
+        openReportDetails,
         isAnyModalOpen
       }}
     >

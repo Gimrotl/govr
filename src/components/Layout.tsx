@@ -21,6 +21,7 @@ import { AdminLoginModal } from './modals/AdminLoginModal';
 import { AdminDashboardModal } from './modals/AdminDashboardModal';
 import { CreateRestStopModal } from './modals/CreateRestStopModal';
 import { EditRestStopModal } from './modals/EditRestStopModal';
+import { ReportDetailsModal } from './modals/ReportDetailsModal';
 import { useModals } from '../hooks/useModals';
 
 interface LayoutProps {
@@ -58,6 +59,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
       {activeModals.adminDashboard && <AdminDashboardModal />}
       {activeModals.createRestStop && <CreateRestStopModal />}
       {activeModals.editRestStop && <EditRestStopModal />}
+      {activeModals.reportDetails && <ReportDetailsModal />}
     </div>
   );
 };

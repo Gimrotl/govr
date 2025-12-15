@@ -7,7 +7,7 @@ import { useInfoCards, InfoCard } from '../../hooks/useInfoCards';
 import { UserProfile } from '../../types';
 
 export const AdminDashboardModal: React.FC = () => {
-  const { closeModal, openUserProfile } = useModals();
+  const { closeModal, openUserProfile, openReportDetails } = useModals();
   const { logout } = useAuth();
   const { rides } = useRides();
   const { cards, updateCard, loading: cardsLoading } = useInfoCards();
@@ -293,15 +293,15 @@ export const AdminDashboardModal: React.FC = () => {
                   <div className="text-sm text-gray-500">{report.ride}</div>
                 </div>
                 <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                  report.status === 'pending' 
-                    ? 'bg-yellow-100 text-yellow-800' 
+                  report.status === 'pending'
+                    ? 'bg-yellow-100 text-yellow-800'
                     : 'bg-green-100 text-green-800'
                 }`}>
                   {report.status === 'pending' ? 'Ausstehend' : 'Gelöst'}
                 </span>
               </div>
               <div className="flex justify-end space-x-2">
-                <button className="text-sky-500 hover:text-sky-700 p-1">
+                <button onClick={() => openReportDetails(report)} className="text-sky-500 hover:text-sky-700 p-1">
                   <Eye size={16} />
                 </button>
                 <button className="text-green-600 hover:text-green-900 p-1">
@@ -340,15 +340,15 @@ export const AdminDashboardModal: React.FC = () => {
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                    report.status === 'pending' 
-                      ? 'bg-yellow-100 text-yellow-800' 
+                    report.status === 'pending'
+                      ? 'bg-yellow-100 text-yellow-800'
                       : 'bg-emerald-50 text-emerald-700'
                   }`}>
                     {report.status === 'pending' ? 'Ausstehend' : 'Gelöst'}
                   </span>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                  <button className="text-sky-500 hover:text-sky-700">
+                  <button onClick={() => openReportDetails(report)} className="text-sky-500 hover:text-sky-700">
                     <Eye size={16} />
                   </button>
                   <button className="text-green-600 hover:text-green-900">
