@@ -132,10 +132,10 @@ export const InfoCards: React.FC = () => {
           <button
             onClick={goToPrevious}
             disabled={currentIndex === 0}
-            className="p-2 rounded-lg bg-gray-200 text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-300 transition-colors"
+            className="p-2 rounded-full bg-white shadow-md transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 hover:shadow-lg"
             aria-label="Vorherige Karte"
           >
-            <ChevronLeft size={20} />
+            <ChevronLeft size={20} className={currentIndex === 0 ? 'text-gray-400' : 'text-red-500'} />
           </button>
 
           <div className="flex gap-2">
@@ -156,10 +156,10 @@ export const InfoCards: React.FC = () => {
           <button
             onClick={goToNext}
             disabled={currentIndex === cards.length - 1}
-            className="p-2 rounded-lg bg-gray-200 text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-300 transition-colors"
+            className="p-2 rounded-full bg-white shadow-md transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 hover:shadow-lg"
             aria-label="Nächste Karte"
           >
-            <ChevronRight size={20} />
+            <ChevronRight size={20} className={currentIndex === cards.length - 1 ? 'text-gray-400' : 'text-red-500'} />
           </button>
         </div>
       </div>
