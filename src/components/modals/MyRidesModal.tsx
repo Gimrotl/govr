@@ -6,7 +6,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { useOrders } from '../../hooks/useOrders';
 
 export const MyRidesModal: React.FC = () => {
-  const { closeModal, openRideDetails } = useModals();
+  const { closeModal, openRideDetails, openUserProfile } = useModals();
   const { rides, deleteRide, editRide } = useRides();
   const { userEmail } = useAuth();
   const { orders, acceptOrder, rejectOrder } = useOrders();
@@ -26,6 +26,25 @@ export const MyRidesModal: React.FC = () => {
     if (window.confirm('Are you sure you want to delete this ride?')) {
       deleteRide(rideId);
     }
+  };
+
+  const handleDriverClick = (ride: any) => {
+    const userProfile = {
+      firstName: ride.driver,
+      age: 'Not specified',
+      mobile: ride.mobile || 'Not provided',
+      whatsapp: ride.whatsapp || 'Not provided',
+      telegram: ride.telegram || 'Not provided',
+      carImages: [
+        ...(ride.carImage ? [ride.carImage] : []),
+        ...(ride.additionalImages || [])
+      ].filter(Boolean),
+      car: ride.car,
+      carImage: ride.carImage,
+      rating: ride.rating,
+      driverInfo: ride.driverInfo
+    };
+    openUserProfile(userProfile);
   };
 
   return (
@@ -106,6 +125,12 @@ export const MyRidesModal: React.FC = () => {
                               <p className="text-gray-600 text-sm">
                                 {ride.date} um {ride.time}
                               </p>
+                              <button
+                                onClick={() => handleDriverClick(ride)}
+                                className="text-sm font-medium text-sky-500 hover:text-sky-700 hover:underline transition-colors mt-1"
+                              >
+                                Fahrzeug von {ride.driver}
+                              </button>
                             </div>
                           </div>
 
