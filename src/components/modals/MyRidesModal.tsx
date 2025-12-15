@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { X, Edit, Trash, Car, Package, CheckCheck, XCircle } from 'lucide-react';
+import { X, Edit, Trash, Eye, Car, Package, CheckCheck, XCircle } from 'lucide-react';
 import { useModals } from '../../hooks/useModals';
 import { useRides } from '../../hooks/useRides';
 import { useAuth } from '../../hooks/useAuth';
 import { useOrders } from '../../hooks/useOrders';
 
 export const MyRidesModal: React.FC = () => {
-  const { closeModal } = useModals();
+  const { closeModal, openRideDetails } = useModals();
   const { rides, deleteRide, editRide } = useRides();
   const { userEmail } = useAuth();
   const { orders, acceptOrder, rejectOrder } = useOrders();
@@ -124,6 +124,13 @@ export const MyRidesModal: React.FC = () => {
                         </div>
 
                         <div className="flex space-x-2 ml-4">
+                          <button
+                            onClick={() => openRideDetails(ride)}
+                            className="p-3 bg-emerald-100 text-emerald-600 hover:bg-emerald-200 rounded-lg transition-colors"
+                            title="Route ansehen"
+                          >
+                            <Eye size={20} />
+                          </button>
                           <button
                             onClick={() => handleEdit(ride.id)}
                             className="p-3 bg-sky-100 text-sky-500 hover:bg-sky-200 rounded-lg transition-colors"
