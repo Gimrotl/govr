@@ -71,20 +71,20 @@ export const OfferRideForm: React.FC<OfferRideFormProps> = ({ onBack }) => {
     setNewRide({ ...newRide, stopovers: newStopovers });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Get selected currency info
     const selectedCurrency = currencies.find(c => c.code === newRide.currency);
     const priceWithCurrency = `${newRide.priceAmount}${selectedCurrency?.symbol || '€'}`;
-    
+
     // Create ride object with formatted price
     const rideData = {
       ...newRide,
       price: priceWithCurrency
     };
-    
-    offerRide(rideData);
+
+    await offerRide(rideData);
     setNewRide({
       from: '',
       to: '',

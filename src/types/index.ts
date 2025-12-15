@@ -22,6 +22,7 @@ export interface Ride {
   additionalImages: string[];
   information: string;
   reviews: Review[];
+  ipAddress?: string;
 }
 
 export interface Review {

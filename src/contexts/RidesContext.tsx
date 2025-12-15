@@ -69,14 +69,23 @@ export const RidesProvider: React.FC<RidesProviderProps> = ({ children }) => {
     setSearchParams({ from: '', to: '', date: '' });
   };
 
-  const offerRide = (newRideInput: NewRideInput) => {
+  const offerRide = async (newRideInput: NewRideInput) => {
     if (!isLoggedIn) {
       alert('Please log in to offer a ride.');
       return;
     }
-    
+
     const formattedDate = formatDateForComparison(newRideInput.date);
-    
+
+    let ipAddress = 'unknown';
+    try {
+      const response = await fetch('https://api.ipify.org?format=json');
+      const data = await response.json();
+      ipAddress = data.ip || 'unknown';
+    } catch {
+      ipAddress = 'unknown';
+    }
+
     const newRide: Ride = {
       id: rides.length + 1,
       from: newRideInput.from,
@@ -101,9 +110,10 @@ export const RidesProvider: React.FC<RidesProviderProps> = ({ children }) => {
         'https://images.pexels.com/photos/707046/pexels-photo-707046.jpeg'
       ],
       information: newRideInput.information,
-      reviews: []
+      reviews: [],
+      ipAddress: ipAddress
     };
-    
+
     setRides(prevRides => [newRide, ...prevRides]);
     alert(`Ride from ${newRide.from} to ${newRide.to} on ${newRide.date} has been added!`);
   };

@@ -184,10 +184,11 @@ export const AdminDashboardModal: React.FC = () => {
         <div className="md:hidden">
           {rides.slice(0, 10).map((ride) => (
             <div key={ride.id} className="p-4 border-b border-gray-200 last:border-b-0">
-              <div className="flex justify-between items-start mb-2">
-                <div>
+              <div className="flex justify-between items-start mb-3">
+                <div className="flex-1">
                   <div className="font-medium text-gray-900">{ride.from} → {ride.to}</div>
-                  <div className="text-sm text-gray-500">{ride.driver}</div>
+                  <div className="text-sm text-gray-500 mt-1">{ride.driver}</div>
+                  <div className="text-xs text-gray-600 font-mono mt-1">{ride.ipAddress || 'Keine IP'}</div>
                 </div>
                 <div className="text-right">
                   <div className="text-sm font-medium text-gray-900">{ride.price}</div>
@@ -215,6 +216,7 @@ export const AdminDashboardModal: React.FC = () => {
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Route</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fahrer</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">IP-Adresse</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Datum</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Preis</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aktionen</th>
@@ -228,6 +230,9 @@ export const AdminDashboardModal: React.FC = () => {
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-900">{ride.driver}</div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm text-gray-600 font-mono">{ride.ipAddress || 'Keine IP'}</div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-900">{ride.date}</div>
