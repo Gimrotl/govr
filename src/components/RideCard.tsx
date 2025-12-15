@@ -65,8 +65,16 @@ export const RideCard: React.FC<RideCardProps> = ({ ride }) => {
           />
         </div>
       )}
-      
-      
+
+      {/* Car Model and Year */}
+      {(ride.carModel || ride.carYear) && (
+        <div className="px-3 pb-2 text-center">
+          <p className="text-sm font-semibold text-gray-700">
+            {ride.carModel && ride.carYear ? `${ride.carModel} • ${ride.carYear}` : (ride.carModel || ride.carYear)}
+          </p>
+        </div>
+      )}
+
       <div className="p-5 flex-grow">
         <div className="flex items-start justify-between mb-3">
           <div className="flex flex-col">
