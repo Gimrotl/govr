@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, MapPin, Star, Save, Upload, Trash2, Pencil } from 'lucide-react';
+import { X, MapPin, Star, Save, Upload, Trash2, Pencil, ChevronUp, ChevronDown } from 'lucide-react';
 import { useModals } from '../../hooks/useModals';
 import { useAuth } from '../../hooks/useAuth';
 import { useDropzone } from 'react-dropzone';
@@ -31,6 +31,9 @@ export const EditRestStopModal: React.FC = () => {
   const { isAdmin } = useAuth();
   const [isEditingDescription, setIsEditingDescription] = useState(false);
   const [isEditingFullDescription, setIsEditingFullDescription] = useState(false);
+  const [isEditingAddress, setIsEditingAddress] = useState(false);
+  const [isEditingAmenities, setIsEditingAmenities] = useState(false);
+  const [images, setImages] = useState<Array<{ id: string; file?: File; url?: string }>>([]);
   const [formData, setFormData] = useState({
     name: '',
     type: 'Raststätte' as 'Raststätte' | 'Hotel' | 'Tankstelle' | 'Restaurant',
@@ -58,29 +61,44 @@ export const EditRestStopModal: React.FC = () => {
     accept: {
       'image/*': ['.png', '.jpg', '.jpeg', '.gif']
     },
-    maxSize: 5242880, // 5MB
-    multiple: false,
+    maxSize: 5242880,
+    multiple: true,
     onDrop: (acceptedFiles) => {
-      const file = acceptedFiles[0];
-      if (file) {
-        setFormData(prev => ({
-          ...prev,
-          image: file,
-          imagePreview: URL.createObjectURL(file)
-        }));
-      }
+      const newImages = acceptedFiles.map(file => ({
+        id: `${Date.now()}-${Math.random()}`,
+        file,
+        url: URL.createObjectURL(file)
+      }));
+      setImages(prev => [...prev, ...newImages]);
     }
   });
 
-  const removeImage = () => {
-    if (formData.imagePreview) {
-      URL.revokeObjectURL(formData.imagePreview);
-    }
-    setFormData(prev => ({
-      ...prev,
-      image: null,
-      imagePreview: ''
-    }));
+  const removeImage = (id: string) => {
+    setImages(prev => {
+      const image = prev.find(img => img.id === id);
+      if (image?.url && image.file) {
+        URL.revokeObjectURL(image.url);
+      }
+      return prev.filter(img => img.id !== id);
+    });
+  };
+
+  const moveImageUp = (index: number) => {
+    if (index === 0) return;
+    setImages(prev => {
+      const newImages = [...prev];
+      [newImages[index - 1], newImages[index]] = [newImages[index], newImages[index - 1]];
+      return newImages;
+    });
+  };
+
+  const moveImageDown = (index: number) => {
+    if (index === images.length - 1) return;
+    setImages(prev => {
+      const newImages = [...prev];
+      [newImages[index], newImages[index + 1]] = [newImages[index + 1], newImages[index]];
+      return newImages;
+    });
   };
 
   useEffect(() => {
@@ -99,6 +117,13 @@ export const EditRestStopModal: React.FC = () => {
         amenities: selectedRestStop.amenities,
         coordinates: selectedRestStop.coordinates
       });
+
+      if (selectedRestStop.image) {
+        setImages([{
+          id: 'original',
+          url: selectedRestStop.image
+        }]);
+      }
     }
   }, [selectedRestStop]);
 
@@ -246,15 +271,36 @@ export const EditRestStopModal: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Adresse *
-            </label>
+            <div className="flex items-center justify-between mb-1">
+              <label className="block text-sm font-medium text-gray-700">
+                Adresse *
+              </label>
+              {isAdmin && (
+                <button
+                  type="button"
+                  onClick={() => setIsEditingAddress(!isEditingAddress)}
+                  className={`p-2 rounded-lg transition duration-200 ${
+                    isEditingAddress
+                      ? 'bg-sky-500 text-white hover:bg-sky-600'
+                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                  }`}
+                  title={isEditingAddress ? 'Bearbeitung beenden' : 'Bearbeiten'}
+                >
+                  <Pencil size={16} />
+                </button>
+              )}
+            </div>
             <input
               type="text"
               name="address"
               value={formData.address}
               onChange={handleChange}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-400 focus:border-transparent"
+              disabled={isAdmin && !isEditingAddress}
+              className={`w-full p-3 border border-gray-300 rounded-lg ${
+                isAdmin && !isEditingAddress
+                  ? 'bg-gray-100 cursor-not-allowed'
+                  : 'focus:ring-2 focus:ring-sky-400 focus:border-transparent'
+              }`}
               placeholder="z.B. A3 Raststätte Geiselwind, 96160 Geiselwind"
               required
             />
@@ -262,66 +308,87 @@ export const EditRestStopModal: React.FC = () => {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Bild hochladen
+              Bilder verwalten
             </label>
-            
-            {formData.imagePreview ? (
-              <div className="relative">
-                <img
-                  src={formData.imagePreview}
-                  alt="Preview"
-                  className="w-full h-48 object-cover rounded-lg border border-gray-300"
-                />
-                <button
-                  type="button"
-                  onClick={removeImage}
-                  className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full hover:bg-red-600 transition duration-200"
-                >
-                  <Trash2 size={16} />
-                </button>
-              </div>
-            ) : formData.originalImage ? (
-              <div className="relative">
-                <img
-                  src={formData.originalImage}
-                  alt="Current image"
-                  className="w-full h-48 object-cover rounded-lg border border-gray-300"
-                />
-                <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center rounded-lg">
-                  <div
-                    {...getRootProps()}
-                    className="text-center cursor-pointer p-4"
-                  >
-                    <input {...getInputProps()} />
-                    <Upload size={32} className="text-white mb-2 mx-auto" />
-                    <p className="text-white text-sm">
-                      Klicken um neues Bild hochzuladen
-                    </p>
+
+            {images.length > 0 && (
+              <div className="space-y-3 mb-3">
+                {images.map((image, index) => (
+                  <div key={image.id} className="flex items-center space-x-3 bg-gray-50 p-3 rounded-lg border border-gray-200">
+                    <img
+                      src={image.url}
+                      alt={`Bild ${index + 1}`}
+                      className="w-20 h-20 object-cover rounded-lg"
+                    />
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-gray-700">
+                        Bild {index + 1} {index === 0 && '(Hauptbild)'}
+                      </p>
+                      <p className="text-xs text-gray-500">
+                        {image.file ? image.file.name : 'Bestehendes Bild'}
+                      </p>
+                    </div>
+                    <div className="flex space-x-2">
+                      <button
+                        type="button"
+                        onClick={() => moveImageUp(index)}
+                        disabled={index === 0}
+                        className={`p-2 rounded-lg transition duration-200 ${
+                          index === 0
+                            ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                            : 'bg-sky-100 text-sky-600 hover:bg-sky-200'
+                        }`}
+                        title="Nach oben"
+                      >
+                        <ChevronUp size={18} />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => moveImageDown(index)}
+                        disabled={index === images.length - 1}
+                        className={`p-2 rounded-lg transition duration-200 ${
+                          index === images.length - 1
+                            ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                            : 'bg-sky-100 text-sky-600 hover:bg-sky-200'
+                        }`}
+                        title="Nach unten"
+                      >
+                        <ChevronDown size={18} />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => removeImage(image.id)}
+                        className="p-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition duration-200"
+                        title="Löschen"
+                      >
+                        <Trash2 size={18} />
+                      </button>
+                    </div>
                   </div>
-                </div>
-              </div>
-            ) : (
-              <div
-                {...getRootProps()}
-                className={`w-full h-48 border-2 border-dashed rounded-lg flex flex-col items-center justify-center cursor-pointer transition-colors ${
-                  isDragActive
-                    ? 'border-sky-400 bg-sky-50'
-                    : 'border-gray-300 hover:border-sky-300 hover:bg-gray-50'
-                }`}
-              >
-                <input {...getInputProps()} />
-                <Upload size={48} className="text-gray-400 mb-2" />
-                <p className="text-gray-600 text-center">
-                  {isDragActive 
-                    ? 'Bild hier ablegen...' 
-                    : 'Klicken oder Bild hierher ziehen'
-                  }
-                </p>
-                <p className="text-sm text-gray-500 mt-1">
-                  PNG, JPG, GIF bis 5MB
-                </p>
+                ))}
               </div>
             )}
+
+            <div
+              {...getRootProps()}
+              className={`w-full h-32 border-2 border-dashed rounded-lg flex flex-col items-center justify-center cursor-pointer transition-colors ${
+                isDragActive
+                  ? 'border-sky-400 bg-sky-50'
+                  : 'border-gray-300 hover:border-sky-300 hover:bg-gray-50'
+              }`}
+            >
+              <input {...getInputProps()} />
+              <Upload size={36} className="text-gray-400 mb-2" />
+              <p className="text-gray-600 text-center text-sm">
+                {isDragActive
+                  ? 'Bilder hier ablegen...'
+                  : 'Klicken oder Bilder hierher ziehen'
+                }
+              </p>
+              <p className="text-xs text-gray-500 mt-1">
+                PNG, JPG, GIF bis 5MB (mehrere möglich)
+              </p>
+            </div>
           </div>
 
           <div>
@@ -393,16 +460,35 @@ export const EditRestStopModal: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Ausstattung
-            </label>
-            <div className="grid grid-cols-3 md:grid-cols-4 gap-2">
+            <div className="flex items-center justify-between mb-2">
+              <label className="block text-sm font-medium text-gray-700">
+                Ausstattung
+              </label>
+              {isAdmin && (
+                <button
+                  type="button"
+                  onClick={() => setIsEditingAmenities(!isEditingAmenities)}
+                  className={`p-2 rounded-lg transition duration-200 ${
+                    isEditingAmenities
+                      ? 'bg-sky-500 text-white hover:bg-sky-600'
+                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                  }`}
+                  title={isEditingAmenities ? 'Bearbeitung beenden' : 'Bearbeiten'}
+                >
+                  <Pencil size={16} />
+                </button>
+              )}
+            </div>
+            <div className={`grid grid-cols-3 md:grid-cols-4 gap-2 ${
+              isAdmin && !isEditingAmenities ? 'opacity-50 pointer-events-none' : ''
+            }`}>
               {availableAmenities.map((amenity) => (
                 <label key={amenity} className="flex items-center space-x-2 cursor-pointer">
                   <input
                     type="checkbox"
                     checked={formData.amenities.includes(amenity)}
                     onChange={() => handleAmenityToggle(amenity)}
+                    disabled={isAdmin && !isEditingAmenities}
                     className="rounded border-gray-300 text-sky-500 focus:ring-sky-400"
                   />
                   <span className="text-sm text-gray-700">{amenity}</span>
