@@ -112,7 +112,7 @@ export const CityAutocomplete: React.FC<CityAutocompleteProps> = ({
           {suggestions.map((suggestion, index) => (
             <div
               key={`${suggestion.city}-${suggestion.country}`}
-              className={`px-4 py-2 cursor-pointer transition-colors ${
+              className={`px-4 py-2 cursor-pointer transition-colors text-left ${
                 index === activeSuggestion
                   ? 'bg-emerald-50 text-emerald-700'
                   : 'hover:bg-gray-100'
