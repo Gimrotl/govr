@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { X, MapPin, Star, Save, Upload, Trash2 } from 'lucide-react';
 import { useModals } from '../../hooks/useModals';
+import { useRestStops } from '../../hooks/useRestStops';
 import { useDropzone } from 'react-dropzone';
 
 interface RestStop {
-  id: number;
+  id: string;
   name: string;
   type: 'Raststätte' | 'Hotel' | 'Tankstelle' | 'Restaurant';
   location: string;
   address: string;
   rating: number;
   description: string;
-  fullDescription: string;
+  full_description: string;
   image: string;
   amenities: string[];
   coordinates: {
@@ -20,13 +21,10 @@ interface RestStop {
   };
 }
 
-interface EditRestStopModalProps {
-  restStop: RestStop | null;
-  onUpdateRestStop: (restStop: RestStop) => void;
-}
-
 export const EditRestStopModal: React.FC = () => {
   const { closeModal, selectedRestStop } = useModals();
+  const { updateRestStop } = useRestStops();
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     type: 'Raststätte' as 'Raststätte' | 'Hotel' | 'Tankstelle' | 'Restaurant',
@@ -34,7 +32,7 @@ export const EditRestStopModal: React.FC = () => {
     address: '',
     rating: 4.0,
     description: '',
-    fullDescription: '',
+    full_description: '',
     image: null as File | null,
     imagePreview: '',
     originalImage: '',
@@ -68,14 +66,15 @@ export const EditRestStopModal: React.FC = () => {
     }
   });
 
-  const removeImage = () => {
+  const removeImage = (isOriginal: boolean = false) => {
     if (formData.imagePreview) {
       URL.revokeObjectURL(formData.imagePreview);
     }
     setFormData(prev => ({
       ...prev,
       image: null,
-      imagePreview: ''
+      imagePreview: '',
+      originalImage: isOriginal ? '' : prev.originalImage
     }));
   };
 
@@ -124,9 +123,9 @@ export const EditRestStopModal: React.FC = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!formData.name || !formData.location || !formData.address) {
       alert('Bitte füllen Sie alle Pflichtfelder aus.');
       return;
@@ -134,29 +133,44 @@ export const EditRestStopModal: React.FC = () => {
 
     if (!selectedRestStop) return;
 
-    // Handle image update
-    if (formData.image) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const updatedRestStop = {
-          ...selectedRestStop,
-          ...formData,
-          image: reader.result as string
-        };
-        console.log('Updating rest stop:', updatedRestStop);
-        alert('Rest Stop erfolgreich aktualisiert!');
-        closeModal('editRestStop');
+    setLoading(true);
+    try {
+      let imageData = formData.originalImage;
+
+      if (formData.image) {
+        const reader = new FileReader();
+        imageData = await new Promise((resolve) => {
+          reader.onloadend = () => {
+            resolve(reader.result as string);
+          };
+          reader.readAsDataURL(formData.image);
+        });
+      }
+
+      const updateData: Partial<RestStop> = {
+        name: formData.name,
+        type: formData.type,
+        location: formData.location,
+        address: formData.address,
+        rating: formData.rating,
+        description: formData.description,
+        full_description: formData.full_description,
+        amenities: formData.amenities,
+        coordinates: formData.coordinates
       };
-      reader.readAsDataURL(formData.image);
-    } else {
-      const updatedRestStop = {
-        ...selectedRestStop,
-        ...formData,
-        image: formData.originalImage // Keep original image if no new image uploaded
-      };
-      console.log('Updating rest stop:', updatedRestStop);
+
+      if (imageData) {
+        updateData.image = imageData;
+      }
+
+      await updateRestStop(selectedRestStop.id, updateData);
       alert('Rest Stop erfolgreich aktualisiert!');
       closeModal('editRestStop');
+    } catch (error) {
+      console.error('Error updating rest stop:', error);
+      alert('Fehler beim Aktualisieren des Rest Stops. Bitte versuchen Sie es erneut.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -260,7 +274,7 @@ export const EditRestStopModal: React.FC = () => {
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Bild hochladen
             </label>
-            
+
             {formData.imagePreview ? (
               <div className="relative">
                 <img
@@ -270,8 +284,9 @@ export const EditRestStopModal: React.FC = () => {
                 />
                 <button
                   type="button"
-                  onClick={removeImage}
+                  onClick={() => removeImage(false)}
                   className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full hover:bg-red-600 transition duration-200"
+                  title="Bild entfernen"
                 >
                   <Trash2 size={16} />
                 </button>
@@ -283,10 +298,10 @@ export const EditRestStopModal: React.FC = () => {
                   alt="Current image"
                   className="w-full h-48 object-cover rounded-lg border border-gray-300"
                 />
-                <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center rounded-lg">
+                <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-between rounded-lg px-4">
                   <div
                     {...getRootProps()}
-                    className="text-center cursor-pointer p-4"
+                    className="text-center cursor-pointer flex-1"
                   >
                     <input {...getInputProps()} />
                     <Upload size={32} className="text-white mb-2 mx-auto" />
@@ -294,6 +309,14 @@ export const EditRestStopModal: React.FC = () => {
                       Klicken um neues Bild hochzuladen
                     </p>
                   </div>
+                  <button
+                    type="button"
+                    onClick={() => removeImage(true)}
+                    className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition duration-200 ml-4 flex-shrink-0"
+                    title="Aktuelles Bild löschen"
+                  >
+                    <Trash2 size={18} />
+                  </button>
                 </div>
               </div>
             ) : (
@@ -308,8 +331,8 @@ export const EditRestStopModal: React.FC = () => {
                 <input {...getInputProps()} />
                 <Upload size={48} className="text-gray-400 mb-2" />
                 <p className="text-gray-600 text-center">
-                  {isDragActive 
-                    ? 'Bild hier ablegen...' 
+                  {isDragActive
+                    ? 'Bild hier ablegen...'
                     : 'Klicken oder Bild hierher ziehen'
                   }
                 </p>
@@ -401,16 +424,18 @@ export const EditRestStopModal: React.FC = () => {
             <button
               type="button"
               onClick={() => closeModal('editRestStop')}
-              className="flex-1 bg-gray-500 text-white py-3 rounded-lg hover:bg-gray-600 transition duration-200"
+              disabled={loading}
+              className="flex-1 bg-gray-500 text-white py-3 rounded-lg hover:bg-gray-600 transition duration-200 disabled:opacity-50"
             >
               Abbrechen
             </button>
             <button
               type="submit"
-              className="flex-1 bg-sky-500 text-white py-3 rounded-lg hover:bg-sky-600 transition duration-200 flex items-center justify-center"
+              disabled={loading}
+              className="flex-1 bg-sky-500 text-white py-3 rounded-lg hover:bg-sky-600 transition duration-200 flex items-center justify-center disabled:opacity-50"
             >
               <Save size={18} className="mr-2" />
-              Speichern
+              {loading ? 'Speichert...' : 'Speichern'}
             </button>
           </div>
         </form>

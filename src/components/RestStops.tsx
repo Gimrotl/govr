@@ -3,89 +3,83 @@ import { ChevronLeft, ChevronRight, MapPin, Star, Navigation, Car, Fuel, Utensil
 import { RestStopDetailsModal } from './modals/RestStopDetailsModal';
 import { useAuth } from '../hooks/useAuth';
 import { useModals } from '../hooks/useModals';
+import { useRestStops, RestStop } from '../hooks/useRestStops';
 
-interface RestStop {
-  id: number;
-  name: string;
-  type: 'Raststätte' | 'Hotel' | 'Tankstelle' | 'Restaurant';
-  location: string;
-  address: string;
-  rating: number;
-  description: string;
-  fullDescription: string;
-  image: string;
-  amenities: string[];
-  coordinates: {
-    lat: number;
-    lng: number;
-  };
-}
-
-const restStops: RestStop[] = [
+const defaultRestStops: RestStop[] = [
   {
-    id: 1,
+    id: 'default-1',
     name: 'Raststätte Geiselwind',
     type: 'Raststätte',
     location: 'Geiselwind',
     address: 'A3 Raststätte Geiselwind, 96160 Geiselwind',
     rating: 4.3,
     description: 'Große Raststätte mit Restaurant, Tankstelle und Spielplatz. Perfekt für...',
-    fullDescription: 'Große Raststätte mit Restaurant, Tankstelle und Spielplatz. Perfekt für Familien mit Kindern. Die Raststätte bietet eine Vielzahl von Restaurants und Imbissen, saubere Sanitäranlagen und einen großen Parkplatz für PKW und LKW. Der Spielplatz ist modern ausgestattet und bietet Kindern verschiedene Spielmöglichkeiten.',
+    full_description: 'Große Raststätte mit Restaurant, Tankstelle und Spielplatz. Perfekt für Familien mit Kindern. Die Raststätte bietet eine Vielzahl von Restaurants und Imbissen, saubere Sanitäranlagen und einen großen Parkplatz für PKW und LKW. Der Spielplatz ist modern ausgestattet und bietet Kindern verschiedene Spielmöglichkeiten.',
     image: 'https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg',
     amenities: ['WC', 'Kinder', 'Sport', 'Grün'],
-    coordinates: { lat: 49.7667, lng: 10.4667 }
+    coordinates: { lat: 49.7667, lng: 10.4667 },
+    created_at: new Date().toISOString(),
+    created_by: null
   },
   {
-    id: 2,
+    id: 'default-2',
     name: 'Hotel Gasthof Zur Post',
     type: 'Hotel',
     location: 'Lauf an der Pegnitz',
     address: 'Hauptstraße 12, 91207 Lauf an der Pegnitz',
     rating: 4.7,
     description: 'Gemütliches Hotel mit Restaurant und Biergarten. Ideal für Übernachtungen auf...',
-    fullDescription: 'Gemütliches Hotel mit Restaurant und Biergarten. Ideal für Übernachtungen auf längeren Reisen. Das traditionelle Gasthaus bietet komfortable Zimmer, regionale Küche und einen schönen Biergarten. Die Lage ist ruhig und dennoch verkehrsgünstig gelegen.',
+    full_description: 'Gemütliches Hotel mit Restaurant und Biergarten. Ideal für Übernachtungen auf längeren Reisen. Das traditionelle Gasthaus bietet komfortable Zimmer, regionale Küche und einen schönen Biergarten. Die Lage ist ruhig und dennoch verkehrsgünstig gelegen.',
     image: 'https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg',
     amenities: ['WC', 'Hotel', 'Essen', 'Parkplatz'],
-    coordinates: { lat: 49.5167, lng: 11.2833 }
+    coordinates: { lat: 49.5167, lng: 11.2833 },
+    created_at: new Date().toISOString(),
+    created_by: null
   },
   {
-    id: 3,
+    id: 'default-3',
     name: 'Shell Tankstelle Würzburg',
     type: 'Tankstelle',
     location: 'Würzburg',
     address: 'Würzburger Straße 45, 97082 Würzburg',
     rating: 4.1,
     description: 'Moderne Tankstelle mit Shop, Café und sauberen Sanitäranlagen.',
-    fullDescription: 'Moderne Tankstelle mit Shop, Café und sauberen Sanitäranlagen. Die Tankstelle bietet alle gängigen Kraftstoffe, einen gut sortierten Shop mit Reiseproviant und warmen Snacks. Die Sanitäranlagen werden regelmäßig gereinigt und sind barrierefrei zugänglich.',
+    full_description: 'Moderne Tankstelle mit Shop, Café und sauberen Sanitäranlagen. Die Tankstelle bietet alle gängigen Kraftstoffe, einen gut sortierten Shop mit Reiseproviant und warmen Snacks. Die Sanitäranlagen werden regelmäßig gereinigt und sind barrierefrei zugänglich.',
     image: 'https://images.pexels.com/photos/33688/delicate-arch-night-stars-landscape.jpeg',
     amenities: ['WC', 'Tankstelle', 'Essen', 'Autowaschen'],
-    coordinates: { lat: 49.7913, lng: 9.9534 }
+    coordinates: { lat: 49.7913, lng: 9.9534 },
+    created_at: new Date().toISOString(),
+    created_by: null
   },
   {
-    id: 4,
+    id: 'default-4',
     name: 'Restaurant Waldblick',
     type: 'Restaurant',
     location: 'Bad Hersfeld',
     address: 'Waldweg 8, 36251 Bad Hersfeld',
     rating: 4.5,
     description: 'Familienrestaurant mit regionaler Küche und herrlichem Blick in den...',
-    fullDescription: 'Familienrestaurant mit regionaler Küche und herrlichem Blick in den Wald. Das Restaurant bietet traditionelle deutsche Küche mit frischen, regionalen Zutaten. Die Terrasse mit Waldblick lädt zum Verweilen ein. Besonders empfehlenswert sind die hausgemachten Kuchen und das Wild aus der Region.',
+    full_description: 'Familienrestaurant mit regionaler Küche und herrlichem Blick in den Wald. Das Restaurant bietet traditionelle deutsche Küche mit frischen, regionalen Zutaten. Die Terrasse mit Waldblick lädt zum Verweilen ein. Besonders empfehlenswert sind die hausgemachten Kuchen und das Wild aus der Region.',
     image: 'https://images.pexels.com/photos/262978/pexels-photo-262978.jpeg',
     amenities: ['WC', 'Kinder', 'Essen', 'Esstisch', 'Parkplatz'],
-    coordinates: { lat: 50.8667, lng: 9.7 }
+    coordinates: { lat: 50.8667, lng: 9.7 },
+    created_at: new Date().toISOString(),
+    created_by: null
   },
   {
-    id: 5,
+    id: 'default-5',
     name: 'Autohof München Süd',
     type: 'Raststätte',
     location: 'München',
     address: 'A8 Autohof München Süd, 85521 Ottobrunn',
     rating: 4.2,
     description: 'Großer Autohof mit vielen Restaurants und Einkaufsmöglichkeiten.',
-    fullDescription: 'Großer Autohof mit vielen Restaurants und Einkaufsmöglichkeiten. Der Autohof bietet eine große Auswahl an Restaurants, von Fast Food bis hin zu gehobener Küche. Zusätzlich gibt es Einkaufsmöglichkeiten, eine Apotheke und verschiedene Dienstleistungen für Reisende.',
+    full_description: 'Großer Autohof mit vielen Restaurants und Einkaufsmöglichkeiten. Der Autohof bietet eine große Auswahl an Restaurants, von Fast Food bis hin zu gehobener Küche. Zusätzlich gibt es Einkaufsmöglichkeiten, eine Apotheke und verschiedene Dienstleistungen für Reisende.',
     image: 'https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg',
     amenities: ['WC', 'Kinder', 'Sport', 'Essen', 'Tankstelle', 'Duschen', 'Parkplatz'],
-    coordinates: { lat: 48.0667, lng: 11.6667 }
+    coordinates: { lat: 48.0667, lng: 11.6667 },
+    created_at: new Date().toISOString(),
+    created_by: null
   }
 ];
 
@@ -176,9 +170,16 @@ export const RestStops: React.FC = () => {
   const [isScrolling2, setIsScrolling2] = useState(false);
   const [isScrolling3, setIsScrolling3] = useState(false);
   const [selectedRestStop, setSelectedRestStop] = useState<RestStop | null>(null);
-  const [restStopsData, setRestStopsData] = useState<RestStop[]>(restStops);
   const { isAdmin } = useAuth();
   const { openModal } = useModals();
+  const { restStops, deleteRestStop } = useRestStops();
+  const [restStopsData, setRestStopsData] = useState<RestStop[]>(defaultRestStops);
+
+  React.useEffect(() => {
+    if (restStops && restStops.length > 0) {
+      setRestStopsData(restStops);
+    }
+  }, [restStops]);
 
   const scrollToIndex = (index: number) => {
     if (scrollContainerRef.current) {
@@ -335,12 +336,18 @@ export const RestStops: React.FC = () => {
     openModal('editRestStop');
   };
 
-  const handleDeleteRestStop = (restStopId: number, e: React.MouseEvent) => {
+  const handleDeleteRestStop = async (restStopId: string, e: React.MouseEvent) => {
     e.stopPropagation();
     if (window.confirm('Sind Sie sicher, dass Sie diesen Rest Stop löschen möchten?')) {
-      setRestStopsData(prev => prev.filter(stop => stop.id !== restStopId));
-      if (currentIndex >= restStopsData.length - 1 && currentIndex > 0) {
-        setCurrentIndex(currentIndex - 1);
+      try {
+        await deleteRestStop(restStopId);
+        setRestStopsData(prev => prev.filter(stop => stop.id !== restStopId));
+        if (currentIndex >= restStopsData.length - 1 && currentIndex > 0) {
+          setCurrentIndex(currentIndex - 1);
+        }
+      } catch (error) {
+        alert('Fehler beim Löschen des Rest Stops');
+        console.error(error);
       }
     }
   };
