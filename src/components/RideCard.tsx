@@ -86,7 +86,12 @@ export const RideCard: React.FC<RideCardProps> = ({ ride }) => {
               <span className="text-sm">{ride.time}</span>
             </div>
           </div>
-          <span className="font-bold text-emerald-500">{ride.price}</span>
+          <div className="flex flex-col items-end">
+            <span className="font-bold text-emerald-500">{ride.price}</span>
+            {ride.carYear && (
+              <span className="text-xs text-gray-500 mt-1">{ride.carYear}</span>
+            )}
+          </div>
         </div>
         
         <div className="flex items-center mb-3">
