@@ -13,6 +13,7 @@ export const ProfileModal: React.FC = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [showGallery, setShowGallery] = useState(false);
+  const [showCurrentRides, setShowCurrentRides] = useState(false);
   const [profile, setProfile] = useState<UserProfile>({
     firstName: 'John Doe',
     age: '30',
@@ -235,7 +236,7 @@ export const ProfileModal: React.FC = () => {
                   Kontaktieren
                 </button>
                 <button
-                  onClick={() => {/* Show current rides */}}
+                  onClick={() => setShowCurrentRides(!showCurrentRides)}
                   className="flex-1 flex items-center justify-center bg-emerald-500 text-white py-2 md:py-3 px-3 md:px-4 rounded-lg hover:bg-emerald-600 transition duration-200 text-sm md:text-base"
                 >
                   <Car size={16} className="mr-2 md:hidden" />
@@ -246,40 +247,48 @@ export const ProfileModal: React.FC = () => {
             )}
             
             {/* Current Rides Section - only for other users */}
-            {currentRides.length > 0 && (
+            {isViewingOtherUser && showCurrentRides && (
               <div className="mt-4 md:mt-6">
                 <h3 className="text-base md:text-lg font-medium text-gray-800 mb-3 md:mb-4 flex items-center">
                   <Car size={18} className="mr-2 text-green-600 md:hidden" />
                   <Car size={20} className="mr-2 text-green-600 hidden md:block" />
-                  {isViewingOtherUser ? 'Aktuelle Fahrten' : 'Meine aktuellen Fahrten'}
+                  Aktuelle Fahrten
                 </h3>
-                <div className="max-h-32 md:max-h-40 overflow-y-auto space-y-2">
-                  {currentRides.map((ride) => (
-                    <div key={ride.id} className="bg-gray-50 p-2 md:p-3 rounded-lg border hover:bg-gray-100 transition-colors">
-                      <div className="flex justify-between items-start">
-                        <div>
-                          <p className="font-medium text-gray-800 text-sm md:text-base">
-                            {ride.from} → {ride.to}
-                          </p>
-                          <p className="text-xs md:text-sm text-gray-600">
-                            {ride.date} um {ride.time}
-                          </p>
-                          <p className="text-xs md:text-sm text-emerald-500 font-medium">
-                            {ride.price}
-                          </p>
-                        </div>
-                        <div className="text-right">
-                          <div className="flex items-center">
-                            <StarRating rating={ride.rating} size={12} />
+                {currentRides.length > 0 ? (
+                  <div className="max-h-32 md:max-h-40 overflow-y-auto space-y-2">
+                    {currentRides.map((ride) => (
+                      <div key={ride.id} className="bg-gray-50 p-2 md:p-3 rounded-lg border hover:bg-gray-100 transition-colors">
+                        <div className="flex justify-between items-start">
+                          <div>
+                            <p className="font-medium text-gray-800 text-sm md:text-base">
+                              {ride.from} → {ride.to}
+                            </p>
+                            <p className="text-xs md:text-sm text-gray-600">
+                              {ride.date} um {ride.time}
+                            </p>
+                            <p className="text-xs md:text-sm text-emerald-500 font-medium">
+                              {ride.price}
+                            </p>
                           </div>
-                          <p className="text-xs text-gray-500 mt-0.5 md:mt-1">
-                            {ride.availableSeats - ride.bookedSeats} Plätze frei
-                          </p>
+                          <div className="text-right">
+                            <div className="flex items-center">
+                              <StarRating rating={ride.rating} size={12} />
+                            </div>
+                            <p className="text-xs text-gray-500 mt-0.5 md:mt-1">
+                              {ride.availableSeats - ride.bookedSeats} Plätze frei
+                            </p>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="bg-gray-50 p-4 md:p-6 rounded-lg border border-gray-200 text-center">
+                    <p className="text-gray-600 text-sm md:text-base">
+                      Keine aktuellen Fahrten verfügbar
+                    </p>
+                  </div>
+                )}
               </div>
             )}
           </div>
