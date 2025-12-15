@@ -21,10 +21,10 @@ export const AdminDashboardModal: React.FC = () => {
   };
 
   const mockUsers = [
-    { id: 1, name: 'Anna', email: 'anna@example.com', status: 'active', rides: 5 },
-    { id: 2, name: 'Tom', email: 'tom@example.com', status: 'active', rides: 3 },
-    { id: 3, name: 'Lisa', email: 'lisa@example.com', status: 'suspended', rides: 2 },
-    { id: 4, name: 'Mark', email: 'mark@example.com', status: 'active', rides: 8 }
+    { id: 1, name: 'Anna', email: 'anna@example.com', status: 'active', rides: 5, ipAddress: '192.168.1.1' },
+    { id: 2, name: 'Tom', email: 'tom@example.com', status: 'active', rides: 3, ipAddress: '192.168.1.2' },
+    { id: 3, name: 'Lisa', email: 'lisa@example.com', status: 'suspended', rides: 2, ipAddress: '192.168.1.3' },
+    { id: 4, name: 'Mark', email: 'mark@example.com', status: 'active', rides: 8, ipAddress: '192.168.1.4' }
   ];
 
   const mockReports = [
@@ -94,14 +94,15 @@ export const AdminDashboardModal: React.FC = () => {
         <div className="md:hidden">
           {mockUsers.map((user) => (
             <div key={user.id} className="p-4 border-b border-gray-200 last:border-b-0">
-              <div className="flex justify-between items-start mb-2">
-                <div>
+              <div className="flex justify-between items-start mb-3">
+                <div className="flex-1">
                   <div className="font-medium text-gray-900">{user.name}</div>
-                  <div className="text-sm text-gray-500">{user.email}</div>
+                  <div className="text-sm text-gray-500 mt-1">{user.email}</div>
+                  <div className="text-xs text-gray-600 font-mono mt-1">{user.ipAddress}</div>
                 </div>
                 <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                  user.status === 'active' 
-                    ? 'bg-green-100 text-green-800' 
+                  user.status === 'active'
+                    ? 'bg-green-100 text-green-800'
                     : 'bg-red-100 text-red-800'
                 }`}>
                   {user.status === 'active' ? 'Aktiv' : 'Gesperrt'}
@@ -130,6 +131,7 @@ export const AdminDashboardModal: React.FC = () => {
           <thead className="bg-gray-50">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Benutzer</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">IP-Adresse</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fahrten</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aktionen</th>
@@ -145,9 +147,12 @@ export const AdminDashboardModal: React.FC = () => {
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm text-gray-600 font-mono">{user.ipAddress}</div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
                   <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                    user.status === 'active' 
-                      ? 'bg-emerald-50 text-emerald-700' 
+                    user.status === 'active'
+                      ? 'bg-emerald-50 text-emerald-700'
                       : 'bg-red-100 text-red-800'
                   }`}>
                     {user.status === 'active' ? 'Aktiv' : 'Gesperrt'}
