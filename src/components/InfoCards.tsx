@@ -128,39 +128,39 @@ export const InfoCards: React.FC = () => {
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-4">
+        <div className="fixed left-0 right-0 top-1/2 transform -translate-y-1/2 flex items-center justify-between px-4 pointer-events-none z-40">
           <button
             onClick={goToPrevious}
             disabled={currentIndex === 0}
-            className="p-2 rounded-full bg-white shadow-md transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 hover:shadow-lg"
+            className="pointer-events-auto p-2 rounded-full bg-white shadow-md transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 hover:shadow-lg"
             aria-label="Vorherige Karte"
           >
             <ChevronLeft size={20} className={currentIndex === 0 ? 'text-gray-400' : 'text-red-500'} />
           </button>
 
-          <div className="flex gap-2">
-            {cards.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentIndex(index)}
-                className={`h-2 rounded-full transition-all ${
-                  index === currentIndex
-                    ? 'bg-emerald-500 w-6'
-                    : 'bg-gray-300 w-2'
-                }`}
-                aria-label={`Gehe zu Karte ${index + 1}`}
-              />
-            ))}
-          </div>
-
           <button
             onClick={goToNext}
             disabled={currentIndex === cards.length - 1}
-            className="p-2 rounded-full bg-white shadow-md transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 hover:shadow-lg"
+            className="pointer-events-auto p-2 rounded-full bg-white shadow-md transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 hover:shadow-lg"
             aria-label="Nächste Karte"
           >
             <ChevronRight size={20} className={currentIndex === cards.length - 1 ? 'text-gray-400' : 'text-red-500'} />
           </button>
+        </div>
+
+        <div className="flex justify-center mt-4 space-x-2">
+          {cards.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentIndex(index)}
+              className={`h-2 rounded-full transition-all ${
+                index === currentIndex
+                  ? 'bg-emerald-500 w-6'
+                  : 'bg-gray-300 w-2'
+              }`}
+              aria-label={`Gehe zu Karte ${index + 1}`}
+            />
+          ))}
         </div>
       </div>
     </section>
