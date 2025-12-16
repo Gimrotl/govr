@@ -314,6 +314,8 @@ export const citiesWithCountries: CityWithCountry[] = [
   { city: 'Улан-Удэ', country: 'Russia', cityEn: 'Ulan-Ude' },
   { city: 'Чита', country: 'Russia', cityEn: 'Chita' },
   { city: 'Якутск', country: 'Russia', cityEn: 'Yakutsk' },
+ { city: 'Красная Горка', country: 'Russia', cityEn: 'Krasnaya Gorka' },
+  
 
   // Chechnya
   { city: 'Grozny', country: 'Chechnya', cityRu: 'Грозный', },
