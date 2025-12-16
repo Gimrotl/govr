@@ -560,6 +560,8 @@ export const citiesWithCountries: CityWithCountry[] = [
   { city: 'Tirana', country: 'Albania', cityRu: 'Тирана', cityEn: 'Tirana' },
   { city: 'Sofia', country: 'Bulgaria', cityRu: 'София', cityEn: 'Sofia' },
 
+// USA
+  
   // Baltic cities
   { city: 'Vilnius', country: 'Lithuania', cityRu: 'Вильнюс', cityEn: 'Vilnius' },
   { city: 'Riga', country: 'Latvia', cityRu: 'Рига', cityEn: 'Riga' },
