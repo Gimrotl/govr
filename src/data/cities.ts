@@ -156,6 +156,7 @@ export const citiesWithCountries: CityWithCountry[] = [
   { city: 'Bydgoszcz', country: 'Poland', cityRu: 'Быдгощ', cityEn: 'Bydgoszcz' },
   { city: 'Lublin', country: 'Poland', cityRu: 'Люблин', cityEn: 'Lublin' },
   { city: 'Białystok', country: 'Poland', cityRu: 'Белосток', cityEn: 'Bialystok' },
+  { city: 'Terespol', country: 'Poland', cityRu: 'Тересполь', },
 
   // Netherlands
   { city: 'Amsterdam', country: 'Netherlands', cityRu: 'Амстердам', cityEn: 'Amsterdam' },
@@ -430,6 +431,7 @@ export const citiesWithCountries: CityWithCountry[] = [
   { city: 'Борисов', country: 'Belarus', cityRu: 'Борисов', cityEn: 'Borisov' },
   { city: 'Пинск', country: 'Belarus', cityRu: 'Пинск', cityEn: 'Pinsk' },
   { city: 'Орша', country: 'Belarus', cityRu: 'Орша', cityEn: 'Orsha' },
+  { city: 'Барановичи', country: 'Belarus', cityEn: 'Baranawitschy' },
 
   // Jordan
   { city: 'Аммон', country: 'Jordan', cityRu: 'Аммон', cityEn: 'Amman' },
