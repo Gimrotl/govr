@@ -452,40 +452,40 @@ export const citiesWithCountries: CityWithCountry[] = [
   { city: 'Mardin', country: 'Turkey', cityRu: 'Мардин', cityEn: 'Mardin' },
 
   // Georgia
-  { city: 'თბილისი', country: 'Georgia', cityRu: 'Тбилиси', cityEn: 'Tbilisi' },
-  { city: 'ბათუმი', country: 'Georgia', cityRu: 'Батуми', cityEn: 'Batumi' },
-  { city: 'ქუთაისი', country: 'Georgia', cityRu: 'Кутаиси', cityEn: 'Kutaisi' },
-  { city: 'რუსთავი', country: 'Georgia', cityRu: 'Рустави', cityEn: 'Rustavi' },
-  { city: 'გორი', country: 'Georgia', cityRu: 'Гори', cityEn: 'Gori' },
-  { city: 'ზუგდიდი', country: 'Georgia', cityRu: 'Зугдиди', cityEn: 'Zugdidi' },
-  { city: 'ფოთი', country: 'Georgia', cityRu: 'Поти', cityEn: 'Poti' },
-  { city: 'ხაშური', country: 'Georgia', cityRu: 'Хашури', cityEn: 'Khashuri' },
-  { city: 'სამტრედია', country: 'Georgia', cityRu: 'Самтредиа', cityEn: 'Samtredia' },
-  { city: 'სენაკი', country: 'Georgia', cityRu: 'Сенаки', cityEn: 'Senaki' },
+  { city: 'Tbilisi', country: 'Georgia', cityRu: 'Тбилиси', },
+  { city: 'Batumi', country: 'Georgia', cityRu: 'Батуми', },
+  { city: 'Kutaisi', country: 'Georgia', cityRu: 'Кутаиси', },
+  { city: 'Rustavi', country: 'Georgia', cityRu: 'Рустави', },
+  { city: 'Gori', country: 'Georgia', cityRu: 'Гори', },
+  { city: 'Zugdidi', country: 'Georgia', cityRu: 'Зугдиди',},
+  { city: 'Poti', country: 'Georgia', cityRu: 'Поти', },
+  { city: 'Khashuri', country: 'Georgia', cityRu: 'Хашури', },
+  { city: 'Samtredia', country: 'Georgia', cityRu: 'Самтредиа', },
+  { city: 'Senaki', country: 'Georgia', cityRu: 'Сенаки',},
 
   // Sweden
-  { city: 'Stockholm', country: 'Sweden', cityRu: 'Стокгольм', cityEn: 'Stockholm' },
-  { city: 'Göteborg', country: 'Sweden', cityRu: 'Гётеборг', cityEn: 'Gothenburg' },
-  { city: 'Malmö', country: 'Sweden', cityRu: 'Мальмё', cityEn: 'Malmo' },
-  { city: 'Uppsala', country: 'Sweden', cityRu: 'Уппсала', cityEn: 'Uppsala' },
-  { city: 'Västerås', country: 'Sweden', cityRu: 'Вестерос', cityEn: 'Vasteras' },
-  { city: 'Örebro', country: 'Sweden', cityRu: 'Эребру', cityEn: 'Orebro' },
-  { city: 'Linköping', country: 'Sweden', cityRu: 'Линчёпинг', cityEn: 'Linkoping' },
-  { city: 'Helsingborg', country: 'Sweden', cityRu: 'Хельсингборг', cityEn: 'Helsingborg' },
-  { city: 'Jönköping', country: 'Sweden', cityRu: 'Йёнчёпинг', cityEn: 'Jonkoping' },
-  { city: 'Norrköping', country: 'Sweden', cityRu: 'Норрчёпинг', cityEn: 'Norrkoping' },
+  { city: 'Stockholm', country: 'Sweden', cityRu: 'Стокгольм', },
+  { city: 'Gothenburg', country: 'Sweden', cityRu: 'Гётеборг', },
+  { city: 'Malmo', country: 'Sweden', cityRu: 'Мальмё',},
+  { city: 'Uppsala', country: 'Sweden', cityRu: 'Уппсала', },
+  { city: 'Vasteras', country: 'Sweden', cityRu: 'Вестерос', },
+  { city: 'Orebro', country: 'Sweden', cityRu: 'Эребру', },
+  { city: 'Linkoping', country: 'Sweden', cityRu: 'Линчёпинг', },
+  { city: 'Helsingborg', country: 'Sweden', cityRu: 'Хельсингборг', },
+  { city: 'Jonkoping', country: 'Sweden', cityRu: 'Йёнчёпинг', },
+  { city: 'Norrkoping', country: 'Sweden', cityRu: 'Норрчёпинг', },
 
   // Norway
-  { city: 'Oslo', country: 'Norway', cityRu: 'Осло', cityEn: 'Oslo' },
-  { city: 'Bergen', country: 'Norway', cityRu: 'Берген', cityEn: 'Bergen' },
-  { city: 'Stavanger', country: 'Norway', cityRu: 'Ставангер', cityEn: 'Stavanger' },
-  { city: 'Trondheim', country: 'Norway', cityRu: 'Тронхейм', cityEn: 'Trondheim' },
-  { city: 'Fredrikstad', country: 'Norway', cityRu: 'Фредрикстад', cityEn: 'Fredrikstad' },
-  { city: 'Drammen', country: 'Norway', cityRu: 'Драммен', cityEn: 'Drammen' },
-  { city: 'Skien', country: 'Norway', cityRu: 'Шиен', cityEn: 'Skien' },
-  { city: 'Kristiansand', country: 'Norway', cityRu: 'Кристиансанн', cityEn: 'Kristiansand' },
-  { city: 'Ålesund', country: 'Norway', cityRu: 'Олесунн', cityEn: 'Alesund' },
-  { city: 'Tønsberg', country: 'Norway', cityRu: 'Тёнсберг', cityEn: 'Tonsberg' },
+  { city: 'Oslo', country: 'Norway', cityRu: 'Осло',},
+  { city: 'Bergen', country: 'Norway', cityRu: 'Берген', },
+  { city: 'Stavanger', country: 'Norway', cityRu: 'Ставангер', },
+  { city: 'Trondheim', country: 'Norway', cityRu: 'Тронхейм', },
+  { city: 'Fredrikstad', country: 'Norway', cityRu: 'Фредрикстад', },
+  { city: 'Drammen', country: 'Norway', cityRu: 'Драммен', },
+  { city: 'Skien', country: 'Norway', cityRu: 'Шиен', },
+  { city: 'Kristiansand', country: 'Norway', cityRu: 'Кристиансанн', },
+  { city: 'Alesund', country: 'Norway', cityRu: 'Олесунн', },
+  { city: 'Tonsberg', country: 'Norway', cityRu: 'Тёнсберг', },
 
   // Finland
   { city: 'Helsinki', country: 'Finland', cityRu: 'Хельсинки', },
@@ -550,14 +550,14 @@ export const citiesWithCountries: CityWithCountry[] = [
   { city: 'Athens', country: 'Greece', cityRu: 'Афины', },
 
   // Balkan cities
-  { city: 'Pristina', country: 'Kosovo', cityRu: 'Приштина', cityEn: 'Pristina' },
-  { city: 'Skopje', country: 'North Macedonia', cityRu: 'Скопье', cityEn: 'Skopje' },
-  { city: 'Podgorica', country: 'Montenegro', cityRu: 'Подгорица', cityEn: 'Podgorica' },
-  { city: 'Belgrad', country: 'Serbia', cityRu: 'Белград', cityEn: 'Belgrade' },
-  { city: 'Dubrovnik', country: 'Croatia', cityRu: 'Дубровник', cityEn: 'Dubrovnik' },
-  { city: 'Split', country: 'Croatia', cityRu: 'Сплит', cityEn: 'Split' },
-  { city: 'Tirana', country: 'Albania', cityRu: 'Тирана', cityEn: 'Tirana' },
-  { city: 'Sofia', country: 'Bulgaria', cityRu: 'София', cityEn: 'Sofia' },
+  { city: 'Pristina', country: 'Kosovo', cityRu: 'Приштина', },
+  { city: 'Skopje', country: 'North Macedonia', cityRu: 'Скопье', },
+  { city: 'Podgorica', country: 'Montenegro', cityRu: 'Подгорица',},
+  { city: 'Belgrad', country: 'Serbia', cityRu: 'Белград', },
+  { city: 'Dubrovnik', country: 'Croatia', cityRu: 'Дубровник',},
+  { city: 'Split', country: 'Croatia', cityRu: 'Сплит',},
+  { city: 'Tirana', country: 'Albania', cityRu: 'Тирана', },
+  { city: 'Sofia', country: 'Bulgaria', cityRu: 'София', },
 
   // USA
   { city: 'New York City', country: 'USA', cityRu: 'Нью-Йорк', },
@@ -611,9 +611,9 @@ export const citiesWithCountries: CityWithCountry[] = [
 { city: 'Arlington', country: 'USA', cityRu: 'Арлингтон', },
   
   // Baltic cities
-  { city: 'Vilnius', country: 'Lithuania', cityRu: 'Вильнюс', cityEn: 'Vilnius' },
-  { city: 'Riga', country: 'Latvia', cityRu: 'Рига', cityEn: 'Riga' },
-  { city: 'Kaunas', country: 'Lithuania', cityRu: 'Каунас', cityEn: 'Kaunas' }
+  { city: 'Vilnius', country: 'Lithuania', cityRu: 'Вильнюс', },
+  { city: 'Riga', country: 'Latvia', cityRu: 'Рига', },
+  { city: 'Kaunas', country: 'Lithuania', cityRu: 'Каунас', }
 
  
 ];
