@@ -230,7 +230,7 @@ export const citiesWithCountries: CityWithCountry[] = [
   { city: 'Poprad', country: 'Slovakia', cityRu: 'Попрад', cityEn: 'Poprad' },
 
   // Hungary
-  { city: 'Budapest', country: 'Hungary', cityRu: 'Будапешт', cityEn: 'Budapest' },
+  { city: 'Budapest', country: 'Hungary', cityRu: 'Будапешт', },
   { city: 'Debrecen', country: 'Hungary', cityRu: 'Дебрецен', cityEn: 'Debrecen' },
   { city: 'Szeged', country: 'Hungary', cityRu: 'Сегед', cityEn: 'Szeged' },
   { city: 'Miskolc', country: 'Hungary', cityRu: 'Мишкольц', cityEn: 'Miskolc' },
