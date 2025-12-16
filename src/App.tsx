@@ -46,7 +46,7 @@ function App() {
               <h1 className="text-4xl md:text-3xl lg:text-4xl font-bold text-white drop-shadow-lg mb-66">
                 Caucasian Mobility Network
               </h1>
-              <p className="text-xl md:text-1xl text-white/90 drop-shadow-md mb-12">
+              <p className="text-xl md:text-1xl text-red/90 drop-shadow-md mb-12">
                 ẊAN VORD - ẊAN NEQ̇
               </p>
 
