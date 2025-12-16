@@ -618,6 +618,7 @@ export const citiesWithCountries: CityWithCountry[] = [
 { city: 'Arlington', country: 'USA', cityRu: 'Арлингтон', },
   
   // Baltic cities
+  { city: 'Paternieki', country: 'Lithuania', cityRu: 'Патерниеки', }
   { city: 'Vilnius', country: 'Lithuania', cityRu: 'Вильнюс', },
   { city: 'Riga', country: 'Latvia', cityRu: 'Рига', },
   { city: 'Kaunas', country: 'Lithuania', cityRu: 'Каунас', }
