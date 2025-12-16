@@ -418,22 +418,22 @@ export const citiesWithCountries: CityWithCountry[] = [
 { city: 'Yurt-Aukh', country: 'Chechnya', cityRu: 'Юрт-Аух', },
   
   // Belarus
-  { city: 'Минск', country: 'Belarus', cityRu: 'Минск', cityEn: 'Minsk' },
-  { city: 'Гомель', country: 'Belarus', cityRu: 'Гомель', cityEn: 'Gomel' },
-  { city: 'Могилёв', country: 'Belarus', cityRu: 'Могилёв', cityEn: 'Mogilev' },
-  { city: 'Витебск', country: 'Belarus', cityRu: 'Витебск', cityEn: 'Vitebsk' },
-  { city: 'Гродно', country: 'Belarus', cityRu: 'Гродно', cityEn: 'Grodno' },
-  { city: 'Брест', country: 'Belarus', cityRu: 'Брест', cityEn: 'Brest' },
-  { city: 'Бобруйск', country: 'Belarus', cityRu: 'Бобруйск', cityEn: 'Bobruisk' },
-  { city: 'Барановичи', country: 'Belarus', cityRu: 'Барановичи', cityEn: 'Baranovichi' },
-  { city: 'Борисов', country: 'Belarus', cityRu: 'Борисов', cityEn: 'Borisov' },
-  { city: 'Пинск', country: 'Belarus', cityRu: 'Пинск', cityEn: 'Pinsk' },
-  { city: 'Орша', country: 'Belarus', cityRu: 'Орша', cityEn: 'Orsha' },
+  { city: 'Minsk', country: 'Belarus', cityRu: 'Минск', },
+  { city: 'Gomel', country: 'Belarus', cityRu: 'Гомель', },
+  { city: 'Mogilev', country: 'Belarus', cityRu: 'Могилёв',  },
+  { city: 'Vitebsk', country: 'Belarus', cityRu: 'Витебск', },
+  { city: 'Grodno', country: 'Belarus', cityRu: 'Гродно', },
+  { city: 'Brest', country: 'Belarus', cityRu: 'Брест', },
+  { city: 'Bobruisk', country: 'Belarus', cityRu: 'Бобруйск', },
+  { city: 'Baranovichi', country: 'Belarus', cityRu: 'Барановичи', },
+  { city: 'Borisov', country: 'Belarus', cityRu: 'Борисов', },
+  { city: 'Pinsk', country: 'Belarus', cityRu: 'Пинск',},
+  { city: 'Orsha', country: 'Belarus', cityRu: 'Орша', },
 
   // Jordan
-  { city: 'Аммон', country: 'Jordan', cityRu: 'Аммон', cityEn: 'Amman' },
-  { city: 'Сувейлех', country: 'Jordan', cityRu: 'Сувейлех', cityEn: 'Suweileh' },
-  { city: 'Эз-Зарка', country: 'Jordan', cityRu: 'Эз-Зарка', cityEn: 'Zarqa' },
+  { city: 'Amman', country: 'Jordan', cityRu: 'Аммон', },
+  { city: 'Suweileh', country: 'Jordan', cityRu: 'Сувейлех',  },
+  { city: 'Zarqa', country: 'Jordan', cityRu: 'Эз-Зарка', },
 
   // Turkey
   { city: 'Istanbul', country: 'Turkey', cityRu: 'Стамбул',  },
