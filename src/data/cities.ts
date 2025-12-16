@@ -522,7 +522,7 @@ export const citiesWithCountries: CityWithCountry[] = [
   { city: 'Coimbra', country: 'Portugal', cityRu: 'Коимбра', cityEn: 'Coimbra' },
   { city: 'Setúbal', country: 'Portugal', cityRu: 'Сетубал', cityEn: 'Setubal' },
   { city: 'Almada', country: 'Portugal', cityRu: 'Алмада', cityEn: 'Almada' },
-  { city: 'Agualva-Cacém', country: 'Portugal', cityRu: 'Агуалва-Касен', cityEn: 'Agualva-Cacem' },
+  { city: 'Agualva-Cacem', country: 'Portugal', cityRu: 'Агуалва-Касен', },
 
   // Middle East and North Africa
   { city: 'Medina', country: 'Saudi Arabia', cityRu: 'Медина', },
