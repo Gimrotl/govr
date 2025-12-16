@@ -313,7 +313,6 @@ export const citiesWithCountries: CityWithCountry[] = [
   { city: 'Улан-Удэ', country: 'Russia', cityEn: 'Ulan-Ude' },
   { city: 'Чита', country: 'Russia', cityEn: 'Chita' },
   { city: 'Якутск', country: 'Russia', cityEn: 'Yakutsk' },
-  { city: 'Шалажи', country: 'Russia', cityEn: 'Shalazhi' },
 
   // Chechnya
   { city: 'Грозный', country: 'Chechnya', cityRu: 'Грозный', cityEn: 'Grozny' },
@@ -327,6 +326,7 @@ export const citiesWithCountries: CityWithCountry[] = [
   { city: 'Курчалой', country: 'Chechnya', cityRu: 'Курчалой', cityEn: 'Kurchaloy' },
   { city: 'Ойсхара', country: 'Chechnya', cityRu: 'Ойсхара', cityEn: 'Oiskhara' },
   { city: 'Серноводское', country: 'Chechnya', cityRu: 'Серноводское', cityEn: 'Sernovodskoye' },
+  { city: 'Шалажи', country: 'Chechnya', cityRu: 'Шалажи', cityEn: 'Shalazhi' },
 
   // Belarus
   { city: 'Минск', country: 'Belarus', cityEn: 'Minsk' },
