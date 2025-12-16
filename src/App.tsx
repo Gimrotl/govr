@@ -39,7 +39,7 @@ function App() {
           className="relative min-h-[500px] md:min-h-[600px] bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: 'url(/bildschirmfoto_2025-12-14_um_03.47.46.png)' }}
         >
-          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-gray-30"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-gray-50"></div>
 
           <div className="relative z-10 pt-24 md:pt-32 pb-16 md:pb-24">
             <div className="container mx-auto px-4 text-center">
