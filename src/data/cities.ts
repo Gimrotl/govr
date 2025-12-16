@@ -435,6 +435,7 @@ export const citiesWithCountries: CityWithCountry[] = [
   { city: 'Пинск', country: 'Belarus', cityEn: 'Pinsk' },
   { city: 'Орша', country: 'Belarus', cityEn: 'Orsha' },
 { city: 'Григоровщина', country: 'Belarus', cityEn: 'Grigorovshchina' },
+  { city: 'Пяшчатка', country: 'Belarus', cityEn: 'Peshchatka' },
 
   // Jordan
   { city: 'Аммон', country: 'Jordan', cityRu: 'Аммон', cityEn: 'Amman' },
