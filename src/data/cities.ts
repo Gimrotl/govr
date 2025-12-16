@@ -315,18 +315,15 @@ export const citiesWithCountries: CityWithCountry[] = [
   { city: 'Якутск', country: 'Russia', cityEn: 'Yakutsk' },
 
   // Chechnya
-  { city: 'Грозный', country: 'Chechnya', cityRu: 'Грозный', cityEn: 'Grozny' },
-  { city: 'Урус-Мартан', country: 'Chechnya', cityRu: 'Урус-Мартан', cityEn: 'Urus-Martan' },
-  { city: 'Аргун', country: 'Chechnya', cityRu: 'Аргун', cityEn: 'Argun' },
-  { city: 'Гудермес', country: 'Chechnya', cityRu: 'Гудермес', cityEn: 'Gudermes' },
-  { city: 'Катыр-Юрт', country: 'Chechnya', cityRu: 'Катыр-Юрт', cityEn: 'Katyr-Yurt' },
-  { city: 'Ведучи', country: 'Chechnya', cityRu: 'Ведучи', cityEn: 'Veduchi' },
-  { city: 'Шали', country: 'Chechnya', cityRu: 'Шали', cityEn: 'Shali' },
-  { city: 'Ачхой-Мартан', country: 'Chechnya', cityRu: 'Ачхой-Мартан', cityEn: 'Achkhoy-Martan' },
-  { city: 'Курчалой', country: 'Chechnya', cityRu: 'Курчалой', cityEn: 'Kurchaloy' },
-  { city: 'Ойсхара', country: 'Chechnya', cityRu: 'Ойсхара', cityEn: 'Oiskhara' },
-  { city: 'Серноводское', country: 'Chechnya', cityRu: 'Серноводское', cityEn: 'Sernovodskoye' },
-  { city: 'Шалажи', country: 'Chechnya', cityRu: 'Шалажи', cityEn: 'Shalazhi' },
+  { city: 'Grozny', country: 'Chechnya', cityRu: 'Грозный', },
+  
+  { city: 'Argun', country: 'Chechnya', cityRu: 'Аргун',  },
+  
+
+
+  { city: 'Shali', country: 'Chechnya', cityRu: 'Шали',  },
+  { city: 'Sernovodskoye', country: 'Chechnya', cityRu: 'Серноводское', },
+ 
 { city: 'Avtury', country: 'Chechnya', cityRu: 'Автуры', },
 { city: 'Agishty', country: 'Chechnya', cityRu: 'Агишты', },
 { city: 'Ayti-Mokhk', country: 'Chechnya', cityRu: 'Айти-Мохк', },
