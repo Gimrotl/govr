@@ -9,7 +9,7 @@ export interface CityWithCountry {
 export const citiesWithCountries: CityWithCountry[] = [
   // Germany
   { city: 'Berlin', country: 'Germany', cityRu: 'Берлин', },
-   { city: 'Kitzingn', country: 'Germany', cityRu: 'Китцинген', },
+   { city: 'Kitzingen', country: 'Germany', cityRu: 'Китцинген', },
   { city: 'Hamburg', country: 'Germany', cityRu: 'Гамбург', },
   { city: 'München', country: 'Germany', cityRu: 'Мюнхен', cityEn: 'Munich' },
   { city: 'Köln', country: 'Germany', cityRu: 'Кёльн', cityEn: 'Cologne' },
