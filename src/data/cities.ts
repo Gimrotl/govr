@@ -439,7 +439,7 @@ export const citiesWithCountries: CityWithCountry[] = [
   { city: 'Mekka', country: 'Saudi Arabia', cityRu: 'Мекка' },
   { city: 'Riad', country: 'Saudi Arabia', cityRu: 'Эр-Рияд' },
   { city: 'Kuwait', country: 'Kuwait', cityRu: 'Эль-Кувейт' },
-  { city: 'Dschidda', country: 'Saudi Arabia', cityRu: 'Джидда' },
+  { city: 'Dschidda', country: 'Saudi Arabia', cityRu: 'Джидда', cityEn: 'Jeddah' },
   { city: 'Kairo', country: 'Egypt', cityRu: 'Каир' },
   { city: 'Alexandria', country: 'Egypt', cityRu: 'Александрия' },
   { city: 'Luxor', country: 'Egypt', cityRu: 'Луксор' },
