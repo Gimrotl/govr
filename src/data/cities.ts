@@ -318,8 +318,8 @@ export const citiesWithCountries: CityWithCountry[] = [
   { city: 'Grozny', country: 'Chechnya', cityRu: 'Грозный', },
   
   { city: 'Argun', country: 'Chechnya', cityRu: 'Аргун',  },
-  
-
+  { city: 'Duba-Yurt', country: 'Chechnya', cityRu: 'Дуба-Юрт',  },
+{ city: 'Yandi', country: 'Chechnya', cityRu: 'Янди-КӀотар',  },
 
   { city: 'Shali', country: 'Chechnya', cityRu: 'Шали',  },
   { city: 'Sernovodskoye', country: 'Chechnya', cityRu: 'Серноводское', },
