@@ -30,18 +30,27 @@ export function useInfoCards() {
   };
 
   const updateCard = async (id: string, updates: Partial<InfoCard>) => {
-    const { error } = await supabase
-      .from('info_cards')
-      .update({ ...updates, updated_at: new Date().toISOString() })
-      .eq('id', id);
+    try {
+      const { error } = await supabase
+        .from('info_cards')
+        .update({ ...updates, updated_at: new Date().toISOString() })
+        .eq('id', id);
 
-    if (error) {
-      setError(error.message);
+      if (error) {
+        console.error('Update error:', error);
+        setError(error.message);
+        return false;
+      }
+
+      await fetchCards();
+      setError(null);
+      return true;
+    } catch (err) {
+      console.error('Update exception:', err);
+      const errorMessage = err instanceof Error ? err.message : 'Unbekannter Fehler';
+      setError(errorMessage);
       return false;
     }
-
-    await fetchCards();
-    return true;
   };
 
   useEffect(() => {

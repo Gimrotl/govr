@@ -15,6 +15,8 @@ export const AdminDashboardModal: React.FC = () => {
   const [showSidebar, setShowSidebar] = useState(false);
   const [editingCard, setEditingCard] = useState<InfoCard | null>(null);
   const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
+  const [saveSuccess, setSaveSuccess] = useState(false);
 
   const handleLogout = () => {
     logout();
@@ -410,18 +412,38 @@ export const AdminDashboardModal: React.FC = () => {
   const handleSaveCard = async () => {
     if (!editingCard) return;
     setSaving(true);
-    await updateCard(editingCard.id, {
+    setSaveError(null);
+    setSaveSuccess(false);
+    const success = await updateCard(editingCard.id, {
       title: editingCard.title,
       description: editingCard.description,
       link_text: editingCard.link_text
     });
     setSaving(false);
-    setEditingCard(null);
+    if (success) {
+      setSaveSuccess(true);
+      setEditingCard(null);
+      setTimeout(() => setSaveSuccess(false), 3000);
+    } else {
+      setSaveError('Fehler beim Speichern der Änderungen. Bitte versuchen Sie es erneut.');
+    }
   };
 
   const renderContentCards = () => (
     <div>
       <h1 className="text-xl md:text-2xl font-bold text-gray-800 mb-4 md:mb-6 hidden md:block">Info-Karten verwalten</h1>
+
+      {saveError && (
+        <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg text-sm">
+          {saveError}
+        </div>
+      )}
+
+      {saveSuccess && (
+        <div className="mb-4 p-3 bg-emerald-100 border border-emerald-400 text-emerald-700 rounded-lg text-sm">
+          Änderungen erfolgreich gespeichert und veröffentlicht!
+        </div>
+      )}
 
       {cardsLoading ? (
         <div className="flex justify-center py-8">
