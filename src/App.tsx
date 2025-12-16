@@ -43,7 +43,7 @@ function App() {
 
           <div className="relative z-10 pt-24 md:pt-32 pb-16 md:pb-24">
             <div className="container mx-auto px-4 text-center">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white drop-shadow-lg mb-66">
+              <h1 className="text-4xl md:text-3xl lg:text-4xl font-bold text-white drop-shadow-lg mb-66">
                 Caucasian Mobility Network
               </h1>
               <p className="text-xl md:text-2xl text-white/90 drop-shadow-md mb-12">
