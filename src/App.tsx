@@ -47,7 +47,7 @@ function App() {
                 Caucasus RideShare Network
               </h1>
               <p className="text-xl md:text-2xl text-white/90 drop-shadow-md mb-12">
-                Han vord - han nekh
+                ẊAN VORD - ẊAN NEQ̇
               </p>
 
               {(activeSection === 'search') && (
