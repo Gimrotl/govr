@@ -242,16 +242,16 @@ export const citiesWithCountries: CityWithCountry[] = [
   { city: 'Szombathely', country: 'Hungary', cityRu: 'Сомбатхей', cityEn: 'Szombathely' },
 
   // Romania
-  { city: 'București', country: 'Romania', cityRu: 'Бухарест', cityEn: 'Bucharest' },
-  { city: 'Cluj-Napoca', country: 'Romania', cityRu: 'Клуж-Напока', cityEn: 'Cluj-Napoca' },
-  { city: 'Timișoara', country: 'Romania', cityRu: 'Тимишоара', cityEn: 'Timisoara' },
-  { city: 'Iași', country: 'Romania', cityRu: 'Яссы', cityEn: 'Iasi' },
-  { city: 'Constanța', country: 'Romania', cityRu: 'Констанца', cityEn: 'Constanta' },
-  { city: 'Craiova', country: 'Romania', cityRu: 'Крайова', cityEn: 'Craiova' },
-  { city: 'Brașov', country: 'Romania', cityRu: 'Брашов', cityEn: 'Brasov' },
-  { city: 'Galați', country: 'Romania', cityRu: 'Галац', cityEn: 'Galati' },
-  { city: 'Ploiești', country: 'Romania', cityRu: 'Плоешти', cityEn: 'Ploiesti' },
-  { city: 'Oradea', country: 'Romania', cityRu: 'Орадя', cityEn: 'Oradea' },
+  { city: 'Bucharest', country: 'Romania', cityRu: 'Бухарест', },
+  { city: 'Cluj-Napoca', country: 'Romania', cityRu: 'Клуж-Напока', },
+  { city: 'Timisoara', country: 'Romania', cityRu: 'Тимишоара', },
+  { city: 'Iasi', country: 'Romania', cityRu: 'Яссы',},
+  { city: 'Constanta', country: 'Romania', cityRu: 'Констанца', },
+  { city: 'Craiova', country: 'Romania', cityRu: 'Крайова',  },
+  { city: 'Brasov', country: 'Romania', cityRu: 'Брашов', },
+  { city: 'Galati', country: 'Romania', cityRu: 'Галац', },
+  { city: 'Ploiesti', country: 'Romania', cityRu: 'Плоешти', },
+  { city: 'Oradea', country: 'Romania', cityRu: 'Орадя', },
 
   // Russia
   { city: 'Москва', country: 'Russia', cityEn: 'Moscow' },
