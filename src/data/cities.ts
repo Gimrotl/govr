@@ -157,6 +157,7 @@ export const citiesWithCountries: CityWithCountry[] = [
   { city: 'Lublin', country: 'Poland', cityRu: 'Люблин', cityEn: 'Lublin' },
   { city: 'Białystok', country: 'Poland', cityRu: 'Белосток', cityEn: 'Bialystok' },
   { city: 'Terespol', country: 'Poland', cityRu: 'Тересполь', },
+  { city: 'Kuznica', country: 'Poland', cityRu: 'Кузница', },
 
   // Netherlands
   { city: 'Amsterdam', country: 'Netherlands', cityRu: 'Амстердам', cityEn: 'Amsterdam' },
