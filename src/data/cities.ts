@@ -234,12 +234,12 @@ export const citiesWithCountries: CityWithCountry[] = [
   { city: 'Debrecen', country: 'Hungary', cityRu: 'Дебрецен', },
   { city: 'Szeged', country: 'Hungary', cityRu: 'Сегед', cityEn: 'Szeged' },
   { city: 'Miskolc', country: 'Hungary', cityRu: 'Мишкольц', cityEn: 'Miskolc' },
-  { city: 'Pécs', country: 'Hungary', cityRu: 'Печ', cityEn: 'Pecs' },
-  { city: 'Győr', country: 'Hungary', cityRu: 'Дьёр', cityEn: 'Gyor' },
-  { city: 'Nyíregyháza', country: 'Hungary', cityRu: 'Ниредьхаза', cityEn: 'Nyiregyhaza' },
-  { city: 'Kecskemét', country: 'Hungary', cityRu: 'Кечкемет', cityEn: 'Kecskemet' },
-  { city: 'Székesfehérvár', country: 'Hungary', cityRu: 'Секешфехервар', cityEn: 'Szekesfehervar' },
-  { city: 'Szombathely', country: 'Hungary', cityRu: 'Сомбатхей', cityEn: 'Szombathely' },
+  { city: 'Pecs', country: 'Hungary', cityRu: 'Печ', },
+  { city: 'Gyor', country: 'Hungary', cityRu: 'Дьёр',},
+  { city: 'Nyiregyhaza', country: 'Hungary', cityRu: 'Ниредьхаза', },
+  { city: 'Kecskemet', country: 'Hungary', cityRu: 'Кечкемет', },
+  { city: 'Szekesfehervar', country: 'Hungary', cityRu: 'Секешфехервар', },
+  { city: 'Szombathely', country: 'Hungary', cityRu: 'Сомбатхей', },
 
   // Romania
   { city: 'Bucharest', country: 'Romania', cityRu: 'Бухарест', },
