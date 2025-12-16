@@ -531,7 +531,7 @@ export const citiesWithCountries: CityWithCountry[] = [
   { city: 'Kuwait', country: 'Kuwait', cityRu: 'Эль-Кувейт', ' },
   { city: 'Jeddah', country: 'Saudi Arabia', cityRu: 'Джидда',  },
   { city: 'Kairo', country: 'Egypt', cityRu: 'Каир', cityEn: 'Cairo' },
-  { city: 'Alexandria', country: 'Egypt', cityRu: 'Александрия',  },
+  { city: 'Alexandria', country: 'Egypt', cityRu: 'Александрия', },
   { city: 'Luxor', country: 'Egypt', cityRu: 'Луксор',  },
   { city: 'Hurghada', country: 'Egypt', cityRu: 'Хургада',  },
   { city: 'Marrakech', country: 'Morocco', cityRu: 'Марракеш', },
@@ -542,10 +542,10 @@ export const citiesWithCountries: CityWithCountry[] = [
 
   // Ukraine
   { city: 'Kyiv', country: 'Ukraine', cityRu: 'Киев',  },
-  { city: 'Kharkiv', country: 'Ukraine', cityRu: 'Харьков',  },
+  { city: 'Kharkiv', country: 'Ukraine', cityRu: 'Харьков', },
   { city: 'Dnipro', country: 'Ukraine', cityRu: 'Днепр',  },
   { city: 'Lviv', country: 'Ukraine', cityRu: 'Львов', },
-  { city: 'Odessa', country: 'Ukraine', cityRu: 'Одесса',  },
+  { city: 'Odessa', country: 'Ukraine', cityRu: 'Одесса', },
 
   // Greece
   { city: 'Athens', country: 'Greece', cityRu: 'Афины', },
