@@ -515,7 +515,7 @@ export const citiesWithCountries: CityWithCountry[] = [
   // Portugal
   { city: 'Lisboa', country: 'Portugal', cityRu: 'Лиссабон', cityEn: 'Lisbon' },
   { city: 'Porto', country: 'Portugal', cityRu: 'Порту', cityEn: 'Porto' },
-  { city: 'Vila Nova de Gaia', country: 'Portugal', cityRu: 'Вила-Нова-де-Гая', cityEn: 'Vila Nova de Gaia' },
+  { city: 'Vila Nova de Gaia', country: 'Portugal', cityRu: 'Вила-Нова-де-Гая', },
   { city: 'Amadora', country: 'Portugal', cityRu: 'Амадора', },
   { city: 'Braga', country: 'Portugal', cityRu: 'Брага', },
   { city: 'Funchal', country: 'Portugal', cityRu: 'Фуншал', },
