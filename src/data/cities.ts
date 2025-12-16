@@ -368,7 +368,7 @@ export const citiesWithCountries: CityWithCountry[] = [
 { city: 'Itum-Kale', country: 'Chechnya', cityRu: 'Итум-Кали', },
 { city: 'Kalinovskaya', country: 'Chechnya', cityRu: 'Калиновская', },
 { city: 'Kargalinskaya', country: 'Chechnya', cityRu: 'Каргалинская', },
-{ city: 'Katar-Yurt', country: 'Chechnya', cityRu: 'Катар-Юрт', },
+{ city: 'Katar-Yurt', country: 'Chechnya', cityRu: 'Котар-Юрт', },
 { city: 'Kenkhi', country: 'Chechnya', cityRu: 'Кенхи', },
 { city: 'Komsomolskoye', country: 'Chechnya', cityRu: 'Комсомольское', },
 { city: 'Kulatory', country: 'Chechnya', cityRu: 'Кулары', },
