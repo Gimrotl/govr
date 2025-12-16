@@ -565,9 +565,7 @@ export const citiesWithCountries: CityWithCountry[] = [
   { city: 'Riga', country: 'Latvia', cityRu: 'Рига', cityEn: 'Riga' },
   { city: 'Kaunas', country: 'Lithuania', cityRu: 'Каунас', cityEn: 'Kaunas' }
 
-  // USA
-  { city: 'New York City', country: 'USA', cityRu: 'Нью-Йорк', },
-
+ 
 ];
 
 // Keep the old cities array for backward compatibility
