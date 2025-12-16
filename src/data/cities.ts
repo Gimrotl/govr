@@ -2,6 +2,7 @@ export interface CityWithCountry {
   city: string;
   country: string;
   cityRu?: string;
+  cityEn?: string;
 }
 
 // European cities with countries
@@ -253,48 +254,48 @@ export const citiesWithCountries: CityWithCountry[] = [
   { city: 'Oradea', country: 'Rumänien', cityRu: 'Орадя' },
 
   // Russia
-  { city: 'Москва', country: 'Russland' },
-  { city: 'Санкт-Петербург', country: 'Russland' },
-  { city: 'Новосибирск', country: 'Russland' },
-  { city: 'Екатеринбург', country: 'Russland' },
-  { city: 'Нижний Новгород', country: 'Russland' },
-  { city: 'Казань', country: 'Russland' },
-  { city: 'Челябинск', country: 'Russland' },
-  { city: 'Омск', country: 'Russland' },
-  { city: 'Самара', country: 'Russland' },
-  { city: 'Ростов-на-Дону', country: 'Russland' },
-  { city: 'Уфа', country: 'Russland' },
-  { city: 'Красноярск', country: 'Russland' },
-  { city: 'Пермь', country: 'Russland' },
-  { city: 'Воронеж', country: 'Russland' },
-  { city: 'Волгоград', country: 'Russland' },
-  { city: 'Краснодар', country: 'Russland' },
-  { city: 'Саратов', country: 'Russland' },
-  { city: 'Тюмень', country: 'Russland' },
-  { city: 'Тольятти', country: 'Russland' },
-  { city: 'Ижевск', country: 'Russland' },
-  { city: 'Грозный', country: 'Russland' },
-  { city: 'Махачкала', country: 'Russland' },
-  { city: 'Владикавказ', country: 'Russland' },
-  { city: 'Нальчик', country: 'Russland' },
-  { city: 'Черкесск', country: 'Russland' },
-  { city: 'Майкоп', country: 'Russland' },
-  { city: 'Элиста', country: 'Russland' },
-  { city: 'Дербент', country: 'Russland' },
-  { city: 'Хасавюрт', country: 'Russland' },
-  { city: 'Буйнакск', country: 'Russland' },
+  { city: 'Москва', country: 'Russland', cityEn: 'Moscow' },
+  { city: 'Санкт-Петербург', country: 'Russland', cityEn: 'Saint Petersburg' },
+  { city: 'Новосибирск', country: 'Russland', cityEn: 'Novosibirsk' },
+  { city: 'Екатеринбург', country: 'Russland', cityEn: 'Yekaterinburg' },
+  { city: 'Нижний Новгород', country: 'Russland', cityEn: 'Nizhny Novgorod' },
+  { city: 'Казань', country: 'Russland', cityEn: 'Kazan' },
+  { city: 'Челябинск', country: 'Russland', cityEn: 'Chelyabinsk' },
+  { city: 'Омск', country: 'Russland', cityEn: 'Omsk' },
+  { city: 'Самара', country: 'Russland', cityEn: 'Samara' },
+  { city: 'Ростов-на-Дону', country: 'Russland', cityEn: 'Rostov-on-Don' },
+  { city: 'Уфа', country: 'Russland', cityEn: 'Ufa' },
+  { city: 'Красноярск', country: 'Russland', cityEn: 'Krasnoyarsk' },
+  { city: 'Пермь', country: 'Russland', cityEn: 'Perm' },
+  { city: 'Воронеж', country: 'Russland', cityEn: 'Voronezh' },
+  { city: 'Волгоград', country: 'Russland', cityEn: 'Volgograd' },
+  { city: 'Краснодар', country: 'Russland', cityEn: 'Krasnodar' },
+  { city: 'Саратов', country: 'Russland', cityEn: 'Saratov' },
+  { city: 'Тюмень', country: 'Russland', cityEn: 'Tyumen' },
+  { city: 'Тольятти', country: 'Russland', cityEn: 'Tolyatti' },
+  { city: 'Ижевск', country: 'Russland', cityEn: 'Izhevsk' },
+  { city: 'Грозный', country: 'Russland', cityEn: 'Grozny' },
+  { city: 'Махачкала', country: 'Russland', cityEn: 'Makhachkala' },
+  { city: 'Владикавказ', country: 'Russland', cityEn: 'Vladikavkaz' },
+  { city: 'Нальчик', country: 'Russland', cityEn: 'Nalchik' },
+  { city: 'Черкесск', country: 'Russland', cityEn: 'Cherkessk' },
+  { city: 'Майкоп', country: 'Russland', cityEn: 'Maykop' },
+  { city: 'Элиста', country: 'Russland', cityEn: 'Elista' },
+  { city: 'Дербент', country: 'Russland', cityEn: 'Derbent' },
+  { city: 'Хасавюрт', country: 'Russland', cityEn: 'Khasavyurt' },
+  { city: 'Буйнакск', country: 'Russland', cityEn: 'Buynaksk' },
 
   // Belarus
-  { city: 'Минск', country: 'Belarus' },
-  { city: 'Гомель', country: 'Belarus' },
-  { city: 'Могилёв', country: 'Belarus' },
-  { city: 'Витебск', country: 'Belarus' },
-  { city: 'Гродно', country: 'Belarus' },
-  { city: 'Брест', country: 'Belarus' },
-  { city: 'Бобруйск', country: 'Belarus' },
-  { city: 'Барановичи', country: 'Belarus' },
-  { city: 'Борисов', country: 'Belarus' },
-  { city: 'Пинск', country: 'Belarus' },
+  { city: 'Минск', country: 'Belarus', cityEn: 'Minsk' },
+  { city: 'Гомель', country: 'Belarus', cityEn: 'Gomel' },
+  { city: 'Могилёв', country: 'Belarus', cityEn: 'Mogilev' },
+  { city: 'Витебск', country: 'Belarus', cityEn: 'Vitebsk' },
+  { city: 'Гродно', country: 'Belarus', cityEn: 'Grodno' },
+  { city: 'Брест', country: 'Belarus', cityEn: 'Brest' },
+  { city: 'Бобруйск', country: 'Belarus', cityEn: 'Bobruisk' },
+  { city: 'Барановичи', country: 'Belarus', cityEn: 'Baranovichi' },
+  { city: 'Борисов', country: 'Belarus', cityEn: 'Borisov' },
+  { city: 'Пинск', country: 'Belarus', cityEn: 'Pinsk' },
 
   // Turkey
   { city: 'İstanbul', country: 'Türkei', cityRu: 'Стамбул' },
@@ -309,16 +310,16 @@ export const citiesWithCountries: CityWithCountry[] = [
   { city: 'Mersin', country: 'Türkei', cityRu: 'Мерсин' },
 
   // Georgia
-  { city: 'თბილისი', country: 'Georgien' },
-  { city: 'ბათუმი', country: 'Georgien' },
-  { city: 'ქუთაისი', country: 'Georgien' },
-  { city: 'რუსთავი', country: 'Georgien' },
-  { city: 'გორი', country: 'Georgien' },
-  { city: 'ზუგდიდი', country: 'Georgien' },
-  { city: 'ფოთი', country: 'Georgien' },
-  { city: 'ხაშური', country: 'Georgien' },
-  { city: 'სამტრედია', country: 'Georgien' },
-  { city: 'სენაკი', country: 'Georgien' },
+  { city: 'თბილისი', country: 'Georgien', cityEn: 'Tbilisi' },
+  { city: 'ბათუმი', country: 'Georgien', cityEn: 'Batumi' },
+  { city: 'ქუთაისი', country: 'Georgien', cityEn: 'Kutaisi' },
+  { city: 'რუსთავი', country: 'Georgien', cityEn: 'Rustavi' },
+  { city: 'გორი', country: 'Georgien', cityEn: 'Gori' },
+  { city: 'ზუგდიდი', country: 'Georgien', cityEn: 'Zugdidi' },
+  { city: 'ფოთი', country: 'Georgien', cityEn: 'Poti' },
+  { city: 'ხაშური', country: 'Georgien', cityEn: 'Khashuri' },
+  { city: 'სამტრედია', country: 'Georgien', cityEn: 'Samtredia' },
+  { city: 'სენაკი', country: 'Georgien', cityEn: 'Senaki' },
 
   // Sweden
   { city: 'Stockholm', country: 'Schweden', cityRu: 'Стокгольм' },
@@ -434,21 +435,24 @@ export const getCitySuggestions = (input: string, limit: number = 10): CityWithC
     .filter(item => {
       const cityMatch = item.city.toLowerCase().includes(searchTerm);
       const cityRuMatch = item.cityRu?.toLowerCase().includes(searchTerm);
-      return cityMatch || cityRuMatch;
+      const cityEnMatch = item.cityEn?.toLowerCase().includes(searchTerm);
+      return cityMatch || cityRuMatch || cityEnMatch;
     })
     .sort((a, b) => {
       const aLower = a.city.toLowerCase();
       const bLower = b.city.toLowerCase();
       const aRuLower = a.cityRu?.toLowerCase() || '';
       const bRuLower = b.cityRu?.toLowerCase() || '';
+      const aEnLower = a.cityEn?.toLowerCase() || '';
+      const bEnLower = b.cityEn?.toLowerCase() || '';
 
-      // Prioritize exact matches (either original or Russian)
-      if (aLower === searchTerm || aRuLower === searchTerm) return -1;
-      if (bLower === searchTerm || bRuLower === searchTerm) return 1;
+      // Prioritize exact matches (original, Russian, or English)
+      if (aLower === searchTerm || aRuLower === searchTerm || aEnLower === searchTerm) return -1;
+      if (bLower === searchTerm || bRuLower === searchTerm || bEnLower === searchTerm) return 1;
 
       // Then prioritize cities that start with the search term
-      const aStarts = aLower.startsWith(searchTerm) || aRuLower.startsWith(searchTerm);
-      const bStarts = bLower.startsWith(searchTerm) || bRuLower.startsWith(searchTerm);
+      const aStarts = aLower.startsWith(searchTerm) || aRuLower.startsWith(searchTerm) || aEnLower.startsWith(searchTerm);
+      const bStarts = bLower.startsWith(searchTerm) || bRuLower.startsWith(searchTerm) || bEnLower.startsWith(searchTerm);
       if (aStarts && !bStarts) return -1;
       if (bStarts && !aStarts) return 1;
 

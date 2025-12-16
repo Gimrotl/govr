@@ -119,8 +119,16 @@ export const CityAutocomplete: React.FC<CityAutocompleteProps> = ({
               }`}
               onClick={() => handleSuggestionClick(suggestion)}
             >
-              <span className="font-medium">{suggestion.city}</span>
-              <span className="text-gray-500 ml-2">({suggestion.country})</span>
+              <div className="flex items-center">
+                <span className="font-medium">{suggestion.city}</span>
+                {suggestion.cityEn && (
+                  <span className="text-gray-600 ml-2 text-sm">({suggestion.cityEn})</span>
+                )}
+                <span className="text-gray-500 ml-2">- {suggestion.country}</span>
+              </div>
+              {suggestion.cityRu && (
+                <div className="text-xs text-gray-400 mt-0.5">{suggestion.cityRu}</div>
+              )}
             </div>
           ))}
         </div>
