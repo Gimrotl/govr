@@ -625,6 +625,7 @@ export const citiesWithCountries: CityWithCountry[] = [
   { city: 'Kaunas', country: 'Lithuania', cityRu: 'Каунас', }
   { city: 'Zarasai', country: 'Lithuania', cityRu: 'Зарасай', }  
 
+
   ]
 
 // Keep the old cities array for backward compatibility
