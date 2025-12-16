@@ -621,7 +621,7 @@ export const citiesWithCountries: CityWithCountry[] = [
   { city: 'Vilnius', country: 'Lithuania', cityRu: 'Вильнюс', cityEn: 'Vilnius' },
   { city: 'Riga', country: 'Latvia', cityRu: 'Рига', cityEn: 'Riga' },
   { city: 'Kaunas', country: 'Lithuania', cityRu: 'Каунас', cityEn: 'Kaunas' }
-
+ { city: 'Paternieki', country: 'Lithuania', cityRu: 'Патерниеки', }
  
 ];
 
