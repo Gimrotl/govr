@@ -11,6 +11,7 @@ export const CreateRestStopModal: React.FC = () => {
   const { createRestStop } = useRestStops();
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
+  const [images, setImages] = useState<Array<{ id: string; file?: File; url?: string }>>([]);
   const [formData, setFormData] = useState({
     name: '',
     type: 'Raststätte' as 'Raststätte' | 'Hotel' | 'Tankstelle' | 'Restaurant' | 'Route',
@@ -20,8 +21,6 @@ export const CreateRestStopModal: React.FC = () => {
     rating: 4.0,
     description: '',
     fullDescription: '',
-    image: null as File | null,
-    imagePreview: '',
     amenities: [] as string[],
     coordinates: {
       lat: 0,
@@ -38,29 +37,26 @@ export const CreateRestStopModal: React.FC = () => {
     accept: {
       'image/*': ['.png', '.jpg', '.jpeg', '.gif']
     },
-    maxSize: 5242880, // 5MB
-    multiple: false,
+    maxSize: 5242880,
+    multiple: true,
     onDrop: (acceptedFiles) => {
-      const file = acceptedFiles[0];
-      if (file) {
-        setFormData(prev => ({
-          ...prev,
-          image: file,
-          imagePreview: URL.createObjectURL(file)
-        }));
-      }
+      const newImages = acceptedFiles.map(file => ({
+        id: `${Date.now()}-${Math.random()}`,
+        file,
+        url: URL.createObjectURL(file)
+      }));
+      setImages(prev => [...prev, ...newImages]);
     }
   });
 
-  const removeImage = () => {
-    if (formData.imagePreview) {
-      URL.revokeObjectURL(formData.imagePreview);
-    }
-    setFormData(prev => ({
-      ...prev,
-      image: null,
-      imagePreview: ''
-    }));
+  const removeImage = (id: string) => {
+    setImages(prev => {
+      const image = prev.find(img => img.id === id);
+      if (image?.url && image.file) {
+        URL.revokeObjectURL(image.url);
+      }
+      return prev.filter(img => img.id !== id);
+    });
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -103,7 +99,7 @@ export const CreateRestStopModal: React.FC = () => {
     try {
       let imageToSave = 'https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg';
 
-      if (formData.image) {
+      if (images.length > 0 && images[0].file) {
         await new Promise<void>((resolve, reject) => {
           const reader = new FileReader();
           reader.onloadend = () => {
@@ -111,7 +107,7 @@ export const CreateRestStopModal: React.FC = () => {
             resolve();
           };
           reader.onerror = () => reject(new Error('Fehler beim Lesen der Datei'));
-          reader.readAsDataURL(formData.image);
+          reader.readAsDataURL(images[0].file);
         });
       }
 
@@ -266,46 +262,59 @@ export const CreateRestStopModal: React.FC = () => {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Bild hochladen
+              Bilder verwalten
             </label>
-            
-            {formData.imagePreview ? (
-              <div className="relative">
-                <img
-                  src={formData.imagePreview}
-                  alt="Preview"
-                  className="w-full h-48 object-cover rounded-lg border border-gray-300"
-                />
-                <button
-                  type="button"
-                  onClick={removeImage}
-                  className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full hover:bg-red-600 transition duration-200"
-                >
-                  <Trash2 size={16} />
-                </button>
-              </div>
-            ) : (
-              <div
-                {...getRootProps()}
-                className={`w-full h-48 border-2 border-dashed rounded-lg flex flex-col items-center justify-center cursor-pointer transition-colors ${
-                  isDragActive
-                    ? 'border-sky-400 bg-sky-50'
-                    : 'border-gray-300 hover:border-sky-300 hover:bg-gray-50'
-                }`}
-              >
-                <input {...getInputProps()} />
-                <Upload size={48} className="text-gray-400 mb-2" />
-                <p className="text-gray-600 text-center">
-                  {isDragActive 
-                    ? 'Bild hier ablegen...' 
-                    : 'Klicken oder Bild hierher ziehen'
-                  }
-                </p>
-                <p className="text-sm text-gray-500 mt-1">
-                  PNG, JPG, GIF bis 5MB
-                </p>
+
+            {images.length > 0 && (
+              <div className="space-y-3 mb-3">
+                {images.map((image, index) => (
+                  <div key={image.id} className="flex items-center space-x-3 bg-gray-50 p-3 rounded-lg border border-gray-200">
+                    <img
+                      src={image.url}
+                      alt={`Bild ${index + 1}`}
+                      className="w-20 h-20 object-cover rounded-lg"
+                    />
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-gray-700">
+                        Bild {index + 1} {index === 0 && '(Hauptbild)'}
+                      </p>
+                      <p className="text-xs text-gray-500">
+                        {image.file ? image.file.name : 'Bestehendes Bild'}
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => removeImage(image.id)}
+                      className="p-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition duration-200"
+                      title="Löschen"
+                    >
+                      <Trash2 size={18} />
+                    </button>
+                  </div>
+                ))}
               </div>
             )}
+
+            <div
+              {...getRootProps()}
+              className={`w-full h-32 border-2 border-dashed rounded-lg flex flex-col items-center justify-center cursor-pointer transition-colors ${
+                isDragActive
+                  ? 'border-sky-400 bg-sky-50'
+                  : 'border-gray-300 hover:border-sky-300 hover:bg-gray-50'
+              }`}
+            >
+              <input {...getInputProps()} />
+              <Upload size={36} className="text-gray-400 mb-2" />
+              <p className="text-gray-600 text-center text-sm">
+                {isDragActive
+                  ? 'Bilder hier ablegen...'
+                  : 'Klicken oder Bilder hierher ziehen'
+                }
+              </p>
+              <p className="text-xs text-gray-500 mt-1">
+                PNG, JPG, GIF bis 5MB (mehrere möglich)
+              </p>
+            </div>
           </div>
 
           <div>
