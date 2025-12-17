@@ -3,24 +3,7 @@ import { X, MapPin, Star, Navigation, ExternalLink, ChevronLeft, ChevronRight } 
 import { useModals } from '../../hooks/useModals';
 import { useAuth } from '../../hooks/useAuth';
 import { RestStopReviewsModal } from './RestStopReviewsModal';
-
-interface RestStop {
-  id: number;
-  name: string;
-  type: 'Raststätte' | 'Hotel' | 'Tankstelle' | 'Restaurant';
-  location: string;
-  address: string;
-  rating: number;
-  description: string;
-  image: string;
-  images: string[];
-  amenities: string[];
-  fullDescription: string;
-  coordinates: {
-    lat: number;
-    lng: number;
-  };
-}
+import { RestStop } from '../../hooks/useRestStops';
 
 interface RestStopDetailsModalProps {
   restStop: RestStop | null;
@@ -404,7 +387,7 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
                 <h3 className="text-lg font-semibold text-gray-800 mb-3">Beschreibung</h3>
                 <div className="bg-gray-50 p-4 lg:p-6 rounded-xl">
                   <p className="text-sm lg:text-base text-gray-700 leading-relaxed">
-                    {restStop.fullDescription}
+                    {restStop.full_description || restStop.description}
                   </p>
                 </div>
               </div>
