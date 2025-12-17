@@ -143,7 +143,6 @@ export const CreateRestStopModal: React.FC = () => {
         description: formData.description,
         full_description: formData.fullDescription,
         image: mainImage,
-        images: imageUrls,
         amenities: formData.amenities,
         coordinates: formData.coordinates
       };

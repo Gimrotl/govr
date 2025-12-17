@@ -11,7 +11,6 @@ export interface RestStop {
   description: string;
   full_description: string;
   image: string;
-  images?: string[];
   amenities: string[];
   coordinates: {
     lat: number;
