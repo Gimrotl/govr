@@ -75,13 +75,13 @@ export function useRestStops() {
     }
   };
 
-  const createRestStop = async (newRestStop: Omit<RestStop, 'id' | 'created_at' | 'updated_at' | 'created_by'>, userId: string) => {
+  const createRestStop = async (newRestStop: Omit<RestStop, 'id' | 'created_at' | 'updated_at' | 'created_by'>, userId: string | null) => {
     try {
       const { data, error: createError } = await supabase
         .from('rest_stops')
         .insert({
           ...newRestStop,
-          created_by: userId,
+          created_by: userId || null,
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString()
         })

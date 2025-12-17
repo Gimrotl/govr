@@ -127,7 +127,7 @@ export const CreateRestStopModal: React.FC = () => {
         coordinates: formData.coordinates
       };
 
-      const result = await createRestStop(newRestStop, user?.id || 'system');
+      const result = await createRestStop(newRestStop, user?.id || null);
 
       if (result) {
         setSaveError(null);
