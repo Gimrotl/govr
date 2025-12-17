@@ -116,7 +116,6 @@ export const CreateRestStopModal: React.FC = () => {
 
     try {
       const imageUrls: string[] = [];
-      const defaultImage = 'https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg';
 
       for (const image of images) {
         if (image.file) {
@@ -132,7 +131,7 @@ export const CreateRestStopModal: React.FC = () => {
         }
       }
 
-      const mainImage = imageUrls.length > 0 ? imageUrls[0] : defaultImage;
+      const mainImage = imageUrls.length > 0 ? imageUrls[0] : null;
 
       const newRestStop = {
         name: formData.name,
