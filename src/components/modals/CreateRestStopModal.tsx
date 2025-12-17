@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, MapPin, Star, Save, Upload, Trash2 } from 'lucide-react';
+import { X, MapPin, Star, Save, Upload, Trash2, ChevronUp, ChevronDown } from 'lucide-react';
 import { useModals } from '../../hooks/useModals';
 import { useAuth } from '../../hooks/useAuth';
 import { useRestStops } from '../../hooks/useRestStops';
@@ -56,6 +56,24 @@ export const CreateRestStopModal: React.FC = () => {
         URL.revokeObjectURL(image.url);
       }
       return prev.filter(img => img.id !== id);
+    });
+  };
+
+  const moveImageUp = (index: number) => {
+    if (index === 0) return;
+    setImages(prev => {
+      const newImages = [...prev];
+      [newImages[index - 1], newImages[index]] = [newImages[index], newImages[index - 1]];
+      return newImages;
+    });
+  };
+
+  const moveImageDown = (index: number) => {
+    if (index === images.length - 1) return;
+    setImages(prev => {
+      const newImages = [...prev];
+      [newImages[index], newImages[index + 1]] = [newImages[index + 1], newImages[index]];
+      return newImages;
     });
   };
 
@@ -272,30 +290,60 @@ export const CreateRestStopModal: React.FC = () => {
             </label>
 
             {images.length > 0 && (
-              <div className="space-y-3 mb-3">
+              <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 mb-3">
                 {images.map((image, index) => (
-                  <div key={image.id} className="flex items-center space-x-3 bg-gray-50 p-3 rounded-lg border border-gray-200">
-                    <img
-                      src={image.url}
-                      alt={`Bild ${index + 1}`}
-                      className="w-20 h-20 object-cover rounded-lg"
-                    />
-                    <div className="flex-1">
-                      <p className="text-sm font-medium text-gray-700">
-                        Bild {index + 1} {index === 0 && '(Hauptbild)'}
-                      </p>
-                      <p className="text-xs text-gray-500">
-                        {image.file ? image.file.name : 'Bestehendes Bild'}
-                      </p>
+                  <div key={image.id} className="relative group">
+                    <div className="relative h-24 bg-gray-100 rounded-lg overflow-hidden border-2 border-gray-200">
+                      <img
+                        src={image.url}
+                        alt={`Bild ${index + 1}`}
+                        className="w-full h-full object-cover"
+                      />
+                      {index === 0 && (
+                        <div className="absolute top-1 left-1 bg-sky-500 text-white text-xs font-bold px-2 py-1 rounded">
+                          Hauptbild
+                        </div>
+                      )}
                     </div>
-                    <button
-                      type="button"
-                      onClick={() => removeImage(image.id)}
-                      className="p-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition duration-200"
-                      title="Löschen"
-                    >
-                      <Trash2 size={18} />
-                    </button>
+
+                    <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 rounded-lg transition duration-200 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                      <div className="flex flex-col gap-1">
+                        <button
+                          type="button"
+                          onClick={() => moveImageUp(index)}
+                          disabled={index === 0}
+                          className={`p-1.5 rounded transition duration-200 ${
+                            index === 0
+                              ? 'bg-gray-400 text-gray-600 cursor-not-allowed'
+                              : 'bg-sky-500 text-white hover:bg-sky-600'
+                          }`}
+                          title="Nach oben"
+                        >
+                          <ChevronUp size={16} />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => moveImageDown(index)}
+                          disabled={index === images.length - 1}
+                          className={`p-1.5 rounded transition duration-200 ${
+                            index === images.length - 1
+                              ? 'bg-gray-400 text-gray-600 cursor-not-allowed'
+                              : 'bg-sky-500 text-white hover:bg-sky-600'
+                          }`}
+                          title="Nach unten"
+                        >
+                          <ChevronDown size={16} />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => removeImage(image.id)}
+                          className="p-1.5 bg-red-500 text-white rounded hover:bg-red-600 transition duration-200"
+                          title="Löschen"
+                        >
+                          <Trash2 size={16} />
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>
