@@ -13,7 +13,7 @@ export const CreateRestStopModal: React.FC = () => {
   const [saveError, setSaveError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     name: '',
-    type: 'Raststätte' as 'Raststätte' | 'Hotel' | 'Tankstelle' | 'Restaurant',
+    type: 'Raststätte' as 'Raststätte' | 'Hotel' | 'Tankstelle' | 'Restaurant' | 'Route',
     route: 'eastern' as 'eastern' | 'baltic' | 'southern',
     location: '',
     address: '',
@@ -197,6 +197,7 @@ export const CreateRestStopModal: React.FC = () => {
                 <option value="Hotel">Hotel</option>
                 <option value="Tankstelle">Tankstelle</option>
                 <option value="Restaurant">Restaurant</option>
+                <option value="Route">Route</option>
               </select>
             </div>
 

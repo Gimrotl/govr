@@ -19,7 +19,7 @@ export const EditRestStopModal: React.FC = () => {
   const [images, setImages] = useState<Array<{ id: string; file?: File; url?: string }>>([]);
   const [formData, setFormData] = useState({
     name: '',
-    type: 'Raststätte' as 'Raststätte' | 'Hotel' | 'Tankstelle' | 'Restaurant',
+    type: 'Raststätte' as 'Raststätte' | 'Hotel' | 'Tankstelle' | 'Restaurant' | 'Route',
     location: '',
     address: '',
     rating: 4.0,
@@ -254,6 +254,7 @@ export const EditRestStopModal: React.FC = () => {
                 <option value="Hotel">Hotel</option>
                 <option value="Tankstelle">Tankstelle</option>
                 <option value="Restaurant">Restaurant</option>
+                <option value="Route">Route</option>
               </select>
             </div>
 
