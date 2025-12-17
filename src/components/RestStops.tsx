@@ -359,7 +359,7 @@ export const RestStops: React.FC = () => {
     borderColor: string,
     stops: RestStop[]
   ) => (
-    <section className={`mt-20 mb-20 bg-gray-100 py-12 px-6 rounded-3xl border-t-4 ${borderColor}`}>
+    <section className={`w-full mt-20 mb-20 bg-gray-100 py-12 px-6 rounded-3xl border-t-4 ${borderColor}`}>
       <div className="flex items-start justify-between mb-10">
         <div className="flex-1">
           <h2 className="text-2xl font-bold text-gray-900 mb-2">{title}</h2>
