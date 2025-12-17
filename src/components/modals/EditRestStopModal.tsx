@@ -101,7 +101,13 @@ export const EditRestStopModal: React.FC = () => {
         coordinates: selectedRestStop.coordinates
       });
 
-      if (selectedRestStop.image) {
+      const imageUrls = (selectedRestStop as any).images || [];
+      if (imageUrls.length > 0) {
+        setImages(imageUrls.map((url: string, index: number) => ({
+          id: `original-${index}`,
+          url
+        })));
+      } else if (selectedRestStop.image) {
         setImages([{
           id: 'original',
           url: selectedRestStop.image
@@ -151,19 +157,25 @@ export const EditRestStopModal: React.FC = () => {
     setSaveSuccess(false);
 
     try {
-      let imageToSave = formData.originalImage;
+      const imageUrls: string[] = [];
 
-      if (formData.image) {
-        await new Promise<void>((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onloadend = () => {
-            imageToSave = reader.result as string;
-            resolve();
-          };
-          reader.onerror = () => reject(new Error('Fehler beim Lesen der Datei'));
-          reader.readAsDataURL(formData.image);
-        });
+      for (const image of images) {
+        if (image.file) {
+          await new Promise<void>((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+              imageUrls.push(reader.result as string);
+              resolve();
+            };
+            reader.onerror = () => reject(new Error('Fehler beim Lesen der Datei'));
+            reader.readAsDataURL(image.file);
+          });
+        } else if (image.url) {
+          imageUrls.push(image.url);
+        }
       }
+
+      const mainImage = imageUrls.length > 0 ? imageUrls[0] : formData.originalImage;
 
       const updateData = {
         name: formData.name,
@@ -173,7 +185,8 @@ export const EditRestStopModal: React.FC = () => {
         rating: formData.rating,
         description: formData.description,
         full_description: formData.fullDescription,
-        image: imageToSave,
+        image: mainImage,
+        images: imageUrls,
         amenities: formData.amenities,
         coordinates: formData.coordinates
       };

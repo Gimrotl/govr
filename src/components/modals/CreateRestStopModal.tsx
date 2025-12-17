@@ -97,19 +97,24 @@ export const CreateRestStopModal: React.FC = () => {
     setSaveError(null);
 
     try {
-      let imageToSave = 'https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg';
+      const imageUrls: string[] = [];
+      const defaultImage = 'https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg';
 
-      if (images.length > 0 && images[0].file) {
-        await new Promise<void>((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onloadend = () => {
-            imageToSave = reader.result as string;
-            resolve();
-          };
-          reader.onerror = () => reject(new Error('Fehler beim Lesen der Datei'));
-          reader.readAsDataURL(images[0].file);
-        });
+      for (const image of images) {
+        if (image.file) {
+          await new Promise<void>((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+              imageUrls.push(reader.result as string);
+              resolve();
+            };
+            reader.onerror = () => reject(new Error('Fehler beim Lesen der Datei'));
+            reader.readAsDataURL(image.file);
+          });
+        }
       }
+
+      const mainImage = imageUrls.length > 0 ? imageUrls[0] : defaultImage;
 
       const newRestStop = {
         name: formData.name,
@@ -120,7 +125,8 @@ export const CreateRestStopModal: React.FC = () => {
         rating: formData.rating,
         description: formData.description,
         full_description: formData.fullDescription,
-        image: imageToSave,
+        image: mainImage,
+        images: imageUrls,
         amenities: formData.amenities,
         coordinates: formData.coordinates
       };
