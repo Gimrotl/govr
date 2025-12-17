@@ -85,7 +85,6 @@ export const RestStops: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentIndex2, setCurrentIndex2] = useState(0);
   const [currentIndex3, setCurrentIndex3] = useState(0);
-  const [selectedRestStop, setSelectedRestStop] = useState<RestStop | null>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef2 = useRef<HTMLDivElement>(null);
   const scrollContainerRef3 = useRef<HTMLDivElement>(null);
@@ -387,15 +386,15 @@ export const RestStops: React.FC = () => {
 
         <button
           onClick={goToNext}
-          disabled={currentIdx >= (restStopsData?.length || 0) - 1}
+          disabled={currentIdx >= restStopsData.length - 1}
           className={`absolute right-0 top-1/2 transform -translate-y-1/2 z-20 bg-white rounded-full p-3 shadow-lg transition-all duration-200 ${
-            currentIdx >= (restStopsData?.length || 0) - 1
+            currentIdx >= restStopsData.length - 1
               ? 'opacity-30 cursor-not-allowed'
               : 'hover:bg-gray-100 hover:shadow-xl opacity-90 hover:opacity-100'
           }`}
           style={{ marginRight: '-20px' }}
         >
-          <ChevronRight size={28} className={currentIdx >= (restStopsData?.length || 0) - 1 ? 'text-gray-400' : 'text-[#c51d34]'} />
+          <ChevronRight size={28} className={currentIdx >= restStopsData.length - 1 ? 'text-gray-400' : 'text-[#c51d34]'} />
         </button>
 
         <div
@@ -403,7 +402,7 @@ export const RestStops: React.FC = () => {
           className="flex overflow-x-auto space-x-6 pb-4 scrollbar-hide px-4"
           style={{ scrollSnapType: 'x mandatory' }}
         >
-          {(restStopsData || []).map((stop) => (
+          {restStopsData.map((stop) => (
             <div key={stop.id} style={{ scrollSnapAlign: 'start' }}>
               <RestStopCard stop={stop} />
             </div>
@@ -411,7 +410,7 @@ export const RestStops: React.FC = () => {
         </div>
 
         <div className="flex justify-center mt-10 space-x-3">
-          {(restStopsData || []).map((_, index) => (
+          {restStopsData.map((_, index) => (
             <button
               key={index}
               onClick={() => {
@@ -434,22 +433,6 @@ export const RestStops: React.FC = () => {
       </div>
     </section>
   );
-
-  if (loading) {
-    return (
-      <div className="w-full py-20 flex justify-center items-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sky-500"></div>
-      </div>
-    );
-  }
-
-  if (!restStopsData || restStopsData.length === 0) {
-    return (
-      <div className="w-full py-20 text-center">
-        <p className="text-gray-600 text-lg">Keine Rest Stops verfügbar.</p>
-      </div>
-    );
-  }
 
   return (
     <>
