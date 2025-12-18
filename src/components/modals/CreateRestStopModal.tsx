@@ -14,7 +14,6 @@ export const CreateRestStopModal: React.FC = () => {
   const [formData, setFormData] = useState({
     name: '',
     type: 'Raststätte' as 'Raststätte' | 'Hotel' | 'Tankstelle' | 'Restaurant',
-    route: 'eastern' as 'eastern' | 'baltic' | 'southern',
     location: '',
     address: '',
     rating: 4.0,
@@ -97,6 +96,11 @@ export const CreateRestStopModal: React.FC = () => {
       return;
     }
 
+    if (!user) {
+      setSaveError('Sie müssen angemeldet sein, um einen Rest Stop zu erstellen.');
+      return;
+    }
+
     setSaving(true);
     setSaveError(null);
 
@@ -118,7 +122,6 @@ export const CreateRestStopModal: React.FC = () => {
       const newRestStop = {
         name: formData.name,
         type: formData.type,
-        route: formData.route,
         location: formData.location,
         address: formData.address,
         rating: formData.rating,
@@ -129,7 +132,7 @@ export const CreateRestStopModal: React.FC = () => {
         coordinates: formData.coordinates
       };
 
-      const result = await createRestStop(newRestStop, user?.id || null);
+      const result = await createRestStop(newRestStop, user.id);
 
       if (result) {
         setSaveError(null);
@@ -197,22 +200,6 @@ export const CreateRestStopModal: React.FC = () => {
                 <option value="Hotel">Hotel</option>
                 <option value="Tankstelle">Tankstelle</option>
                 <option value="Restaurant">Restaurant</option>
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Route
-              </label>
-              <select
-                name="route"
-                value={formData.route}
-                onChange={handleChange}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-400 focus:border-transparent"
-              >
-                <option value="eastern">Östliche Routen</option>
-                <option value="baltic">Baltische und östliche Staaten</option>
-                <option value="southern">Südliche Routen</option>
               </select>
             </div>
 
