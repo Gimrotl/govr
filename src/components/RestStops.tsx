@@ -443,8 +443,8 @@ export const RestStops: React.FC = () => {
   return (
     <>
       {renderSection(
-        'Östliche Routen',
-        'Raststätten und Übernachtungsmöglichkeiten auf dem Weg nach Polen, Weißrussland und in den Kaukasus. Finden Sie alles, was Sie für eine komfortable Fahrt benötigen.',
+        'Восточные маршруты',
+        'Места отдыха и варианты ночлега на пути в Польшу, Беларусь и на Кавказ. Найдите всё необходимое для комфортной поездки.',
         currentIndex,
         goToPrevious,
         goToNext,
