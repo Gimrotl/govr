@@ -452,7 +452,6 @@ export const RestStops: React.FC = () => {
         'border-sky-400',
         restStopsEastern
       )}
-
       {renderSection(
         'Балтийские и восточные страны',
         'Комфортные остановки через в Польшу, Литву, Латвию, Белорусия и далее.',
