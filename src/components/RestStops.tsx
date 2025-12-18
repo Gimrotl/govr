@@ -456,6 +456,7 @@ export const RestStops: React.FC = () => {
       {renderSection(
         'Балтийские и восточные страны',
         'Комфортные остановки через в Польшу, Литву, Латвию, Белорусия и далее.
+      
         currentIndex2,
         goToPrevious2,
         goToNext2,
