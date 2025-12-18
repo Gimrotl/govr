@@ -101,7 +101,7 @@ export const EditRestStopModal: React.FC = () => {
         coordinates: selectedRestStop.coordinates
       });
 
-      const imageUrls = (selectedRestStop as any).images || [];
+      const imageUrls = selectedRestStop.images || [];
       if (imageUrls.length > 0) {
         setImages(imageUrls.map((url: string, index: number) => ({
           id: `original-${index}`,
@@ -186,6 +186,7 @@ export const EditRestStopModal: React.FC = () => {
         description: formData.description,
         full_description: formData.fullDescription,
         image: mainImage,
+        images: imageUrls,
         amenities: formData.amenities,
         coordinates: formData.coordinates
       };
