@@ -466,8 +466,8 @@ export const RestStops: React.FC = () => {
       )}
 
       {renderSection(
-        'Südliche Routen',
-        'Entdecken Sie erstklassige Raststätten und Hotels auf der Route nach Ungarn, Serbien, Bulgarien, der Türkei und Georgien. Perfekt zum Ausruhen und Tanken.',
+        'Южные маршруты',
+        'Открой для себя удобный места отдыха и отели на маршруте в Грозный через Венгрию, Сербию, Болгарию, Турцию и Грузию.',
         currentIndex3,
         goToPrevious3,
         goToNext3,
