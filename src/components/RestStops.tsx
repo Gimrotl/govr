@@ -454,8 +454,8 @@ export const RestStops: React.FC = () => {
       )}
 
       {renderSection(
-        'Baltische und östliche Staaten',
-        'Komfortable Stopps für Ihre Reise nach Litauen, Lettland, Polen und darüber hinaus. Mit allen wichtigen Einrichtungen und guten Bewertungen.',
+        'Балтийские и восточные страны',
+        'Комфортные остановки для вашего путешествия в Польшу, Литву, Латвию, Белорусия и далее. Все важные удобства и отличные отзывы.',
         currentIndex2,
         goToPrevious2,
         goToNext2,
