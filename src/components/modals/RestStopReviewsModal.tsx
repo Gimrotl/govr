@@ -2,7 +2,23 @@ import React, { useState } from 'react';
 import { X, Star, Send, ThumbsUp, ThumbsDown, MessageCircle, Edit2 } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { useModals } from '../../hooks/useModals';
-import { RestStop } from '../../hooks/useRestStops';
+
+interface RestStop {
+  id: number;
+  name: string;
+  type: 'Raststätte' | 'Hotel' | 'Tankstelle' | 'Restaurant';
+  location: string;
+  address: string;
+  rating: number;
+  description: string;
+  fullDescription: string;
+  image: string;
+  amenities: string[];
+  coordinates: {
+    lat: number;
+    lng: number;
+  };
+}
 
 interface Review {
   id: number;
