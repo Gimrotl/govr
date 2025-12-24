@@ -4,14 +4,13 @@ import { supabase } from '../lib/supabase';
 export interface RestStop {
   id: string;
   name: string;
-  type: 'Raststätte' | 'Hotel' | 'Tankstelle' | 'Restaurant' | 'Route';
+  type: 'Raststätte' | 'Hotel' | 'Tankstelle' | 'Restaurant';
   location: string;
   address: string;
   rating: number;
   description: string;
   full_description: string;
   image: string;
-  images: string[];
   amenities: string[];
   coordinates: {
     lat: number;

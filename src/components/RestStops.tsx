@@ -443,8 +443,8 @@ export const RestStops: React.FC = () => {
   return (
     <>
       {renderSection(
-        'Восточные маршруты',
-        'Места отдыха и ночлега на пути в Грозный через Польшу, Беларусь, Москва, Грозный.',
+        'Östliche Routen',
+        'Raststätten und Übernachtungsmöglichkeiten auf dem Weg nach Polen, Weißrussland und in den Kaukasus. Finden Sie alles, was Sie für eine komfortable Fahrt benötigen.',
         currentIndex,
         goToPrevious,
         goToNext,
@@ -452,11 +452,10 @@ export const RestStops: React.FC = () => {
         'border-sky-400',
         restStopsEastern
       )}
-      
+
       {renderSection(
-        'Балтийские и восточные страны',
-        'Комфортные остановки через в Польшу, Литву, Латвию, Белорусия и далее.',
-      
+        'Baltische und östliche Staaten',
+        'Komfortable Stopps für Ihre Reise nach Litauen, Lettland, Polen und darüber hinaus. Mit allen wichtigen Einrichtungen und guten Bewertungen.',
         currentIndex2,
         goToPrevious2,
         goToNext2,
@@ -466,8 +465,8 @@ export const RestStops: React.FC = () => {
       )}
 
       {renderSection(
-        'Южные маршруты',
-        'Открой для себя удобный места отдыха и отели на маршруте в Грозный через Венгрию, Сербию, Болгарию, Турцию и Грузию.',
+        'Südliche Routen',
+        'Entdecken Sie erstklassige Raststätten und Hotels auf der Route nach Ungarn, Serbien, Bulgarien, der Türkei und Georgien. Perfekt zum Ausruhen und Tanken.',
         currentIndex3,
         goToPrevious3,
         goToNext3,
