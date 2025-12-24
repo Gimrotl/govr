@@ -2,16 +2,33 @@ import React, { useState, useEffect } from 'react';
 import { X, MapPin, Star, Save, Upload, Trash2, Pencil, ChevronUp, ChevronDown } from 'lucide-react';
 import { useModals } from '../../hooks/useModals';
 import { useAuth } from '../../hooks/useAuth';
-import { useRestStops, RestStop } from '../../hooks/useRestStops';
 import { useDropzone } from 'react-dropzone';
+
+interface RestStop {
+  id: number;
+  name: string;
+  type: 'Raststätte' | 'Hotel' | 'Tankstelle' | 'Restaurant';
+  location: string;
+  address: string;
+  rating: number;
+  description: string;
+  fullDescription: string;
+  image: string;
+  amenities: string[];
+  coordinates: {
+    lat: number;
+    lng: number;
+  };
+}
+
+interface EditRestStopModalProps {
+  restStop: RestStop | null;
+  onUpdateRestStop: (restStop: RestStop) => void;
+}
 
 export const EditRestStopModal: React.FC = () => {
   const { closeModal, selectedRestStop } = useModals();
   const { isAdmin } = useAuth();
-  const { updateRestStop } = useRestStops();
-  const [saving, setSaving] = useState(false);
-  const [saveError, setSaveError] = useState<string | null>(null);
-  const [saveSuccess, setSaveSuccess] = useState(false);
   const [isEditingDescription, setIsEditingDescription] = useState(false);
   const [isEditingFullDescription, setIsEditingFullDescription] = useState(false);
   const [isEditingAddress, setIsEditingAddress] = useState(false);
@@ -19,7 +36,7 @@ export const EditRestStopModal: React.FC = () => {
   const [images, setImages] = useState<Array<{ id: string; file?: File; url?: string }>>([]);
   const [formData, setFormData] = useState({
     name: '',
-    type: 'Raststätte' as 'Raststätte' | 'Hotel' | 'Tankstelle' | 'Restaurant' | 'Route',
+    type: 'Raststätte' as 'Raststätte' | 'Hotel' | 'Tankstelle' | 'Restaurant',
     location: '',
     address: '',
     rating: 4.0,
@@ -101,13 +118,7 @@ export const EditRestStopModal: React.FC = () => {
         coordinates: selectedRestStop.coordinates
       });
 
-      const imageUrls = selectedRestStop.images || [];
-      if (imageUrls.length > 0) {
-        setImages(imageUrls.map((url: string, index: number) => ({
-          id: `original-${index}`,
-          url
-        })));
-      } else if (selectedRestStop.image) {
+      if (selectedRestStop.image) {
         setImages([{
           id: 'original',
           url: selectedRestStop.image
@@ -142,70 +153,39 @@ export const EditRestStopModal: React.FC = () => {
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
+    
     if (!formData.name || !formData.location || !formData.address) {
-      setSaveError('Bitte füllen Sie alle Pflichtfelder aus.');
+      alert('Bitte füllen Sie alle Pflichtfelder aus.');
       return;
     }
 
     if (!selectedRestStop) return;
 
-    setSaving(true);
-    setSaveError(null);
-    setSaveSuccess(false);
-
-    try {
-      const imageUrls: string[] = [];
-
-      for (const image of images) {
-        if (image.file) {
-          await new Promise<void>((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-              imageUrls.push(reader.result as string);
-              resolve();
-            };
-            reader.onerror = () => reject(new Error('Fehler beim Lesen der Datei'));
-            reader.readAsDataURL(image.file);
-          });
-        } else if (image.url) {
-          imageUrls.push(image.url);
-        }
-      }
-
-      const mainImage = imageUrls.length > 0 ? imageUrls[0] : formData.originalImage;
-
-      const updateData = {
-        name: formData.name,
-        type: formData.type,
-        location: formData.location,
-        address: formData.address,
-        rating: formData.rating,
-        description: formData.description,
-        full_description: formData.fullDescription,
-        image: mainImage,
-        images: imageUrls,
-        amenities: formData.amenities,
-        coordinates: formData.coordinates
+    // Handle image update
+    if (formData.image) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const updatedRestStop = {
+          ...selectedRestStop,
+          ...formData,
+          image: reader.result as string
+        };
+        console.log('Updating rest stop:', updatedRestStop);
+        alert('Rest Stop erfolgreich aktualisiert!');
+        closeModal('editRestStop');
       };
-
-      const success = await updateRestStop(selectedRestStop.id, updateData);
-
-      if (success) {
-        setSaveSuccess(true);
-        setTimeout(() => {
-          closeModal('editRestStop');
-        }, 1500);
-      } else {
-        setSaveError('Fehler beim Speichern. Bitte versuchen Sie es erneut.');
-      }
-    } catch (err) {
-      console.error('Save error:', err);
-      setSaveError(err instanceof Error ? err.message : 'Fehler beim Speichern');
-    } finally {
-      setSaving(false);
+      reader.readAsDataURL(formData.image);
+    } else {
+      const updatedRestStop = {
+        ...selectedRestStop,
+        ...formData,
+        image: formData.originalImage // Keep original image if no new image uploaded
+      };
+      console.log('Updating rest stop:', updatedRestStop);
+      alert('Rest Stop erfolgreich aktualisiert!');
+      closeModal('editRestStop');
     }
   };
 
@@ -225,18 +205,6 @@ export const EditRestStopModal: React.FC = () => {
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
-          {saveError && (
-            <div className="p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg text-sm">
-              {saveError}
-            </div>
-          )}
-
-          {saveSuccess && (
-            <div className="p-3 bg-emerald-100 border border-emerald-400 text-emerald-700 rounded-lg text-sm">
-              Rest Stop erfolgreich gespeichert!
-            </div>
-          )}
-
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -267,7 +235,6 @@ export const EditRestStopModal: React.FC = () => {
                 <option value="Hotel">Hotel</option>
                 <option value="Tankstelle">Tankstelle</option>
                 <option value="Restaurant">Restaurant</option>
-                <option value="Route">Route</option>
               </select>
             </div>
 
@@ -345,59 +312,57 @@ export const EditRestStopModal: React.FC = () => {
             </label>
 
             {images.length > 0 && (
-              <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 mb-3">
+              <div className="space-y-3 mb-3">
                 {images.map((image, index) => (
-                  <div key={image.id} className="relative group">
-                    <div className="relative h-24 bg-gray-100 rounded-lg overflow-hidden border-2 border-gray-200">
-                      <img
-                        src={image.url}
-                        alt={`Bild ${index + 1}`}
-                        className="w-full h-full object-cover"
-                      />
-                      {index === 0 && (
-                        <div className="absolute top-1 left-1 bg-sky-500 text-white text-xs font-bold px-2 py-1 rounded">
-                          Hauptbild
-                        </div>
-                      )}
+                  <div key={image.id} className="flex items-center space-x-3 bg-gray-50 p-3 rounded-lg border border-gray-200">
+                    <img
+                      src={image.url}
+                      alt={`Bild ${index + 1}`}
+                      className="w-20 h-20 object-cover rounded-lg"
+                    />
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-gray-700">
+                        Bild {index + 1} {index === 0 && '(Hauptbild)'}
+                      </p>
+                      <p className="text-xs text-gray-500">
+                        {image.file ? image.file.name : 'Bestehendes Bild'}
+                      </p>
                     </div>
-
-                    <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 rounded-lg transition duration-200 flex items-center justify-center opacity-0 group-hover:opacity-100">
-                      <div className="flex flex-col gap-1">
-                        <button
-                          type="button"
-                          onClick={() => moveImageUp(index)}
-                          disabled={index === 0}
-                          className={`p-1.5 rounded transition duration-200 ${
-                            index === 0
-                              ? 'bg-gray-400 text-gray-600 cursor-not-allowed'
-                              : 'bg-sky-500 text-white hover:bg-sky-600'
-                          }`}
-                          title="Nach oben"
-                        >
-                          <ChevronUp size={16} />
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => moveImageDown(index)}
-                          disabled={index === images.length - 1}
-                          className={`p-1.5 rounded transition duration-200 ${
-                            index === images.length - 1
-                              ? 'bg-gray-400 text-gray-600 cursor-not-allowed'
-                              : 'bg-sky-500 text-white hover:bg-sky-600'
-                          }`}
-                          title="Nach unten"
-                        >
-                          <ChevronDown size={16} />
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => removeImage(image.id)}
-                          className="p-1.5 bg-red-500 text-white rounded hover:bg-red-600 transition duration-200"
-                          title="Löschen"
-                        >
-                          <Trash2 size={16} />
-                        </button>
-                      </div>
+                    <div className="flex space-x-2">
+                      <button
+                        type="button"
+                        onClick={() => moveImageUp(index)}
+                        disabled={index === 0}
+                        className={`p-2 rounded-lg transition duration-200 ${
+                          index === 0
+                            ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                            : 'bg-sky-100 text-sky-600 hover:bg-sky-200'
+                        }`}
+                        title="Nach oben"
+                      >
+                        <ChevronUp size={18} />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => moveImageDown(index)}
+                        disabled={index === images.length - 1}
+                        className={`p-2 rounded-lg transition duration-200 ${
+                          index === images.length - 1
+                            ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                            : 'bg-sky-100 text-sky-600 hover:bg-sky-200'
+                        }`}
+                        title="Nach unten"
+                      >
+                        <ChevronDown size={18} />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => removeImage(image.id)}
+                        className="p-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition duration-200"
+                        title="Löschen"
+                      >
+                        <Trash2 size={18} />
+                      </button>
                     </div>
                   </div>
                 ))}
@@ -568,18 +533,16 @@ export const EditRestStopModal: React.FC = () => {
             <button
               type="button"
               onClick={() => closeModal('editRestStop')}
-              disabled={saving}
-              className="flex-1 bg-gray-500 text-white py-3 rounded-lg hover:bg-gray-600 transition duration-200 disabled:opacity-50"
+              className="flex-1 bg-gray-500 text-white py-3 rounded-lg hover:bg-gray-600 transition duration-200"
             >
               Abbrechen
             </button>
             <button
               type="submit"
-              disabled={saving}
-              className="flex-1 bg-sky-500 text-white py-3 rounded-lg hover:bg-sky-600 transition duration-200 flex items-center justify-center disabled:opacity-50"
+              className="flex-1 bg-sky-500 text-white py-3 rounded-lg hover:bg-sky-600 transition duration-200 flex items-center justify-center"
             >
               <Save size={18} className="mr-2" />
-              {saving ? 'Speichern...' : 'Speichern'}
+              Speichern
             </button>
           </div>
         </form>
