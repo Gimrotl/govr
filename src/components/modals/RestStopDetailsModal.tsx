@@ -117,7 +117,6 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
               <img
                 src={allImages[currentImageIndex]}
                 alt={`${restStop.name} ${currentImageIndex + 1}`}
-                loading="lazy"
                 className="w-full h-full object-cover"
               />
               
@@ -157,7 +156,6 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
                     <img
                       src={image}
                       alt={`Thumbnail ${index + 1}`}
-                      loading="lazy"
                       className="w-full h-full object-cover"
                     />
                   </button>

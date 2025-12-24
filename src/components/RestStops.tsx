@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, MapPin, Star, Navigation, Car, Fuel, Utensils, Plus, Edit, Trash2 } from 'lucide-react';
 import { RestStopDetailsModal } from './modals/RestStopDetailsModal';
 import { useAuth } from '../hooks/useAuth';
@@ -231,26 +231,26 @@ export const RestStops: React.FC = () => {
     }
   }, [currentIndex3, isScrolling3]);
 
-  const handleDetailsClick = useCallback((restStop: RestStop) => {
+  const handleDetailsClick = (restStop: RestStop) => {
     setSelectedRestStop(restStop);
-  }, []);
+  };
 
-  const handleNavigationClick = useCallback((restStop: RestStop) => {
+  const handleNavigationClick = (restStop: RestStop) => {
     const query = encodeURIComponent(`${restStop.name}, ${restStop.address}`);
     const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${query}`;
     window.open(googleMapsUrl, '_blank');
-  }, []);
+  };
 
-  const handleCreateRestStop = useCallback(() => {
+  const handleCreateRestStop = () => {
     openModal('createRestStop');
-  }, [openModal]);
+  };
 
-  const handleEditRestStop = useCallback((restStop: RestStop, e: React.MouseEvent) => {
+  const handleEditRestStop = (restStop: RestStop, e: React.MouseEvent) => {
     e.stopPropagation();
     openRestStopEdit(restStop);
-  }, [openRestStopEdit]);
+  };
 
-  const handleDeleteRestStop = useCallback(async (restStopId: string, e: React.MouseEvent) => {
+  const handleDeleteRestStop = async (restStopId: string, e: React.MouseEvent) => {
     e.stopPropagation();
     if (window.confirm('Sind Sie sicher, dass Sie diesen Rest Stop löschen möchten?')) {
       await deleteRestStop(restStopId);
@@ -258,13 +258,13 @@ export const RestStops: React.FC = () => {
         setCurrentIndex(currentIndex - 1);
       }
     }
-  }, [deleteRestStop, currentIndex, restStopsData.length]);
+  };
 
-  const restStopsEastern = useMemo(() => restStopsData.filter(stop => stop.route === 'eastern'), [restStopsData]);
-  const restStopsBaltic = useMemo(() => restStopsData.filter(stop => stop.route === 'baltic'), [restStopsData]);
-  const restStopsSouthern = useMemo(() => restStopsData.filter(stop => stop.route === 'southern'), [restStopsData]);
+  const restStopsEastern = restStopsData.filter(stop => stop.route === 'eastern');
+  const restStopsBaltic = restStopsData.filter(stop => stop.route === 'baltic');
+  const restStopsSouthern = restStopsData.filter(stop => stop.route === 'southern');
 
-  const RestStopCard = React.memo(({ stop }: { stop: RestStop }) => (
+  const RestStopCard = ({ stop }: { stop: RestStop }) => (
     <div
       className="flex-shrink-0 w-72 sm:w-80 md:w-96 h-[500px] bg-gray-100 rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer group border-2 border-gray-200 flex flex-col"
       onClick={() => handleDetailsClick(stop)}
@@ -273,7 +273,6 @@ export const RestStops: React.FC = () => {
         <img
           src={stop.image}
           alt={stop.name}
-          loading="lazy"
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
         />
         <div className="absolute top-4 left-4 bg-white bg-opacity-90 backdrop-blur-sm rounded-full px-3 py-1 flex items-center space-x-2">
@@ -348,7 +347,7 @@ export const RestStops: React.FC = () => {
         </div>
       </div>
     </div>
-  ));
+  );
 
   const renderSection = (
     title: string,
@@ -440,17 +439,6 @@ export const RestStops: React.FC = () => {
       </div>
     </section>
   );
-
-  if (loading) {
-    return (
-      <div className="w-full mt-20 mb-20 bg-gray-100 py-12 px-6 rounded-3xl">
-        <div className="flex items-center justify-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-sky-500"></div>
-        </div>
-        <p className="text-center mt-4 text-gray-600">Lädt Rest Stops...</p>
-      </div>
-    );
-  }
 
   return (
     <>
