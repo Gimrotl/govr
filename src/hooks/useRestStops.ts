@@ -4,20 +4,18 @@ import { supabase } from '../lib/supabase';
 export interface RestStop {
   id: string;
   name: string;
-  type: 'Raststätte' | 'Hotel' | 'Tankstelle' | 'Restaurant' | 'Route';
+  type: 'Raststätte' | 'Hotel' | 'Tankstelle' | 'Restaurant';
   location: string;
   address: string;
   rating: number;
   description: string;
   full_description: string;
   image: string;
-  images: string[];
   amenities: string[];
   coordinates: {
     lat: number;
     lng: number;
   };
-  route: 'eastern' | 'baltic' | 'southern';
   created_by: string;
   created_at: string;
   updated_at: string;
@@ -77,13 +75,13 @@ export function useRestStops() {
     }
   };
 
-  const createRestStop = async (newRestStop: Omit<RestStop, 'id' | 'created_at' | 'updated_at' | 'created_by'>, userId: string | null) => {
+  const createRestStop = async (newRestStop: Omit<RestStop, 'id' | 'created_at' | 'updated_at' | 'created_by'>, userId: string) => {
     try {
       const { data, error: createError } = await supabase
         .from('rest_stops')
         .insert({
           ...newRestStop,
-          created_by: userId || null,
+          created_by: userId,
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString()
         })
