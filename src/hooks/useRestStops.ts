@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { supabase } from '../lib/supabase';
 
 export interface RestStop {
@@ -27,29 +27,55 @@ export function useRestStops() {
   const [restStops, setRestStops] = useState<RestStop[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const isMountedRef = useRef(true);
+  const fetchAttemptRef = useRef(0);
 
-  const fetchRestStops = useCallback(async () => {
-    setLoading(true);
-    setError(null);
+  const fetchRestStops = useCallback(async (retryCount = 0) => {
+    const maxRetries = 3;
+    const currentAttempt = ++fetchAttemptRef.current;
 
     try {
+      if (retryCount === 0) {
+        setLoading(true);
+      }
+      setError(null);
+
       const { data, error: fetchError } = await supabase
         .from('rest_stops')
         .select('*')
         .order('created_at', { ascending: false });
 
+      if (!isMountedRef.current || currentAttempt !== fetchAttemptRef.current) return;
+
       if (fetchError) {
+        if (retryCount < maxRetries) {
+          const delay = Math.min(1000 * Math.pow(2, retryCount), 5000);
+          await new Promise(resolve => setTimeout(resolve, delay));
+          if (isMountedRef.current) {
+            return fetchRestStops(retryCount + 1);
+          }
+        }
         setError(fetchError.message);
-        setRestStops([]);
-      } else {
-        setRestStops(data || []);
+        return;
       }
+
+      setRestStops(data || []);
     } catch (err) {
+      if (!isMountedRef.current || currentAttempt !== fetchAttemptRef.current) return;
+
+      if (retryCount < maxRetries) {
+        const delay = Math.min(1000 * Math.pow(2, retryCount), 5000);
+        await new Promise(resolve => setTimeout(resolve, delay));
+        if (isMountedRef.current) {
+          return fetchRestStops(retryCount + 1);
+        }
+      }
       const errorMessage = err instanceof Error ? err.message : 'Unbekannter Fehler';
       setError(errorMessage);
-      setRestStops([]);
     } finally {
-      setLoading(false);
+      if (isMountedRef.current && currentAttempt === fetchAttemptRef.current) {
+        setLoading(false);
+      }
     }
   }, []);
 
@@ -61,13 +87,16 @@ export function useRestStops() {
         .eq('id', id);
 
       if (updateError) {
+        console.error('Update error:', updateError);
         setError(updateError.message);
         return false;
       }
 
       await fetchRestStops();
+      setError(null);
       return true;
     } catch (err) {
+      console.error('Update exception:', err);
       const errorMessage = err instanceof Error ? err.message : 'Unbekannter Fehler';
       setError(errorMessage);
       return false;
@@ -87,13 +116,16 @@ export function useRestStops() {
         .select();
 
       if (createError) {
+        console.error('Create error:', createError);
         setError(createError.message);
         return null;
       }
 
       await fetchRestStops();
+      setError(null);
       return data?.[0] || null;
     } catch (err) {
+      console.error('Create exception:', err);
       const errorMessage = err instanceof Error ? err.message : 'Unbekannter Fehler';
       setError(errorMessage);
       return null;
@@ -108,13 +140,16 @@ export function useRestStops() {
         .eq('id', id);
 
       if (deleteError) {
+        console.error('Delete error:', deleteError);
         setError(deleteError.message);
         return false;
       }
 
       await fetchRestStops();
+      setError(null);
       return true;
     } catch (err) {
+      console.error('Delete exception:', err);
       const errorMessage = err instanceof Error ? err.message : 'Unbekannter Fehler';
       setError(errorMessage);
       return false;
@@ -122,7 +157,12 @@ export function useRestStops() {
   };
 
   useEffect(() => {
+    isMountedRef.current = true;
     fetchRestStops();
+
+    return () => {
+      isMountedRef.current = false;
+    };
   }, [fetchRestStops]);
 
   return {
