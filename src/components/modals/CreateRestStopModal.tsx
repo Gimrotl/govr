@@ -96,6 +96,11 @@ export const CreateRestStopModal: React.FC = () => {
       return;
     }
 
+    if (!user) {
+      setSaveError('Sie müssen angemeldet sein, um einen Rest Stop zu erstellen.');
+      return;
+    }
+
     setSaving(true);
     setSaveError(null);
 
@@ -127,7 +132,7 @@ export const CreateRestStopModal: React.FC = () => {
         coordinates: formData.coordinates
       };
 
-      const result = await createRestStop(newRestStop, user?.id || 'system');
+      const result = await createRestStop(newRestStop, user.id);
 
       if (result) {
         setSaveError(null);
