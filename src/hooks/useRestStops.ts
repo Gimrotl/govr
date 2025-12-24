@@ -16,7 +16,6 @@ export interface RestStop {
     lat: number;
     lng: number;
   };
-  route: 'eastern' | 'baltic' | 'southern';
   created_by: string;
   created_at: string;
   updated_at: string;
