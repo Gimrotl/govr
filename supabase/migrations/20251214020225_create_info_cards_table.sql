@@ -43,7 +43,7 @@ CREATE POLICY "Authenticated users can update info cards"
   WITH CHECK (true);
 
 INSERT INTO info_cards (title, description, link_text, order_index) VALUES
-  ('Wichtige Infos', 'Wichtige Informationen fuer Ihre Fahrt: Abfahrtszeiten, Treffpunkte und was Sie mitbringen sollten. Planen Sie Ihre Reise sorgfaeltig.', 'Mehr erfahren', 1),
+  ('Не берите слишком много груза. Берите только то, что вам необходимо. Так вы сэкономите на таможне время и нервы', 'Mehr erfahren', 1), 
   ('Zoll Infos', 'Zollbestimmungen und Einfuhrregeln fuer die Grenzueberquerung. Informieren Sie sich ueber erlaubte Waren und Freigrenzen.', 'Zollinfos anzeigen', 2),
   ('Gepaeck Infos', 'Nehmen Sie bis zu 20 Kilo Gepaeck kostenlos mit. Fuer zusaetzliches Gepaeck koennen weitere 25 Kilo hinzugefuegt werden.', 'Entdecken Sie mehr', 3)
 ON CONFLICT DO NOTHING;

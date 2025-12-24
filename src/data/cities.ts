@@ -156,6 +156,8 @@ export const citiesWithCountries: CityWithCountry[] = [
   { city: 'Bydgoszcz', country: 'Poland', cityRu: 'Быдгощ', cityEn: 'Bydgoszcz' },
   { city: 'Lublin', country: 'Poland', cityRu: 'Люблин', cityEn: 'Lublin' },
   { city: 'Białystok', country: 'Poland', cityRu: 'Белосток', cityEn: 'Bialystok' },
+  { city: 'Terespol', country: 'Poland', cityRu: 'Тересполь', },
+  { city: 'Kuznica', country: 'Poland', cityRu: 'Кузница', },
 
   // Netherlands
   { city: 'Amsterdam', country: 'Netherlands', cityRu: 'Амстердам', cityEn: 'Amsterdam' },
@@ -313,6 +315,8 @@ export const citiesWithCountries: CityWithCountry[] = [
   { city: 'Улан-Удэ', country: 'Russia', cityEn: 'Ulan-Ude' },
   { city: 'Чита', country: 'Russia', cityEn: 'Chita' },
   { city: 'Якутск', country: 'Russia', cityEn: 'Yakutsk' },
+ { city: 'Красная Горка', country: 'Russia', cityEn: 'Krasnaya Gorka' },
+  
 
   // Chechnya
   { city: 'Grozny', country: 'Chechnya', cityRu: 'Грозный', },
@@ -419,17 +423,19 @@ export const citiesWithCountries: CityWithCountry[] = [
 { city: 'Yurt-Aukh', country: 'Chechnya', cityRu: 'Юрт-Аух', },
   
   // Belarus
-  { city: 'Минск', country: 'Belarus', cityRu: 'Минск', cityEn: 'Minsk' },
-  { city: 'Гомель', country: 'Belarus', cityRu: 'Гомель', cityEn: 'Gomel' },
-  { city: 'Могилёв', country: 'Belarus', cityRu: 'Могилёв', cityEn: 'Mogilev' },
-  { city: 'Витебск', country: 'Belarus', cityRu: 'Витебск', cityEn: 'Vitebsk' },
-  { city: 'Гродно', country: 'Belarus', cityRu: 'Гродно', cityEn: 'Grodno' },
-  { city: 'Брест', country: 'Belarus', cityRu: 'Брест', cityEn: 'Brest' },
-  { city: 'Бобруйск', country: 'Belarus', cityRu: 'Бобруйск', cityEn: 'Bobruisk' },
-  { city: 'Барановичи', country: 'Belarus', cityRu: 'Барановичи', cityEn: 'Baranovichi' },
-  { city: 'Борисов', country: 'Belarus', cityRu: 'Борисов', cityEn: 'Borisov' },
-  { city: 'Пинск', country: 'Belarus', cityRu: 'Пинск', cityEn: 'Pinsk' },
-  { city: 'Орша', country: 'Belarus', cityRu: 'Орша', cityEn: 'Orsha' },
+  { city: 'Минск', country: 'Belarus', cityEn: 'Minsk' },
+  { city: 'Гомель', country: 'Belarus', cityEn: 'Gomel' },
+  { city: 'Могилёв', country: 'Belarus', cityEn: 'Mogilev' },
+  { city: 'Витебск', country: 'Belarus', cityEn: 'Vitebsk' },
+  { city: 'Гродно', country: 'Belarus', cityEn: 'Grodno' },
+  { city: 'Брест', country: 'Belarus', cityEn: 'Brest' },
+  { city: 'Бобруйск', country: 'Belarus', cityEn: 'Bobruisk' },
+  { city: 'Барановичи', country: 'Belarus', cityEn: 'Baranovichi' },
+  { city: 'Борисов', country: 'Belarus', cityEn: 'Borisov' },
+  { city: 'Пинск', country: 'Belarus', cityEn: 'Pinsk' },
+  { city: 'Орша', country: 'Belarus', cityEn: 'Orsha' },
+{ city: 'Григоровщина', country: 'Belarus', cityEn: 'Grigorovshchina' },
+  { city: 'Пяшчатка', country: 'Belarus', cityEn: 'Peshchatka' },
 
   // Jordan
   { city: 'Аммон', country: 'Jordan', cityRu: 'Аммон', cityEn: 'Amman' },
@@ -612,12 +618,14 @@ export const citiesWithCountries: CityWithCountry[] = [
 { city: 'Arlington', country: 'USA', cityRu: 'Арлингтон', },
   
   // Baltic cities
-  { city: 'Vilnius', country: 'Lithuania', cityRu: 'Вильнюс', cityEn: 'Vilnius' },
-  { city: 'Riga', country: 'Latvia', cityRu: 'Рига', cityEn: 'Riga' },
-  { city: 'Kaunas', country: 'Lithuania', cityRu: 'Каунас', cityEn: 'Kaunas' }
+  { city: 'Vilnius', country: 'Lithuania', cityRu: 'Вильнюс', },
+  { city: 'Riga', country: 'Latvia', cityRu: 'Рига', },
+  { city: 'Paternieki', country: 'Latvia', cityRu: 'Патерниеки', },
+  { city: 'Daugavpils', country: 'Latvia', cityRu: 'Даугавпилс', },
+  { city: 'Kaunas', country: 'Lithuania', cityRu: 'Каунас', }
 
- 
-];
+
+  ]
 
 // Keep the old cities array for backward compatibility
 export const cities = citiesWithCountries.map(item => item.city);

@@ -15,6 +15,8 @@ export const AdminDashboardModal: React.FC = () => {
   const [showSidebar, setShowSidebar] = useState(false);
   const [editingCard, setEditingCard] = useState<InfoCard | null>(null);
   const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
+  const [saveSuccess, setSaveSuccess] = useState(false);
 
   const handleLogout = () => {
     logout();
@@ -49,48 +51,48 @@ export const AdminDashboardModal: React.FC = () => {
   const renderDashboard = () => (
     <div>
       <h1 className="text-xl md:text-2xl font-bold text-gray-800 mb-4 md:mb-6 md:block hidden">Willkommen, Admin</h1>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-        <div className="bg-white p-4 md:p-6 rounded-lg shadow-md">
+        <div className="bg-white p-4 md:p-6 rounded-lg shadow-md border-l-4 border-sky-500">
           <div className="flex items-center">
             <Users size={24} className="text-sky-500 mr-3 md:mr-4 md:w-8 md:h-8" />
             <div>
-              <h3 className="text-base md:text-lg font-semibold text-gray-800">Benutzer</h3>
-              <p className="text-sm md:text-base text-gray-600 hidden md:block">Registrierte Benutzer, Rollen und Zugriffsrechte verwalten.</p>
+              <h3 className="text-base md:text-lg font-semibold text-gray-800">Mitglieder</h3>
+              <p className="text-sm md:text-base text-gray-600 hidden md:block">Registrierte Community-Mitglieder</p>
               <p className="text-xl md:text-2xl font-bold text-sky-500 mt-1 md:mt-2">{mockUsers.length}</p>
             </div>
           </div>
         </div>
-        
-        <div className="bg-white p-4 md:p-6 rounded-lg shadow-md">
+
+        <div className="bg-white p-4 md:p-6 rounded-lg shadow-md border-l-4 border-emerald-500">
           <div className="flex items-center">
             <Car size={24} className="text-emerald-500 mr-3 md:mr-4 md:w-8 md:h-8" />
             <div>
-              <h3 className="text-base md:text-lg font-semibold text-gray-800">Fahrten</h3>
-              <p className="text-sm md:text-base text-gray-600 hidden md:block">Fahrten überprüfen und genehmigen, aktive Angebote prüfen.</p>
+              <h3 className="text-base md:text-lg font-semibold text-gray-800">Angebotene Fahrten</h3>
+              <p className="text-sm md:text-base text-gray-600 hidden md:block">Aktive Fahrtangebote auf der Plattform</p>
               <p className="text-xl md:text-2xl font-bold text-emerald-500 mt-1 md:mt-2">{rides.length}</p>
             </div>
           </div>
         </div>
-        
-        <div className="bg-white p-4 md:p-6 rounded-lg shadow-md">
+
+        <div className="bg-white p-4 md:p-6 rounded-lg shadow-md border-l-4 border-red-600">
           <div className="flex items-center">
             <AlertTriangle size={24} className="text-red-600 mr-3 md:mr-4 md:w-8 md:h-8" />
             <div>
               <h3 className="text-base md:text-lg font-semibold text-gray-800">Meldungen</h3>
-              <p className="text-sm md:text-base text-gray-600 hidden md:block">Gemeldete Fahrten oder verdächtige Konten bearbeiten.</p>
+              <p className="text-sm md:text-base text-gray-600 hidden md:block">Ausstehende Meldungen und Beschwerde</p>
               <p className="text-xl md:text-2xl font-bold text-red-600 mt-1 md:mt-2">{mockReports.filter(r => r.status === 'pending').length}</p>
             </div>
           </div>
         </div>
-        
-        <div className="bg-white p-4 md:p-6 rounded-lg shadow-md">
+
+        <div className="bg-white p-4 md:p-6 rounded-lg shadow-md border-l-4 border-amber-500">
           <div className="flex items-center">
-            <Settings size={24} className="text-gray-600 mr-3 md:mr-4 md:w-8 md:h-8" />
+            <Settings size={24} className="text-amber-500 mr-3 md:mr-4 md:w-8 md:h-8" />
             <div>
               <h3 className="text-base md:text-lg font-semibold text-gray-800">Einstellungen</h3>
-              <p className="text-sm md:text-base text-gray-600 hidden md:block">Website-Einstellungen und Admin-Tools konfigurieren.</p>
-              <p className="text-xl md:text-2xl font-bold text-gray-600 mt-1 md:mt-2">✓</p>
+              <p className="text-sm md:text-base text-gray-600 hidden md:block">Website-Einstellungen konfigurieren</p>
+              <p className="text-xl md:text-2xl font-bold text-amber-500 mt-1 md:mt-2">✓</p>
             </div>
           </div>
         </div>
@@ -410,18 +412,38 @@ export const AdminDashboardModal: React.FC = () => {
   const handleSaveCard = async () => {
     if (!editingCard) return;
     setSaving(true);
-    await updateCard(editingCard.id, {
+    setSaveError(null);
+    setSaveSuccess(false);
+    const success = await updateCard(editingCard.id, {
       title: editingCard.title,
       description: editingCard.description,
       link_text: editingCard.link_text
     });
     setSaving(false);
-    setEditingCard(null);
+    if (success) {
+      setSaveSuccess(true);
+      setEditingCard(null);
+      setTimeout(() => setSaveSuccess(false), 3000);
+    } else {
+      setSaveError('Fehler beim Speichern der Änderungen. Bitte versuchen Sie es erneut.');
+    }
   };
 
   const renderContentCards = () => (
     <div>
       <h1 className="text-xl md:text-2xl font-bold text-gray-800 mb-4 md:mb-6 hidden md:block">Info-Karten verwalten</h1>
+
+      {saveError && (
+        <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg text-sm">
+          {saveError}
+        </div>
+      )}
+
+      {saveSuccess && (
+        <div className="mb-4 p-3 bg-emerald-100 border border-emerald-400 text-emerald-700 rounded-lg text-sm">
+          Änderungen erfolgreich gespeichert und veröffentlicht!
+        </div>
+      )}
 
       {cardsLoading ? (
         <div className="flex justify-center py-8">
