@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { supabase } from '../lib/supabase';
 
 export interface RestStop {
@@ -27,31 +27,57 @@ export function useRestStops() {
   const [restStops, setRestStops] = useState<RestStop[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const isMountedRef = useRef(true);
+  const fetchAttemptRef = useRef(0);
 
-  const fetchRestStops = async () => {
+  const fetchRestStops = useCallback(async (retryCount = 0) => {
+    const maxRetries = 3;
+    const currentAttempt = ++fetchAttemptRef.current;
+
     try {
-      setLoading(true);
+      if (retryCount === 0) {
+        setLoading(true);
+      }
       setError(null);
+
       const { data, error: fetchError } = await supabase
         .from('rest_stops')
         .select('*')
         .order('created_at', { ascending: false });
 
+      if (!isMountedRef.current || currentAttempt !== fetchAttemptRef.current) return;
+
       if (fetchError) {
-        console.error('Fetch error:', fetchError);
+        if (retryCount < maxRetries) {
+          const delay = Math.min(1000 * Math.pow(2, retryCount), 5000);
+          await new Promise(resolve => setTimeout(resolve, delay));
+          if (isMountedRef.current) {
+            return fetchRestStops(retryCount + 1);
+          }
+        }
         setError(fetchError.message);
         return;
       }
 
       setRestStops(data || []);
     } catch (err) {
-      console.error('Fetch exception:', err);
+      if (!isMountedRef.current || currentAttempt !== fetchAttemptRef.current) return;
+
+      if (retryCount < maxRetries) {
+        const delay = Math.min(1000 * Math.pow(2, retryCount), 5000);
+        await new Promise(resolve => setTimeout(resolve, delay));
+        if (isMountedRef.current) {
+          return fetchRestStops(retryCount + 1);
+        }
+      }
       const errorMessage = err instanceof Error ? err.message : 'Unbekannter Fehler';
       setError(errorMessage);
     } finally {
-      setLoading(false);
+      if (isMountedRef.current && currentAttempt === fetchAttemptRef.current) {
+        setLoading(false);
+      }
     }
-  };
+  }, []);
 
   const updateRestStop = async (id: string, updates: Partial<RestStop>) => {
     try {
@@ -131,8 +157,13 @@ export function useRestStops() {
   };
 
   useEffect(() => {
+    isMountedRef.current = true;
     fetchRestStops();
-  }, []);
+
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, [fetchRestStops]);
 
   return {
     restStops,

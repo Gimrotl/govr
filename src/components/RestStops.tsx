@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, MapPin, Star, Navigation, Car, Fuel, Utensils, Plus, Edit, Trash2 } from 'lucide-react';
+import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react';
+import { ChevronLeft, ChevronRight, MapPin, Star, Navigation, Car, Fuel, Utensils, Plus, Edit, Trash2, AlertCircle, Loader2 } from 'lucide-react';
 import { RestStopDetailsModal } from './modals/RestStopDetailsModal';
 import { useAuth } from '../hooks/useAuth';
 import { useModals } from '../hooks/useModals';
@@ -20,83 +20,154 @@ const getTypeIcon = (type: string) => {
   }
 };
 
-const getAmenityIcon = (amenity: string) => {
-  switch (amenity) {
-    case 'WC':
-      return <div className="bg-sky-100 text-sky-700 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs flex items-center">
-        <span className="mr-1">🚻</span> WC
-      </div>;
-    case 'Kinderfreundlich':
-      return <div className="bg-pink-100 text-pink-800 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs flex items-center">
-        <span className="mr-1">👶</span> Kinderfreundlich
-      </div>;
-    case 'Sport':
-      return <div className="bg-orange-100 text-orange-800 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs flex items-center">
-        <span className="mr-1">⚽</span> Sport
-      </div>;
-    case 'Restaurant':
-      return <div className="bg-red-100 text-red-800 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs flex items-center">
-        <span className="mr-1">🍽️</span> Restaurant
-      </div>;
-    case 'Grün':
-      return <div className="bg-emerald-50 text-emerald-700 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs flex items-center">
-        <span className="mr-1">🌳</span> Grünfläche
-      </div>;
-    case 'Parkplatz':
-      return <div className="bg-gray-100 text-gray-800 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs flex items-center">
-        <span className="mr-1">🅿️</span> Parkplatz
-      </div>;
-    case 'Duschen':
-      return <div className="bg-cyan-100 text-cyan-800 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs flex items-center">
-        <span className="mr-1">🚿</span> Duschen
-      </div>;
-    case 'Tankstelle':
-      return <div className="bg-red-100 text-red-800 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs flex items-center">
-        <span className="mr-1">⛽</span> Tankstelle
-      </div>;
-    case 'Autowaschen':
-      return <div className="bg-sky-100 text-sky-700 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs flex items-center">
-        <span className="mr-1">🚗</span> Autowäsche
-      </div>;
-    case 'Hotel':
-      return <div className="bg-amber-100 text-amber-800 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs flex items-center">
-        <span className="mr-1">🏨</span> Hotel
-      </div>;
-    case 'Kinder':
-      return <div className="bg-pink-100 text-pink-800 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs flex items-center">
-        <span className="mr-1">👶</span> Kinderfreundlich
-      </div>;
-    case 'Essen':
-      return <div className="bg-red-100 text-red-800 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs flex items-center">
-        <span className="mr-1">🍽️</span> Restaurant
-      </div>;
-    case 'Esstisch':
-      return <div className="bg-amber-100 text-amber-800 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs flex items-center">
-        <span className="mr-1">🪑</span> Picknickplatz
-      </div>;
-    default:
-      return <div className="bg-gray-100 text-gray-800 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs flex items-center">
-        <span className="mr-1">📍</span> {amenity}
-      </div>;
-  }
+const AMENITY_STYLES: Record<string, { icon: string; label: string; color: string }> = {
+  WC: { icon: '🚻', label: 'WC', color: 'bg-sky-100 text-sky-700' },
+  Kinderfreundlich: { icon: '👶', label: 'Kinderfreundlich', color: 'bg-pink-100 text-pink-800' },
+  Sport: { icon: '⚽', label: 'Sport', color: 'bg-orange-100 text-orange-800' },
+  Restaurant: { icon: '🍽️', label: 'Restaurant', color: 'bg-red-100 text-red-800' },
+  Grün: { icon: '🌳', label: 'Grünfläche', color: 'bg-emerald-50 text-emerald-700' },
+  Parkplatz: { icon: '🅿️', label: 'Parkplatz', color: 'bg-gray-100 text-gray-800' },
+  Duschen: { icon: '🚿', label: 'Duschen', color: 'bg-cyan-100 text-cyan-800' },
+  Tankstelle: { icon: '⛽', label: 'Tankstelle', color: 'bg-red-100 text-red-800' },
+  Autowaschen: { icon: '🚗', label: 'Autowäsche', color: 'bg-sky-100 text-sky-700' },
+  Hotel: { icon: '🏨', label: 'Hotel', color: 'bg-amber-100 text-amber-800' },
+  Kinder: { icon: '👶', label: 'Kinderfreundlich', color: 'bg-pink-100 text-pink-800' },
+  Essen: { icon: '🍽️', label: 'Restaurant', color: 'bg-red-100 text-red-800' },
+  Esstisch: { icon: '🪑', label: 'Picknickplatz', color: 'bg-amber-100 text-amber-800' },
 };
 
-export const RestStops: React.FC = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [currentIndex2, setCurrentIndex2] = useState(0);
-  const [currentIndex3, setCurrentIndex3] = useState(0);
-  const [selectedRestStop, setSelectedRestStop] = useState<RestStop | null>(null);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const scrollContainerRef2 = useRef<HTMLDivElement>(null);
-  const scrollContainerRef3 = useRef<HTMLDivElement>(null);
-  const [isScrolling, setIsScrolling] = useState(false);
-  const [isScrolling2, setIsScrolling2] = useState(false);
-  const [isScrolling3, setIsScrolling3] = useState(false);
-  const { isAdmin } = useAuth();
-  const { openRestStopEdit, openModal } = useModals();
-  const { restStops: restStopsData, loading, deleteRestStop } = useRestStops();
+const AmenityBadge = React.memo(({ amenity }: { amenity: string }) => {
+  const style = AMENITY_STYLES[amenity] || { icon: '📍', label: amenity, color: 'bg-gray-100 text-gray-800' };
+  return (
+    <div className={`${style.color} px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs flex items-center`}>
+      <span className="mr-1">{style.icon}</span> {style.label}
+    </div>
+  );
+});
 
-  const scrollToIndex = (index: number) => {
+interface RestStopCardProps {
+  stop: RestStop;
+  isAdmin: boolean;
+  onDetailsClick: (stop: RestStop) => void;
+  onNavigationClick: (stop: RestStop) => void;
+  onEditClick: (stop: RestStop, e: React.MouseEvent) => void;
+  onDeleteClick: (id: string, e: React.MouseEvent) => void;
+}
+
+const RestStopCard = React.memo(({ stop, isAdmin, onDetailsClick, onNavigationClick, onEditClick, onDeleteClick }: RestStopCardProps) => (
+  <div
+    className="flex-shrink-0 w-72 sm:w-80 md:w-96 h-[500px] bg-gray-100 rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer group border-2 border-gray-200 flex flex-col"
+    onClick={() => onDetailsClick(stop)}
+  >
+    <div className="relative h-48 overflow-hidden">
+      <img
+        src={stop.image}
+        alt={stop.name}
+        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+        loading="lazy"
+      />
+      <div className="absolute top-4 left-4 bg-white bg-opacity-90 backdrop-blur-sm rounded-full px-3 py-1 flex items-center space-x-2">
+        {getTypeIcon(stop.type)}
+        <span className="text-sm font-medium text-gray-800">{stop.type}</span>
+      </div>
+      <div className="absolute top-4 right-4 bg-white bg-opacity-90 backdrop-blur-sm rounded-full px-3 py-1 flex items-center space-x-1">
+        <Star size={14} className="text-yellow-500 fill-current" />
+        <span className="text-sm font-bold text-gray-800">{stop.rating}</span>
+      </div>
+
+      {isAdmin && (
+        <div className="absolute bottom-4 right-4 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
+          <button
+            onClick={(e) => onEditClick(stop, e)}
+            className="bg-sky-500 text-white p-2 rounded-full hover:bg-sky-600 transition duration-200"
+            title="Rest Stop bearbeiten"
+          >
+            <Edit size={16} />
+          </button>
+          <button
+            onClick={(e) => onDeleteClick(stop.id, e)}
+            className="bg-red-600 text-white p-2 rounded-full hover:bg-red-700 transition duration-200"
+            title="Rest Stop löschen"
+          >
+            <Trash2 size={16} />
+          </button>
+        </div>
+      )}
+    </div>
+
+    <div className="p-6 flex-1 flex flex-col">
+      <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-1">{stop.name}</h3>
+
+      <div className="flex items-center text-gray-600 mb-4">
+        <MapPin size={16} className="mr-2 flex-shrink-0" />
+        <span className="text-sm truncate">{stop.location}</span>
+      </div>
+
+      <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+        {stop.description}
+      </p>
+
+      <div className="flex flex-wrap gap-2 mb-6">
+        {stop.amenities.slice(0, 6).map((amenity, index) => (
+          <AmenityBadge key={index} amenity={amenity} />
+        ))}
+      </div>
+
+      <div className="flex flex-col space-y-2 mt-auto">
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onNavigationClick(stop);
+          }}
+          className="w-full bg-sky-500 text-white py-3 px-4 rounded-xl font-medium hover:bg-sky-600 transition duration-200 flex items-center justify-center"
+        >
+          <Navigation size={18} className="mr-2" />
+          Navigation
+        </button>
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onDetailsClick(stop);
+          }}
+          className="w-full py-3 px-4 border border-gray-300 text-gray-700 rounded-xl font-medium hover:bg-gray-50 transition duration-200"
+        >
+          Details
+        </button>
+      </div>
+    </div>
+  </div>
+));
+
+interface SectionProps {
+  title: string;
+  description: string;
+  borderColor: string;
+  stops: RestStop[];
+  isAdmin: boolean;
+  onCreateClick: () => void;
+  onDetailsClick: (stop: RestStop) => void;
+  onNavigationClick: (stop: RestStop) => void;
+  onEditClick: (stop: RestStop, e: React.MouseEvent) => void;
+  onDeleteClick: (id: string, e: React.MouseEvent) => void;
+}
+
+const RestStopSection = React.memo(({
+  title,
+  description,
+  borderColor,
+  stops,
+  isAdmin,
+  onCreateClick,
+  onDetailsClick,
+  onNavigationClick,
+  onEditClick,
+  onDeleteClick,
+}: SectionProps) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isScrolling, setIsScrolling] = useState(false);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const scrollToIndex = useCallback((index: number) => {
     if (scrollContainerRef.current) {
       setIsScrolling(true);
       const cardWidth = 312;
@@ -110,41 +181,9 @@ export const RestStops: React.FC = () => {
       setCurrentIndex(index);
       setTimeout(() => setIsScrolling(false), 300);
     }
-  };
+  }, []);
 
-  const scrollToIndex2 = (index: number) => {
-    if (scrollContainerRef2.current) {
-      setIsScrolling2(true);
-      const cardWidth = 312;
-      const gap = 24;
-      const scrollPosition = index * (cardWidth + gap);
-
-      scrollContainerRef2.current.scrollTo({
-        left: scrollPosition,
-        behavior: 'smooth'
-      });
-      setCurrentIndex2(index);
-      setTimeout(() => setIsScrolling2(false), 300);
-    }
-  };
-
-  const scrollToIndex3 = (index: number) => {
-    if (scrollContainerRef3.current) {
-      setIsScrolling3(true);
-      const cardWidth = 312;
-      const gap = 24;
-      const scrollPosition = index * (cardWidth + gap);
-
-      scrollContainerRef3.current.scrollTo({
-        left: scrollPosition,
-        behavior: 'smooth'
-      });
-      setCurrentIndex3(index);
-      setTimeout(() => setIsScrolling3(false), 300);
-    }
-  };
-
-  const handleScroll = () => {
+  const handleScroll = useCallback(() => {
     if (isScrolling || !scrollContainerRef.current) return;
     const container = scrollContainerRef.current;
     const cardWidth = 312;
@@ -152,213 +191,30 @@ export const RestStops: React.FC = () => {
     const scrollLeft = container.scrollLeft;
     const newIndex = Math.round(scrollLeft / (cardWidth + gap));
 
-    if (newIndex !== currentIndex && newIndex >= 0 && newIndex < restStopsEastern.length) {
+    if (newIndex !== currentIndex && newIndex >= 0 && newIndex < stops.length) {
       setCurrentIndex(newIndex);
     }
-  };
+  }, [currentIndex, isScrolling, stops.length]);
 
-  const handleScroll2 = () => {
-    if (isScrolling2 || !scrollContainerRef2.current) return;
-    const container = scrollContainerRef2.current;
-    const cardWidth = 312;
-    const gap = 24;
-    const scrollLeft = container.scrollLeft;
-    const newIndex = Math.round(scrollLeft / (cardWidth + gap));
-
-    if (newIndex !== currentIndex2 && newIndex >= 0 && newIndex < restStopsBaltic.length) {
-      setCurrentIndex2(newIndex);
-    }
-  };
-
-  const handleScroll3 = () => {
-    if (isScrolling3 || !scrollContainerRef3.current) return;
-    const container = scrollContainerRef3.current;
-    const cardWidth = 312;
-    const gap = 24;
-    const scrollLeft = container.scrollLeft;
-    const newIndex = Math.round(scrollLeft / (cardWidth + gap));
-
-    if (newIndex !== currentIndex3 && newIndex >= 0 && newIndex < restStopsSouthern.length) {
-      setCurrentIndex3(newIndex);
-    }
-  };
-
-  const goToPrevious = () => {
-    if (currentIndex > 0) scrollToIndex(currentIndex - 1);
-  };
-
-  const goToNext = () => {
-    if (currentIndex < restStopsEastern.length - 1) scrollToIndex(currentIndex + 1);
-  };
-
-  const goToPrevious2 = () => {
-    if (currentIndex2 > 0) scrollToIndex2(currentIndex2 - 1);
-  };
-
-  const goToNext2 = () => {
-    if (currentIndex2 < restStopsBaltic.length - 1) scrollToIndex2(currentIndex2 + 1);
-  };
-
-  const goToPrevious3 = () => {
-    if (currentIndex3 > 0) scrollToIndex3(currentIndex3 - 1);
-  };
-
-  const goToNext3 = () => {
-    if (currentIndex3 < restStopsSouthern.length - 1) scrollToIndex3(currentIndex3 + 1);
-  };
-
-  React.useEffect(() => {
+  useEffect(() => {
     const container = scrollContainerRef.current;
     if (container) {
-      container.addEventListener('scroll', handleScroll);
+      container.addEventListener('scroll', handleScroll, { passive: true });
       return () => container.removeEventListener('scroll', handleScroll);
     }
-  }, [currentIndex, isScrolling]);
+  }, [handleScroll]);
 
-  React.useEffect(() => {
-    const container = scrollContainerRef2.current;
-    if (container) {
-      container.addEventListener('scroll', handleScroll2);
-      return () => container.removeEventListener('scroll', handleScroll2);
-    }
-  }, [currentIndex2, isScrolling2]);
+  const goToPrevious = useCallback(() => {
+    if (currentIndex > 0) scrollToIndex(currentIndex - 1);
+  }, [currentIndex, scrollToIndex]);
 
-  React.useEffect(() => {
-    const container = scrollContainerRef3.current;
-    if (container) {
-      container.addEventListener('scroll', handleScroll3);
-      return () => container.removeEventListener('scroll', handleScroll3);
-    }
-  }, [currentIndex3, isScrolling3]);
+  const goToNext = useCallback(() => {
+    if (currentIndex < stops.length - 1) scrollToIndex(currentIndex + 1);
+  }, [currentIndex, stops.length, scrollToIndex]);
 
-  const handleDetailsClick = (restStop: RestStop) => {
-    setSelectedRestStop(restStop);
-  };
+  if (stops.length === 0) return null;
 
-  const handleNavigationClick = (restStop: RestStop) => {
-    const query = encodeURIComponent(`${restStop.name}, ${restStop.address}`);
-    const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${query}`;
-    window.open(googleMapsUrl, '_blank');
-  };
-
-  const handleCreateRestStop = () => {
-    openModal('createRestStop');
-  };
-
-  const handleEditRestStop = (restStop: RestStop, e: React.MouseEvent) => {
-    e.stopPropagation();
-    openRestStopEdit(restStop);
-  };
-
-  const handleDeleteRestStop = async (restStopId: string, e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (window.confirm('Sind Sie sicher, dass Sie diesen Rest Stop löschen möchten?')) {
-      await deleteRestStop(restStopId);
-      if (currentIndex >= restStopsData.length - 1 && currentIndex > 0) {
-        setCurrentIndex(currentIndex - 1);
-      }
-    }
-  };
-
-  const restStopsEastern = restStopsData.filter(stop => stop.route === 'eastern');
-  const restStopsBaltic = restStopsData.filter(stop => stop.route === 'baltic');
-  const restStopsSouthern = restStopsData.filter(stop => stop.route === 'southern');
-
-  const RestStopCard = ({ stop }: { stop: RestStop }) => (
-    <div
-      className="flex-shrink-0 w-72 sm:w-80 md:w-96 h-[500px] bg-gray-100 rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer group border-2 border-gray-200 flex flex-col"
-      onClick={() => handleDetailsClick(stop)}
-    >
-      <div className="relative h-48 overflow-hidden">
-        <img
-          src={stop.image}
-          alt={stop.name}
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-        />
-        <div className="absolute top-4 left-4 bg-white bg-opacity-90 backdrop-blur-sm rounded-full px-3 py-1 flex items-center space-x-2">
-          {getTypeIcon(stop.type)}
-          <span className="text-sm font-medium text-gray-800">{stop.type}</span>
-        </div>
-        <div className="absolute top-4 right-4 bg-white bg-opacity-90 backdrop-blur-sm rounded-full px-3 py-1 flex items-center space-x-1">
-          <Star size={14} className="text-yellow-500 fill-current" />
-          <span className="text-sm font-bold text-gray-800">{stop.rating}</span>
-        </div>
-
-        {isAdmin && (
-          <div className="absolute bottom-4 right-4 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
-            <button
-              onClick={(e) => handleEditRestStop(stop, e)}
-              className="bg-sky-500 text-white p-2 rounded-full hover:bg-sky-600 transition duration-200"
-              title="Rest Stop bearbeiten"
-            >
-              <Edit size={16} />
-            </button>
-            <button
-              onClick={(e) => handleDeleteRestStop(stop.id, e)}
-              className="bg-red-600 text-white p-2 rounded-full hover:bg-red-700 transition duration-200"
-              title="Rest Stop löschen"
-            >
-              <Trash2 size={16} />
-            </button>
-          </div>
-        )}
-      </div>
-
-      <div className="p-6 flex-1 flex flex-col">
-        <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-1">{stop.name}</h3>
-
-        <div className="flex items-center text-gray-600 mb-4">
-          <MapPin size={16} className="mr-2 flex-shrink-0" />
-          <span className="text-sm truncate">{stop.location}</span>
-        </div>
-
-        <p className="text-gray-600 text-sm mb-4 line-clamp-2">
-          {stop.description}
-        </p>
-
-        <div className="flex flex-wrap gap-2 mb-6">
-          {stop.amenities.slice(0, 6).map((amenity, index) => (
-            <div key={index}>
-              {getAmenityIcon(amenity)}
-            </div>
-          ))}
-        </div>
-
-        <div className="flex flex-col space-y-2 mt-auto">
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              handleNavigationClick(stop);
-            }}
-            className="w-full bg-sky-500 text-white py-3 px-4 rounded-xl font-medium hover:bg-sky-600 transition duration-200 flex items-center justify-center"
-          >
-            <Navigation size={18} className="mr-2" />
-            Navigation
-          </button>
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              handleDetailsClick(stop);
-            }}
-            className="w-full py-3 px-4 border border-gray-300 text-gray-700 rounded-xl font-medium hover:bg-gray-50 transition duration-200"
-          >
-            Details
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-
-  const renderSection = (
-    title: string,
-    description: string,
-    currentIdx: number,
-    goToPrev: () => void,
-    goToNext: () => void,
-    scrollRef: React.RefObject<HTMLDivElement>,
-    borderColor: string,
-    stops: RestStop[]
-  ) => (
+  return (
     <section className={`w-full mt-20 mb-20 bg-gray-100 py-12 px-6 rounded-3xl border-t-4 ${borderColor}`}>
       <div className="flex items-start justify-between mb-10">
         <div className="flex-1">
@@ -367,7 +223,7 @@ export const RestStops: React.FC = () => {
         </div>
         {isAdmin && (
           <button
-            onClick={handleCreateRestStop}
+            onClick={onCreateClick}
             className="ml-4 bg-emerald-500 text-white p-3 rounded-full hover:bg-emerald-600 transition duration-200 flex-shrink-0"
             title="Neuen Rest Stop erstellen"
           >
@@ -378,39 +234,46 @@ export const RestStops: React.FC = () => {
 
       <div className="relative">
         <button
-          onClick={goToPrev}
-          disabled={currentIdx === 0}
+          onClick={goToPrevious}
+          disabled={currentIndex === 0}
           className={`absolute left-0 top-1/2 transform -translate-y-1/2 z-20 bg-white rounded-full p-3 shadow-lg transition-all duration-200 ${
-            currentIdx === 0
+            currentIndex === 0
               ? 'opacity-30 cursor-not-allowed'
               : 'hover:bg-gray-100 hover:shadow-xl opacity-90 hover:opacity-100'
           }`}
           style={{ marginLeft: '-20px' }}
         >
-          <ChevronLeft size={28} className={currentIdx === 0 ? 'text-gray-400' : 'text-[#c51d34]'} />
+          <ChevronLeft size={28} className={currentIndex === 0 ? 'text-gray-400' : 'text-[#c51d34]'} />
         </button>
 
         <button
           onClick={goToNext}
-          disabled={currentIdx >= stops.length - 1}
+          disabled={currentIndex >= stops.length - 1}
           className={`absolute right-0 top-1/2 transform -translate-y-1/2 z-20 bg-white rounded-full p-3 shadow-lg transition-all duration-200 ${
-            currentIdx >= stops.length - 1
+            currentIndex >= stops.length - 1
               ? 'opacity-30 cursor-not-allowed'
               : 'hover:bg-gray-100 hover:shadow-xl opacity-90 hover:opacity-100'
           }`}
           style={{ marginRight: '-20px' }}
         >
-          <ChevronRight size={28} className={currentIdx >= stops.length - 1 ? 'text-gray-400' : 'text-[#c51d34]'} />
+          <ChevronRight size={28} className={currentIndex >= stops.length - 1 ? 'text-gray-400' : 'text-[#c51d34]'} />
         </button>
 
         <div
-          ref={scrollRef}
+          ref={scrollContainerRef}
           className="flex overflow-x-auto space-x-6 pb-4 scrollbar-hide px-4"
           style={{ scrollSnapType: 'x mandatory' }}
         >
           {stops.map((stop) => (
             <div key={stop.id} style={{ scrollSnapAlign: 'start' }}>
-              <RestStopCard stop={stop} />
+              <RestStopCard
+                stop={stop}
+                isAdmin={isAdmin}
+                onDetailsClick={onDetailsClick}
+                onNavigationClick={onNavigationClick}
+                onEditClick={onEditClick}
+                onDeleteClick={onDeleteClick}
+              />
             </div>
           ))}
         </div>
@@ -419,13 +282,9 @@ export const RestStops: React.FC = () => {
           {stops.map((_, index) => (
             <button
               key={index}
-              onClick={() => {
-                if (scrollRef === scrollContainerRef) scrollToIndex(index);
-                else if (scrollRef === scrollContainerRef2) scrollToIndex2(index);
-                else scrollToIndex3(index);
-              }}
+              onClick={() => scrollToIndex(index)}
               className={`h-3 rounded-full transition-all duration-300 ${
-                index === currentIdx
+                index === currentIndex
                   ? 'bg-sky-500 w-10'
                   : 'bg-gray-300 w-3 hover:bg-gray-400'
               }`}
@@ -434,47 +293,125 @@ export const RestStops: React.FC = () => {
         </div>
 
         <div className="text-center mt-6 text-sm text-gray-500 md:hidden">
-          ← Wischen zum Blättern →
+          Wischen zum Blaettern
         </div>
       </div>
     </section>
   );
+});
+
+export const RestStops: React.FC = () => {
+  const [selectedRestStop, setSelectedRestStop] = useState<RestStop | null>(null);
+  const { isAdmin } = useAuth();
+  const { openRestStopEdit, openModal } = useModals();
+  const { restStops: restStopsData, loading, error, deleteRestStop, refetch } = useRestStops();
+
+  const restStopsEastern = useMemo(() =>
+    restStopsData.filter(stop => stop.route === 'eastern'),
+    [restStopsData]
+  );
+  const restStopsBaltic = useMemo(() =>
+    restStopsData.filter(stop => stop.route === 'baltic'),
+    [restStopsData]
+  );
+  const restStopsSouthern = useMemo(() =>
+    restStopsData.filter(stop => stop.route === 'southern'),
+    [restStopsData]
+  );
+
+  const handleDetailsClick = useCallback((restStop: RestStop) => {
+    setSelectedRestStop(restStop);
+  }, []);
+
+  const handleNavigationClick = useCallback((restStop: RestStop) => {
+    const query = encodeURIComponent(`${restStop.name}, ${restStop.address}`);
+    const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${query}`;
+    window.open(googleMapsUrl, '_blank');
+  }, []);
+
+  const handleCreateRestStop = useCallback(() => {
+    openModal('createRestStop');
+  }, [openModal]);
+
+  const handleEditRestStop = useCallback((restStop: RestStop, e: React.MouseEvent) => {
+    e.stopPropagation();
+    openRestStopEdit(restStop);
+  }, [openRestStopEdit]);
+
+  const handleDeleteRestStop = useCallback(async (restStopId: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (window.confirm('Sind Sie sicher, dass Sie diesen Rest Stop loeschen moechten?')) {
+      await deleteRestStop(restStopId);
+    }
+  }, [deleteRestStop]);
+
+  if (loading) {
+    return (
+      <div className="w-full mt-20 mb-20 flex items-center justify-center py-20">
+        <div className="flex flex-col items-center space-y-4">
+          <Loader2 size={48} className="text-sky-500 animate-spin" />
+          <p className="text-gray-600 text-lg">Raststätten werden geladen...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="w-full mt-20 mb-20 flex items-center justify-center py-20">
+        <div className="flex flex-col items-center space-y-4 bg-red-50 p-8 rounded-2xl border border-red-200 max-w-md">
+          <AlertCircle size={48} className="text-red-500" />
+          <p className="text-red-700 text-lg font-medium text-center">Fehler beim Laden der Raststätten</p>
+          <p className="text-red-600 text-sm text-center">{error}</p>
+          <button
+            onClick={() => refetch()}
+            className="bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600 transition-colors"
+          >
+            Erneut versuchen
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  const sections = [
+    {
+      title: 'Восточные маршруты',
+      description: 'Места отдыха и ночлега на пути в Грозный через Польшу, Беларусь, Москва, Грозный.',
+      borderColor: 'border-sky-400',
+      stops: restStopsEastern,
+    },
+    {
+      title: 'Балтийские и восточные страны',
+      description: 'Комфортные остановки через в Польшу, Литву, Латвию, Белорусия и далее.',
+      borderColor: 'border-emerald-400',
+      stops: restStopsBaltic,
+    },
+    {
+      title: 'Южные маршруты',
+      description: 'Открой для себя удобный места отдыха и отели на маршруте в Грозный через Венгрию, Сербию, Болгарию, Турцию и Грузию.',
+      borderColor: 'border-orange-500',
+      stops: restStopsSouthern,
+    },
+  ];
 
   return (
     <>
-      {renderSection(
-        'Восточные маршруты',
-        'Места отдыха и ночлега на пути в Грозный через Польшу, Беларусь, Москва, Грозный.',
-        currentIndex,
-        goToPrevious,
-        goToNext,
-        scrollContainerRef,
-        'border-sky-400',
-        restStopsEastern
-      )}
-      
-      {renderSection(
-        'Балтийские и восточные страны',
-        'Комфортные остановки через в Польшу, Литву, Латвию, Белорусия и далее.',
-      
-        currentIndex2,
-        goToPrevious2,
-        goToNext2,
-        scrollContainerRef2,
-        'border-emerald-400',
-        restStopsBaltic
-      )}
-
-      {renderSection(
-        'Южные маршруты',
-        'Открой для себя удобный места отдыха и отели на маршруте в Грозный через Венгрию, Сербию, Болгарию, Турцию и Грузию.',
-        currentIndex3,
-        goToPrevious3,
-        goToNext3,
-        scrollContainerRef3,
-        'border-orange-500',
-        restStopsSouthern
-      )}
+      {sections.map((section, index) => (
+        <RestStopSection
+          key={index}
+          title={section.title}
+          description={section.description}
+          borderColor={section.borderColor}
+          stops={section.stops}
+          isAdmin={isAdmin}
+          onCreateClick={handleCreateRestStop}
+          onDetailsClick={handleDetailsClick}
+          onNavigationClick={handleNavigationClick}
+          onEditClick={handleEditRestStop}
+          onDeleteClick={handleDeleteRestStop}
+        />
+      ))}
 
       <RestStopDetailsModal
         restStop={selectedRestStop}
