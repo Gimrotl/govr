@@ -34,7 +34,7 @@ export function useRestStops() {
       setError(null);
       const { data, error: fetchError } = await supabase
         .from('rest_stops')
-        .select('*')
+        .select('id, name, type, location, address, rating, description, image, amenities, route, created_at, updated_at')
         .order('created_at', { ascending: false });
 
       if (fetchError) {
