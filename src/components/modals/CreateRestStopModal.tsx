@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, MapPin, Star, Save, Upload, Trash2 } from 'lucide-react';
+import { X, MapPin, Star, Save, Upload, Trash2, ChevronUp, ChevronDown } from 'lucide-react';
 import { useModals } from '../../hooks/useModals';
 import { useAuth } from '../../hooks/useAuth';
 import { useRestStops } from '../../hooks/useRestStops';
@@ -11,16 +11,16 @@ export const CreateRestStopModal: React.FC = () => {
   const { createRestStop } = useRestStops();
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
+  const [images, setImages] = useState<Array<{ id: string; file?: File; url?: string }>>([]);
   const [formData, setFormData] = useState({
     name: '',
-    type: 'Raststätte' as 'Raststätte' | 'Hotel' | 'Tankstelle' | 'Restaurant',
+    type: 'Raststätte' as 'Raststätte' | 'Hotel' | 'Tankstelle' | 'Restaurant' | 'Route',
+    route: 'eastern' as 'eastern' | 'baltic' | 'southern',
     location: '',
     address: '',
     rating: 4.0,
     description: '',
     fullDescription: '',
-    image: null as File | null,
-    imagePreview: '',
     amenities: [] as string[],
     coordinates: {
       lat: 0,
@@ -37,29 +37,44 @@ export const CreateRestStopModal: React.FC = () => {
     accept: {
       'image/*': ['.png', '.jpg', '.jpeg', '.gif']
     },
-    maxSize: 5242880, // 5MB
-    multiple: false,
+    maxSize: 5242880,
+    multiple: true,
     onDrop: (acceptedFiles) => {
-      const file = acceptedFiles[0];
-      if (file) {
-        setFormData(prev => ({
-          ...prev,
-          image: file,
-          imagePreview: URL.createObjectURL(file)
-        }));
-      }
+      const newImages = acceptedFiles.map(file => ({
+        id: `${Date.now()}-${Math.random()}`,
+        file,
+        url: URL.createObjectURL(file)
+      }));
+      setImages(prev => [...prev, ...newImages]);
     }
   });
 
-  const removeImage = () => {
-    if (formData.imagePreview) {
-      URL.revokeObjectURL(formData.imagePreview);
-    }
-    setFormData(prev => ({
-      ...prev,
-      image: null,
-      imagePreview: ''
-    }));
+  const removeImage = (id: string) => {
+    setImages(prev => {
+      const image = prev.find(img => img.id === id);
+      if (image?.url && image.file) {
+        URL.revokeObjectURL(image.url);
+      }
+      return prev.filter(img => img.id !== id);
+    });
+  };
+
+  const moveImageUp = (index: number) => {
+    if (index === 0) return;
+    setImages(prev => {
+      const newImages = [...prev];
+      [newImages[index - 1], newImages[index]] = [newImages[index], newImages[index - 1]];
+      return newImages;
+    });
+  };
+
+  const moveImageDown = (index: number) => {
+    if (index === images.length - 1) return;
+    setImages(prev => {
+      const newImages = [...prev];
+      [newImages[index], newImages[index + 1]] = [newImages[index + 1], newImages[index]];
+      return newImages;
+    });
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -96,43 +111,43 @@ export const CreateRestStopModal: React.FC = () => {
       return;
     }
 
-    if (!user) {
-      setSaveError('Sie müssen angemeldet sein, um einen Rest Stop zu erstellen.');
-      return;
-    }
-
     setSaving(true);
     setSaveError(null);
 
     try {
-      let imageToSave = 'https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg';
+      const imageUrls: string[] = [];
 
-      if (formData.image) {
-        await new Promise<void>((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onloadend = () => {
-            imageToSave = reader.result as string;
-            resolve();
-          };
-          reader.onerror = () => reject(new Error('Fehler beim Lesen der Datei'));
-          reader.readAsDataURL(formData.image);
-        });
+      for (const image of images) {
+        if (image.file) {
+          await new Promise<void>((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+              imageUrls.push(reader.result as string);
+              resolve();
+            };
+            reader.onerror = () => reject(new Error('Fehler beim Lesen der Datei'));
+            reader.readAsDataURL(image.file);
+          });
+        }
       }
+
+      const mainImage = imageUrls.length > 0 ? imageUrls[0] : null;
 
       const newRestStop = {
         name: formData.name,
         type: formData.type,
+        route: formData.route,
         location: formData.location,
         address: formData.address,
         rating: formData.rating,
         description: formData.description,
         full_description: formData.fullDescription,
-        image: imageToSave,
+        image: mainImage,
         amenities: formData.amenities,
         coordinates: formData.coordinates
       };
 
-      const result = await createRestStop(newRestStop, user.id);
+      const result = await createRestStop(newRestStop, user?.id || null);
 
       if (result) {
         setSaveError(null);
@@ -200,6 +215,23 @@ export const CreateRestStopModal: React.FC = () => {
                 <option value="Hotel">Hotel</option>
                 <option value="Tankstelle">Tankstelle</option>
                 <option value="Restaurant">Restaurant</option>
+                <option value="Route">Route</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Route
+              </label>
+              <select
+                name="route"
+                value={formData.route}
+                onChange={handleChange}
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-400 focus:border-transparent"
+              >
+                <option value="eastern">Östliche Routen</option>
+                <option value="baltic">Baltische und östliche Staaten</option>
+                <option value="southern">Südliche Routen</option>
               </select>
             </div>
 
@@ -252,46 +284,89 @@ export const CreateRestStopModal: React.FC = () => {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Bild hochladen
+              Bilder verwalten
             </label>
-            
-            {formData.imagePreview ? (
-              <div className="relative">
-                <img
-                  src={formData.imagePreview}
-                  alt="Preview"
-                  className="w-full h-48 object-cover rounded-lg border border-gray-300"
-                />
-                <button
-                  type="button"
-                  onClick={removeImage}
-                  className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full hover:bg-red-600 transition duration-200"
-                >
-                  <Trash2 size={16} />
-                </button>
-              </div>
-            ) : (
-              <div
-                {...getRootProps()}
-                className={`w-full h-48 border-2 border-dashed rounded-lg flex flex-col items-center justify-center cursor-pointer transition-colors ${
-                  isDragActive
-                    ? 'border-sky-400 bg-sky-50'
-                    : 'border-gray-300 hover:border-sky-300 hover:bg-gray-50'
-                }`}
-              >
-                <input {...getInputProps()} />
-                <Upload size={48} className="text-gray-400 mb-2" />
-                <p className="text-gray-600 text-center">
-                  {isDragActive 
-                    ? 'Bild hier ablegen...' 
-                    : 'Klicken oder Bild hierher ziehen'
-                  }
-                </p>
-                <p className="text-sm text-gray-500 mt-1">
-                  PNG, JPG, GIF bis 5MB
-                </p>
+
+            {images.length > 0 && (
+              <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 mb-3">
+                {images.map((image, index) => (
+                  <div key={image.id} className="relative group">
+                    <div className="relative h-24 bg-gray-100 rounded-lg overflow-hidden border-2 border-gray-200">
+                      <img
+                        src={image.url}
+                        alt={`Bild ${index + 1}`}
+                        className="w-full h-full object-cover"
+                      />
+                      {index === 0 && (
+                        <div className="absolute top-1 left-1 bg-sky-500 text-white text-xs font-bold px-2 py-1 rounded">
+                          Hauptbild
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 rounded-lg transition duration-200 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                      <div className="flex flex-col gap-1">
+                        <button
+                          type="button"
+                          onClick={() => moveImageUp(index)}
+                          disabled={index === 0}
+                          className={`p-1.5 rounded transition duration-200 ${
+                            index === 0
+                              ? 'bg-gray-400 text-gray-600 cursor-not-allowed'
+                              : 'bg-sky-500 text-white hover:bg-sky-600'
+                          }`}
+                          title="Nach oben"
+                        >
+                          <ChevronUp size={16} />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => moveImageDown(index)}
+                          disabled={index === images.length - 1}
+                          className={`p-1.5 rounded transition duration-200 ${
+                            index === images.length - 1
+                              ? 'bg-gray-400 text-gray-600 cursor-not-allowed'
+                              : 'bg-sky-500 text-white hover:bg-sky-600'
+                          }`}
+                          title="Nach unten"
+                        >
+                          <ChevronDown size={16} />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => removeImage(image.id)}
+                          className="p-1.5 bg-red-500 text-white rounded hover:bg-red-600 transition duration-200"
+                          title="Löschen"
+                        >
+                          <Trash2 size={16} />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             )}
+
+            <div
+              {...getRootProps()}
+              className={`w-full h-32 border-2 border-dashed rounded-lg flex flex-col items-center justify-center cursor-pointer transition-colors ${
+                isDragActive
+                  ? 'border-sky-400 bg-sky-50'
+                  : 'border-gray-300 hover:border-sky-300 hover:bg-gray-50'
+              }`}
+            >
+              <input {...getInputProps()} />
+              <Upload size={36} className="text-gray-400 mb-2" />
+              <p className="text-gray-600 text-center text-sm">
+                {isDragActive
+                  ? 'Bilder hier ablegen...'
+                  : 'Klicken oder Bilder hierher ziehen'
+                }
+              </p>
+              <p className="text-xs text-gray-500 mt-1">
+                PNG, JPG, GIF bis 5MB (mehrere möglich)
+              </p>
+            </div>
           </div>
 
           <div>

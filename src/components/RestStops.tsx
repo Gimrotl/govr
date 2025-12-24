@@ -85,6 +85,7 @@ export const RestStops: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentIndex2, setCurrentIndex2] = useState(0);
   const [currentIndex3, setCurrentIndex3] = useState(0);
+  const [selectedRestStop, setSelectedRestStop] = useState<RestStop | null>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef2 = useRef<HTMLDivElement>(null);
   const scrollContainerRef3 = useRef<HTMLDivElement>(null);
@@ -151,7 +152,7 @@ export const RestStops: React.FC = () => {
     const scrollLeft = container.scrollLeft;
     const newIndex = Math.round(scrollLeft / (cardWidth + gap));
 
-    if (newIndex !== currentIndex && newIndex >= 0 && newIndex < restStopsData.length) {
+    if (newIndex !== currentIndex && newIndex >= 0 && newIndex < restStopsEastern.length) {
       setCurrentIndex(newIndex);
     }
   };
@@ -164,7 +165,7 @@ export const RestStops: React.FC = () => {
     const scrollLeft = container.scrollLeft;
     const newIndex = Math.round(scrollLeft / (cardWidth + gap));
 
-    if (newIndex !== currentIndex2 && newIndex >= 0 && newIndex < restStopsData.length) {
+    if (newIndex !== currentIndex2 && newIndex >= 0 && newIndex < restStopsBaltic.length) {
       setCurrentIndex2(newIndex);
     }
   };
@@ -177,7 +178,7 @@ export const RestStops: React.FC = () => {
     const scrollLeft = container.scrollLeft;
     const newIndex = Math.round(scrollLeft / (cardWidth + gap));
 
-    if (newIndex !== currentIndex3 && newIndex >= 0 && newIndex < restStopsData.length) {
+    if (newIndex !== currentIndex3 && newIndex >= 0 && newIndex < restStopsSouthern.length) {
       setCurrentIndex3(newIndex);
     }
   };
@@ -187,7 +188,7 @@ export const RestStops: React.FC = () => {
   };
 
   const goToNext = () => {
-    if (currentIndex < restStopsData.length - 1) scrollToIndex(currentIndex + 1);
+    if (currentIndex < restStopsEastern.length - 1) scrollToIndex(currentIndex + 1);
   };
 
   const goToPrevious2 = () => {
@@ -195,7 +196,7 @@ export const RestStops: React.FC = () => {
   };
 
   const goToNext2 = () => {
-    if (currentIndex2 < restStopsData.length - 1) scrollToIndex2(currentIndex2 + 1);
+    if (currentIndex2 < restStopsBaltic.length - 1) scrollToIndex2(currentIndex2 + 1);
   };
 
   const goToPrevious3 = () => {
@@ -203,7 +204,7 @@ export const RestStops: React.FC = () => {
   };
 
   const goToNext3 = () => {
-    if (currentIndex3 < restStopsData.length - 1) scrollToIndex3(currentIndex3 + 1);
+    if (currentIndex3 < restStopsSouthern.length - 1) scrollToIndex3(currentIndex3 + 1);
   };
 
   React.useEffect(() => {
@@ -258,6 +259,10 @@ export const RestStops: React.FC = () => {
       }
     }
   };
+
+  const restStopsEastern = restStopsData.filter(stop => stop.route === 'eastern');
+  const restStopsBaltic = restStopsData.filter(stop => stop.route === 'baltic');
+  const restStopsSouthern = restStopsData.filter(stop => stop.route === 'southern');
 
   const RestStopCard = ({ stop }: { stop: RestStop }) => (
     <div
@@ -351,9 +356,10 @@ export const RestStops: React.FC = () => {
     goToPrev: () => void,
     goToNext: () => void,
     scrollRef: React.RefObject<HTMLDivElement>,
-    borderColor: string
+    borderColor: string,
+    stops: RestStop[]
   ) => (
-    <section className={`mt-20 mb-20 bg-gray-100 py-12 px-6 rounded-3xl border-t-4 ${borderColor}`}>
+    <section className={`w-full mt-20 mb-20 bg-gray-100 py-12 px-6 rounded-3xl border-t-4 ${borderColor}`}>
       <div className="flex items-start justify-between mb-10">
         <div className="flex-1">
           <h2 className="text-2xl font-bold text-gray-900 mb-2">{title}</h2>
@@ -386,15 +392,15 @@ export const RestStops: React.FC = () => {
 
         <button
           onClick={goToNext}
-          disabled={currentIdx >= restStopsData.length - 1}
+          disabled={currentIdx >= stops.length - 1}
           className={`absolute right-0 top-1/2 transform -translate-y-1/2 z-20 bg-white rounded-full p-3 shadow-lg transition-all duration-200 ${
-            currentIdx >= restStopsData.length - 1
+            currentIdx >= stops.length - 1
               ? 'opacity-30 cursor-not-allowed'
               : 'hover:bg-gray-100 hover:shadow-xl opacity-90 hover:opacity-100'
           }`}
           style={{ marginRight: '-20px' }}
         >
-          <ChevronRight size={28} className={currentIdx >= restStopsData.length - 1 ? 'text-gray-400' : 'text-[#c51d34]'} />
+          <ChevronRight size={28} className={currentIdx >= stops.length - 1 ? 'text-gray-400' : 'text-[#c51d34]'} />
         </button>
 
         <div
@@ -402,7 +408,7 @@ export const RestStops: React.FC = () => {
           className="flex overflow-x-auto space-x-6 pb-4 scrollbar-hide px-4"
           style={{ scrollSnapType: 'x mandatory' }}
         >
-          {restStopsData.map((stop) => (
+          {stops.map((stop) => (
             <div key={stop.id} style={{ scrollSnapAlign: 'start' }}>
               <RestStopCard stop={stop} />
             </div>
@@ -410,7 +416,7 @@ export const RestStops: React.FC = () => {
         </div>
 
         <div className="flex justify-center mt-10 space-x-3">
-          {restStopsData.map((_, index) => (
+          {stops.map((_, index) => (
             <button
               key={index}
               onClick={() => {
@@ -437,33 +443,37 @@ export const RestStops: React.FC = () => {
   return (
     <>
       {renderSection(
-        'Östliche Routen',
-        'Raststätten und Übernachtungsmöglichkeiten auf dem Weg nach Polen, Weißrussland und in den Kaukasus. Finden Sie alles, was Sie für eine komfortable Fahrt benötigen.',
+        'Восточные маршруты',
+        'Места отдыха и ночлега на пути в Грозный через Польшу, Беларусь, Москва, Грозный.',
         currentIndex,
         goToPrevious,
         goToNext,
         scrollContainerRef,
-        'border-sky-400'
+        'border-sky-400',
+        restStopsEastern
       )}
-
+      
       {renderSection(
-        'Baltische und östliche Staaten',
-        'Komfortable Stopps für Ihre Reise nach Litauen, Lettland, Polen und darüber hinaus. Mit allen wichtigen Einrichtungen und guten Bewertungen.',
+        'Балтийские и восточные страны',
+        'Комфортные остановки через в Польшу, Литву, Латвию, Белорусия и далее.',
+      
         currentIndex2,
         goToPrevious2,
         goToNext2,
         scrollContainerRef2,
-        'border-emerald-400'
+        'border-emerald-400',
+        restStopsBaltic
       )}
 
       {renderSection(
-        'Südliche Routen',
-        'Entdecken Sie erstklassige Raststätten und Hotels auf der Route nach Ungarn, Serbien, Bulgarien, der Türkei und Georgien. Perfekt zum Ausruhen und Tanken.',
+        'Южные маршруты',
+        'Открой для себя удобный места отдыха и отели на маршруте в Грозный через Венгрию, Сербию, Болгарию, Турцию и Грузию.',
         currentIndex3,
         goToPrevious3,
         goToNext3,
         scrollContainerRef3,
-        'border-orange-500'
+        'border-orange-500',
+        restStopsSouthern
       )}
 
       <RestStopDetailsModal
