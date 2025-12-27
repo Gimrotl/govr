@@ -48,8 +48,8 @@ export const InfoCardModal: React.FC = () => {
           </div>
         </div>
 
-        <div className="p-6 -mt-8">
-          <div className="bg-gray-50 rounded-xl p-6 shadow-inner">
+        <div className="p-6 -mt-8 flex flex-col max-h-96">
+          <div className="bg-gray-50 rounded-xl p-6 shadow-inner overflow-y-auto flex-1">
             <p className="text-deep-slate-600 leading-relaxed text-center">
               {selectedInfoCard.description}
             </p>
