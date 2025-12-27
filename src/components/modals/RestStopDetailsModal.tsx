@@ -517,7 +517,7 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
 
             {/* Amenities below images */}
             <div className="p-4 bg-gray-50">
-              <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center justify-between mb-3 pr-12">
                 <h3 className="text-lg font-semibold text-gray-900">Ausstattung</h3>
                 {isAdmin && editingField === 'amenities' && (
                   <div className="flex space-x-2">
