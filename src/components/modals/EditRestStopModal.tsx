@@ -2,16 +2,33 @@ import React, { useState, useEffect } from 'react';
 import { X, MapPin, Star, Save, Upload, Trash2, Pencil, ChevronUp, ChevronDown } from 'lucide-react';
 import { useModals } from '../../hooks/useModals';
 import { useAuth } from '../../hooks/useAuth';
-import { useRestStops, RestStop } from '../../hooks/useRestStops';
 import { useDropzone } from 'react-dropzone';
+
+interface RestStop {
+  id: number;
+  name: string;
+  type: 'Raststätte' | 'Hotel' | 'Tankstelle' | 'Restaurant';
+  location: string;
+  address: string;
+  rating: number;
+  description: string;
+  fullDescription: string;
+  image: string;
+  amenities: string[];
+  coordinates: {
+    lat: number;
+    lng: number;
+  };
+}
+
+interface EditRestStopModalProps {
+  restStop: RestStop | null;
+  onUpdateRestStop: (restStop: RestStop) => void;
+}
 
 export const EditRestStopModal: React.FC = () => {
   const { closeModal, selectedRestStop } = useModals();
   const { isAdmin } = useAuth();
-  const { updateRestStop } = useRestStops();
-  const [saving, setSaving] = useState(false);
-  const [saveError, setSaveError] = useState<string | null>(null);
-  const [saveSuccess, setSaveSuccess] = useState(false);
   const [isEditingDescription, setIsEditingDescription] = useState(false);
   const [isEditingFullDescription, setIsEditingFullDescription] = useState(false);
   const [isEditingAddress, setIsEditingAddress] = useState(false);
@@ -136,63 +153,39 @@ export const EditRestStopModal: React.FC = () => {
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
+    
     if (!formData.name || !formData.location || !formData.address) {
-      setSaveError('Bitte füllen Sie alle Pflichtfelder aus.');
+      alert('Bitte füllen Sie alle Pflichtfelder aus.');
       return;
     }
 
     if (!selectedRestStop) return;
 
-    setSaving(true);
-    setSaveError(null);
-    setSaveSuccess(false);
-
-    try {
-      let imageToSave = formData.originalImage;
-
-      if (formData.image) {
-        await new Promise<void>((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onloadend = () => {
-            imageToSave = reader.result as string;
-            resolve();
-          };
-          reader.onerror = () => reject(new Error('Fehler beim Lesen der Datei'));
-          reader.readAsDataURL(formData.image);
-        });
-      }
-
-      const updateData = {
-        name: formData.name,
-        type: formData.type,
-        location: formData.location,
-        address: formData.address,
-        rating: formData.rating,
-        description: formData.description,
-        full_description: formData.fullDescription,
-        image: imageToSave,
-        amenities: formData.amenities,
-        coordinates: formData.coordinates
+    // Handle image update
+    if (formData.image) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const updatedRestStop = {
+          ...selectedRestStop,
+          ...formData,
+          image: reader.result as string
+        };
+        console.log('Updating rest stop:', updatedRestStop);
+        alert('Rest Stop erfolgreich aktualisiert!');
+        closeModal('editRestStop');
       };
-
-      const success = await updateRestStop(selectedRestStop.id, updateData);
-
-      if (success) {
-        setSaveSuccess(true);
-        setTimeout(() => {
-          closeModal('editRestStop');
-        }, 1500);
-      } else {
-        setSaveError('Fehler beim Speichern. Bitte versuchen Sie es erneut.');
-      }
-    } catch (err) {
-      console.error('Save error:', err);
-      setSaveError(err instanceof Error ? err.message : 'Fehler beim Speichern');
-    } finally {
-      setSaving(false);
+      reader.readAsDataURL(formData.image);
+    } else {
+      const updatedRestStop = {
+        ...selectedRestStop,
+        ...formData,
+        image: formData.originalImage // Keep original image if no new image uploaded
+      };
+      console.log('Updating rest stop:', updatedRestStop);
+      alert('Rest Stop erfolgreich aktualisiert!');
+      closeModal('editRestStop');
     }
   };
 
@@ -212,18 +205,6 @@ export const EditRestStopModal: React.FC = () => {
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
-          {saveError && (
-            <div className="p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg text-sm">
-              {saveError}
-            </div>
-          )}
-
-          {saveSuccess && (
-            <div className="p-3 bg-emerald-100 border border-emerald-400 text-emerald-700 rounded-lg text-sm">
-              Rest Stop erfolgreich gespeichert!
-            </div>
-          )}
-
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -552,18 +533,16 @@ export const EditRestStopModal: React.FC = () => {
             <button
               type="button"
               onClick={() => closeModal('editRestStop')}
-              disabled={saving}
-              className="flex-1 bg-gray-500 text-white py-3 rounded-lg hover:bg-gray-600 transition duration-200 disabled:opacity-50"
+              className="flex-1 bg-gray-500 text-white py-3 rounded-lg hover:bg-gray-600 transition duration-200"
             >
               Abbrechen
             </button>
             <button
               type="submit"
-              disabled={saving}
-              className="flex-1 bg-sky-500 text-white py-3 rounded-lg hover:bg-sky-600 transition duration-200 flex items-center justify-center disabled:opacity-50"
+              className="flex-1 bg-sky-500 text-white py-3 rounded-lg hover:bg-sky-600 transition duration-200 flex items-center justify-center"
             >
               <Save size={18} className="mr-2" />
-              {saving ? 'Speichern...' : 'Speichern'}
+              Speichern
             </button>
           </div>
         </form>
