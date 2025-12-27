@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef } from 'react';
 import { ChevronRight, ChevronLeft, Car, Shield, Luggage } from 'lucide-react';
 import { useInfoCards } from '../hooks/useInfoCards';
 import { useModals } from '../hooks/useModals';
@@ -38,7 +38,6 @@ export const InfoCards: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const touchStartX = useRef(0);
   const touchEndX = useRef(0);
-  const containerRef = useRef<HTMLDivElement>(null);
 
   const handleCardClick = (card: typeof cards[0], index: number) => {
     const cardData: InfoCardData = {
@@ -72,42 +71,17 @@ export const InfoCards: React.FC = () => {
     }
   };
 
-  const goToNext = useCallback(() => {
-    setCurrentIndex(prev => (prev < cards.length - 1 ? prev + 1 : prev));
-  }, [cards.length]);
+  const goToPrevious = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1);
+    }
+  };
 
-  const goToPrevious = useCallback(() => {
-    setCurrentIndex(prev => (prev > 0 ? prev - 1 : prev));
-  }, []);
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowLeft') {
-        goToPrevious();
-      } else if (e.key === 'ArrowRight') {
-        goToNext();
-      }
-    };
-
-    const handleWheel = (e: WheelEvent) => {
-      if (!containerRef.current?.contains(e.target as Node)) return;
-
-      e.preventDefault();
-      if (e.deltaX > 0 || e.deltaY > 20) {
-        goToNext();
-      } else if (e.deltaX < 0 || e.deltaY < -20) {
-        goToPrevious();
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    containerRef.current?.addEventListener('wheel', handleWheel, { passive: false });
-
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-      containerRef.current?.removeEventListener('wheel', handleWheel);
-    };
-  }, [goToNext, goToPrevious]);
+  const goToNext = () => {
+    if (currentIndex < cards.length - 1) {
+      setCurrentIndex(currentIndex + 1);
+    }
+  };
 
   if (loading) {
     return (
@@ -155,7 +129,7 @@ export const InfoCards: React.FC = () => {
         })}
       </div>
 
-      <div className="md:hidden relative" ref={containerRef}>
+      <div className="md:hidden relative">
         <div
           className="overflow-hidden"
           onTouchStart={handleTouchStart}
