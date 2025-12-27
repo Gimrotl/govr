@@ -148,7 +148,7 @@ const getAmenityIcon = (amenity: string) => {
       </div>;
     case 'Kinder':
       return <div className="bg-pink-100 text-pink-800 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs flex items-center">
-        <span className="mr-1">🚸</span> Kinderfreundlich
+        <span className="mr-1">🚸.</span> Kinderfreundlich
       </div>;
     case 'Essen':
       return <div className="bg-red-100 text-red-800 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs flex items-center">
