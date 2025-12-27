@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { X, MapPin, Star, Navigation, ExternalLink, ChevronLeft, ChevronRight, Trash2, Pencil, Check, XCircle } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { X, MapPin, Star, Navigation, ExternalLink, ChevronLeft, ChevronRight, ChevronUp, ChevronDown, Trash2, Pencil, Check, XCircle } from 'lucide-react';
 import { useModals } from '../../hooks/useModals';
 import { useAuth } from '../../hooks/useAuth';
 import { useRestStops } from '../../hooks/useRestStops';
@@ -105,6 +105,8 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
   const [showReviewsModal, setShowReviewsModal] = useState(false);
   const [hiddenIndices, setHiddenIndices] = useState<number[]>(restStop?.hidden_image_indices || []);
   const [isUpdating, setIsUpdating] = useState(false);
+  const [amenitiesScrollIndex, setAmenitiesScrollIndex] = useState(0);
+  const amenitiesContainerRef = useRef<HTMLDivElement>(null);
   const { isLoggedIn, userEmail, isAdmin } = useAuth();
   const { openModal } = useModals();
   const { updateRestStop } = useRestStops();
@@ -227,6 +229,24 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
       setEditAmenities(editAmenities.filter(a => a !== amenity));
     } else {
       setEditAmenities([...editAmenities, amenity]);
+    }
+  };
+
+  const scrollAmenitiesUp = () => {
+    if (amenitiesContainerRef.current) {
+      amenitiesContainerRef.current.scrollBy({
+        top: -150,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  const scrollAmenitiesDown = () => {
+    if (amenitiesContainerRef.current) {
+      amenitiesContainerRef.current.scrollBy({
+        top: 150,
+        behavior: 'smooth'
+      });
     }
   };
 
@@ -511,27 +531,46 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
               </div>
               {editingField === 'amenities' ? (
                 <div className="space-y-3">
-                  <div className="grid grid-cols-2 gap-2">
-                    {AVAILABLE_AMENITIES.map((amenity) => {
-                      const amenityInfo = getAmenityIcon(amenity);
-                      const isSelected = editAmenities.includes(amenity);
-                      return (
-                        <button
-                          key={amenity}
-                          onClick={() => toggleAmenity(amenity)}
-                          className={`px-3 py-2 rounded-xl flex items-center shadow-sm transition-all ${
-                            isSelected
-                              ? `${amenityInfo.color} ring-2 ring-sky-400`
-                              : 'bg-gray-200 text-gray-500 opacity-60'
-                          }`}
-                        >
-                          <span className="text-lg mr-2">{amenityInfo.icon}</span>
-                          <span className="font-medium text-sm">{amenityInfo.label}</span>
-                        </button>
-                      );
-                    })}
+                  <div className="relative">
+                    <button
+                      onClick={scrollAmenitiesUp}
+                      className="absolute -top-10 right-0 p-2 text-gray-600 hover:text-sky-500 hover:bg-sky-50 rounded-lg transition-colors z-10"
+                      title="Nach oben scrollen"
+                    >
+                      <ChevronUp size={20} />
+                    </button>
+                    <div
+                      ref={amenitiesContainerRef}
+                      className="grid grid-cols-2 gap-2 max-h-64 overflow-y-auto scrollbar-hide"
+                    >
+                      {AVAILABLE_AMENITIES.map((amenity) => {
+                        const amenityInfo = getAmenityIcon(amenity);
+                        const isSelected = editAmenities.includes(amenity);
+                        return (
+                          <button
+                            key={amenity}
+                            onClick={() => toggleAmenity(amenity)}
+                            className={`px-3 py-2 rounded-xl flex items-center shadow-sm transition-all ${
+                              isSelected
+                                ? `${amenityInfo.color} ring-2 ring-sky-400`
+                                : 'bg-gray-200 text-gray-500 opacity-60'
+                            }`}
+                          >
+                            <span className="text-lg mr-2">{amenityInfo.icon}</span>
+                            <span className="font-medium text-sm">{amenityInfo.label}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                    <button
+                      onClick={scrollAmenitiesDown}
+                      className="absolute -bottom-10 right-0 p-2 text-gray-600 hover:text-sky-500 hover:bg-sky-50 rounded-lg transition-colors z-10"
+                      title="Nach unten scrollen"
+                    >
+                      <ChevronDown size={20} />
+                    </button>
                   </div>
-                  <div className="flex justify-end space-x-2 pt-2">
+                  <div className="flex justify-end space-x-2 pt-8">
                     <button
                       onClick={cancelEdit}
                       disabled={isUpdating}
@@ -551,16 +590,35 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
                   </div>
                 </div>
               ) : (
-                <div className="grid grid-cols-2 gap-2">
-                  {restStop.amenities.map((amenity, index) => {
-                    const amenityInfo = getAmenityIcon(amenity);
-                    return (
-                      <div key={index} className={`${amenityInfo.color} px-3 py-2 rounded-xl flex items-center shadow-sm`}>
-                        <span className="text-lg mr-2">{amenityInfo.icon}</span>
-                        <span className="font-medium text-sm">{amenityInfo.label}</span>
-                      </div>
-                    );
-                  })}
+                <div className="relative">
+                  <button
+                    onClick={scrollAmenitiesUp}
+                    className="absolute -top-10 right-0 p-2 text-gray-600 hover:text-sky-500 hover:bg-sky-50 rounded-lg transition-colors z-10"
+                    title="Nach oben scrollen"
+                  >
+                    <ChevronUp size={20} />
+                  </button>
+                  <div
+                    ref={amenitiesContainerRef}
+                    className="grid grid-cols-2 gap-2 max-h-64 overflow-y-auto scrollbar-hide"
+                  >
+                    {restStop.amenities.map((amenity, index) => {
+                      const amenityInfo = getAmenityIcon(amenity);
+                      return (
+                        <div key={index} className={`${amenityInfo.color} px-3 py-2 rounded-xl flex items-center shadow-sm`}>
+                          <span className="text-lg mr-2">{amenityInfo.icon}</span>
+                          <span className="font-medium text-sm">{amenityInfo.label}</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <button
+                    onClick={scrollAmenitiesDown}
+                    className="absolute -bottom-10 right-0 p-2 text-gray-600 hover:text-sky-500 hover:bg-sky-50 rounded-lg transition-colors z-10"
+                    title="Nach unten scrollen"
+                  >
+                    <ChevronDown size={20} />
+                  </button>
                 </div>
               )}
             </div>
