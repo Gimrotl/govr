@@ -85,7 +85,6 @@ export const RestStops: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentIndex2, setCurrentIndex2] = useState(0);
   const [currentIndex3, setCurrentIndex3] = useState(0);
-  const [selectedRestStop, setSelectedRestStop] = useState<RestStop | null>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef2 = useRef<HTMLDivElement>(null);
   const scrollContainerRef3 = useRef<HTMLDivElement>(null);
