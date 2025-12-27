@@ -294,7 +294,7 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
             </div>
 
             {/* Main image with navigation */}
-            <div className="relative h-96 lg:h-[28rem]">
+            <div className="relative h-64 lg:h-80">
               <img
                 src={allImages[currentImageIndex]}
                 alt={`${restStop.name} ${currentImageIndex + 1}`}
@@ -328,7 +328,7 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
                   <button
                     key={index}
                     onClick={() => setCurrentImageIndex(index)}
-                    className={`flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-all ${
+                    className={`flex-shrink-0 w-12 h-12 rounded-lg overflow-hidden border-2 transition-all ${
                       index === currentImageIndex
                         ? 'border-sky-400 shadow-lg'
                         : 'border-gray-300 hover:border-gray-400'
