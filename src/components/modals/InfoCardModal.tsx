@@ -1,22 +1,22 @@
 import React from 'react';
-import { X, Car, Luggage, Users } from 'lucide-react';
+import { X, Car, Shield, Users } from 'lucide-react';
 import { useModals } from '../../hooks/useModals';
 
 const iconComponents = {
   car: Car,
-  luggage: Luggage,
+  shield: Shield,
   users: Users
 };
 
 const iconColors = {
   car: 'text-terracotta-600',
-  luggage: 'text-deep-slate-600',
+  shield: 'text-deep-slate-600',
   users: 'text-terracotta-500'
 };
 
 const iconBgColors = {
   car: 'bg-terracotta-100',
-  luggage: 'bg-deep-slate-100',
+  shield: 'bg-deep-slate-100',
   users: 'bg-terracotta-50'
 };
 

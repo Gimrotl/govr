@@ -1,10 +1,10 @@
 import React, { useState, useRef } from 'react';
-import { ChevronRight, ChevronLeft, Car, Luggage, Users } from 'lucide-react';
+import { ChevronRight, ChevronLeft, Car, Shield, Users } from 'lucide-react';
 import { useInfoCards } from '../hooks/useInfoCards';
 import { useModals } from '../hooks/useModals';
 import { InfoCardData } from '../contexts/ModalsContext';
 
-const iconComponents = [Car, Luggage, Users];
+const iconComponents = [Car, Shield, Users];
 
 const iconColors = [
   'text-terracotta-600',
@@ -30,7 +30,7 @@ const hoverBorderColors = [
   'hover:border-terracotta-500'
 ];
 
-const iconTypes: Array<'car' | 'luggage' | 'users'> = ['car', 'luggage', 'users'];
+const iconTypes: Array<'car' | 'shield' | 'users'> = ['car', 'shield', 'users'];
 
 export const InfoCards: React.FC = () => {
   const { cards, loading } = useInfoCards();
