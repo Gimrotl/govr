@@ -7,7 +7,7 @@ import { useModals } from '../hooks/useModals';
 interface RestStop {
   id: number;
   name: string;
-  type: 'Raststätte' | 'Route' | 'Hotel' | 'Tankstelle' | 'RestaurantRoute' |;
+  type: 'Raststätte' | 'Hotel' | 'Tankstelle' | 'Restaurant' | 'Route';
   location: string;
   address: string;
   rating: number;
