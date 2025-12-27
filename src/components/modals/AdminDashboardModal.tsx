@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
-import { X, Users, Car, AlertTriangle, Settings, LogOut, Shield, Eye, Trash2, Ban, CheckCircle, FileText, Save } from 'lucide-react';
+import { X, Users, Car, AlertTriangle, Settings, LogOut, Shield, Eye, Trash2, Ban, CheckCircle, FileText, Save, MapPin, Edit } from 'lucide-react';
 import { useModals } from '../../hooks/useModals';
 import { useAuth } from '../../hooks/useAuth';
 import { useRides } from '../../hooks/useRides';
 import { useInfoCards, InfoCard } from '../../hooks/useInfoCards';
+import { useRestStops } from '../../hooks/useRestStops';
 import { UserProfile } from '../../types';
 
 export const AdminDashboardModal: React.FC = () => {
-  const { closeModal, openUserProfile, openReportDetails } = useModals();
+  const { closeModal, openUserProfile, openReportDetails, openRestStopEdit, openModal } = useModals();
   const { logout } = useAuth();
   const { rides } = useRides();
   const { cards, updateCard, loading: cardsLoading } = useInfoCards();
-  const [activeTab, setActiveTab] = useState<'dashboard' | 'users' | 'rides' | 'reports' | 'settings' | 'content'>('dashboard');
+  const { restStops, loading: restStopsLoading, deleteRestStop } = useRestStops();
+  const [activeTab, setActiveTab] = useState<'dashboard' | 'users' | 'rides' | 'reports' | 'settings' | 'content' | 'restStops'>('dashboard');
   const [showSidebar, setShowSidebar] = useState(false);
   const [editingCard, setEditingCard] = useState<InfoCard | null>(null);
   const [saving, setSaving] = useState(false);
@@ -429,6 +431,130 @@ export const AdminDashboardModal: React.FC = () => {
     }
   };
 
+  const handleDeleteRestStop = async (restStopId: string, name: string) => {
+    if (window.confirm(`Möchten Sie "${name}" wirklich löschen?`)) {
+      const success = await deleteRestStop(restStopId);
+      if (success) {
+        alert('Rest Stop erfolgreich gelöscht!');
+      } else {
+        alert('Fehler beim Löschen des Rest Stops.');
+      }
+    }
+  };
+
+  const renderRestStops = () => (
+    <div>
+      <h1 className="text-xl md:text-2xl font-bold text-gray-800 mb-4 md:mb-6 hidden md:block">Rest Stops verwalten</h1>
+
+      <div className="mb-4">
+        <button
+          onClick={() => openModal('createRestStop')}
+          className="bg-emerald-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-600 transition duration-200"
+        >
+          Neuen Rest Stop erstellen
+        </button>
+      </div>
+
+      {restStopsLoading ? (
+        <div className="flex justify-center py-8">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-500"></div>
+        </div>
+      ) : (
+        <div className="bg-white rounded-lg shadow-md overflow-hidden">
+          {/* Mobile Card View */}
+          <div className="md:hidden">
+            {restStops.map((stop) => (
+              <div key={stop.id} className="p-4 border-b border-gray-200 last:border-b-0">
+                <div className="flex justify-between items-start mb-3">
+                  <div className="flex-1">
+                    <div className="font-medium text-gray-900">{stop.name}</div>
+                    <div className="text-sm text-gray-500 mt-1">{stop.type}</div>
+                    <div className="text-xs text-gray-600 font-mono mt-1">{stop.location}</div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-sm font-medium text-gray-900">{stop.rating}★</div>
+                  </div>
+                </div>
+                <div className="flex justify-end space-x-2">
+                  <button
+                    onClick={() => openRestStopEdit(stop)}
+                    className="text-sky-500 hover:text-sky-700 p-1"
+                  >
+                    <Edit size={16} />
+                  </button>
+                  <button
+                    onClick={() => handleDeleteRestStop(stop.id, stop.name)}
+                    className="text-red-600 hover:text-red-900 p-1"
+                  >
+                    <Trash2 size={16} />
+                  </button>
+                </div>
+              </div>
+            ))}
+            {restStops.length === 0 && (
+              <div className="p-8 text-center text-gray-500">
+                Keine Rest Stops gefunden
+              </div>
+            )}
+          </div>
+
+          {/* Desktop Table View */}
+          <table className="w-full hidden md:table">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Typ</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ort</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Bewertung</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aktionen</th>
+              </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {restStops.length === 0 ? (
+                <tr>
+                  <td colSpan={5} className="px-6 py-8 text-center text-gray-500">
+                    Keine Rest Stops gefunden
+                  </td>
+                </tr>
+              ) : (
+                restStops.map((stop) => (
+                  <tr key={stop.id}>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm font-medium text-gray-900">{stop.name}</div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm text-gray-900">{stop.type}</div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm text-gray-600">{stop.location}</div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm text-gray-900">{stop.rating}★</div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
+                      <button
+                        onClick={() => openRestStopEdit(stop)}
+                        className="text-sky-500 hover:text-sky-700"
+                      >
+                        <Edit size={16} />
+                      </button>
+                      <button
+                        onClick={() => handleDeleteRestStop(stop.id, stop.name)}
+                        className="text-red-600 hover:text-red-900"
+                      >
+                        <Trash2 size={16} />
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  );
+
   const renderContentCards = () => (
     <div>
       <h1 className="text-xl md:text-2xl font-bold text-gray-800 mb-4 md:mb-6 hidden md:block">Info-Karten verwalten</h1>
@@ -533,6 +659,8 @@ export const AdminDashboardModal: React.FC = () => {
         return renderSettings();
       case 'content':
         return renderContentCards();
+      case 'restStops':
+        return renderRestStops();
       default:
         return renderDashboard();
     }
@@ -631,6 +759,18 @@ export const AdminDashboardModal: React.FC = () => {
             </button>
             <button
               onClick={() => {
+                setActiveTab('restStops');
+                setShowSidebar(false);
+              }}
+              className={`w-full text-left p-3 rounded-lg transition duration-200 flex items-center ${
+                activeTab === 'restStops' ? 'bg-gray-600' : 'hover:bg-gray-600'
+              }`}
+            >
+              <MapPin size={18} className="mr-3" />
+              Rest Stops
+            </button>
+            <button
+              onClick={() => {
                 setActiveTab('settings');
                 setShowSidebar(false);
               }}
@@ -708,6 +848,15 @@ export const AdminDashboardModal: React.FC = () => {
               Inhalte
             </button>
             <button
+              onClick={() => setActiveTab('restStops')}
+              className={`w-full text-left p-3 rounded-lg mb-2 transition duration-200 flex items-center ${
+                activeTab === 'restStops' ? 'bg-gray-700' : 'hover:bg-gray-700'
+              }`}
+            >
+              <MapPin size={18} className="mr-3" />
+              Rest Stops
+            </button>
+            <button
               onClick={() => setActiveTab('settings')}
               className={`w-full text-left p-3 rounded-lg mb-2 transition duration-200 flex items-center ${
                 activeTab === 'settings' ? 'bg-gray-700' : 'hover:bg-gray-700'
@@ -737,6 +886,7 @@ export const AdminDashboardModal: React.FC = () => {
               {activeTab === 'rides' && 'Fahrten'}
               {activeTab === 'reports' && 'Meldungen'}
               {activeTab === 'content' && 'Inhalte'}
+              {activeTab === 'restStops' && 'Rest Stops'}
               {activeTab === 'settings' && 'Einstellungen'}
             </h1>
           </div>
