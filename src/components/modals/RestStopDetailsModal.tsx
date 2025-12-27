@@ -294,7 +294,7 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
             </div>
 
             {/* Main image with navigation */}
-            <div className="relative h-64 lg:h-80">
+            <div className="relative h-96 lg:h-[28rem]">
               <img
                 src={allImages[currentImageIndex]}
                 alt={`${restStop.name} ${currentImageIndex + 1}`}
