@@ -30,7 +30,7 @@ const hoverBorderColors = [
   'hover:border-amber-600'
 ];
 
-const iconTypes: Array<'car' | 'shield' | 'users'> = ['car', 'shield', 'users'];
+const iconTypes: Array<'car' | 'shield' | 'Luggage'> = ['car', 'shield', 'Luggage'];
 
 export const InfoCards: React.FC = () => {
   const { cards, loading } = useInfoCards();
