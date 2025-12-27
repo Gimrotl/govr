@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { ChevronRight, ChevronLeft, Car, Shield, Luggage } from 'lucide-react';
 import { useInfoCards } from '../hooks/useInfoCards';
 import { useModals } from '../hooks/useModals';
@@ -38,6 +38,7 @@ export const InfoCards: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const touchStartX = useRef(0);
   const touchEndX = useRef(0);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const handleCardClick = (card: typeof cards[0], index: number) => {
     const cardData: InfoCardData = {
@@ -82,6 +83,35 @@ export const InfoCards: React.FC = () => {
       setCurrentIndex(currentIndex + 1);
     }
   };
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') {
+        goToPrevious();
+      } else if (e.key === 'ArrowRight') {
+        goToNext();
+      }
+    };
+
+    const handleWheel = (e: WheelEvent) => {
+      if (!containerRef.current?.contains(e.target as Node)) return;
+
+      e.preventDefault();
+      if (e.deltaX > 0 || e.deltaY > 20) {
+        goToNext();
+      } else if (e.deltaX < 0 || e.deltaY < -20) {
+        goToPrevious();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    containerRef.current?.addEventListener('wheel', handleWheel, { passive: false });
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      containerRef.current?.removeEventListener('wheel', handleWheel);
+    };
+  }, [currentIndex, cards.length]);
 
   if (loading) {
     return (
@@ -129,7 +159,7 @@ export const InfoCards: React.FC = () => {
         })}
       </div>
 
-      <div className="md:hidden relative">
+      <div className="md:hidden relative" ref={containerRef}>
         <div
           className="overflow-hidden"
           onTouchStart={handleTouchStart}
