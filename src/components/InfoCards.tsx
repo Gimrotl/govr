@@ -4,7 +4,7 @@ import { useInfoCards } from '../hooks/useInfoCards';
 import { useModals } from '../hooks/useModals';
 import { InfoCardData } from '../contexts/ModalsContext';
 
-const iconComponents = [Car, Shield, Users];
+const iconComponents = [Car, Shield, Luggage];
 
 const iconColors = [
   'text-sky-600',
