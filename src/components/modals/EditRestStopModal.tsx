@@ -354,7 +354,7 @@ export const EditRestStopModal: React.FC = () => {
                     <img
                       src={image.url}
                       alt={`Bild ${index + 1}`}
-                      className="w-20 h-20 object-cover rounded-lg"
+                      className="w-16 h-16 object-cover rounded-lg"
                     />
                     <div className="flex-1">
                       <p className="text-sm font-medium text-gray-700">
@@ -407,7 +407,7 @@ export const EditRestStopModal: React.FC = () => {
 
             <div
               {...getRootProps()}
-              className={`w-full h-32 border-2 border-dashed rounded-lg flex flex-col items-center justify-center cursor-pointer transition-colors ${
+              className={`w-full h-64 border-2 border-dashed rounded-lg flex flex-col items-center justify-center cursor-pointer transition-colors ${
                 isDragActive
                   ? 'border-sky-400 bg-sky-50'
                   : 'border-gray-300 hover:border-sky-300 hover:bg-gray-50'
