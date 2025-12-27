@@ -4,7 +4,7 @@ import { useInfoCards } from '../hooks/useInfoCards';
 import { useModals } from '../hooks/useModals';
 import { InfoCardData } from '../contexts/ModalsContext';
 
-const iconComponents = [Car, Shield, Luggage];
+const iconComponents = [Car, Shield, Users];
 
 const iconColors = [
   'text-sky-600',
@@ -30,7 +30,7 @@ const hoverBorderColors = [
   'hover:border-amber-600'
 ];
 
-const iconTypes: Array<'car' | 'shield' | 'Luggage'> = ['car', 'shield', 'Luggage'];
+const iconTypes: Array<'car' | 'shield' | 'Luggage'> = ['car', 'shield', 'Users'];
 
 export const InfoCards: React.FC = () => {
   const { cards, loading } = useInfoCards();
