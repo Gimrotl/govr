@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { X, MapPin, Star, Navigation, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react';
+import { X, MapPin, Star, Navigation, ExternalLink, ChevronLeft, ChevronRight, Trash2 } from 'lucide-react';
 import { useModals } from '../../hooks/useModals';
 import { useAuth } from '../../hooks/useAuth';
+import { useRestStops } from '../../hooks/useRestStops';
 import { RestStopReviewsModal } from './RestStopReviewsModal';
 
 interface RestStop {
-  id: number;
+  id: string | number;
   name: string;
   type: 'Raststätte' | 'Hotel' | 'Tankstelle' | 'Restaurant';
   location: string;
@@ -13,13 +14,14 @@ interface RestStop {
   rating: number;
   description: string;
   image: string;
-  images: string[];
+  images?: string[];
   amenities: string[];
   fullDescription: string;
   coordinates: {
     lat: number;
     lng: number;
   };
+  hidden_image_indices?: number[];
 }
 
 interface RestStopDetailsModalProps {
@@ -98,12 +100,14 @@ const getAmenityIcon = (amenity: string) => {
 export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ restStop, onClose }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [showReviewsModal, setShowReviewsModal] = useState(false);
+  const [hiddenIndices, setHiddenIndices] = useState<number[]>(restStop?.hidden_image_indices || []);
+  const [isUpdating, setIsUpdating] = useState(false);
   const { isLoggedIn, userEmail } = useAuth();
   const { openModal } = useModals();
+  const { updateRestStop } = useRestStops();
 
   if (!restStop) return null;
 
-  // Create up to 10 images for slideshow
   const allImages = [
     restStop.image,
     'https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg',
@@ -117,6 +121,32 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
     'https://images.pexels.com/photos/116675/pexels-photo-116675.jpeg'
   ];
 
+  const visibleImages = allImages.filter((_, index) => !hiddenIndices.includes(index));
+
+  const handleHideImage = async (imageIndex: number) => {
+    setIsUpdating(true);
+    const newHiddenIndices = [...hiddenIndices, imageIndex];
+    setHiddenIndices(newHiddenIndices);
+
+    const success = await updateRestStop(String(restStop.id), {
+      hidden_image_indices: newHiddenIndices
+    } as any);
+
+    if (success) {
+      const nextVisibleIndex = visibleImages.findIndex((_, idx) =>
+        allImages.indexOf(visibleImages[idx]) > imageIndex
+      );
+      if (nextVisibleIndex !== -1) {
+        setCurrentImageIndex(allImages.indexOf(visibleImages[nextVisibleIndex]));
+      } else if (visibleImages.length > 0) {
+        setCurrentImageIndex(allImages.indexOf(visibleImages[0]));
+      }
+    } else {
+      setHiddenIndices(hiddenIndices);
+    }
+    setIsUpdating(false);
+  };
+
   const handleNavigateToGoogleMaps = () => {
     const query = encodeURIComponent(`${restStop.name}, ${restStop.address}`);
     const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${query}`;
@@ -124,11 +154,17 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
   };
 
   const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % allImages.length);
+    if (visibleImages.length === 0) return;
+    const currentVisibleIdx = visibleImages.findIndex(img => img === allImages[currentImageIndex]);
+    const nextVisibleIdx = (currentVisibleIdx + 1) % visibleImages.length;
+    setCurrentImageIndex(allImages.indexOf(visibleImages[nextVisibleIdx]));
   };
 
   const prevImage = () => {
-    setCurrentImageIndex((prev) => (prev - 1 + allImages.length) % allImages.length);
+    if (visibleImages.length === 0) return;
+    const currentVisibleIdx = visibleImages.findIndex(img => img === allImages[currentImageIndex]);
+    const prevVisibleIdx = (currentVisibleIdx - 1 + visibleImages.length) % visibleImages.length;
+    setCurrentImageIndex(allImages.indexOf(visibleImages[prevVisibleIdx]));
   };
 
   const handleSubmitReview = () => {
@@ -294,53 +330,83 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
             </div>
 
             {/* Main image with navigation */}
-            <div className="relative h-64 lg:h-80">
-              <img
-                src={allImages[currentImageIndex]}
-                alt={`${restStop.name} ${currentImageIndex + 1}`}
-                className="w-full h-full object-cover"
-              />
-              
-              {/* Navigation arrows */}
-              <button
-                onClick={prevImage}
-                className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-gray-50 bg-opacity-80 backdrop-blur-sm rounded-full p-3 text-gray-600 hover:bg-opacity-100 transition-all shadow-lg"
-              >
-                <ChevronLeft size={24} />
-              </button>
-              <button
-                onClick={nextImage}
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-gray-50 bg-opacity-80 backdrop-blur-sm rounded-full p-3 text-gray-600 hover:bg-opacity-100 transition-all shadow-lg"
-              >
-                <ChevronRight size={24} />
-              </button>
+            <div className="relative h-64 lg:h-80 bg-gray-200">
+              {visibleImages.length > 0 ? (
+                <>
+                  <img
+                    src={allImages[currentImageIndex]}
+                    alt={`${restStop.name}`}
+                    className="w-full h-full object-cover"
+                  />
 
-              {/* Image counter */}
-              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-60 text-white px-3 py-1 rounded-full text-sm">
-                {currentImageIndex + 1} / {allImages.length}
-              </div>
+                  {/* Navigation arrows */}
+                  {visibleImages.length > 1 && (
+                    <>
+                      <button
+                        onClick={prevImage}
+                        className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-gray-50 bg-opacity-80 backdrop-blur-sm rounded-full p-3 text-gray-600 hover:bg-opacity-100 transition-all shadow-lg"
+                      >
+                        <ChevronLeft size={24} />
+                      </button>
+                      <button
+                        onClick={nextImage}
+                        className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-gray-50 bg-opacity-80 backdrop-blur-sm rounded-full p-3 text-gray-600 hover:bg-opacity-100 transition-all shadow-lg"
+                      >
+                        <ChevronRight size={24} />
+                      </button>
+                    </>
+                  )}
+
+                  {/* Image counter */}
+                  <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-60 text-white px-3 py-1 rounded-full text-sm">
+                    {visibleImages.findIndex(img => img === allImages[currentImageIndex]) + 1} / {visibleImages.length}
+                  </div>
+                </>
+              ) : (
+                <div className="w-full h-full flex items-center justify-center text-gray-500">
+                  <span className="text-center">Keine Bilder verfügbar</span>
+                </div>
+              )}
             </div>
 
             {/* Thumbnail navigation */}
             <div className="p-3 bg-gray-100">
               <div className="flex space-x-2 overflow-x-auto scrollbar-hide">
-                {allImages.map((image, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentImageIndex(index)}
-                    className={`flex-shrink-0 w-12 h-12 rounded-lg overflow-hidden border-2 transition-all ${
-                      index === currentImageIndex
-                        ? 'border-sky-400 shadow-lg'
-                        : 'border-gray-300 hover:border-gray-400'
-                    }`}
-                  >
-                    <img
-                      src={image}
-                      alt={`Thumbnail ${index + 1}`}
-                      className="w-full h-full object-cover"
-                    />
-                  </button>
-                ))}
+                {allImages.map((image, index) => {
+                  const isHidden = hiddenIndices.includes(index);
+                  const isSelected = index === currentImageIndex;
+
+                  return (
+                    <div key={index} className="relative flex-shrink-0 group">
+                      <button
+                        onClick={() => !isHidden && setCurrentImageIndex(index)}
+                        disabled={isHidden}
+                        className={`w-12 h-12 rounded-lg overflow-hidden border-2 transition-all flex items-center justify-center ${
+                          isSelected
+                            ? 'border-sky-400 shadow-lg'
+                            : 'border-gray-300 hover:border-gray-400'
+                        } ${isHidden ? 'opacity-40 cursor-not-allowed' : ''}`}
+                      >
+                        <img
+                          src={image}
+                          alt={`Thumbnail ${index + 1}`}
+                          className="w-full h-full object-cover"
+                        />
+                      </button>
+
+                      {!isHidden && (
+                        <button
+                          onClick={() => handleHideImage(index)}
+                          disabled={isUpdating}
+                          className="absolute -top-2 -right-2 bg-red-500 hover:bg-red-600 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity shadow-lg disabled:opacity-50"
+                          title="Bild ausblenden"
+                        >
+                          <Trash2 size={14} />
+                        </button>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             </div>
 

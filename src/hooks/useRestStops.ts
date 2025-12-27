@@ -19,6 +19,7 @@ export interface RestStop {
   created_at: string;
   created_by: string;
   updated_at: string;
+  hidden_image_indices?: number[];
 }
 
 export const useRestStops = () => {
