@@ -27,7 +27,7 @@ const WhatsAppIcon = ({ size = 20, className = "" }) => (
 );
 
 export const RideDetailsModal: React.FC = () => {
-  const { selectedRide, closeModal, openModal, openUserReviews } = useModals();
+  const { selectedRide, closeModal, openModal } = useModals();
   const { isLoggedIn } = useAuth();
   const { bookRide } = useRides();
   const [showCarImages, setShowCarImages] = useState(false);
@@ -100,30 +100,9 @@ export const RideDetailsModal: React.FC = () => {
       car: selectedRide.car,
       carImage: selectedRide.carImage,
       rating: selectedRide.rating,
-      driverInfo: selectedRide.driverInfo,
-      reviews: selectedRide.reviews
+      driverInfo: selectedRide.driverInfo
     };
     openModal('profile', userProfile);
-  };
-
-  const handleShowReviews = () => {
-    const userProfile = {
-      firstName: selectedRide.driver,
-      age: 'Not specified',
-      mobile: selectedRide.mobile || 'Not provided',
-      whatsapp: selectedRide.whatsapp || 'Not provided',
-      telegram: selectedRide.telegram || 'Not provided',
-      carImages: [
-        ...(selectedRide.carImage ? [selectedRide.carImage] : []),
-        ...(selectedRide.additionalImages || [])
-      ].filter(Boolean),
-      car: selectedRide.car,
-      carImage: selectedRide.carImage,
-      rating: selectedRide.rating,
-      driverInfo: selectedRide.driverInfo,
-      reviews: selectedRide.reviews
-    };
-    openUserReviews(userProfile);
   };
 
   return (
@@ -241,7 +220,7 @@ export const RideDetailsModal: React.FC = () => {
               <p className="text-sm text-gray-600 mb-3">Mitglied seit 15.03.2023</p>
               <div className="flex items-center justify-center mb-4">
                 <button
-                  onClick={handleShowReviews}
+                  onClick={() => openModal('reviews')}
                   className="flex items-center hover:bg-gray-100 rounded-lg p-2 transition-colors"
                 >
                   <span className="text-xl font-bold mr-2">{selectedRide.rating}</span>

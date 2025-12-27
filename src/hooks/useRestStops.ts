@@ -1,17 +1,16 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 
 export interface RestStop {
   id: string;
   name: string;
-  type: 'Raststätte' | 'Hotel' | 'Tankstelle' | 'Restaurant' | 'Route';
+  type: 'Raststätte' | 'Hotel' | 'Tankstelle' | 'Restaurant';
   location: string;
   address: string;
   rating: number;
   description: string;
   full_description: string;
   image: string;
-  images: string[];
   amenities: string[];
   coordinates: {
     lat: number;
@@ -28,30 +27,30 @@ export function useRestStops() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchRestStops = useCallback(async () => {
-    setLoading(true);
-    setError(null);
-
+  const fetchRestStops = async () => {
     try {
+      setLoading(true);
+      setError(null);
       const { data, error: fetchError } = await supabase
         .from('rest_stops')
         .select('*')
         .order('created_at', { ascending: false });
 
       if (fetchError) {
+        console.error('Fetch error:', fetchError);
         setError(fetchError.message);
-        setRestStops([]);
-      } else {
-        setRestStops(data || []);
+        return;
       }
+
+      setRestStops(data || []);
     } catch (err) {
+      console.error('Fetch exception:', err);
       const errorMessage = err instanceof Error ? err.message : 'Unbekannter Fehler';
       setError(errorMessage);
-      setRestStops([]);
     } finally {
       setLoading(false);
     }
-  }, []);
+  };
 
   const updateRestStop = async (id: string, updates: Partial<RestStop>) => {
     try {
@@ -61,13 +60,16 @@ export function useRestStops() {
         .eq('id', id);
 
       if (updateError) {
+        console.error('Update error:', updateError);
         setError(updateError.message);
         return false;
       }
 
       await fetchRestStops();
+      setError(null);
       return true;
     } catch (err) {
+      console.error('Update exception:', err);
       const errorMessage = err instanceof Error ? err.message : 'Unbekannter Fehler';
       setError(errorMessage);
       return false;
@@ -87,13 +89,16 @@ export function useRestStops() {
         .select();
 
       if (createError) {
+        console.error('Create error:', createError);
         setError(createError.message);
         return null;
       }
 
       await fetchRestStops();
+      setError(null);
       return data?.[0] || null;
     } catch (err) {
+      console.error('Create exception:', err);
       const errorMessage = err instanceof Error ? err.message : 'Unbekannter Fehler';
       setError(errorMessage);
       return null;
@@ -108,13 +113,16 @@ export function useRestStops() {
         .eq('id', id);
 
       if (deleteError) {
+        console.error('Delete error:', deleteError);
         setError(deleteError.message);
         return false;
       }
 
       await fetchRestStops();
+      setError(null);
       return true;
     } catch (err) {
+      console.error('Delete exception:', err);
       const errorMessage = err instanceof Error ? err.message : 'Unbekannter Fehler';
       setError(errorMessage);
       return false;
@@ -123,7 +131,7 @@ export function useRestStops() {
 
   useEffect(() => {
     fetchRestStops();
-  }, [fetchRestStops]);
+  }, []);
 
   return {
     restStops,

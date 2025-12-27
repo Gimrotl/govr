@@ -1,11 +1,35 @@
 import React, { useState } from 'react';
 import { X, MapPin, Star, Navigation, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useModals } from '../../hooks/useModals';
+import { useAuth } from '../../hooks/useAuth';
 import { RestStopReviewsModal } from './RestStopReviewsModal';
 import { RestStop } from '../../hooks/useRestStops';
 
 interface RestStopDetailsModalProps {
   restStop: RestStop | null;
   onClose: () => void;
+}
+
+interface Review {
+  id: number;
+  userId: string;
+  userName: string;
+  rating: number;
+  comment: string;
+  timestamp: string;
+  likes: number;
+  dislikes: number;
+  replies: Reply[];
+  userLiked?: boolean;
+  userDisliked?: boolean;
+}
+
+interface Reply {
+  id: number;
+  userId: string;
+  userName: string;
+  comment: string;
+  timestamp: string;
 }
 
 const getTypeIcon = (type: string) => {
@@ -57,6 +81,8 @@ const getAmenityIcon = (amenity: string) => {
 export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ restStop, onClose }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [showReviewsModal, setShowReviewsModal] = useState(false);
+  const { isLoggedIn, userEmail } = useAuth();
+  const { openModal } = useModals();
 
   if (!restStop) return null;
 
@@ -86,6 +112,146 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
 
   const prevImage = () => {
     setCurrentImageIndex((prev) => (prev - 1 + allImages.length) % allImages.length);
+  };
+
+  const handleSubmitReview = () => {
+    if (!isLoggedIn) {
+      alert('Sie müssen eingeloggt sein, um eine Bewertung abzugeben.');
+      openModal('login');
+      return;
+    }
+    
+    if (!newReview.comment.trim()) {
+      alert('Bitte geben Sie einen Kommentar ein.');
+      return;
+    }
+    
+    const review: Review = {
+      id: Date.now(),
+      userId: userEmail || '',
+      userName: userEmail?.split('@')[0] || 'Benutzer',
+      rating: newReview.rating,
+      comment: newReview.comment,
+      timestamp: new Date().toLocaleDateString('de-DE'),
+      likes: 0,
+      dislikes: 0,
+      replies: []
+    };
+    
+    setReviews([review, ...reviews]);
+    setNewReview({ rating: 5, comment: '' });
+    alert('Bewertung erfolgreich abgegeben!');
+  };
+
+  const handleLike = (reviewId: number) => {
+    if (!isLoggedIn) {
+      alert('Sie müssen eingeloggt sein, um zu bewerten.');
+      openModal('login');
+      return;
+    }
+    
+    setReviews(reviews.map(review => {
+      if (review.id === reviewId) {
+        if (review.userLiked) {
+          return { ...review, likes: review.likes - 1, userLiked: false };
+        } else {
+          return { 
+            ...review, 
+            likes: review.likes + 1, 
+            dislikes: review.userDisliked ? review.dislikes - 1 : review.dislikes,
+            userLiked: true, 
+            userDisliked: false 
+          };
+        }
+      }
+      return review;
+    }));
+  };
+
+  const handleDislike = (reviewId: number) => {
+    if (!isLoggedIn) {
+      alert('Sie müssen eingeloggt sein, um zu bewerten.');
+      openModal('login');
+      return;
+    }
+    
+    setReviews(reviews.map(review => {
+      if (review.id === reviewId) {
+        if (review.userDisliked) {
+          return { ...review, dislikes: review.dislikes - 1, userDisliked: false };
+        } else {
+          return { 
+            ...review, 
+            dislikes: review.dislikes + 1,
+            likes: review.userLiked ? review.likes - 1 : review.likes,
+            userDisliked: true, 
+            userLiked: false 
+          };
+        }
+      }
+      return review;
+    }));
+  };
+
+  const handleReply = (reviewId: number) => {
+    if (!isLoggedIn) {
+      alert('Sie müssen eingeloggt sein, um zu antworten.');
+      openModal('login');
+      return;
+    }
+    
+    if (!replyText.trim()) {
+      alert('Bitte geben Sie eine Antwort ein.');
+      return;
+    }
+    
+    // Check if user already replied to this review
+    const review = reviews.find(r => r.id === reviewId);
+    const existingReply = review?.replies.find(reply => reply.userId === userEmail);
+    
+    if (existingReply) {
+      alert('Sie haben bereits auf diese Bewertung geantwortet.');
+      return;
+    }
+    
+    const reply: Reply = {
+      id: Date.now(),
+      userId: userEmail || '',
+      userName: userEmail?.split('@')[0] || 'Benutzer',
+      comment: replyText,
+      timestamp: new Date().toLocaleDateString('de-DE')
+    };
+    
+    setReviews(reviews.map(review => {
+      if (review.id === reviewId) {
+        return { ...review, replies: [...review.replies, reply] };
+      }
+      return review;
+    }));
+    
+    setReplyText('');
+    setReplyingTo(null);
+    alert('Antwort erfolgreich abgegeben!');
+  };
+
+  const handleEditReply = (replyId: number) => {
+    if (!editReplyText.trim()) {
+      alert('Bitte geben Sie eine Antwort ein.');
+      return;
+    }
+    
+    setReviews(reviews.map(review => ({
+      ...review,
+      replies: review.replies.map(reply => 
+        reply.id === replyId 
+          ? { ...reply, comment: editReplyText }
+          : reply
+      )
+    })));
+    
+    setEditingReply(null);
+    setEditReplyText('');
+    alert('Antwort erfolgreich bearbeitet!');
   };
 
   return (
