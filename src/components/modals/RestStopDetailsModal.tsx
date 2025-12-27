@@ -27,6 +27,7 @@ interface RestStop {
 interface RestStopDetailsModalProps {
   restStop: RestStop | null;
   onClose: () => void;
+  onUpdate?: (updatedRestStop: RestStop) => void;
 }
 
 interface Review {
@@ -99,7 +100,7 @@ const getAmenityIcon = (amenity: string) => {
 
 const AVAILABLE_AMENITIES = ['WC', 'Kinder', 'Sport', 'Essen', 'Grün', 'Parkplatz', 'Duschen', 'Tankstelle', 'Autowaschen', 'Hotel', 'Strand', 'Esstisch'];
 
-export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ restStop, onClose }) => {
+export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ restStop, onClose, onUpdate }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [showReviewsModal, setShowReviewsModal] = useState(false);
   const [hiddenIndices, setHiddenIndices] = useState<number[]>(restStop?.hidden_image_indices || []);
@@ -170,12 +171,16 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
     if (!isAdmin) return;
     setIsUpdating(true);
     const success = await updateRestStop(String(restStop.id), {
-      fullDescription: editDescription,
+      full_description: editDescription,
       description: editDescription.substring(0, 100)
     } as any);
     if (success) {
-      restStop.fullDescription = editDescription;
-      restStop.description = editDescription.substring(0, 100);
+      const updated = {
+        ...restStop,
+        fullDescription: editDescription,
+        description: editDescription.substring(0, 100)
+      };
+      onUpdate?.(updated);
     }
     setEditingField(null);
     setIsUpdating(false);
@@ -189,8 +194,12 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
       location: editLocation
     } as any);
     if (success) {
-      restStop.address = editAddress;
-      restStop.location = editLocation;
+      const updated = {
+        ...restStop,
+        address: editAddress,
+        location: editLocation
+      };
+      onUpdate?.(updated);
     }
     setEditingField(null);
     setIsUpdating(false);
@@ -203,7 +212,11 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
       amenities: editAmenities
     } as any);
     if (success) {
-      restStop.amenities = editAmenities;
+      const updated = {
+        ...restStop,
+        amenities: editAmenities
+      };
+      onUpdate?.(updated);
     }
     setEditingField(null);
     setIsUpdating(false);

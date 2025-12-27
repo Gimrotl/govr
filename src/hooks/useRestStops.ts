@@ -52,22 +52,61 @@ export const useRestStops = () => {
 
   const updateRestStop = async (
     id: string,
-    updates: Partial<RestStop>
+    updates: Partial<RestStop> & Record<string, any>
   ): Promise<boolean> => {
     try {
-      const { error: updateError } = await supabase
-        .from('rest_stops')
-        .update({
-          ...updates,
-          updated_at: new Date().toISOString(),
-        })
-        .eq('id', id);
+      const updateData: Record<string, any> = {
+        updated_at: new Date().toISOString(),
+      };
 
-      if (updateError) throw updateError;
+      if (updates.full_description !== undefined) {
+        updateData.full_description = updates.full_description;
+      }
+      if (updates.description !== undefined) {
+        updateData.description = updates.description;
+      }
+      if (updates.address !== undefined) {
+        updateData.address = updates.address;
+      }
+      if (updates.location !== undefined) {
+        updateData.location = updates.location;
+      }
+      if (updates.amenities !== undefined) {
+        updateData.amenities = updates.amenities;
+      }
+      if (updates.hidden_image_indices !== undefined) {
+        updateData.hidden_image_indices = updates.hidden_image_indices;
+      }
+      if (updates.name !== undefined) {
+        updateData.name = updates.name;
+      }
+      if (updates.type !== undefined) {
+        updateData.type = updates.type;
+      }
+      if (updates.image !== undefined) {
+        updateData.image = updates.image;
+      }
+      if (updates.rating !== undefined) {
+        updateData.rating = updates.rating;
+      }
+      if (updates.coordinates !== undefined) {
+        updateData.coordinates = updates.coordinates;
+      }
+
+      const { data, error: updateError } = await supabase
+        .from('rest_stops')
+        .update(updateData)
+        .eq('id', id)
+        .select();
+
+      if (updateError) {
+        console.error('Supabase update error:', updateError);
+        throw updateError;
+      }
 
       setRestStops((prev) =>
         prev.map((stop) =>
-          stop.id === id ? { ...stop, ...updates, updated_at: new Date().toISOString() } : stop
+          stop.id === id ? { ...stop, ...updateData } : stop
         )
       );
       return true;

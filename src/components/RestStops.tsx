@@ -319,6 +319,13 @@ export const RestStops: React.FC = () => {
     setSelectedRestStop(restStop);
   };
 
+  const handleRestStopUpdate = (updatedRestStop: RestStop) => {
+    setRestStopsData(prev =>
+      prev.map(stop => stop.id === updatedRestStop.id ? updatedRestStop : stop)
+    );
+    setSelectedRestStop(updatedRestStop);
+  };
+
   const handleNavigationClick = (restStop: RestStop) => {
     const query = encodeURIComponent(`${restStop.name}, ${restStop.address}`);
     const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${query}`;
@@ -555,6 +562,7 @@ export const RestStops: React.FC = () => {
       <RestStopDetailsModal
         restStop={selectedRestStop}
         onClose={() => setSelectedRestStop(null)}
+        onUpdate={handleRestStopUpdate}
       />
     </>
   );
