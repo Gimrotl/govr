@@ -149,33 +149,7 @@ export const InfoCards: React.FC = () => {
     <section ref={containerRef} className="my-12 relative overflow-hidden focus-visible:outline-none">
       <div className="absolute inset-0 bg-gradient-to-b from-deep-slate-700/10 via-terracotta-500/5 to-transparent pointer-events-none -z-10"></div>
 
-      <div className="hidden md:grid grid-cols-1 md:grid-cols-3 gap-6">
-        {cards.map((card, index) => {
-          const IconComponent = iconComponents[index % iconComponents.length];
-          return (
-            <div
-              key={card.id}
-              onClick={() => handleCardClick(card, index)}
-              className={`bg-white rounded-xl p-8 transition-all duration-300 hover:shadow-xl hover:-translate-y-2 cursor-pointer group border-t-4 ${borderColors[index % borderColors.length]} border border-gray-100 ${hoverBorderColors[index % hoverBorderColors.length]}`}
-            >
-              <div className="flex flex-col items-center text-center">
-                <div className={`w-16 h-16 rounded-full ${iconBgColors[index % iconBgColors.length]} flex items-center justify-center mb-5 transition-transform duration-300 group-hover:scale-110`}>
-                  <IconComponent size={32} className={`${iconColors[index % iconColors.length]} transition-colors`} strokeWidth={1.5} />
-                </div>
-                <h3 className="text-lg font-bold text-deep-slate-700 mb-3 transition-colors group-hover:text-deep-slate-800">
-                  {card.title}
-                </h3>
-                <div className="flex items-center text-terracotta-600 font-medium text-sm group-hover:text-terracotta-700 transition-colors">
-                  <span>{card.link_text}</span>
-                  <ChevronRight size={16} className="ml-1 transform group-hover:translate-x-1 transition-transform" />
-                </div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      <div className="md:hidden relative">
+      <div className="relative">
         <div
           className="overflow-hidden"
           onTouchStart={handleTouchStart}
@@ -194,18 +168,19 @@ export const InfoCards: React.FC = () => {
                 >
                   <div
                     onClick={() => handleCardClick(card, index)}
-                    className={`bg-white rounded-xl p-6 transition-all duration-300 border-t-4 ${borderColors[index % borderColors.length]} border border-gray-100 cursor-pointer`}
+                    className={`bg-white rounded-xl p-6 md:p-8 transition-all duration-300 hover:shadow-xl cursor-pointer group border-t-4 ${borderColors[index % borderColors.length]} border border-gray-100 ${hoverBorderColors[index % hoverBorderColors.length]}`}
                   >
                     <div className="flex flex-col items-center text-center">
-                      <div className={`w-14 h-14 rounded-full ${iconBgColors[index % iconBgColors.length]} flex items-center justify-center mb-4`}>
-                        <IconComponent size={28} className={iconColors[index % iconColors.length]} strokeWidth={1.5} />
+                      <div className={`w-14 h-14 md:w-16 md:h-16 rounded-full ${iconBgColors[index % iconBgColors.length]} flex items-center justify-center mb-4 md:mb-5 transition-transform duration-300 group-hover:scale-110`}>
+                        <IconComponent size={28} className={`${iconColors[index % iconColors.length]} transition-colors md:hidden`} strokeWidth={1.5} />
+                        <IconComponent size={32} className={`${iconColors[index % iconColors.length]} transition-colors hidden md:block`} strokeWidth={1.5} />
                       </div>
-                      <h3 className="text-lg font-bold text-deep-slate-700 mb-3">
+                      <h3 className="text-lg font-bold text-deep-slate-700 mb-3 transition-colors group-hover:text-deep-slate-800">
                         {card.title}
                       </h3>
-                      <div className="flex items-center text-terracotta-600 font-medium text-sm">
+                      <div className="flex items-center text-terracotta-600 font-medium text-sm group-hover:text-terracotta-700 transition-colors">
                         <span>{card.link_text}</span>
-                        <ChevronRight size={16} className="ml-1" />
+                        <ChevronRight size={16} className="ml-1 transform group-hover:translate-x-1 transition-transform" />
                       </div>
                     </div>
                   </div>
@@ -215,7 +190,7 @@ export const InfoCards: React.FC = () => {
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-4">
+        <div className="flex items-center justify-between mt-4 px-4">
           <button
             onClick={goToPrevious}
             disabled={currentIndex === 0}
