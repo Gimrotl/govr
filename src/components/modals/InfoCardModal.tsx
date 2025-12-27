@@ -50,7 +50,7 @@ export const InfoCardModal: React.FC = () => {
 
         <div className="p-6 -mt-8 flex flex-col max-h-96">
           <div className="bg-gray-50 rounded-xl p-6 shadow-inner overflow-y-auto flex-1">
-            <div className="text-deep-slate-600 leading-relaxed text-center whitespace-pre-wrap">
+            <div className="text-deep-slate-600 leading-relaxed whitespace-pre-wrap">
               {selectedInfoCard.description}
             </div>
           </div>
