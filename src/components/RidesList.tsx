@@ -134,7 +134,7 @@ export const RidesList: React.FC<RidesListProps> = ({ rides }) => {
             </div>
             
             <div className="text-center mt-4 text-sm text-gray-500 md:hidden">
-              ← Wischen Sie nach links/rechts für mehr Fahrten →
+              ← Wischen zum Blättern →
             </div>
           </div>
         </>
