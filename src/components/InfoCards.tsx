@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { ChevronRight, ChevronLeft, Car, Shield, Luggage } from 'lucide-react';
 import { useInfoCards } from '../hooks/useInfoCards';
 import { useModals } from '../hooks/useModals';
@@ -38,6 +38,8 @@ export const InfoCards: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const touchStartX = useRef(0);
   const touchEndX = useRef(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const wheelTimeoutRef = useRef<NodeJS.Timeout>();
 
   const handleCardClick = (card: typeof cards[0], index: number) => {
     const cardData: InfoCardData = {
@@ -83,6 +85,50 @@ export const InfoCards: React.FC = () => {
     }
   };
 
+  const handleWheel = (e: WheelEvent) => {
+    if (!containerRef.current?.contains(e.target as Node)) return;
+
+    e.preventDefault();
+
+    if (wheelTimeoutRef.current) {
+      clearTimeout(wheelTimeoutRef.current);
+    }
+
+    wheelTimeoutRef.current = setTimeout(() => {
+      if (e.deltaY > 0) {
+        goToNext();
+      } else if (e.deltaY < 0) {
+        goToPrevious();
+      }
+    }, 50);
+  };
+
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      goToPrevious();
+    } else if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      goToNext();
+    }
+  };
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    container.addEventListener('wheel', handleWheel, { passive: false });
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      container.removeEventListener('wheel', handleWheel);
+      window.removeEventListener('keydown', handleKeyDown);
+      if (wheelTimeoutRef.current) {
+        clearTimeout(wheelTimeoutRef.current);
+      }
+    };
+  }, [currentIndex, cards.length]);
+
   if (loading) {
     return (
       <section className="my-12">
@@ -100,7 +146,7 @@ export const InfoCards: React.FC = () => {
   }
 
   return (
-    <section className="my-12 relative overflow-hidden">
+    <section ref={containerRef} className="my-12 relative overflow-hidden focus-visible:outline-none">
       <div className="absolute inset-0 bg-gradient-to-b from-deep-slate-700/10 via-terracotta-500/5 to-transparent pointer-events-none -z-10"></div>
 
       <div className="hidden md:grid grid-cols-1 md:grid-cols-3 gap-6">
