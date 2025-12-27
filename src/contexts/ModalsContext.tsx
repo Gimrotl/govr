@@ -7,7 +7,7 @@ export interface InfoCardData {
   id: string;
   title: string;
   description: string;
-  iconType: 'car' | 'shield' | 'users';
+  iconType: 'car' | 'shield' | 'luggage';
 }
 
 interface ModalsContextType {
