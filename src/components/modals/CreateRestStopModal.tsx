@@ -199,6 +199,7 @@ export const CreateRestStopModal: React.FC = () => {
                 <option value="Hotel">Hotel</option>
                 <option value="Tankstelle">Tankstelle</option>
                 <option value="Restaurant">Restaurant</option>
+                <option value="Route">Route</option>
               </select>
             </div>
 
