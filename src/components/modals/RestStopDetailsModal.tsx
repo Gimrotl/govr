@@ -328,7 +328,7 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
                   <button
                     key={index}
                     onClick={() => setCurrentImageIndex(index)}
-                    className={`flex-shrink-0 w-12 h-12 rounded-lg overflow-hidden border-2 transition-all ${
+                    className={`flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-all ${
                       index === currentImageIndex
                         ? 'border-sky-400 shadow-lg'
                         : 'border-gray-300 hover:border-gray-400'
