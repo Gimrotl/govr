@@ -102,7 +102,7 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
   const [showReviewsModal, setShowReviewsModal] = useState(false);
   const [hiddenIndices, setHiddenIndices] = useState<number[]>(restStop?.hidden_image_indices || []);
   const [isUpdating, setIsUpdating] = useState(false);
-  const { isLoggedIn, userEmail } = useAuth();
+  const { isLoggedIn, userEmail, isAdmin } = useAuth();
   const { openModal } = useModals();
   const { updateRestStop } = useRestStops();
 
@@ -124,6 +124,11 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
   const visibleImages = allImages.filter((_, index) => !hiddenIndices.includes(index));
 
   const handleHideImage = async (imageIndex: number) => {
+    if (!isAdmin) {
+      alert('Nur Administratoren können Bilder ausblenden.');
+      return;
+    }
+
     setIsUpdating(true);
     const newHiddenIndices = [...hiddenIndices, imageIndex];
     setHiddenIndices(newHiddenIndices);
@@ -394,7 +399,7 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
                         />
                       </button>
 
-                      {!isHidden && (
+                      {!isHidden && isAdmin && (
                         <button
                           onClick={() => handleHideImage(index)}
                           disabled={isUpdating}
