@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, MapPin, Star, Navigation, ExternalLink, ChevronLeft, ChevronRight, Trash2 } from 'lucide-react';
+import { X, MapPin, Star, Navigation, ExternalLink, ChevronLeft, ChevronRight, Trash2, Pencil, Check, XCircle } from 'lucide-react';
 import { useModals } from '../../hooks/useModals';
 import { useAuth } from '../../hooks/useAuth';
 import { useRestStops } from '../../hooks/useRestStops';
@@ -97,6 +97,8 @@ const getAmenityIcon = (amenity: string) => {
   }
 };
 
+const AVAILABLE_AMENITIES = ['WC', 'Kinder', 'Sport', 'Essen', 'Grün', 'Parkplatz', 'Duschen', 'Tankstelle', 'Autowaschen', 'Hotel', 'Strand', 'Esstisch'];
+
 export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ restStop, onClose }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [showReviewsModal, setShowReviewsModal] = useState(false);
@@ -105,6 +107,12 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
   const { isLoggedIn, userEmail, isAdmin } = useAuth();
   const { openModal } = useModals();
   const { updateRestStop } = useRestStops();
+
+  const [editingField, setEditingField] = useState<'description' | 'address' | 'amenities' | null>(null);
+  const [editDescription, setEditDescription] = useState(restStop?.fullDescription || '');
+  const [editAddress, setEditAddress] = useState(restStop?.address || '');
+  const [editLocation, setEditLocation] = useState(restStop?.location || '');
+  const [editAmenities, setEditAmenities] = useState<string[]>(restStop?.amenities || []);
 
   if (!restStop) return null;
 
@@ -156,6 +164,65 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
     const query = encodeURIComponent(`${restStop.name}, ${restStop.address}`);
     const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${query}`;
     window.open(googleMapsUrl, '_blank');
+  };
+
+  const handleSaveDescription = async () => {
+    if (!isAdmin) return;
+    setIsUpdating(true);
+    const success = await updateRestStop(String(restStop.id), {
+      fullDescription: editDescription,
+      description: editDescription.substring(0, 100)
+    } as any);
+    if (success) {
+      restStop.fullDescription = editDescription;
+      restStop.description = editDescription.substring(0, 100);
+    }
+    setEditingField(null);
+    setIsUpdating(false);
+  };
+
+  const handleSaveAddress = async () => {
+    if (!isAdmin) return;
+    setIsUpdating(true);
+    const success = await updateRestStop(String(restStop.id), {
+      address: editAddress,
+      location: editLocation
+    } as any);
+    if (success) {
+      restStop.address = editAddress;
+      restStop.location = editLocation;
+    }
+    setEditingField(null);
+    setIsUpdating(false);
+  };
+
+  const handleSaveAmenities = async () => {
+    if (!isAdmin) return;
+    setIsUpdating(true);
+    const success = await updateRestStop(String(restStop.id), {
+      amenities: editAmenities
+    } as any);
+    if (success) {
+      restStop.amenities = editAmenities;
+    }
+    setEditingField(null);
+    setIsUpdating(false);
+  };
+
+  const toggleAmenity = (amenity: string) => {
+    if (editAmenities.includes(amenity)) {
+      setEditAmenities(editAmenities.filter(a => a !== amenity));
+    } else {
+      setEditAmenities([...editAmenities, amenity]);
+    }
+  };
+
+  const cancelEdit = () => {
+    setEditingField(null);
+    setEditDescription(restStop.fullDescription);
+    setEditAddress(restStop.address);
+    setEditLocation(restStop.location);
+    setEditAmenities(restStop.amenities);
   };
 
   const nextImage = () => {
@@ -417,18 +484,72 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
 
             {/* Amenities below images */}
             <div className="p-4 bg-gray-50">
-              <h3 className="text-lg font-semibold text-gray-900 mb-3">Ausstattung</h3>
-              <div className="grid grid-cols-2 gap-2">
-                {restStop.amenities.map((amenity, index) => {
-                  const amenityInfo = getAmenityIcon(amenity);
-                  return (
-                    <div key={index} className={`${amenityInfo.color} px-3 py-2 rounded-xl flex items-center shadow-sm`}>
-                      <span className="text-lg mr-2">{amenityInfo.icon}</span>
-                      <span className="font-medium text-sm">{amenityInfo.label}</span>
-                    </div>
-                  );
-                })}
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="text-lg font-semibold text-gray-900">Ausstattung</h3>
+                {isAdmin && editingField !== 'amenities' && (
+                  <button
+                    onClick={() => setEditingField('amenities')}
+                    className="p-2 text-gray-500 hover:text-sky-500 hover:bg-sky-50 rounded-lg transition-colors"
+                    title="Bearbeiten"
+                  >
+                    <Pencil size={18} />
+                  </button>
+                )}
               </div>
+              {editingField === 'amenities' ? (
+                <div className="space-y-3">
+                  <div className="grid grid-cols-2 gap-2">
+                    {AVAILABLE_AMENITIES.map((amenity) => {
+                      const amenityInfo = getAmenityIcon(amenity);
+                      const isSelected = editAmenities.includes(amenity);
+                      return (
+                        <button
+                          key={amenity}
+                          onClick={() => toggleAmenity(amenity)}
+                          className={`px-3 py-2 rounded-xl flex items-center shadow-sm transition-all ${
+                            isSelected
+                              ? `${amenityInfo.color} ring-2 ring-sky-400`
+                              : 'bg-gray-200 text-gray-500 opacity-60'
+                          }`}
+                        >
+                          <span className="text-lg mr-2">{amenityInfo.icon}</span>
+                          <span className="font-medium text-sm">{amenityInfo.label}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                  <div className="flex justify-end space-x-2 pt-2">
+                    <button
+                      onClick={cancelEdit}
+                      disabled={isUpdating}
+                      className="px-4 py-2 text-gray-600 hover:bg-gray-200 rounded-lg transition-colors flex items-center"
+                    >
+                      <XCircle size={18} className="mr-1" />
+                      Abbrechen
+                    </button>
+                    <button
+                      onClick={handleSaveAmenities}
+                      disabled={isUpdating}
+                      className="px-4 py-2 bg-sky-500 text-white hover:bg-sky-600 rounded-lg transition-colors flex items-center disabled:opacity-50"
+                    >
+                      <Check size={18} className="mr-1" />
+                      {isUpdating ? 'Speichern...' : 'Speichern'}
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="grid grid-cols-2 gap-2">
+                  {restStop.amenities.map((amenity, index) => {
+                    const amenityInfo = getAmenityIcon(amenity);
+                    return (
+                      <div key={index} className={`${amenityInfo.color} px-3 py-2 rounded-xl flex items-center shadow-sm`}>
+                        <span className="text-lg mr-2">{amenityInfo.icon}</span>
+                        <span className="font-medium text-sm">{amenityInfo.label}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
 
             {/* Address section moved here */}
@@ -472,11 +593,51 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
 
               {/* Description section */}
               <div className="mb-6">
-                <h3 className="text-lg font-semibold text-gray-800 mb-3">Beschreibung</h3>
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-lg font-semibold text-gray-800">Beschreibung</h3>
+                  {isAdmin && editingField !== 'description' && (
+                    <button
+                      onClick={() => setEditingField('description')}
+                      className="p-2 text-gray-500 hover:text-sky-500 hover:bg-sky-50 rounded-lg transition-colors"
+                      title="Bearbeiten"
+                    >
+                      <Pencil size={18} />
+                    </button>
+                  )}
+                </div>
                 <div className="bg-gray-50 p-4 lg:p-6 rounded-xl">
-                  <p className="text-sm lg:text-base text-gray-700 leading-relaxed">
-                    {restStop.fullDescription}
-                  </p>
+                  {editingField === 'description' ? (
+                    <div className="space-y-3">
+                      <textarea
+                        value={editDescription}
+                        onChange={(e) => setEditDescription(e.target.value)}
+                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-400 focus:border-transparent resize-none"
+                        rows={5}
+                      />
+                      <div className="flex justify-end space-x-2">
+                        <button
+                          onClick={cancelEdit}
+                          disabled={isUpdating}
+                          className="px-4 py-2 text-gray-600 hover:bg-gray-200 rounded-lg transition-colors flex items-center"
+                        >
+                          <XCircle size={18} className="mr-1" />
+                          Abbrechen
+                        </button>
+                        <button
+                          onClick={handleSaveDescription}
+                          disabled={isUpdating}
+                          className="px-4 py-2 bg-sky-500 text-white hover:bg-sky-600 rounded-lg transition-colors flex items-center disabled:opacity-50"
+                        >
+                          <Check size={18} className="mr-1" />
+                          {isUpdating ? 'Speichern...' : 'Speichern'}
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <p className="text-sm lg:text-base text-gray-700 leading-relaxed">
+                      {restStop.fullDescription}
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -485,15 +646,67 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
 
               {/* Address section */}
               <div className="mb-6">
-                <h3 className="text-lg font-semibold text-gray-800 mb-3">Adresse</h3>
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-lg font-semibold text-gray-800">Adresse</h3>
+                  {isAdmin && editingField !== 'address' && (
+                    <button
+                      onClick={() => setEditingField('address')}
+                      className="p-2 text-gray-500 hover:text-sky-500 hover:bg-sky-50 rounded-lg transition-colors"
+                      title="Bearbeiten"
+                    >
+                      <Pencil size={18} />
+                    </button>
+                  )}
+                </div>
                 <div className="bg-gray-50 p-4 lg:p-6 rounded-xl">
-                  <div className="flex items-start text-gray-700">
-                    <MapPin size={20} className="mr-3 mt-1 text-sky-400 flex-shrink-0" />
-                    <div className="flex-1">
-                      <p className="font-medium text-gray-800 text-sm lg:text-base">{restStop.address}</p>
-                      <p className="text-sm text-gray-600 mt-1">{restStop.location}</p>
+                  {editingField === 'address' ? (
+                    <div className="space-y-3">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Adresse</label>
+                        <input
+                          type="text"
+                          value={editAddress}
+                          onChange={(e) => setEditAddress(e.target.value)}
+                          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-400 focus:border-transparent"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Ort/Region</label>
+                        <input
+                          type="text"
+                          value={editLocation}
+                          onChange={(e) => setEditLocation(e.target.value)}
+                          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-400 focus:border-transparent"
+                        />
+                      </div>
+                      <div className="flex justify-end space-x-2">
+                        <button
+                          onClick={cancelEdit}
+                          disabled={isUpdating}
+                          className="px-4 py-2 text-gray-600 hover:bg-gray-200 rounded-lg transition-colors flex items-center"
+                        >
+                          <XCircle size={18} className="mr-1" />
+                          Abbrechen
+                        </button>
+                        <button
+                          onClick={handleSaveAddress}
+                          disabled={isUpdating}
+                          className="px-4 py-2 bg-sky-500 text-white hover:bg-sky-600 rounded-lg transition-colors flex items-center disabled:opacity-50"
+                        >
+                          <Check size={18} className="mr-1" />
+                          {isUpdating ? 'Speichern...' : 'Speichern'}
+                        </button>
+                      </div>
                     </div>
-                  </div>
+                  ) : (
+                    <div className="flex items-start text-gray-700">
+                      <MapPin size={20} className="mr-3 mt-1 text-sky-400 flex-shrink-0" />
+                      <div className="flex-1">
+                        <p className="font-medium text-gray-800 text-sm lg:text-base">{restStop.address}</p>
+                        <p className="text-sm text-gray-600 mt-1">{restStop.location}</p>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
 
