@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { ChevronRight, ChevronLeft, Car, Shield, Luggage } from 'lucide-react';
 import { useInfoCards } from '../hooks/useInfoCards';
 import { useModals } from '../hooks/useModals';
@@ -72,17 +72,13 @@ export const InfoCards: React.FC = () => {
     }
   };
 
-  const goToPrevious = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
-    }
-  };
+  const goToNext = useCallback(() => {
+    setCurrentIndex(prev => (prev < cards.length - 1 ? prev + 1 : prev));
+  }, [cards.length]);
 
-  const goToNext = () => {
-    if (currentIndex < cards.length - 1) {
-      setCurrentIndex(currentIndex + 1);
-    }
-  };
+  const goToPrevious = useCallback(() => {
+    setCurrentIndex(prev => (prev > 0 ? prev - 1 : prev));
+  }, []);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -111,7 +107,7 @@ export const InfoCards: React.FC = () => {
       window.removeEventListener('keydown', handleKeyDown);
       containerRef.current?.removeEventListener('wheel', handleWheel);
     };
-  }, [currentIndex, cards.length]);
+  }, [goToNext, goToPrevious]);
 
   if (loading) {
     return (
