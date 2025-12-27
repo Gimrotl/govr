@@ -7,27 +7,27 @@ import { InfoCardData } from '../contexts/ModalsContext';
 const iconComponents = [Car, Shield, Users];
 
 const iconColors = [
-  'text-terracotta-600',
-  'text-deep-slate-600',
-  'text-terracotta-500'
+  'text-sky-600',
+  'text-emerald-600',
+  'text-amber-600'
 ];
 
 const iconBgColors = [
-  'bg-terracotta-100',
-  'bg-deep-slate-100',
-  'bg-terracotta-50'
+  'bg-sky-100',
+  'bg-emerald-100',
+  'bg-amber-100'
 ];
 
 const borderColors = [
-  'border-t-terracotta-500',
-  'border-t-deep-slate-500',
-  'border-t-terracotta-400'
+  'border-t-sky-500',
+  'border-t-emerald-500',
+  'border-t-amber-500'
 ];
 
 const hoverBorderColors = [
-  'hover:border-terracotta-600',
-  'hover:border-deep-slate-600',
-  'hover:border-terracotta-500'
+  'hover:border-sky-600',
+  'hover:border-emerald-600',
+  'hover:border-amber-600'
 ];
 
 const iconTypes: Array<'car' | 'shield' | 'users'> = ['car', 'shield', 'users'];
@@ -101,7 +101,7 @@ export const InfoCards: React.FC = () => {
 
   return (
     <section className="my-12 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-deep-slate-700/10 via-terracotta-500/5 to-transparent pointer-events-none -z-10"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-sky-500/10 via-emerald-500/5 to-transparent pointer-events-none -z-10"></div>
 
       <div className="hidden md:grid grid-cols-1 md:grid-cols-3 gap-6">
         {cards.map((card, index) => {
@@ -116,10 +116,10 @@ export const InfoCards: React.FC = () => {
                 <div className={`w-16 h-16 rounded-full ${iconBgColors[index % iconBgColors.length]} flex items-center justify-center mb-5 transition-transform duration-300 group-hover:scale-110`}>
                   <IconComponent size={32} className={`${iconColors[index % iconColors.length]} transition-colors`} strokeWidth={1.5} />
                 </div>
-                <h3 className="text-lg font-bold text-deep-slate-700 mb-3 transition-colors group-hover:text-deep-slate-800">
+                <h3 className="text-lg font-bold text-gray-800 mb-3 transition-colors group-hover:text-gray-900">
                   {card.title}
                 </h3>
-                <div className="flex items-center text-terracotta-600 font-medium text-sm group-hover:text-terracotta-700 transition-colors">
+                <div className="flex items-center text-sky-600 font-medium text-sm group-hover:text-sky-700 transition-colors">
                   <span>{card.link_text}</span>
                   <ChevronRight size={16} className="ml-1 transform group-hover:translate-x-1 transition-transform" />
                 </div>
@@ -154,10 +154,10 @@ export const InfoCards: React.FC = () => {
                       <div className={`w-14 h-14 rounded-full ${iconBgColors[index % iconBgColors.length]} flex items-center justify-center mb-4`}>
                         <IconComponent size={28} className={iconColors[index % iconColors.length]} strokeWidth={1.5} />
                       </div>
-                      <h3 className="text-lg font-bold text-deep-slate-700 mb-3">
+                      <h3 className="text-lg font-bold text-gray-800 mb-3">
                         {card.title}
                       </h3>
-                      <div className="flex items-center text-terracotta-600 font-medium text-sm">
+                      <div className="flex items-center text-sky-600 font-medium text-sm">
                         <span>{card.link_text}</span>
                         <ChevronRight size={16} className="ml-1" />
                       </div>
@@ -176,7 +176,7 @@ export const InfoCards: React.FC = () => {
             className="p-2 rounded-full bg-white shadow-md transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 hover:shadow-lg"
             aria-label="Vorherige Karte"
           >
-            <ChevronLeft size={20} className={currentIndex === 0 ? 'text-gray-400' : 'text-terracotta-600'} />
+            <ChevronLeft size={20} className={currentIndex === 0 ? 'text-gray-400' : 'text-sky-600'} />
           </button>
 
           <div className="flex gap-2">
@@ -186,7 +186,7 @@ export const InfoCards: React.FC = () => {
                 onClick={() => setCurrentIndex(index)}
                 className={`h-2 rounded-full transition-all ${
                   index === currentIndex
-                    ? 'bg-terracotta-500 w-6'
+                    ? 'bg-sky-500 w-6'
                     : 'bg-gray-300 w-2'
                 }`}
                 aria-label={`Gehe zu Karte ${index + 1}`}
@@ -200,7 +200,7 @@ export const InfoCards: React.FC = () => {
             className="p-2 rounded-full bg-white shadow-md transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 hover:shadow-lg"
             aria-label="Nächste Karte"
           >
-            <ChevronRight size={20} className={currentIndex === cards.length - 1 ? 'text-gray-400' : 'text-terracotta-600'} />
+            <ChevronRight size={20} className={currentIndex === cards.length - 1 ? 'text-gray-400' : 'text-sky-600'} />
           </button>
         </div>
       </div>
