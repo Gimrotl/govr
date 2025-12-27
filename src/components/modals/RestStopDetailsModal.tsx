@@ -519,6 +519,26 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
             <div className="p-4 bg-gray-50">
               <div className="flex items-center justify-between mb-3">
                 <h3 className="text-lg font-semibold text-gray-900">Ausstattung</h3>
+                {isAdmin && editingField === 'amenities' && (
+                  <div className="flex space-x-2">
+                    <button
+                      onClick={cancelEdit}
+                      disabled={isUpdating}
+                      className="px-3 py-1 text-sm text-gray-600 hover:bg-gray-200 rounded-lg transition-colors flex items-center"
+                    >
+                      <XCircle size={16} className="mr-1" />
+                      Abbrechen
+                    </button>
+                    <button
+                      onClick={handleSaveAmenities}
+                      disabled={isUpdating}
+                      className="px-3 py-1 text-sm bg-sky-500 text-white hover:bg-sky-600 rounded-lg transition-colors flex items-center disabled:opacity-50"
+                    >
+                      <Check size={16} className="mr-1" />
+                      {isUpdating ? 'Speichern...' : 'Speichern'}
+                    </button>
+                  </div>
+                )}
                 {isAdmin && editingField !== 'amenities' && (
                   <button
                     onClick={() => setEditingField('amenities')}
@@ -530,64 +550,44 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
                 )}
               </div>
               {editingField === 'amenities' ? (
-                <div className="space-y-3">
-                  <div className="relative">
-                    <button
-                      onClick={scrollAmenitiesUp}
-                      className="absolute -top-10 right-0 p-2 text-gray-600 hover:text-sky-500 hover:bg-sky-50 rounded-lg transition-colors z-10"
-                      title="Nach oben scrollen"
-                    >
-                      <ChevronUp size={20} />
-                    </button>
-                    <div
-                      ref={amenitiesContainerRef}
-                      className="grid grid-cols-2 gap-2 max-h-64 overflow-y-auto scrollbar-hide"
-                    >
-                      {AVAILABLE_AMENITIES.map((amenity) => {
-                        const amenityInfo = getAmenityIcon(amenity);
-                        const isSelected = editAmenities.includes(amenity);
-                        return (
-                          <button
-                            key={amenity}
-                            onClick={() => toggleAmenity(amenity)}
-                            className={`px-3 py-2 rounded-xl flex items-center shadow-sm transition-all ${
-                              isSelected
-                                ? `${amenityInfo.color} ring-2 ring-sky-400`
-                                : 'bg-gray-200 text-gray-500 opacity-60'
-                            }`}
-                          >
-                            <span className="text-lg mr-2">{amenityInfo.icon}</span>
-                            <span className="font-medium text-sm">{amenityInfo.label}</span>
-                          </button>
-                        );
-                      })}
-                    </div>
-                    <button
-                      onClick={scrollAmenitiesDown}
-                      className="absolute -bottom-10 right-0 p-2 text-gray-600 hover:text-sky-500 hover:bg-sky-50 rounded-lg transition-colors z-10"
-                      title="Nach unten scrollen"
-                    >
-                      <ChevronDown size={20} />
-                    </button>
+                <div className="relative">
+                  <button
+                    onClick={scrollAmenitiesUp}
+                    className="absolute -top-10 right-0 p-2 text-gray-600 hover:text-sky-500 hover:bg-sky-50 rounded-lg transition-colors z-10"
+                    title="Nach oben scrollen"
+                  >
+                    <ChevronUp size={20} />
+                  </button>
+                  <div
+                    ref={amenitiesContainerRef}
+                    className="grid grid-cols-2 gap-2 max-h-64 overflow-y-auto scrollbar-hide"
+                  >
+                    {AVAILABLE_AMENITIES.map((amenity) => {
+                      const amenityInfo = getAmenityIcon(amenity);
+                      const isSelected = editAmenities.includes(amenity);
+                      return (
+                        <button
+                          key={amenity}
+                          onClick={() => toggleAmenity(amenity)}
+                          className={`px-3 py-2 rounded-xl flex items-center shadow-sm transition-all ${
+                            isSelected
+                              ? `${amenityInfo.color} ring-2 ring-sky-400`
+                              : 'bg-gray-200 text-gray-500 opacity-60'
+                          }`}
+                        >
+                          <span className="text-lg mr-2">{amenityInfo.icon}</span>
+                          <span className="font-medium text-sm">{amenityInfo.label}</span>
+                        </button>
+                      );
+                    })}
                   </div>
-                  <div className="flex justify-end space-x-2 pt-8">
-                    <button
-                      onClick={cancelEdit}
-                      disabled={isUpdating}
-                      className="px-4 py-2 text-gray-600 hover:bg-gray-200 rounded-lg transition-colors flex items-center"
-                    >
-                      <XCircle size={18} className="mr-1" />
-                      Abbrechen
-                    </button>
-                    <button
-                      onClick={handleSaveAmenities}
-                      disabled={isUpdating}
-                      className="px-4 py-2 bg-sky-500 text-white hover:bg-sky-600 rounded-lg transition-colors flex items-center disabled:opacity-50"
-                    >
-                      <Check size={18} className="mr-1" />
-                      {isUpdating ? 'Speichern...' : 'Speichern'}
-                    </button>
-                  </div>
+                  <button
+                    onClick={scrollAmenitiesDown}
+                    className="absolute -bottom-10 right-0 p-2 text-gray-600 hover:text-sky-500 hover:bg-sky-50 rounded-lg transition-colors z-10"
+                    title="Nach unten scrollen"
+                  >
+                    <ChevronDown size={20} />
+                  </button>
                 </div>
               ) : (
                 <div className="relative">
