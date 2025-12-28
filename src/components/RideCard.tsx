@@ -57,15 +57,15 @@ export const RideCard: React.FC<RideCardProps> = ({ ride }) => {
   return (
     <div className="bg-gray-100 rounded-lg shadow-md overflow-hidden flex flex-col h-full transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1">
       {/* Car image or icon at the top */}
-      <div className="p-3">
+      <div>
         {ride.carImage || (ride.additionalImages && ride.additionalImages.length > 0) ? (
           <img
             src={ride.carImage || ride.additionalImages?.[0]}
             alt={`${ride.driver}'s car`}
-            className="w-full h-32 object-cover rounded-lg border-2 border-gray-200 shadow-sm"
+            className="w-full h-32 object-cover"
           />
         ) : (
-          <div className="w-full h-32 bg-white rounded-lg border-2 border-gray-200 shadow-sm flex items-center justify-center">
+          <div className="w-full h-32 bg-white flex items-center justify-center">
             <CarTypeIcon carModel={ride.carModel} size={64} />
           </div>
         )}
