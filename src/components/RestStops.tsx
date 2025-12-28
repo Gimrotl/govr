@@ -1,8 +1,9 @@
 import React, { useState, useRef } from 'react';
-import { ChevronLeft, ChevronRight, MapPin, Star, Navigation, Car, Fuel, Utensils, Plus, Edit, Trash2 } from 'lucide-react';
+import { ChevronLeft, ChevronRight, MapPin, Star, Navigation, Fuel, Utensils, Plus, Edit, Trash2 } from 'lucide-react';
 import { RestStopDetailsModal } from './modals/RestStopDetailsModal';
 import { useAuth } from '../hooks/useAuth';
 import { useModals } from '../hooks/useModals';
+import { CarTypeIcon } from './CarTypeIcon';
 
 interface RestStop {
   id: number;
@@ -92,7 +93,7 @@ const restStops: RestStop[] = [
 const getTypeIcon = (type: string) => {
   switch (type) {
     case 'Raststätte':
-      return <Car size={16} className="text-emerald-500" />;
+      return <CarTypeIcon size={16} className="text-emerald-500" />;
     case 'Hotel':
       return <div className="w-4 h-4 bg-sky-500 rounded flex items-center justify-center text-white text-xs font-bold">H</div>;
     case 'Tankstelle':

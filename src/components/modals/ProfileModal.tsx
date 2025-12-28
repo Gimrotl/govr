@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { X, Pencil, Check, Upload, ChevronLeft, ChevronRight, MessageCircle, Car, Search } from 'lucide-react';
+import { X, Pencil, Check, Upload, ChevronLeft, ChevronRight, MessageCircle, Search } from 'lucide-react';
 import { useModals } from '../../hooks/useModals';
 import { useRides } from '../../hooks/useRides';
 import { useAuth } from '../../hooks/useAuth';
 import { UserProfile } from '../../types';
 import { StarRating } from '../StarRating';
+import { CarTypeIcon } from '../CarTypeIcon';
 import { CurrentRidesModal } from './CurrentRidesModal';
 
 export const ProfileModal: React.FC = () => {
@@ -239,8 +240,8 @@ export const ProfileModal: React.FC = () => {
                   onClick={() => openModal('currentRides')}
                   className="flex-1 flex items-center justify-center bg-emerald-500 text-white py-2 md:py-3 px-3 md:px-4 rounded-lg hover:bg-emerald-600 transition duration-200 text-sm md:text-base"
                 >
-                  <Car size={16} className="mr-2 md:hidden" />
-                  <Car size={18} className="mr-2 hidden md:block" />
+                  <CarTypeIcon size={16} className="mr-2 md:hidden" />
+                  <CarTypeIcon size={18} className="mr-2 hidden md:block" />
                   Aktuelle Angebote
                 </button>
               </div>

@@ -1,8 +1,9 @@
 import React from 'react';
-import { Menu, User, LogOut, LogIn, MessageSquare, ShoppingBag, PlusCircle, Car, Bell, Shield } from 'lucide-react';
+import { Menu, User, LogOut, LogIn, MessageSquare, ShoppingBag, PlusCircle, Bell, Shield } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { useModals } from '../hooks/useModals';
 import { useMessages } from '../hooks/useMessages';
+import { CarTypeIcon } from './CarTypeIcon';
 
 export const Navbar: React.FC = () => {
   const { isLoggedIn, logout, isAdmin } = useAuth();
@@ -60,7 +61,7 @@ export const Navbar: React.FC = () => {
                   onClick={() => openModal('myRides')}
                   className="flex items-center text-white px-4 py-1.5 border border-white/50 rounded-full hover:bg-white/10 hover:border-white transition duration-200 backdrop-blur-sm"
                 >
-                  <Car size={16} className="mr-1.5" />
+                  <CarTypeIcon size={16} className="mr-1.5" />
                   <span className="text-sm font-medium">My Rides</span>
                 </button>
                 <button

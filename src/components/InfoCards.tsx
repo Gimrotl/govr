@@ -1,10 +1,11 @@
 import React, { useState, useRef } from 'react';
-import { ChevronRight, ChevronLeft, Car, Shield, Luggage } from 'lucide-react';
+import { ChevronRight, ChevronLeft, Shield, Luggage } from 'lucide-react';
 import { useInfoCards } from '../hooks/useInfoCards';
 import { useModals } from '../hooks/useModals';
 import { InfoCardData } from '../contexts/ModalsContext';
+import { CarTypeIcon } from './CarTypeIcon';
 
-const iconComponents = [Car, Shield, Luggage];
+const iconComponents = [CarTypeIcon, Shield, Luggage];
 
 const iconColors = [
   'text-terracotta-600',

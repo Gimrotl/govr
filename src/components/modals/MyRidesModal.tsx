@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { X, Edit, Trash, Eye, Car, Package, CheckCheck, XCircle } from 'lucide-react';
+import { X, Edit, Trash, Eye, Package, CheckCheck, XCircle } from 'lucide-react';
 import { useModals } from '../../hooks/useModals';
 import { useRides } from '../../hooks/useRides';
 import { useAuth } from '../../hooks/useAuth';
 import { useOrders } from '../../hooks/useOrders';
+import { CarTypeIcon } from '../CarTypeIcon';
 
 export const MyRidesModal: React.FC = () => {
   const { closeModal, openRideDetails, openUserProfile } = useModals();
@@ -70,7 +71,7 @@ export const MyRidesModal: React.FC = () => {
                   : 'bg-sky-400 bg-opacity-30 text-white hover:bg-opacity-50'
               }`}
             >
-              <Car size={20} className="mr-2" />
+              <CarTypeIcon size={20} className="mr-2" />
               Meine Fahrten
               {myRides.length > 0 && (
                 <span className="ml-2 bg-sky-600 text-white text-xs font-bold px-2 py-1 rounded-full">
@@ -102,7 +103,7 @@ export const MyRidesModal: React.FC = () => {
             <div>
               {myRides.length === 0 ? (
                 <div className="text-center py-12">
-                  <Car size={64} className="mx-auto text-gray-300 mb-4" />
+                  <CarTypeIcon size={64} className="mx-auto text-gray-300 mb-4" />
                   <p className="text-gray-500 text-lg">Sie haben noch keine Fahrten angeboten.</p>
                 </div>
               ) : (
@@ -116,7 +117,7 @@ export const MyRidesModal: React.FC = () => {
                         <div className="flex-1">
                           <div className="flex items-center mb-3">
                             <div className="bg-sky-100 p-2 rounded-lg mr-3">
-                              <Car size={24} className="text-sky-500" />
+                              <CarTypeIcon size={24} className="text-sky-500" />
                             </div>
                             <div>
                               <h3 className="text-xl font-bold text-gray-800">

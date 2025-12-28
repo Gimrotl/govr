@@ -1,8 +1,9 @@
 import React from 'react';
-import { X, Car } from 'lucide-react';
+import { X } from 'lucide-react';
 import { useModals } from '../../hooks/useModals';
 import { Ride } from '../../types';
 import { StarRating } from '../StarRating';
+import { CarTypeIcon } from '../CarTypeIcon';
 
 interface CurrentRidesModalProps {
   rides: Ride[];
@@ -20,7 +21,7 @@ export const CurrentRidesModal: React.FC<CurrentRidesModalProps> = ({ rides, dri
         <div className="p-4 md:p-6">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl md:text-2xl font-semibold text-gray-800 flex items-center">
-              <Car size={24} className="mr-2 text-emerald-500" />
+              <CarTypeIcon size={24} className="mr-2 text-emerald-500" />
               Aktuelle Fahrten
             </h2>
             <button
@@ -75,7 +76,7 @@ export const CurrentRidesModal: React.FC<CurrentRidesModalProps> = ({ rides, dri
             </div>
           ) : (
             <div className="flex flex-col items-center justify-center py-12">
-              <Car size={48} className="text-gray-300 mb-3" />
+              <CarTypeIcon size={48} className="text-gray-300 mb-3" />
               <p className="text-gray-600 text-center">
                 Keine aktuellen Fahrten verfügbar
               </p>

@@ -1,9 +1,10 @@
 import React from 'react';
-import { X, Car, Shield, Luggage } from 'lucide-react';
+import { X, Shield, Luggage } from 'lucide-react';
 import { useModals } from '../../hooks/useModals';
+import { CarTypeIcon } from '../CarTypeIcon';
 
 const iconComponents = {
-  car: Car,
+  car: CarTypeIcon,
   shield: Shield,
   luggage: Luggage
 };
