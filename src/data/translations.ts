@@ -235,7 +235,7 @@ export const translations = {
     dateLabel: 'Календарь:',
     timeLabel: 'Сахь:',
     oclock: 'Сахь',
-    seatsCount: 'mettigş',
+    seatsCount: 'Mettig',
     noCurrentRides: 'Ногнаьрпа машинаш я къам',
     rideDetailsTitle: 'Sov ẋaar',
     routeSection: 'Маршрут',
