@@ -237,7 +237,7 @@ export const translations = {
     oclock: 'Сахь',
     seatsCount: '{seats} мекъаш',
     noCurrentRides: 'Ногнаьрпа машинаш я къам',
-    rideDetailsTitle: 'Машина оьрса',
+    rideDetailsTitle: 'Sov ẋaar',
     routeSection: 'Маршрут',
     start: 'Алдан',
     stop: 'Миллхна',
