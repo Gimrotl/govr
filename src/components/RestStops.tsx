@@ -444,7 +444,8 @@ export const RestStops: React.FC = () => {
     goToPrev: () => void,
     goToNext: () => void,
     scrollRef: React.RefObject<HTMLDivElement>,
-    borderColor: string
+    borderColor: string,
+    stops: RestStop[] = restStopsData
   ) => (
     <section className={`mt-20 mb-20 bg-gray-100 py-12 px-6 rounded-3xl border-t-4 ${borderColor}`}>
       <div className="flex items-start justify-between mb-10">
@@ -479,15 +480,15 @@ export const RestStops: React.FC = () => {
 
         <button
           onClick={goToNext}
-          disabled={currentIdx >= restStopsData.length - 1}
+          disabled={currentIdx >= stops.length - 1}
           className={`absolute right-0 top-1/2 transform -translate-y-1/2 z-20 bg-white rounded-full p-3 shadow-lg transition-all duration-200 ${
-            currentIdx >= restStopsData.length - 1
+            currentIdx >= stops.length - 1
               ? 'opacity-30 cursor-not-allowed'
               : 'hover:bg-gray-100 hover:shadow-xl opacity-90 hover:opacity-100'
           }`}
           style={{ marginRight: '-20px' }}
         >
-          <ChevronRight size={28} className={currentIdx >= restStopsData.length - 1 ? 'text-gray-400' : 'text-[#c51d34]'} />
+          <ChevronRight size={28} className={currentIdx >= stops.length - 1 ? 'text-gray-400' : 'text-[#c51d34]'} />
         </button>
 
         <div
@@ -495,7 +496,7 @@ export const RestStops: React.FC = () => {
           className="flex overflow-x-auto space-x-6 pb-4 scrollbar-hide px-4"
           style={{ scrollSnapType: 'x mandatory' }}
         >
-          {restStopsData.map((stop) => (
+          {stops.map((stop) => (
             <div key={stop.id} style={{ scrollSnapAlign: 'start' }}>
               <RestStopCard stop={stop} />
             </div>
@@ -503,7 +504,7 @@ export const RestStops: React.FC = () => {
         </div>
 
         <div className="flex justify-center mt-10 space-x-3">
-          {restStopsData.map((_, index) => (
+          {stops.map((_, index) => (
             <button
               key={index}
               onClick={() => {
@@ -527,36 +528,43 @@ export const RestStops: React.FC = () => {
     </section>
   );
 
+  const easternStops = restStopsData.filter(stop => (stop as any).route === 'eastern');
+  const balticStops = restStopsData.filter(stop => (stop as any).route === 'baltic');
+  const southernStops = restStopsData.filter(stop => (stop as any).route === 'southern');
+
   return (
     <>
-      {renderSection(
+      {easternStops.length > 0 && renderSection(
         'Östliche Routen',
         'Raststätten und Übernachtungsmöglichkeiten auf dem Weg nach Polen, Weißrussland und in den Kaukasus. Finden Sie alles, was Sie für eine komfortable Fahrt benötigen.',
         currentIndex,
         goToPrevious,
         goToNext,
         scrollContainerRef,
-        'border-sky-400'
+        'border-sky-400',
+        easternStops
       )}
 
-      {renderSection(
+      {balticStops.length > 0 && renderSection(
         'Baltische und östliche Staaten',
         'Komfortable Stopps für Ihre Reise nach Litauen, Lettland, Polen und darüber hinaus. Mit allen wichtigen Einrichtungen und guten Bewertungen.',
         currentIndex2,
         goToPrevious2,
         goToNext2,
         scrollContainerRef2,
-        'border-emerald-400'
+        'border-emerald-400',
+        balticStops
       )}
 
-      {renderSection(
+      {southernStops.length > 0 && renderSection(
         'Südliche Routen',
         'Entdecken Sie erstklassige Raststätten und Hotels auf der Route nach Ungarn, Serbien, Bulgarien, der Türkei und Georgien. Perfekt zum Ausruhen und Tanken.',
         currentIndex3,
         goToPrevious3,
         goToNext3,
         scrollContainerRef3,
-        'border-orange-500'
+        'border-orange-500',
+        southernStops
       )}
 
       <RestStopDetailsModal
