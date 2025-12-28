@@ -65,7 +65,7 @@ export const RidesList: React.FC<RidesListProps> = ({ rides }) => {
   }, [currentIndex, isScrolling]);
 
   return (
-    <div className="bg-gray-200 rounded-lg shadow-md p-6">
+    <div className="bg-gray-100 rounded-lg shadow-md p-6">
       {rides.length === 0 ? (
         <div className="text-center py-10">
           <p className="text-gray-600">No rides found matching your criteria.</p>
