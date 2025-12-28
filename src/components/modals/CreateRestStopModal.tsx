@@ -25,7 +25,6 @@ export const CreateRestStopModal: React.FC = () => {
     image: null as File | null,
     imagePreview: '',
     amenities: [] as string[],
-    route: 'eastern' as 'eastern' | 'baltic' | 'southern',
     coordinates: {
       lat: 0,
       lng: 0
@@ -127,7 +126,6 @@ export const CreateRestStopModal: React.FC = () => {
         full_description: formData.fullDescription,
         image: imageData,
         amenities: formData.amenities,
-        route: formData.route,
         coordinates: formData.coordinates,
       });
 
@@ -202,22 +200,6 @@ export const CreateRestStopModal: React.FC = () => {
                 <option value="Tankstelle">Tankstelle</option>
                 <option value="Restaurant">Restaurant</option>
                 <option value="Route">Route</option>
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Route *
-              </label>
-              <select
-                name="route"
-                value={formData.route}
-                onChange={handleChange}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-400 focus:border-transparent"
-              >
-                <option value="eastern">Östliche Routen</option>
-                <option value="baltic">Baltische und östliche Staaten</option>
-                <option value="southern">Südliche Routen</option>
               </select>
             </div>
 
