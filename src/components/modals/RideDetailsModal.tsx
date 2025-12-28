@@ -217,7 +217,7 @@ export const RideDetailsModal: React.FC = () => {
               >
                 {selectedRide.driver}
               </h3>
-              <p className="text-sm text-gray-600 mb-3">Mitglied seit 15.03.2023</p>
+              <p className="text-sm text-gray-600 mb-3">15.03.2023 dünca vayc</p>
               <div className="flex items-center justify-center mb-4">
                 <button
                   onClick={() => openModal('reviews')}
