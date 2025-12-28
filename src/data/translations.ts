@@ -10,7 +10,7 @@ export const translations = {
     ride: 'Maşen',
     search: 'Ẋa laxar',
     offer: 'Доьлу кхетар',
-    login: 'C1e',
+    login: 'Çu vala',
     logout: 'Aravala',
     profile: 'Teptar',
     messages: 'Xaamaş',
