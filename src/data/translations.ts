@@ -8,7 +8,7 @@ export const translations = {
     offerRide: 'Машина доьлу кхетар',
     availableRides: 'Боьллу машинаш',
     ride: 'Maşen',
-    search: 'Ẋa laxar,
+    search: 'Ẋa laxar',
     offer: 'Доьлу кхетар',
     login: 'Чӏ хилла',
     logout: 'Чӏ я хилла',
