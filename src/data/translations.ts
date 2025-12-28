@@ -2,8 +2,8 @@ export type Language = 'ce' | 'en' | 'ru';
 
 export const translations = {
   ce: {
-    title: 'Кавказски мобилностан сеть',
-    motto: 'ЕРС ВОРДО - ЕРС МАШИНА',
+    title: 'Caucasian Mobility Network',
+    motto: 'miçar - stenga',
     searchRide: 'Машина кхетар',
     offerRide: 'Машина доьлу кхетар',
     availableRides: 'Боьллу машинаш',
