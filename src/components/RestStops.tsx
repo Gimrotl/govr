@@ -354,7 +354,7 @@ export const RestStops: React.FC = () => {
 
   const RestStopCard = ({ stop }: { stop: RestStop }) => (
     <div
-      className="flex-shrink-0 w-72 sm:w-80 md:w-96 h-[500px] bg-gray-100 rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer group border-2 border-gray-200 flex flex-col"
+      className="flex-shrink-0 w-72 sm:w-80 md:w-96 h-[500px] bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer group flex flex-col"
       onClick={() => handleDetailsClick(stop)}
     >
       <div className="relative h-48 overflow-hidden">
