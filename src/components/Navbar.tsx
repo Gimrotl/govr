@@ -3,6 +3,7 @@ import { Menu, User, LogOut, LogIn, MessageSquare, ShoppingBag, PlusCircle, Car,
 import { useAuth } from '../hooks/useAuth';
 import { useModals } from '../hooks/useModals';
 import { useMessages } from '../hooks/useMessages';
+import { LanguageToggle } from './LanguageToggle';
 
 export const Navbar: React.FC = () => {
   const { isLoggedIn, logout, isAdmin } = useAuth();
@@ -16,12 +17,15 @@ export const Navbar: React.FC = () => {
     <nav className="absolute top-0 left-0 right-0 z-50 text-white">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-16">
-          <div className="flex items-center">
+          <div className="flex items-center gap-4">
             <a href="/" className="text-2xl font-bold text-white drop-shadow-lg">Word</a>
+            <div className="hidden sm:flex">
+              <LanguageToggle />
+            </div>
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center gap-3">
             <button
               onClick={toggleMenu}
               className="text-white hover:text-gray-200 focus:outline-none"
@@ -109,6 +113,10 @@ export const Navbar: React.FC = () => {
       {isMenuOpen && (
         <div className="md:hidden bg-gray-900/90 backdrop-blur-md">
           <div className="px-2 pt-2 pb-3 space-y-1">
+            <div className="px-3 py-2">
+              <LanguageToggle />
+            </div>
+            <hr className="border-gray-600 my-2" />
             <button 
               onClick={() => {
                 openModal('chat');

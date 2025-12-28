@@ -8,6 +8,7 @@ import { InfoCards } from './components/InfoCards';
 import { useRides } from './hooks/useRides';
 import { useAuth } from './hooks/useAuth';
 import { useModals } from './hooks/useModals';
+import { useLanguage } from './hooks/useLanguage';
 import { Search, Plus, Instagram } from 'lucide-react';
 
 // TikTok icon component (since it's not in lucide-react)
@@ -21,11 +22,12 @@ function App() {
   const { isLoggedIn } = useAuth();
   const { filteredRides, setSearchParams, resetSearch, searchParams } = useRides();
   const { isAnyModalOpen, openModal } = useModals();
+  const { t } = useLanguage();
   const [activeSection, setActiveSection] = useState<'search' | 'offer' | null>('search');
 
   const handleOfferRide = () => {
     if (!isLoggedIn) {
-      alert('Please log in first to offer a ride.');
+      alert(t('pleaseLoginFirst'));
       openModal('login');
       return;
     }
@@ -44,10 +46,10 @@ function App() {
           <div className="relative z-10 pt-24 md:pt-32 pb-16 md:pb-24">
             <div className="container mx-auto px-4 text-center">
               <h1 className="text-4xl md:text-3xl lg:text-4xl font-bold text-white drop-shadow-lg mb-66">
-                Caucasian Mobility Network
+                {t('title')}
               </h1>
               <p className="text-xl md:text-1xl text-white/90 drop-shadow-md mb-12">
-                ẊAN VORD - ẊAN NEQ̇
+                {t('motto')}
               </p>
 
               {(activeSection === 'search') && (
@@ -90,7 +92,7 @@ function App() {
             <section className="mt-4">
               <h2 className="text-2xl font-semibold mb-6 text-center">
                 <span className="text-red-600 font-bold mr-2">{filteredRides.length}</span>
-                Available Rides
+                {t('availableRides')}
               </h2>
               <RidesList rides={filteredRides} />
             </section>
