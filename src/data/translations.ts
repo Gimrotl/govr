@@ -15,7 +15,7 @@ export const translations = {
     profile: 'Teptar',
     messages: 'Xaamaş',
     notifications: 'Xaamaş',
-    myRides: 'So vödu',
+    myRides: 'San neq',
     reviews: 'ẋaƶar',
     restStops: 'siycar',
     contact: 'Z1ayne vala ',
