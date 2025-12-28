@@ -11,7 +11,7 @@ export const translations = {
     search: 'Ẋa laxar',
     offer: 'Доьлу кхетар',
     login: 'Çu vala',
-    logout: 'Aravala',
+    logout: 'Ara vala',
     profile: 'Teptar',
     messages: 'Xaamaş',
     notifications: 'Xaamaş',
