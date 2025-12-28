@@ -80,7 +80,7 @@ export const translations = {
     messageSent: 'Хаам - {name} - ца йалгӏай!',
     noOrders: 'Йегӏераш я къам.',
     pending: 'Миллхнаш',
-    accepted: 'Йигӏара',
+    accepted: 'Йигӏарa',
     rejected: 'Цӏахна',
     accept: 'Йигӏара',
     reject: 'Цӏахкар',
