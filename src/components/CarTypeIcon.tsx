@@ -1,5 +1,4 @@
 import React from 'react';
-import { Car, Bus, Truck } from 'lucide-react';
 
 interface CarTypeIconProps {
   carModel?: string;
@@ -11,26 +10,6 @@ const getCarIcon = (carModel?: string) => {
   if (!carModel) return 'sedan';
 
   const model = carModel.toLowerCase();
-
-  if (
-    model.includes('vito') ||
-    model.includes('transporter') ||
-    model.includes('transit') ||
-    model.includes('sprinter') ||
-    model.includes('minibus') ||
-    model.includes('van') ||
-    model.includes('bulli')
-  ) {
-    return 'van';
-  }
-
-  if (
-    model.includes('truck') ||
-    model.includes('laster') ||
-    model.includes('lastkraftwagen')
-  ) {
-    return 'truck';
-  }
 
   if (
     model.includes('golf') ||
@@ -80,18 +59,6 @@ export const CarTypeIcon: React.FC<CarTypeIconProps> = ({
   const iconType = getCarIcon(carModel);
 
   switch (iconType) {
-    case 'van':
-      return (
-        <div className={`flex items-center justify-center ${className}`}>
-          <Bus size={size} className="text-blue-500" strokeWidth={1.5} />
-        </div>
-      );
-    case 'truck':
-      return (
-        <div className={`flex items-center justify-center ${className}`}>
-          <Truck size={size} className="text-orange-500" strokeWidth={1.5} />
-        </div>
-      );
     case 'hatchback':
       return (
         <div className={`flex items-center justify-center ${className}`}>
