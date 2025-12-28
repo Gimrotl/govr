@@ -2,6 +2,7 @@ import React from 'react';
 import { Search, Users, ChevronDown } from 'lucide-react';
 import { SearchParams } from '../types';
 import { CityAutocomplete } from './CityAutocomplete';
+import { useLanguage } from '../hooks/useLanguage';
 
 interface RideSearchProps {
   searchParams: SearchParams;
@@ -14,6 +15,8 @@ export const RideSearch: React.FC<RideSearchProps> = ({
   onSearch,
   onReset
 }) => {
+  const { t } = useLanguage();
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     onSearch({ ...searchParams, [name]: value });
@@ -25,7 +28,7 @@ export const RideSearch: React.FC<RideSearchProps> = ({
         <div className="flex-1 w-full">
           <CityAutocomplete
             name="from"
-            placeholder="From (e.g., Grozny)"
+            placeholder={t('fromPlaceholder')}
             className="w-full p-2.5 md:p-3 text-sm md:text-base border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-300 focus:border-transparent transition duration-200"
             value={searchParams.from}
             onChange={handleChange}
@@ -35,7 +38,7 @@ export const RideSearch: React.FC<RideSearchProps> = ({
         <div className="flex-1 w-full">
           <CityAutocomplete
             name="to"
-            placeholder="To (e.g., Mecca)"
+            placeholder={t('toPlaceholder')}
             className="w-full p-2.5 md:p-3 text-sm md:text-base border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-300 focus:border-transparent transition duration-200"
             value={searchParams.to}
             onChange={handleChange}
@@ -49,15 +52,15 @@ export const RideSearch: React.FC<RideSearchProps> = ({
             value={searchParams.seats}
             onChange={handleChange}
           >
-            <option value="">Seats</option>
-            <option value="1">1 Seat</option>
-            <option value="2">2 Seats</option>
-            <option value="3">3 Seats</option>
-            <option value="4">4 Seats</option>
-            <option value="5">5 Seats</option>
-            <option value="6">6 Seats</option>
-            <option value="7">7 Seats</option>
-            <option value="8">8 Seats</option>
+            <option value="">{t('seats')}</option>
+            <option value="1">{t('seats1')}</option>
+            <option value="2">{t('seats2')}</option>
+            <option value="3">{t('seats3')}</option>
+            <option value="4">{t('seats4')}</option>
+            <option value="5">{t('seats5')}</option>
+            <option value="6">{t('seats6')}</option>
+            <option value="7">{t('seats7')}</option>
+            <option value="8">{t('seats8')}</option>
           </select>
           <Users size={16} className="absolute left-2.5 md:left-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none" />
           <ChevronDown size={16} className="absolute right-2.5 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none" />
@@ -67,7 +70,7 @@ export const RideSearch: React.FC<RideSearchProps> = ({
           <input
             type="date"
             name="date"
-            placeholder="Datum"
+            placeholder={t('date')}
             className="w-full p-2.5 md:p-3 text-sm md:text-base border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-300 focus:border-transparent transition duration-200 date-input-custom"
             value={searchParams.date}
             onChange={handleChange}
@@ -80,7 +83,7 @@ export const RideSearch: React.FC<RideSearchProps> = ({
             className="w-full md:w-auto inline-flex items-center justify-center bg-emerald-500 text-white px-5 md:px-6 py-2.5 md:py-3 text-sm md:text-base rounded-xl hover:bg-emerald-600 transition duration-200 shadow-sm hover:shadow-md"
           >
             <Search size={16} className="mr-2" />
-            <span>Search</span>
+            <span>{t('search')}</span>
           </button>
         </div>
       </div>

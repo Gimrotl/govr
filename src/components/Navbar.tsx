@@ -3,12 +3,14 @@ import { Menu, User, LogOut, LogIn, MessageSquare, ShoppingBag, PlusCircle, Car,
 import { useAuth } from '../hooks/useAuth';
 import { useModals } from '../hooks/useModals';
 import { useMessages } from '../hooks/useMessages';
+import { useLanguage } from '../hooks/useLanguage';
 import { LanguageToggle } from './LanguageToggle';
 
 export const Navbar: React.FC = () => {
   const { isLoggedIn, logout, isAdmin } = useAuth();
   const { openModal } = useModals();
   const { unreadCount } = useMessages();
+  const { t } = useLanguage();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
@@ -41,12 +43,12 @@ export const Navbar: React.FC = () => {
               className="flex items-center text-white px-4 py-1.5 border border-white/50 rounded-full hover:bg-white/10 hover:border-white transition duration-200 backdrop-blur-sm"
             >
               <MessageSquare size={16} className="mr-1.5" />
-              <span className="text-sm font-medium">Chat</span>
+              <span className="text-sm font-medium">{t('chat')}</span>
             </button>
             <button
               onClick={() => {
                 if (!isLoggedIn) {
-                  alert('Nur registrierte Benutzer können Fahrten anbieten. Bitte melden Sie sich an.');
+                  alert(t('onlyRegisteredUsers'));
                   openModal('login');
                   return;
                 }
@@ -55,9 +57,9 @@ export const Navbar: React.FC = () => {
               className="flex items-center text-white px-4 py-1.5 border border-white/50 rounded-full hover:bg-white/10 hover:border-white transition duration-200 backdrop-blur-sm"
             >
               <PlusCircle size={16} className="mr-1.5" />
-              <span className="text-sm font-medium">Offer a Ride</span>
+              <span className="text-sm font-medium">{t('offerRide')}</span>
             </button>
-            
+
             {isLoggedIn && (
               <>
                 <button
@@ -65,14 +67,14 @@ export const Navbar: React.FC = () => {
                   className="flex items-center text-white px-4 py-1.5 border border-white/50 rounded-full hover:bg-white/10 hover:border-white transition duration-200 backdrop-blur-sm"
                 >
                   <Car size={16} className="mr-1.5" />
-                  <span className="text-sm font-medium">My Rides</span>
+                  <span className="text-sm font-medium">{t('myRides')}</span>
                 </button>
                 <button
                   onClick={() => openModal('messages')}
                   className="flex items-center text-white px-4 py-1.5 border border-white/50 rounded-full hover:bg-white/10 hover:border-white transition duration-200 backdrop-blur-sm relative"
                 >
                   <MessageSquare size={16} className="mr-1.5" />
-                  <span className="text-sm font-medium">Messages</span>
+                  <span className="text-sm font-medium">{t('messages')}</span>
                   {unreadCount > 0 && (
                     <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
                       {unreadCount}
@@ -84,7 +86,7 @@ export const Navbar: React.FC = () => {
                   className="flex items-center text-white px-4 py-1.5 border border-white/50 rounded-full hover:bg-white/10 hover:border-white transition duration-200 backdrop-blur-sm"
                 >
                   <User size={16} className="mr-1.5" />
-                  <span className="text-sm font-medium">Profile</span>
+                  <span className="text-sm font-medium">{t('profile')}</span>
                 </button>
               </>
             )}
@@ -96,12 +98,12 @@ export const Navbar: React.FC = () => {
               {isLoggedIn ? (
                 <>
                   <LogOut size={16} className="mr-1.5" />
-                  <span className="text-sm font-medium">Logout</span>
+                  <span className="text-sm font-medium">{t('logout')}</span>
                 </>
               ) : (
                 <>
                   <LogIn size={16} className="mr-1.5" />
-                  <span className="text-sm font-medium">Login</span>
+                  <span className="text-sm font-medium">{t('login')}</span>
                 </>
               )}
             </button>
@@ -117,19 +119,19 @@ export const Navbar: React.FC = () => {
               <LanguageToggle />
             </div>
             <hr className="border-gray-600 my-2" />
-            <button 
+            <button
               onClick={() => {
                 openModal('chat');
                 setIsMenuOpen(false);
               }}
               className="block px-3 py-2 text-base w-full text-left rounded-md hover:bg-gray-600"
             >
-              Chat
+              {t('chat')}
             </button>
-            <button 
+            <button
               onClick={() => {
                 if (!isLoggedIn) {
-                  alert('Nur registrierte Benutzer können Fahrten anbieten. Bitte melden Sie sich an.');
+                  alert(t('onlyRegisteredUsers'));
                   openModal('login');
                   setIsMenuOpen(false);
                   return;
@@ -139,7 +141,7 @@ export const Navbar: React.FC = () => {
               }}
               className="block px-3 py-2 text-base w-full text-left rounded-md hover:bg-gray-600"
             >
-              Offer a Ride
+              {t('offerRide')}
             </button>
             {isLoggedIn && (
               <>
@@ -150,7 +152,7 @@ export const Navbar: React.FC = () => {
                   }}
                   className="block px-3 py-2 text-base w-full text-left rounded-md hover:bg-gray-600"
                 >
-                  My Rides
+                  {t('myRides')}
                 </button>
                 <button
                   onClick={() => {
@@ -159,32 +161,32 @@ export const Navbar: React.FC = () => {
                   }}
                   className="block px-3 py-2 text-base w-full text-left rounded-md hover:bg-gray-600 relative"
                 >
-                  Messages
+                  {t('messages')}
                   {unreadCount > 0 && (
                     <span className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
                       {unreadCount}
                     </span>
                   )}
                 </button>
-                <button 
+                <button
                   onClick={() => {
                     openModal('profile');
                     setIsMenuOpen(false);
                   }}
                   className="block px-3 py-2 text-base w-full text-left rounded-md hover:bg-gray-600"
                 >
-                  Profile
+                  {t('profile')}
                 </button>
               </>
             )}
-            <button 
+            <button
               onClick={() => {
                 isLoggedIn ? logout() : openModal('login');
                 setIsMenuOpen(false);
               }}
               className="block px-3 py-2 text-base w-full text-left rounded-md hover:bg-gray-600"
             >
-              {isLoggedIn ? 'Logout' : 'Login'}
+              {isLoggedIn ? t('logout') : t('login')}
             </button>
           </div>
         </div>
