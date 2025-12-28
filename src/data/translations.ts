@@ -5,7 +5,7 @@ export const translations = {
     title: 'Caucasian Mobility Network',
     motto: 'ẋan vord - ẋan neq',
     searchRide: 'maşen',
-    offerRide: 'Novq̇ d1axaitar',
+    offerRide: 'Novq̇ billar',
     availableRides: 'd1a üduş yolu maşenaş',
     ride: 'Maşen',
     search: 'Ẋa laxar',
