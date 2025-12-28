@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Calendar, Clock, Phone, MessageCircle, Shield, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Calendar, Clock, Phone, MessageCircle, Shield, X, Car, ChevronLeft, ChevronRight } from 'lucide-react';
 import { StarRating } from '../StarRating';
-import { CarTypeIcon } from '../CarTypeIcon';
 import { useModals } from '../../hooks/useModals';
 import { useAuth } from '../../hooks/useAuth';
 import { useRides } from '../../hooks/useRides';
@@ -266,7 +265,7 @@ export const RideDetailsModal: React.FC = () => {
               onClick={handleShowCarImages}
               className="w-full flex items-center justify-center bg-gray-600 text-white py-3 rounded-lg text-base md:text-lg font-medium hover:bg-gray-700 transition duration-200 mb-2"
             >
-              <CarTypeIcon size={18} className="mr-2" />
+              <Car size={18} className="mr-2" />
               Autobilder
             </button>
 
@@ -331,7 +330,7 @@ export const RideDetailsModal: React.FC = () => {
                 />
               ) : (
                 <div className="text-white text-center">
-                  <CarTypeIcon size={64} className="mx-auto mb-4 text-gray-400" />
+                  <Car size={64} className="mx-auto mb-4 text-gray-400" />
                   <p className="text-xl">Keine Autobilder verfügbar</p>
                 </div>
               )}

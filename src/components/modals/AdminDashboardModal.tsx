@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { X, Users, AlertTriangle, Settings, LogOut, Shield, Eye, Trash2, Ban, CheckCircle, FileText, Save, MapPin, Edit } from 'lucide-react';
+import { X, Users, Car, AlertTriangle, Settings, LogOut, Shield, Eye, Trash2, Ban, CheckCircle, FileText, Save, MapPin, Edit } from 'lucide-react';
 import { useModals } from '../../hooks/useModals';
 import { useAuth } from '../../hooks/useAuth';
 import { useRides } from '../../hooks/useRides';
 import { useInfoCards, InfoCard } from '../../hooks/useInfoCards';
 import { useRestStops } from '../../hooks/useRestStops';
 import { UserProfile } from '../../types';
-import { CarTypeIcon } from '../CarTypeIcon';
 
 export const AdminDashboardModal: React.FC = () => {
   const { closeModal, openUserProfile, openReportDetails, openRestStopEdit, openModal } = useModals();
@@ -69,7 +68,7 @@ export const AdminDashboardModal: React.FC = () => {
         
         <div className="bg-white p-4 md:p-6 rounded-lg shadow-md">
           <div className="flex items-center">
-            <CarTypeIcon size={24} className="text-emerald-500 mr-3 md:mr-4 md:w-8 md:h-8" />
+            <Car size={24} className="text-emerald-500 mr-3 md:mr-4 md:w-8 md:h-8" />
             <div>
               <h3 className="text-base md:text-lg font-semibold text-gray-800">Fahrten</h3>
               <p className="text-sm md:text-base text-gray-600 hidden md:block">Fahrten überprüfen und genehmigen, aktive Angebote prüfen.</p>
@@ -731,7 +730,7 @@ export const AdminDashboardModal: React.FC = () => {
                 activeTab === 'rides' ? 'bg-gray-600' : 'hover:bg-gray-600'
               }`}
             >
-              <CarTypeIcon size={18} className="mr-3" />
+              <Car size={18} className="mr-3" />
               Fahrten
             </button>
             <button
@@ -827,7 +826,7 @@ export const AdminDashboardModal: React.FC = () => {
                 activeTab === 'rides' ? 'bg-gray-700' : 'hover:bg-gray-700'
               }`}
             >
-              <CarTypeIcon size={18} className="mr-3" />
+              <Car size={18} className="mr-3" />
               Fahrten
             </button>
             <button

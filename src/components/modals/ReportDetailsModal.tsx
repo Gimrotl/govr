@@ -1,7 +1,6 @@
 import React from 'react';
-import { X, Clock, User, AlertTriangle } from 'lucide-react';
+import { X, Clock, User, Car, AlertTriangle } from 'lucide-react';
 import { useModals } from '../../hooks/useModals';
-import { CarTypeIcon } from '../CarTypeIcon';
 
 export const ReportDetailsModal: React.FC = () => {
   const { activeModals, selectedReport, closeModal } = useModals();
@@ -53,7 +52,7 @@ export const ReportDetailsModal: React.FC = () => {
               </div>
 
               <div className="flex items-start space-x-3">
-                <CarTypeIcon className="text-emerald-500 flex-shrink-0 mt-1" size={20} />
+                <Car className="text-emerald-500 flex-shrink-0 mt-1" size={20} />
                 <div>
                   <p className="text-sm text-gray-600">Fahrt</p>
                   <p className="font-medium text-gray-900">{selectedReport.ride}</p>
