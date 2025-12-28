@@ -2,12 +2,14 @@ import React from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { RideCard } from './RideCard';
 import { Ride } from '../types';
+import { useLanguage } from '../hooks/useLanguage';
 
 interface RidesListProps {
   rides: Ride[];
 }
 
 export const RidesList: React.FC<RidesListProps> = ({ rides }) => {
+  const { t } = useLanguage();
   const [currentIndex, setCurrentIndex] = React.useState(0);
   const scrollContainerRef = React.useRef<HTMLDivElement>(null);
   const [isScrolling, setIsScrolling] = React.useState(false);
@@ -68,7 +70,7 @@ export const RidesList: React.FC<RidesListProps> = ({ rides }) => {
     <div className="bg-gray-100 rounded-lg shadow-md p-6">
       {rides.length === 0 ? (
         <div className="text-center py-10">
-          <p className="text-gray-600">No rides found matching your criteria.</p>
+          <p className="text-gray-600">{t('noRides')}</p>
         </div>
       ) : (
         <>
@@ -134,7 +136,7 @@ export const RidesList: React.FC<RidesListProps> = ({ rides }) => {
             </div>
             
             <div className="text-center mt-4 text-sm text-gray-500 md:hidden">
-              ← Wischen zum Blättern →
+              {t('swipeToScroll')}
             </div>
           </div>
         </>

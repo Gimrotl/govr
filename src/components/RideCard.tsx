@@ -4,12 +4,14 @@ import { Ride } from '../types';
 import { StarRating } from './StarRating';
 import { CarTypeIcon } from './CarTypeIcon';
 import { useModals } from '../hooks/useModals';
+import { useLanguage } from '../hooks/useLanguage';
 
 interface RideCardProps {
   ride: Ride;
 }
 
 export const RideCard: React.FC<RideCardProps> = ({ ride }) => {
+  const { t } = useLanguage();
   const { openRideDetails, openUserProfile, openUserReviews } = useModals();
 
   const availableSeats = ride.availableSeats - ride.bookedSeats;
@@ -103,16 +105,16 @@ export const RideCard: React.FC<RideCardProps> = ({ ride }) => {
         
         <div className="flex items-center text-sm text-gray-600 mb-3">
           <Users size={16} className="mr-1" />
-          <span>{availableSeats} {availableSeats === 1 ? 'seat' : 'seats'} available</span>
+          <span>{availableSeats} {availableSeats === 1 ? t('seats1') : t('seatsCount').replace('{seats}', availableSeats.toString())}</span>
         </div>
       </div>
-      
+
       <div className="px-5 pb-4">
         <button
           onClick={() => openRideDetails(ride)}
           className="w-full bg-emerald-500 text-white py-2 px-4 rounded-md hover:bg-emerald-600 transition duration-200"
         >
-          View Details
+          {t('rideDetailsTitle')}
         </button>
       </div>
     </div>

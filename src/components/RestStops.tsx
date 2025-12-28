@@ -3,6 +3,7 @@ import { ChevronLeft, ChevronRight, MapPin, Star, Navigation, Car, Fuel, Utensil
 import { RestStopDetailsModal } from './modals/RestStopDetailsModal';
 import { useAuth } from '../hooks/useAuth';
 import { useModals } from '../hooks/useModals';
+import { useLanguage } from '../hooks/useLanguage';
 
 interface RestStop {
   id: number;
@@ -166,6 +167,7 @@ const getAmenityIcon = (amenity: string) => {
 };
 
 export const RestStops: React.FC = () => {
+  const { t } = useLanguage();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentIndex2, setCurrentIndex2] = useState(0);
   const [currentIndex3, setCurrentIndex3] = useState(0);
