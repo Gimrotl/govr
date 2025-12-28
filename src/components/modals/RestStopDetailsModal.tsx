@@ -121,7 +121,7 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
 
   const allImages = [
     restStop.image,
-    'https://i.postimg.cc/c1T5vByH/Bildschirmfoto-2025-12-19-um-01-09-52.png',
+    'https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg',
     'https://images.pexels.com/photos/262978/pexels-photo-262978.jpeg',
     'https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg',
     'https://images.pexels.com/photos/33688/delicate-arch-night-stars-landscape.jpeg',

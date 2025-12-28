@@ -12,7 +12,6 @@ export interface RestStop {
   full_description: string;
   image: string;
   amenities: string[];
-  route: 'eastern' | 'baltic' | 'southern';
   coordinates: {
     lat: number;
     lng: number;
@@ -92,9 +91,6 @@ export const useRestStops = () => {
       }
       if (updates.coordinates !== undefined) {
         updateData.coordinates = updates.coordinates;
-      }
-      if (updates.route !== undefined) {
-        updateData.route = updates.route;
       }
 
       const { data, error: updateError } = await supabase

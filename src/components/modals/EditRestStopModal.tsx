@@ -51,7 +51,6 @@ export const EditRestStopModal: React.FC = () => {
     imagePreview: '',
     originalImage: '',
     amenities: [] as string[],
-    route: 'eastern' as 'eastern' | 'baltic' | 'southern',
     coordinates: {
       lat: 0,
       lng: 0
@@ -121,7 +120,6 @@ export const EditRestStopModal: React.FC = () => {
         imagePreview: '',
         originalImage: selectedRestStop.image,
         amenities: selectedRestStop.amenities,
-        route: (selectedRestStop as any).route || 'eastern',
         coordinates: selectedRestStop.coordinates
       });
 
@@ -197,7 +195,6 @@ export const EditRestStopModal: React.FC = () => {
         full_description: formData.fullDescription,
         image: imageUrl,
         amenities: formData.amenities,
-        route: formData.route,
         coordinates: formData.coordinates,
       });
 
@@ -274,22 +271,6 @@ export const EditRestStopModal: React.FC = () => {
                 <option value="Tankstelle">Tankstelle</option>
                 <option value="Restaurant">Restaurant</option>
                 <option value="Route">Route</option>
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Route
-              </label>
-              <select
-                name="route"
-                value={formData.route}
-                onChange={handleChange}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-400 focus:border-transparent"
-              >
-                <option value="eastern">Östliche Routen</option>
-                <option value="baltic">Baltische und östliche Staaten</option>
-                <option value="southern">Südliche Routen</option>
               </select>
             </div>
 
