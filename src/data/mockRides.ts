@@ -126,12 +126,14 @@ export const mockRides: Ride[] = [
     whatsapp: '+491234567896',
     telegram: '@MarkDriver',
     mobile: '+491234567897',
-    car: 'VW Transporter',
-    carModel: 'VW Transporter',
+    car: 'Mercedes Vito - Black',
     availableSeats: 8,
     bookedSeats: 0,
-    carImage: '',
-    additionalImages: [],
+    carImage: 'https://images.pexels.com/photos/707046/pexels-photo-707046.jpeg',
+    additionalImages: [
+      'https://images.pexels.com/photos/1149137/pexels-photo-1149137.jpeg',
+      'https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg'
+    ],
     stopovers: ['Görlitzer Park', 'Warschauer Straße'],
     reviews: [
       {
@@ -156,12 +158,14 @@ export const mockRides: Ride[] = [
     whatsapp: '+491234567898',
     telegram: '@ElenaDriver',
     mobile: '+491234567899',
-    car: 'Ford Transit - White',
-    carModel: 'Ford Transit',
+    car: 'Mercedes Vito - Black',
     availableSeats: 8,
     bookedSeats: 0,
-    carImage: '',
-    additionalImages: [],
+    carImage: 'https://images.pexels.com/photos/707046/pexels-photo-707046.jpeg',
+    additionalImages: [
+      'https://images.pexels.com/photos/1149137/pexels-photo-1149137.jpeg',
+      'https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg'
+    ],
     stopovers: ['Magdeburg', 'Hannover', 'Dortmund'],
     reviews: [
       {
@@ -169,37 +173,6 @@ export const mockRides: Ride[] = [
         user: 'Dmitry',
         rating: 4.0,
         comment: 'Good ride, thanks Elena!'
-      }
-    ]
-  },
-  {
-    id: 6,
-    from: 'Tempelhof',
-    to: 'Spandau',
-    date: '25.04.2025',
-    time: '10:30',
-    price: '3€',
-    driver: 'Robert',
-    rating: 4.3,
-    hasRidden: false,
-    driverInfo: 'Robert, 45 years old, 12 years driving experience',
-    whatsapp: '+491234567900',
-    telegram: '@RobertDriver',
-    mobile: '+491234567901',
-    car: 'BMW 3 Series',
-    carModel: 'BMW 3 Series',
-    availableSeats: 4,
-    bookedSeats: 1,
-    carImage: '',
-    additionalImages: [],
-    stopovers: [],
-    information: 'Comfortable and quiet ride.',
-    reviews: [
-      {
-        id: 1,
-        user: 'Peter',
-        rating: 4.3,
-        comment: 'Very professional driver!'
       }
     ]
   }
