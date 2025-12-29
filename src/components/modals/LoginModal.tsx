@@ -210,7 +210,7 @@ export const LoginModal: React.FC = () => {
             </div>
             <div>
               <label htmlFor="login-password" className="block text-sm font-medium text-gray-700 mb-1">
-                Passwort
+                Passwort f
               </label>
               <input
                 type="password"
