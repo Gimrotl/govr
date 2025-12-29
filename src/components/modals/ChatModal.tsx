@@ -177,7 +177,7 @@ export const ChatModal: React.FC = () => {
             {!isLoggedIn && (
               <div className="mb-1 p-1 bg-yellow-100 border border-yellow-300 rounded text-center">
                 <p className="text-yellow-800 text-xs">
-                  Çuvalar döxu / LogIn / Нужно авторизоваться
+                  Yazda läa, çuvalar döxu / LogIn / Нужно авторизоваться
                 </p>
               </div>
             )}
