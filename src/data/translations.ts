@@ -3,7 +3,7 @@ export type Language = 'ce' | 'en' | 'ru';
 export const translations = {
   ce: {
     title: 'Caucasian Mobility Network',
-    motto: 'ẋan vord - ẋan neq',
+    motto: 'ẊAN VORD - ẊAN NEQ̇',
     searchRide: 'maşen',
     offerRide: 'Novq̇ billar',
     availableRides: 'kerla novq̇a yolu maşenaş',
