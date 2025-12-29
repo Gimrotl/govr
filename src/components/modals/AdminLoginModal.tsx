@@ -41,7 +41,7 @@ export const AdminLoginModal: React.FC = () => {
         <div className="flex justify-between items-center mb-6">
           <div className="flex items-center">
             <Shield size={24} className="text-sky-500 mr-2" />
-            <h2 className="text-2xl font-semibold text-gray-800">Admin Login</h2>
+            <h2 className="text-2xl font-semibold text-gray-800"></h2>
           </div>
           <button
             onClick={() => closeModal('adminLogin')}
