@@ -20,7 +20,7 @@ export const TermsModal: React.FC = () => {
         
         <div className="prose prose-sm max-w-none text-gray-700">
           <p>
-            The Word Platform (which translates from Chechen as "Kaleta") has been developed to simplify finding fellow travelers 
+            The Word Platform (which translates from Chechen as "Car") has been developed to simplify finding fellow travelers 
             and transporting parcels between the Caucasus and Europe, as well as for use in other regions of the world. 
             The organization is not a party to any agreements, contracts, or other obligations that may arise between 
             Platform Users and is not responsible for their fulfillment or consequences.
