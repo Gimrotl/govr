@@ -558,7 +558,7 @@ export const translations = {
     informationSection: 'Information',
     noAdditionalInfo: 'No additional information available.',
     memberSince: 'Member since {date}',
-    reviewCountInfo: '({count} review(s))',
+    reviewCountInfo: 'Review',
     bookButton: 'Book Now - {price}',
     carImagesButton: 'Car Images',
     noCarImages: 'No car images available',
