@@ -63,7 +63,7 @@ export const AdminLoginModal: React.FC = () => {
                 id="admin-username"
                 name="username"
                 className="w-full pl-10 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-400 focus:border-transparent"
-                placeholder="Admin Username"
+                placeholder="Deq̇aşxoçun ċe"
                 value={credentials.username}
                 onChange={handleChange}
                 required
