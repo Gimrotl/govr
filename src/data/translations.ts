@@ -867,7 +867,7 @@ export const translations = {
     routeSection: 'Маршрут',
     start: 'Начало',
     stop: 'Остановка',
-    destination: 'Пункт назначения',
+    destination: 'Конечная',
     informationSection: 'Информация',
     noAdditionalInfo: 'Дополнительная информация недоступна.',
     memberSince: 'Участник с {date}',
