@@ -241,7 +241,7 @@ export const translations = {
     routeSection: 'Novqan oyla',
     start: 'Yüẋ',
     stop: 'Sac',
-    destination: 'G1ovşa qeta mettig',
+    destination: '1alaşo',
     informationSection: 'Xaamaşan mettig',
     noAdditionalInfo: 'Kerla xaamaş bac.',
     memberSince: 'Юзер алдан {date}',
