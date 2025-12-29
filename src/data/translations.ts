@@ -242,7 +242,7 @@ export const translations = {
     start: 'Yüẋ',
     stop: 'Sac',
     destination: '1alaşo',
-    informationSection: 'Xaamaşan mettig',
+    informationSection: 'Novq̇an xaamaş',
     noAdditionalInfo: 'Kerla xaamaş bac.',
     memberSince: 'Юзер алдан {date}',
     reviewCountInfo: '({count} Ẋuna xetarg)',
