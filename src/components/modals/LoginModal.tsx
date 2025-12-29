@@ -202,7 +202,7 @@ export const LoginModal: React.FC = () => {
                 id="login-email"
                 name="email"
                 className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-400 focus:border-transparent"
-                placeholder="Ihre E-Mail-Adresse"
+                placeholder="E-Mail Adresse"
                 value={loginCredentials.email}
                 onChange={handleLoginChange}
                 required
