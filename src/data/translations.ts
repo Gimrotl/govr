@@ -628,7 +628,7 @@ export const translations = {
     picnicArea: 'Picnic Area',
   },
   ru: {
-    title: 'Caucasian Mobility Networkt',
+    title: 'Caucasian Mobility Network',
     motto: 'твоя машина - твои правила',
     searchRide: 'Найти поездку',
     offerRide: 'Предложить поездку',
