@@ -39,7 +39,7 @@ export const translations = {
     seats8: '8 mettig',
     fromPlaceholder: 'miçar (m. Sölƶa G1ala)',
     toPlaceholder: 'stenga (m. Makka)',
-    createAccount: 'Akkaunt qolla',
+    createAccount: 'Akkaunt kxolla',
     signIn: 'Çu vala',
     email: 'E-mail',
     yourEmail: 'San e-mail',
