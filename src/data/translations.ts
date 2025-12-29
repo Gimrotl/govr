@@ -25,7 +25,7 @@ export const translations = {
     adminDashboard: 'Kügalxo',
     pleaseLoginFirst: 'Düxara çu valar döxu',
     chat: 'Çat',
-    onlyRegisteredUsers: 'Novq̇a xaam ban läa, düxara çuvalar döxu.',
+    onlyRegisteredUsers: 'Novq̇an xaam ban läa, düxara çuvalar döxu.',
     from: 'Miçar',
     to: 'Stenga',
     seats: 'Mettig',
