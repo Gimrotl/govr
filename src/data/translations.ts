@@ -316,7 +316,7 @@ export const translations = {
   },
   en: {
     title: 'Caucasian Mobility Network',
-    motto: 'ONE WORD - ONE RIDE',
+    motto: 'YOUR cCar - YOUR ROUTE',
     searchRide: 'Search Ride',
     offerRide: 'Offer Ride',
     availableRides: 'Available Rides',
