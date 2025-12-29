@@ -273,7 +273,7 @@ export const translations = {
     aed: 'Dirxam (AED)',
     egp: 'Funt (EGP)',
     mad: 'Dirxam (MAD)',
-    navigation: 'Навигаци',
+    navigation: 'Heq̇ sẋagayta',
     details: 'Alsam xaar',
     editRestStop: 'Миллхна хийца',
     deleteRestStop: 'Миллхна дӏаяккха',
