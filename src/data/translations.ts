@@ -238,7 +238,7 @@ export const translations = {
     seatsCount: 'Mettig',
     noCurrentRides: 'Maşenaş yac',
     rideDetailsTitle: 'Qin a',
-    routeSection: 'Novq billar',
+    routeSection: 'Novqan oyla',
     start: 'D1a Yexiyt',
     stop: 'Sac',
     destination: 'G1ovşa qeta mettig',
