@@ -129,7 +129,7 @@ export const translations = {
     messageInputPlaceholder: 'Хаам яла... @user',
     reply: 'Ƶop lu',
     replyingTo: 'Йегӏар хилла:',
-    reportProblem: 'Arz dan - {driver}',
+    reportProblem: 'Arz dan',
     describeProblem: 'Машина доьцунца цӏорма хаьаьца ерта. Сана мохаллаш ана команда йегӏа.',
     describeProblemPlaceholder: 'Цӏорма хаьаьца хьжьа...',
     submitReport: 'Мохалла йалгӏа',
