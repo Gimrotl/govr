@@ -38,7 +38,7 @@ export const ReviewsModal: React.FC = () => {
         <div className="flex justify-between items-center p-6 border-b border-gray-200">
           <div>
             <h2 className="text-2xl font-semibold text-gray-800">
-              Naxana xetarg {driverName}
+              Ẋuna xetarg {driverName}
             </h2>
             <div className="flex items-center mt-2">
               <div className="flex items-center mr-3">
