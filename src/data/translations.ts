@@ -85,7 +85,7 @@ export const translations = {
     accept: 'Rez vu',
     reject: 'Rez vac',
     typeYourMessage: 'Xaam çu yaz be...',
-    enterMessageError: 'Хаам яла яьллалла.',
+    enterMessageError: 'Kerar yalla ẋan.',
     myRidesAndOrders: 'Сан машинаш тӏе йегӏераш',
     myRidesTab: 'Сан машинаш',
     ordersTab: 'Йегӏераш',
