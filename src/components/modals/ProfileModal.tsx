@@ -233,7 +233,7 @@ export const ProfileModal: React.FC = () => {
                 >
                   <MessageCircle size={16} className="mr-2 md:hidden" />
                   <MessageCircle size={18} className="mr-2 hidden md:block" />
-                  Kontaktieren
+                  ZIene val
                 </button>
                 <button
                   onClick={() => openModal('currentRides')}
