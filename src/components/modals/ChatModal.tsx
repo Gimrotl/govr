@@ -176,7 +176,7 @@ export const ChatModal: React.FC = () => {
           <form onSubmit={handleSendMessage} className="p-2 bg-white border-t border-gray-200 rounded-b-lg">
             {!isLoggedIn && (
               <div className="mb-1 p-1 bg-yellow-100 border border-yellow-300 rounded text-center">
-                <p className="text-yellow-800 text-xs">
+                <p className="text-red-600 text-xs">
                   Yazda läa, çuvalar döxu / LogIn / Нужно авторизоваться
                 </p>
               </div>
