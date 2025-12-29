@@ -217,7 +217,7 @@ export const LoginModal: React.FC = () => {
                 id="login-password"
                 name="password"
                 className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-400 focus:border-transparent"
-                placeholder="Ihr Passwort"
+                placeholder="Passwort"
                 value={loginCredentials.password}
                 onChange={handleLoginChange}
                 required
