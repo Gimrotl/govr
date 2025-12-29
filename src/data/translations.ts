@@ -245,7 +245,7 @@ export const translations = {
     informationSection: 'Novq̇an xaamaş',
     noAdditionalInfo: 'Kerla xaamaş bac.',
     memberSince: '{date} düyna vayca',
-    reviewCountInfo: '({count} Ẋuna xetarg)',
+    reviewCountInfo: 'Ẋuna xetarg',
     bookButton: 'Sẋaeca - {price}',
     carImagesButton: 'Maşenan sürtaş',
     noCarImages: 'Maşenan sürtaş dac',
