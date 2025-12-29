@@ -865,7 +865,7 @@ export const translations = {
     noCurrentRides: 'Текущие поездки недоступны',
     rideDetailsTitle: 'Детали поездки',
     routeSection: 'Маршрут',
-    start: 'Начало',
+    start: 'Старт',
     stop: 'Остановка',
     destination: 'Конечная',
     informationSection: 'Информация',
