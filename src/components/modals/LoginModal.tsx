@@ -227,7 +227,7 @@ export const LoginModal: React.FC = () => {
               type="submit"
               className="w-full bg-emerald-500 text-white py-3 rounded-lg hover:bg-emerald-600 transition duration-200"
             >
-              Anmelden
+              Anmelden g
             </button>
             <button
               type="button"
