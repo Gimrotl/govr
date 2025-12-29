@@ -115,7 +115,7 @@ export const RideDetailsModal: React.FC = () => {
           <div className="flex-1 p-4 md:p-6 md:border-r border-gray-200">
             {/* Header */}
             <div className="flex justify-between items-start mb-6">
-              <h2 className="text-xl md:text-2xl font-semibold text-gray-800">Ride Details</h2>
+              <h2 className="text-xl md:text-1xl font-semibold text-gray-800">Ride Details</h2>
               <button
                 onClick={() => closeModal('rideDetails')}
                 className="text-red-500 hover:text-red-700 transition duration-200"
