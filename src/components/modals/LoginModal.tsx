@@ -195,7 +195,7 @@ export const LoginModal: React.FC = () => {
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
               <label htmlFor="login-email" className="block text-sm font-medium text-gray-700 mb-1">
-                E-Mail-Adresse f
+
               </label>
               <input
                 type="email"
