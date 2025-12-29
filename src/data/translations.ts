@@ -274,7 +274,7 @@ export const translations = {
     egp: 'Фунт (EGP)',
     mad: 'Дирхам (MAD)',
     navigation: 'Навигаци',
-    details: 'Детал',
+    details: 'Alsam xaar',
     editRestStop: 'Миллхна хийца',
     deleteRestStop: 'Миллхна дӏаяккха',
     createRestStop: 'Керла миллхна кхолла',
