@@ -105,65 +105,35 @@ const getTypeIcon = (type: string) => {
   }
 };
 
-const getAmenityIcon = (amenity: string) => {
-  switch (amenity) {
-    case 'WC':
-      return <div className="bg-sky-100 text-sky-700 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs flex items-center">
-        <span className="mr-1">🚻</span> WC
-      </div>;
-    case 'Kinderfreundlich':
-      return <div className="bg-pink-100 text-pink-800 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs flex items-center">
-        <span className="mr-1">👶</span> Kinderfreundlich
-      </div>;
-    case 'Sport':
-      return <div className="bg-orange-100 text-orange-800 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs flex items-center">
-        <span className="mr-1">⚽</span> Sport
-      </div>;
-    case 'Restaurant':
-      return <div className="bg-red-100 text-red-800 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs flex items-center">
-        <span className="mr-1">🍽️</span> Restaurant
-      </div>;
-    case 'Grün':
-      return <div className="bg-emerald-50 text-emerald-700 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs flex items-center">
-        <span className="mr-1">🌳</span> Grünfläche
-      </div>;
-    case 'Parkplatz':
-      return <div className="bg-gray-100 text-gray-800 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs flex items-center">
-        <span className="mr-1">🅿️</span> Parkplatz
-      </div>;
-    case 'Duschen':
-      return <div className="bg-cyan-100 text-cyan-800 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs flex items-center">
-        <span className="mr-1">🚿</span> Duschen
-      </div>;
-    case 'Tankstelle':
-      return <div className="bg-red-100 text-red-800 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs flex items-center">
-        <span className="mr-1">⛽</span> Tankstelle
-      </div>;
-    case 'Autowaschen':
-      return <div className="bg-sky-100 text-sky-700 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs flex items-center">
-        <span className="mr-1">🚗</span> Autowäsche
-      </div>;
-    case 'Hotel':
-      return <div className="bg-amber-100 text-amber-800 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs flex items-center">
-        <span className="mr-1">🏨</span> Hotel
-      </div>;
-    case 'Kinder':
-      return <div className="bg-pink-100 text-pink-800 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs flex items-center">
-        <span className="mr-1">🚸</span> Kinderfreundlich
-      </div>;
-    case 'Essen':
-      return <div className="bg-red-100 text-red-800 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs flex items-center">
-        <span className="mr-1">🍽️</span> Restaurant
-      </div>;
-    case 'Esstisch':
-      return <div className="bg-amber-100 text-amber-800 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs flex items-center">
-        <span className="mr-1">🪑</span> Picknickplatz
-      </div>;
-    default:
-      return <div className="bg-gray-100 text-gray-800 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs flex items-center">
-        <span className="mr-1">📍</span> {amenity}
-      </div>;
+const getAmenityIcon = (amenity: string, t: (key: string) => string) => {
+  const amenityMap: { [key: string]: { icon: string; labelKey: string; colorClass: string } } = {
+    'WC': { icon: '🚻', labelKey: 'wc', colorClass: 'bg-sky-100 text-sky-700' },
+    'Kinderfreundlich': { icon: '👶', labelKey: 'childFriendly', colorClass: 'bg-pink-100 text-pink-800' },
+    'Kinder': { icon: '🚸', labelKey: 'childFriendly', colorClass: 'bg-pink-100 text-pink-800' },
+    'Sport': { icon: '⚽', labelKey: 'sports', colorClass: 'bg-orange-100 text-orange-800' },
+    'Restaurant': { icon: '🍽️', labelKey: 'restaurant', colorClass: 'bg-red-100 text-red-800' },
+    'Essen': { icon: '🍽️', labelKey: 'restaurant', colorClass: 'bg-red-100 text-red-800' },
+    'Grün': { icon: '🌳', labelKey: 'greenArea', colorClass: 'bg-emerald-50 text-emerald-700' },
+    'Parkplatz': { icon: '🅿️', labelKey: 'parking', colorClass: 'bg-gray-100 text-gray-800' },
+    'Duschen': { icon: '🚿', labelKey: 'showers', colorClass: 'bg-cyan-100 text-cyan-800' },
+    'Tankstelle': { icon: '⛽', labelKey: 'gasStation', colorClass: 'bg-red-100 text-red-800' },
+    'Autowaschen': { icon: '🚗', labelKey: 'carWash', colorClass: 'bg-sky-100 text-sky-700' },
+    'Hotel': { icon: '🏨', labelKey: 'hotel', colorClass: 'bg-amber-100 text-amber-800' },
+    'Esstisch': { icon: '🪑', labelKey: 'picnicArea', colorClass: 'bg-amber-100 text-amber-800' },
+    'Strand': { icon: '🏖️', labelKey: 'beach', colorClass: 'bg-sky-100 text-sky-700' },
+  };
+
+  const amenityInfo = amenityMap[amenity];
+
+  if (amenityInfo) {
+    return <div className={`${amenityInfo.colorClass} px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs flex items-center`}>
+      <span className="mr-1">{amenityInfo.icon}</span> {t(amenityInfo.labelKey)}
+    </div>;
   }
+
+  return <div className="bg-gray-100 text-gray-800 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full text-xs flex items-center">
+    <span className="mr-1">📍</span> {amenity}
+  </div>;
 };
 
 export const RestStops: React.FC = () => {
@@ -346,7 +316,7 @@ export const RestStops: React.FC = () => {
 
   const handleDeleteRestStop = (restStopId: number, e: React.MouseEvent) => {
     e.stopPropagation();
-    if (window.confirm('Sind Sie sicher, dass Sie diesen Rest Stop löschen möchten?')) {
+    if (window.confirm(t('confirmDeleteRestStop'))) {
       setRestStopsData(prev => prev.filter(stop => stop.id !== restStopId));
       if (currentIndex >= restStopsData.length - 1 && currentIndex > 0) {
         setCurrentIndex(currentIndex - 1);
@@ -379,14 +349,14 @@ export const RestStops: React.FC = () => {
             <button
               onClick={(e) => handleEditRestStop(stop, e)}
               className="bg-sky-500 text-white p-2 rounded-full hover:bg-sky-600 transition duration-200"
-              title="Rest Stop bearbeiten"
+              title={t('editRestStop')}
             >
               <Edit size={16} />
             </button>
             <button
               onClick={(e) => handleDeleteRestStop(stop.id, e)}
               className="bg-red-600 text-white p-2 rounded-full hover:bg-red-700 transition duration-200"
-              title="Rest Stop löschen"
+              title={t('deleteRestStop')}
             >
               <Trash2 size={16} />
             </button>
@@ -409,7 +379,7 @@ export const RestStops: React.FC = () => {
         <div className="flex flex-wrap gap-2 mb-6">
           {stop.amenities.slice(0, 6).map((amenity, index) => (
             <div key={index}>
-              {getAmenityIcon(amenity)}
+              {getAmenityIcon(amenity, t)}
             </div>
           ))}
         </div>
@@ -423,7 +393,7 @@ export const RestStops: React.FC = () => {
             className="w-full bg-sky-500 text-white py-3 px-4 rounded-xl font-medium hover:bg-sky-600 transition duration-200 flex items-center justify-center"
           >
             <Navigation size={18} className="mr-2" />
-            Navigation
+            {t('navigation')}
           </button>
           <button
             onClick={(e) => {
@@ -432,7 +402,7 @@ export const RestStops: React.FC = () => {
             }}
             className="w-full py-3 px-4 border border-gray-300 text-gray-700 rounded-xl font-medium hover:bg-gray-50 transition duration-200"
           >
-            Details
+            {t('details')}
           </button>
         </div>
       </div>
@@ -458,7 +428,7 @@ export const RestStops: React.FC = () => {
           <button
             onClick={handleCreateRestStop}
             className="ml-4 bg-emerald-500 text-white p-3 rounded-full hover:bg-emerald-600 transition duration-200 flex-shrink-0"
-            title="Neuen Rest Stop erstellen"
+            title={t('createRestStop')}
           >
             <Plus size={24} />
           </button>
@@ -523,7 +493,7 @@ export const RestStops: React.FC = () => {
         </div>
 
         <div className="text-center mt-6 text-sm text-gray-500 md:hidden">
-          ← Wischen zum Blättern →
+          {t('swipeToScroll')}
         </div>
       </div>
     </section>
@@ -532,8 +502,8 @@ export const RestStops: React.FC = () => {
   return (
     <>
       {renderSection(
-        'Östliche Routen',
-        'Raststätten und Übernachtungsmöglichkeiten auf dem Weg nach Polen, Weißrussland und in den Kaukasus. Finden Sie alles, was Sie für eine komfortable Fahrt benötigen.',
+        t('easternRoutes'),
+        t('easternRoutesDesc'),
         currentIndex,
         goToPrevious,
         goToNext,
@@ -542,8 +512,8 @@ export const RestStops: React.FC = () => {
       )}
 
       {renderSection(
-        'Baltische und östliche Staaten',
-        'Komfortable Stopps für Ihre Reise nach Litauen, Lettland, Polen und darüber hinaus. Mit allen wichtigen Einrichtungen und guten Bewertungen.',
+        t('balticRoutes'),
+        t('balticRoutesDesc'),
         currentIndex2,
         goToPrevious2,
         goToNext2,
@@ -552,8 +522,8 @@ export const RestStops: React.FC = () => {
       )}
 
       {renderSection(
-        'Südliche Routen',
-        'Entdecken Sie erstklassige Raststätten und Hotels auf der Route nach Ungarn, Serbien, Bulgarien, der Türkei und Georgien. Perfekt zum Ausruhen und Tanken.',
+        t('southernRoutes'),
+        t('southernRoutesDesc'),
         currentIndex3,
         goToPrevious3,
         goToNext3,

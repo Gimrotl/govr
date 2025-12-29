@@ -4,6 +4,7 @@ import { StarRating } from '../StarRating';
 import { useModals } from '../../hooks/useModals';
 import { useAuth } from '../../hooks/useAuth';
 import { useRides } from '../../hooks/useRides';
+import { useLanguage } from '../../hooks/useLanguage';
 
 // TikTok icon component
 const TikTokIcon = ({ size = 20, className = "" }) => (
@@ -27,6 +28,7 @@ const WhatsAppIcon = ({ size = 20, className = "" }) => (
 );
 
 export const RideDetailsModal: React.FC = () => {
+  const { t } = useLanguage();
   const { selectedRide, closeModal, openModal } = useModals();
   const { isLoggedIn } = useAuth();
   const { bookRide } = useRides();
@@ -137,7 +139,7 @@ export const RideDetailsModal: React.FC = () => {
             {/* Route */}
             <div className="mb-6">
               <div className="bg-white p-3 rounded-lg border border-gray-200 shadow-sm">
-                <h3 className="text-base font-semibold text-gray-800 mb-4">Route</h3>
+                <h3 className="text-base font-semibold text-gray-800 mb-4">{t('routeSection')}</h3>
                 <div className="relative">
                   {/* Background line */}
                   <div className="absolute top-3 left-3 right-3 h-0.5 bg-gradient-to-r from-emerald-500 to-emerald-400 rounded-full"></div>
@@ -151,7 +153,7 @@ export const RideDetailsModal: React.FC = () => {
                       </div>
                       <div className="mt-2 text-center">
                         <div className="font-medium text-gray-800 text-sm leading-tight">{selectedRide.from}</div>
-                        <div className="text-sm text-emerald-500 mt-1">Start</div>
+                        <div className="text-sm text-emerald-500 mt-1">{t('start')}</div>
                       </div>
                     </div>
                     
@@ -163,7 +165,7 @@ export const RideDetailsModal: React.FC = () => {
                         </div>
                         <div className="mt-2 text-center">
                           <div className="font-medium text-gray-700 text-sm leading-tight">{stop}</div>
-                          <div className="text-sm text-gray-500 mt-1">Stopp</div>
+                          <div className="text-sm text-gray-500 mt-1">{t('stop')}</div>
                         </div>
                       </div>
                     ))}
@@ -175,7 +177,7 @@ export const RideDetailsModal: React.FC = () => {
                       </div>
                       <div className="mt-2 text-center">
                         <div className="font-medium text-gray-800 text-sm leading-tight">{selectedRide.to}</div>
-                        <div className="text-sm text-emerald-500 mt-1">Ziel</div>
+                        <div className="text-sm text-emerald-500 mt-1">{t('destination')}</div>
                       </div>
                     </div>
                   </div>
@@ -185,7 +187,7 @@ export const RideDetailsModal: React.FC = () => {
 
             {/* Information Section */}
             <div className="mb-6">
-              <h3 className="text-base font-medium text-gray-800 mb-3">Information</h3>
+              <h3 className="text-base font-medium text-gray-800 mb-3">{t('informationSection')}</h3>
               {(selectedRide.carModel || selectedRide.carYear) && (
                 <div className="mb-2 text-xs text-gray-500">
                   {selectedRide.carModel && <span>{selectedRide.carModel}</span>}
@@ -194,7 +196,7 @@ export const RideDetailsModal: React.FC = () => {
                 </div>
               )}
               <div className="bg-gray-100 p-6 rounded-lg min-h-[120px]">
-                <p className="text-sm md:text-base text-gray-700">{selectedRide.information || 'Keine zusätzlichen Informationen verfügbar.'}</p>
+                <p className="text-sm md:text-base text-gray-700">{selectedRide.information || t('noAdditionalInfo')}</p>
               </div>
             </div>
           </div>
@@ -217,7 +219,7 @@ export const RideDetailsModal: React.FC = () => {
               >
                 {selectedRide.driver}
               </h3>
-              <p className="text-sm text-gray-600 mb-3">15.03.2023 dünca vayc</p>
+              <p className="text-sm text-gray-600 mb-3">{t('memberSince').replace('{date}', '15.03.2023')}</p>
               <div className="flex items-center justify-center mb-4">
                 <button
                   onClick={() => openModal('reviews')}
@@ -225,7 +227,7 @@ export const RideDetailsModal: React.FC = () => {
                 >
                   <span className="text-xl font-bold mr-2">{selectedRide.rating}</span>
                   <span className="text-yellow-400 text-xl">⭐</span>
-                  <span className="text-gray-600 ml-1 text-sm md:text-base">({selectedRide.reviews?.length || 0} Bewertungen)</span>
+                  <span className="text-gray-600 ml-1 text-sm md:text-base">{t('reviewCountInfo').replace('{count}', String(selectedRide.reviews?.length || 0))}</span>
                 </button>
               </div>
             </div>
@@ -257,7 +259,7 @@ export const RideDetailsModal: React.FC = () => {
               onClick={handleBookRide}
               className="w-full bg-sky-500 text-white py-3 md:py-4 rounded-lg text-base md:text-lg font-semibold hover:bg-sky-600 transition duration-200 mb-2"
             >
-              Jetzt buchen - {selectedRide.price}
+              {t('bookButton').replace('{price}', selectedRide.price)}
             </button>
 
             {/* Car Images button */}
@@ -266,7 +268,7 @@ export const RideDetailsModal: React.FC = () => {
               className="w-full flex items-center justify-center bg-gray-600 text-white py-3 rounded-lg text-base md:text-lg font-medium hover:bg-gray-700 transition duration-200 mb-2"
             >
               <Car size={18} className="mr-2" />
-              Autobilder
+              {t('carImagesButton')}
             </button>
 
             {/* Contact button */}
@@ -275,7 +277,7 @@ export const RideDetailsModal: React.FC = () => {
               className="w-full flex items-center justify-center bg-gray-200 text-gray-700 py-3 rounded-lg text-base md:text-lg font-medium hover:bg-gray-300 transition duration-200 mb-2 border border-gray-400"
             >
               <MessageCircle size={18} className="mr-2" />
-              ZIene val
+              {t('contact')}
             </button>
 
             {/* Report button */}
@@ -284,7 +286,7 @@ export const RideDetailsModal: React.FC = () => {
               className="w-full flex items-center justify-center bg-red-600 text-white py-3 rounded-lg text-base md:text-lg font-medium hover:bg-red-700 transition duration-200"
             >
               <Shield size={18} className="mr-2" />
-              Report a Problem
+              {t('reportProblem').replace('{driver}', selectedRide.driver)}
             </button>
           </div>
         </div>
@@ -331,7 +333,7 @@ export const RideDetailsModal: React.FC = () => {
               ) : (
                 <div className="text-white text-center">
                   <Car size={64} className="mx-auto mb-4 text-gray-400" />
-                  <p className="text-xl">Keine Autobilder verfügbar</p>
+                  <p className="text-xl">{t('noCarImages')}</p>
                 </div>
               )}
             </div>

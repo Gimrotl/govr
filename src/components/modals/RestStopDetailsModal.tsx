@@ -4,6 +4,7 @@ import { useModals } from '../../hooks/useModals';
 import { useAuth } from '../../hooks/useAuth';
 import { useRestStops } from '../../hooks/useRestStops';
 import { RestStopReviewsModal } from './RestStopReviewsModal';
+import { useLanguage } from '../../hooks/useLanguage';
 
 interface RestStop {
   id: string | number;
@@ -67,40 +68,37 @@ const getTypeIcon = (type: string) => {
   }
 };
 
-const getAmenityIcon = (amenity: string) => {
-  switch (amenity) {
-    case 'WC':
-      return { icon: '🚻', label: 'WC', color: 'bg-sky-100 text-sky-700' };
-    case 'Kinder':
-      return { icon: '👶', label: 'Kinderfreundlich', color: 'bg-pink-100 text-pink-800' };
-    case 'Sport':
-      return { icon: '⚽', label: 'Sport', color: 'bg-orange-100 text-orange-800' };
-    case 'Essen':
-      return { icon: '🍽️', label: 'Restaurant', color: 'bg-red-100 text-red-800' };
-    case 'Grün':
-      return { icon: '🌳', label: 'Grünfläche', color: 'bg-emerald-50 text-emerald-700' };
-    case 'Parkplatz':
-      return { icon: '🅿️', label: 'Parkplatz', color: 'bg-gray-100 text-gray-800' };
-    case 'Duschen':
-      return { icon: '🚿', label: 'Duschen', color: 'bg-cyan-100 text-cyan-800' };
-    case 'Tankstelle':
-      return { icon: '⛽', label: 'Tankstelle', color: 'bg-red-100 text-red-800' };
-    case 'Autowaschen':
-      return { icon: '🚗', label: 'Autowäsche', color: 'bg-sky-100 text-sky-700' };
-    case 'Hotel':
-      return { icon: '🏨', label: 'Hotel', color: 'bg-purple-100 text-purple-800' };
-    case 'Strand':
-      return { icon: '🏖️', label: 'Strand', color: 'bg-sky-100 text-sky-700' };
-    case 'Esstisch':
-      return { icon: '🪑', label: 'Picknickplatz', color: 'bg-amber-100 text-amber-800' };
-    default:
-      return { icon: '📍', label: amenity, color: 'bg-gray-100 text-gray-800' };
+const getAmenityIcon = (amenity: string, t: (key: string) => string) => {
+  const amenityMap: { [key: string]: { icon: string; labelKey: string; color: string } } = {
+    'WC': { icon: '🚻', labelKey: 'wc', color: 'bg-sky-100 text-sky-700' },
+    'Kinder': { icon: '👶', labelKey: 'childFriendly', color: 'bg-pink-100 text-pink-800' },
+    'Kinderfreundlich': { icon: '👶', labelKey: 'childFriendly', color: 'bg-pink-100 text-pink-800' },
+    'Sport': { icon: '⚽', labelKey: 'sports', color: 'bg-orange-100 text-orange-800' },
+    'Essen': { icon: '🍽️', labelKey: 'restaurant', color: 'bg-red-100 text-red-800' },
+    'Restaurant': { icon: '🍽️', labelKey: 'restaurant', color: 'bg-red-100 text-red-800' },
+    'Grün': { icon: '🌳', labelKey: 'greenArea', color: 'bg-emerald-50 text-emerald-700' },
+    'Parkplatz': { icon: '🅿️', labelKey: 'parking', color: 'bg-gray-100 text-gray-800' },
+    'Duschen': { icon: '🚿', labelKey: 'showers', color: 'bg-cyan-100 text-cyan-800' },
+    'Tankstelle': { icon: '⛽', labelKey: 'gasStation', color: 'bg-red-100 text-red-800' },
+    'Autowaschen': { icon: '🚗', labelKey: 'carWash', color: 'bg-sky-100 text-sky-700' },
+    'Hotel': { icon: '🏨', labelKey: 'hotel', color: 'bg-amber-100 text-amber-800' },
+    'Strand': { icon: '🏖️', labelKey: 'beach', color: 'bg-sky-100 text-sky-700' },
+    'Esstisch': { icon: '🪑', labelKey: 'picnicArea', color: 'bg-amber-100 text-amber-800' },
+  };
+
+  const amenityInfo = amenityMap[amenity];
+
+  if (amenityInfo) {
+    return { icon: amenityInfo.icon, label: t(amenityInfo.labelKey), color: amenityInfo.color };
   }
+
+  return { icon: '📍', label: amenity, color: 'bg-gray-100 text-gray-800' };
 };
 
 const AVAILABLE_AMENITIES = ['WC', 'Kinder', 'Sport', 'Essen', 'Grün', 'Parkplatz', 'Duschen', 'Tankstelle', 'Autowaschen', 'Hotel', 'Strand', 'Esstisch'];
 
 export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ restStop, onClose, onUpdate }) => {
+  const { t } = useLanguage();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [showReviewsModal, setShowReviewsModal] = useState(false);
   const [hiddenIndices, setHiddenIndices] = useState<number[]>(restStop?.hidden_image_indices || []);
@@ -136,7 +134,7 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
 
   const handleHideImage = async (imageIndex: number) => {
     if (!isAdmin) {
-      alert('Nur Administratoren können Bilder ausblenden.');
+      alert(t('onlyAdminsCanHideImages'));
       return;
     }
 
@@ -274,13 +272,13 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
 
   const handleSubmitReview = () => {
     if (!isLoggedIn) {
-      alert('Sie müssen eingeloggt sein, um eine Bewertung abzugeben.');
+      alert(t('mustBeLoggedInToReview'));
       openModal('login');
       return;
     }
-    
+
     if (!newReview.comment.trim()) {
-      alert('Bitte geben Sie einen Kommentar ein.');
+      alert(t('pleaseEnterComment'));
       return;
     }
     
@@ -298,12 +296,12 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
     
     setReviews([review, ...reviews]);
     setNewReview({ rating: 5, comment: '' });
-    alert('Bewertung erfolgreich abgegeben!');
+    alert(t('reviewSubmitted'));
   };
 
   const handleLike = (reviewId: number) => {
     if (!isLoggedIn) {
-      alert('Sie müssen eingeloggt sein, um zu bewerten.');
+      alert(t('mustBeLoggedInToRate'));
       openModal('login');
       return;
     }
@@ -328,7 +326,7 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
 
   const handleDislike = (reviewId: number) => {
     if (!isLoggedIn) {
-      alert('Sie müssen eingeloggt sein, um zu bewerten.');
+      alert(t('mustBeLoggedInToRate'));
       openModal('login');
       return;
     }
@@ -389,27 +387,27 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
     
     setReplyText('');
     setReplyingTo(null);
-    alert('Antwort erfolgreich abgegeben!');
+    alert(t('replySubmitted'));
   };
 
   const handleEditReply = (replyId: number) => {
     if (!editReplyText.trim()) {
-      alert('Bitte geben Sie eine Antwort ein.');
+      alert(t('pleaseEnterReply'));
       return;
     }
-    
+
     setReviews(reviews.map(review => ({
       ...review,
-      replies: review.replies.map(reply => 
-        reply.id === replyId 
+      replies: review.replies.map(reply =>
+        reply.id === replyId
           ? { ...reply, comment: editReplyText }
           : reply
       )
     })));
-    
+
     setEditingReply(null);
     setEditReplyText('');
-    alert('Antwort erfolgreich bearbeitet!');
+    alert(t('replyEdited'));
   };
 
   return (
@@ -469,7 +467,7 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
                 </>
               ) : (
                 <div className="w-full h-full flex items-center justify-center text-gray-500">
-                  <span className="text-center">Keine Bilder verfügbar</span>
+                  <span className="text-center">{t('noImagesAvailable')}</span>
                 </div>
               )}
             </div>
@@ -504,7 +502,7 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
                           onClick={() => handleHideImage(index)}
                           disabled={isUpdating}
                           className="absolute -top-2 -right-2 bg-red-500 hover:bg-red-600 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity shadow-lg disabled:opacity-50"
-                          title="Bild ausblenden"
+                          title={t('hideImage')}
                         >
                           <Trash2 size={14} />
                         </button>
@@ -518,7 +516,7 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
             {/* Amenities below images */}
             <div className="p-4 bg-gray-50">
               <div className="flex items-center justify-between mb-3 pr-12">
-                <h3 className="text-lg font-semibold text-gray-900">Ausstattung</h3>
+                <h3 className="text-lg font-semibold text-gray-900">{t('equipment')}</h3>
                 {isAdmin && editingField === 'amenities' && (
                   <div className="flex space-x-2">
                     <button
@@ -527,7 +525,7 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
                       className="px-3 py-1 text-sm text-gray-600 hover:bg-gray-200 rounded-lg transition-colors flex items-center"
                     >
                       <XCircle size={16} className="mr-1" />
-                      Abbrechen
+                      {t('cancel')}
                     </button>
                     <button
                       onClick={handleSaveAmenities}
@@ -535,7 +533,7 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
                       className="px-3 py-1 text-sm bg-sky-500 text-white hover:bg-sky-600 rounded-lg transition-colors flex items-center disabled:opacity-50"
                     >
                       <Check size={16} className="mr-1" />
-                      {isUpdating ? 'Speichern...' : 'Speichern'}
+                      {isUpdating ? t('saving') : t('save')}
                     </button>
                   </div>
                 )}
@@ -543,7 +541,7 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
                   <button
                     onClick={() => setEditingField('amenities')}
                     className="p-2 text-gray-500 hover:text-sky-500 hover:bg-sky-50 rounded-lg transition-colors"
-                    title="Bearbeiten"
+                    title={t('edit')}
                   >
                     <Pencil size={18} />
                   </button>
@@ -554,7 +552,7 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
                   <button
                     onClick={scrollAmenitiesUp}
                     className="absolute -top-10 right-0 p-2 text-gray-600 hover:text-sky-500 hover:bg-sky-50 rounded-lg transition-colors z-10"
-                    title="Nach oben scrollen"
+                    title={t('scrollUp')}
                   >
                     <ChevronUp size={20} />
                   </button>
@@ -563,7 +561,7 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
                     className="grid grid-cols-2 gap-2 max-h-64 overflow-y-auto scrollbar-hide"
                   >
                     {AVAILABLE_AMENITIES.map((amenity) => {
-                      const amenityInfo = getAmenityIcon(amenity);
+                      const amenityInfo = getAmenityIcon(amenity, t);
                       const isSelected = editAmenities.includes(amenity);
                       return (
                         <button
@@ -584,7 +582,7 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
                   <button
                     onClick={scrollAmenitiesDown}
                     className="absolute -bottom-10 right-0 p-2 text-gray-600 hover:text-sky-500 hover:bg-sky-50 rounded-lg transition-colors z-10"
-                    title="Nach unten scrollen"
+                    title={t('scrollDown')}
                   >
                     <ChevronDown size={20} />
                   </button>
@@ -594,7 +592,7 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
                   <button
                     onClick={scrollAmenitiesUp}
                     className="absolute -top-10 right-0 p-2 text-gray-600 hover:text-sky-500 hover:bg-sky-50 rounded-lg transition-colors z-10"
-                    title="Nach oben scrollen"
+                    title={t('scrollUp')}
                   >
                     <ChevronUp size={20} />
                   </button>
@@ -603,7 +601,7 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
                     className="grid grid-cols-2 gap-2 max-h-64 overflow-y-auto scrollbar-hide"
                   >
                     {restStop.amenities.map((amenity, index) => {
-                      const amenityInfo = getAmenityIcon(amenity);
+                      const amenityInfo = getAmenityIcon(amenity, t);
                       return (
                         <div key={index} className={`${amenityInfo.color} px-3 py-2 rounded-xl flex items-center shadow-sm`}>
                           <span className="text-lg mr-2">{amenityInfo.icon}</span>
@@ -615,7 +613,7 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
                   <button
                     onClick={scrollAmenitiesDown}
                     className="absolute -bottom-10 right-0 p-2 text-gray-600 hover:text-sky-500 hover:bg-sky-50 rounded-lg transition-colors z-10"
-                    title="Nach unten scrollen"
+                    title={t('scrollDown')}
                   >
                     <ChevronDown size={20} />
                   </button>
@@ -657,7 +655,7 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
                       ))}
                     </div>
                     <span className="text-lg font-bold text-gray-800 mr-1">{restStop.rating}</span>
-                    <span className="text-gray-600">(0 Bewertungen)</span>
+                    <span className="text-gray-600">(0 {t('reviews')})</span>
                   </button>
                 </div>
               </div>
@@ -665,12 +663,12 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
               {/* Description section */}
               <div className="mb-6">
                 <div className="flex items-center justify-between mb-3">
-                  <h3 className="text-lg font-semibold text-gray-800">Beschreibung</h3>
+                  <h3 className="text-lg font-semibold text-gray-800">{t('description')}</h3>
                   {isAdmin && editingField !== 'description' && (
                     <button
                       onClick={() => setEditingField('description')}
                       className="p-2 text-gray-500 hover:text-sky-500 hover:bg-sky-50 rounded-lg transition-colors"
-                      title="Bearbeiten"
+                      title={t('edit')}
                     >
                       <Pencil size={18} />
                     </button>
@@ -692,7 +690,7 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
                           className="px-4 py-2 text-gray-600 hover:bg-gray-200 rounded-lg transition-colors flex items-center"
                         >
                           <XCircle size={18} className="mr-1" />
-                          Abbrechen
+                          {t('cancel')}
                         </button>
                         <button
                           onClick={handleSaveDescription}
@@ -700,7 +698,7 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
                           className="px-4 py-2 bg-sky-500 text-white hover:bg-sky-600 rounded-lg transition-colors flex items-center disabled:opacity-50"
                         >
                           <Check size={18} className="mr-1" />
-                          {isUpdating ? 'Speichern...' : 'Speichern'}
+                          {isUpdating ? t('saving') : t('save')}
                         </button>
                       </div>
                     </div>
@@ -718,12 +716,12 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
               {/* Address section */}
               <div className="mb-6">
                 <div className="flex items-center justify-between mb-3">
-                  <h3 className="text-lg font-semibold text-gray-800">Adresse</h3>
+                  <h3 className="text-lg font-semibold text-gray-800">{t('address')}</h3>
                   {isAdmin && editingField !== 'address' && (
                     <button
                       onClick={() => setEditingField('address')}
                       className="p-2 text-gray-500 hover:text-sky-500 hover:bg-sky-50 rounded-lg transition-colors"
-                      title="Bearbeiten"
+                      title={t('edit')}
                     >
                       <Pencil size={18} />
                     </button>
@@ -733,7 +731,7 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
                   {editingField === 'address' ? (
                     <div className="space-y-3">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Adresse</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">{t('address')}</label>
                         <input
                           type="text"
                           value={editAddress}
@@ -742,7 +740,7 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Ort/Region</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">{t('locationRegion')}</label>
                         <input
                           type="text"
                           value={editLocation}
@@ -757,7 +755,7 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
                           className="px-4 py-2 text-gray-600 hover:bg-gray-200 rounded-lg transition-colors flex items-center"
                         >
                           <XCircle size={18} className="mr-1" />
-                          Abbrechen
+                          {t('cancel')}
                         </button>
                         <button
                           onClick={handleSaveAddress}
@@ -765,7 +763,7 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
                           className="px-4 py-2 bg-sky-500 text-white hover:bg-sky-600 rounded-lg transition-colors flex items-center disabled:opacity-50"
                         >
                           <Check size={18} className="mr-1" />
-                          {isUpdating ? 'Speichern...' : 'Speichern'}
+                          {isUpdating ? t('saving') : t('save')}
                         </button>
                       </div>
                     </div>
@@ -788,7 +786,7 @@ export const RestStopDetailsModal: React.FC<RestStopDetailsModalProps> = ({ rest
                   className="w-full bg-sky-500 text-white py-3 lg:py-4 px-6 rounded-xl font-semibold hover:bg-sky-600 transition duration-200 flex items-center justify-center shadow-lg"
                 >
                   <Navigation size={20} className="mr-3" />
-                  In Google Maps öffnen
+                  {t('openInGoogleMaps')}
                   <ExternalLink size={18} className="ml-3" />
                 </button>
               </div>
