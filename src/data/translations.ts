@@ -871,7 +871,7 @@ export const translations = {
     informationSection: 'Информация',
     noAdditionalInfo: 'Дополнительная информация недоступна.',
     memberSince: 'Участник с {date}',
-    reviewCountInfo: '({count} отзыв(ов))',
+    reviewCountInfo: 'Отзывы',
     bookButton: 'Забронировать сейчас - {price}',
     carImagesButton: 'Изображения автомобиля',
     noCarImages: 'Изображения автомобиля недоступны',
