@@ -25,7 +25,7 @@ export const Footer: React.FC = () => {
                 onClick={() => openModal('adminLogin')}
                 className="flex items-center text-gray-400 hover:text-gray-300 transition duration-200 text-xs"
               >
-                <Shield size={12} className="mr-1" />
+                <Shield size={22} className="mr-1" />
                 <span>Admin</span>
               </button>
             )}
