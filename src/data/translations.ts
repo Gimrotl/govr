@@ -353,7 +353,7 @@ export const translations = {
     fromPlaceholder: 'From (e.g., Grozny)',
     toPlaceholder: 'To (e.g., Mecca)',
     createAccount: 'Create Account',
-    signIn: 'Sign In',
+    signIn: 'Sign Inb',
     email: 'Email',
     yourEmail: 'Your email',
     password: 'Password',
