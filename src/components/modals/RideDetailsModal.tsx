@@ -275,7 +275,7 @@ export const RideDetailsModal: React.FC = () => {
               className="w-full flex items-center justify-center bg-gray-200 text-gray-700 py-3 rounded-lg text-base md:text-lg font-medium hover:bg-gray-300 transition duration-200 mb-2 border border-gray-400"
             >
               <MessageCircle size={18} className="mr-2" />
-              Kontaktieren
+              ZIene val
             </button>
 
             {/* Report button */}
