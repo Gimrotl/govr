@@ -239,7 +239,7 @@ export const translations = {
     noCurrentRides: 'Maşenaş yac',
     rideDetailsTitle: 'Qin a',
     routeSection: 'Novqan oyla',
-    start: 'D1a Yexiyt',
+    start: 'Yüẋ',
     stop: 'Sac',
     destination: 'G1ovşa qeta mettig',
     informationSection: 'Xaamaşan mettig',
