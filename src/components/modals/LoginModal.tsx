@@ -94,7 +94,7 @@ export const LoginModal: React.FC = () => {
           </h2>
           <button
             onClick={() => closeModal('login')}
-            className="text-gray-500 hover:text-gray-700 transition duration-200"
+            className="text-red-600 hover:text-gray-700 transition duration-200"
           >
             <X size={24} />
           </button>
