@@ -201,7 +201,7 @@ export const translations = {
     restStopType: 'Тип',
     restStop: 'Sacamş',
     hotel: 'Hotel',
-    gasStation: 'Mехкадаьтта',
+    gasStation: 'Mexkadyatta',
     restaurant: 'Restoran',
     location: 'Mettig',
     address: 'Adres',
