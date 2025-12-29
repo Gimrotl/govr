@@ -6,7 +6,7 @@ export const translations = {
     motto: 'ẊAN VORD - ẊAN NEQ̇',
     searchRide: 'maşen',
     offerRide: 'Novq̇ billar',
-    availableRides: 'kerla novq̇a yolu maşenaş',
+    availableRides: 'KERLA NOVQ̇A YOLU MAŞENAŞ',
     ride: 'Maşen',
     search: 'Ẋa laxar',
     offer: 'Доьлу кхетар',
