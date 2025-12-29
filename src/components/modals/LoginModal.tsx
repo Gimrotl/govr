@@ -90,7 +90,7 @@ export const LoginModal: React.FC = () => {
       <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6 animate-scaleIn">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-semibold text-gray-800">
-            {isRegisterMode ? 'Create Account' : 'Çuvala / Sign In'}
+            {isRegisterMode ? 'Create Account' : '<center>👣<center>'}
           </h2>
           <button
             onClick={() => closeModal('login')}
