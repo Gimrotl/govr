@@ -723,7 +723,7 @@ export const translations = {
     deleteRide: 'Удалить поездку',
     areYouSureDelete: 'Вы уверены, что хотите удалить эту поездку?',
     reviewsFor: 'Отзывы для {name}',
-    reviewCount: '({count} отзыв(ов))',
+    reviewCount: 'Отзывы',
     noReviews: 'Ещё нет отзывов',
     beFirst: 'Будьте первым, кто оставит отзыв {name}!',
     reviewedOn: 'Отзыв от {date}',
