@@ -628,8 +628,8 @@ export const translations = {
     picnicArea: 'Picnic Area',
   },
   ru: {
-    title: 'Сеть Кавказской мобильности',
-    motto: 'ОДНО СЛОВО - ОДНА ПОЕЗДКА',
+    title: 'Caucasian Mobility Networkt',
+    motto: 'твоя машина - твои правила',
     searchRide: 'Найти поездку',
     offerRide: 'Предложить поездку',
     availableRides: 'Доступные поездки',
