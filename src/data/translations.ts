@@ -410,7 +410,7 @@ export const translations = {
     deleteRide: 'Delete Ride',
     areYouSureDelete: 'Are you sure you want to delete this ride?',
     reviewsFor: 'Reviews for {name}',
-    reviewCount: '({count} review(s))',
+    reviewCount: 'Review',
     noReviews: 'No reviews yet',
     beFirst: 'Be the first to review {name}!',
     reviewedOn: 'Reviewed on {date}',
