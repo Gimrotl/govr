@@ -99,6 +99,8 @@ function App() {
 
             <InfoCards />
 
+            <InfoCards />
+
             <RestStops />
           </>
         )}
